@@ -11,10 +11,15 @@ import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import Api from '../funtion/net'
+import address from '../funtion/net/address'
 
 class WelcomePage extends Component {
 
     componentDidMount() {
+        Api.getFetch(address.sreach("tetris")).then(()=>{
+
+        })
     }
 
     componentWillUnmount() {

@@ -13,10 +13,14 @@ I18n.defaultLocale = "zh-CN";
 
 I18n.translations = {
     'en': {
-        appName: 'GSYGitHubApp'
+        appName: 'GSYGitHubApp',
+        netError: 'network error',
+        netTimeout: 'network timeout',
     },
     'zh-CN': {
-        appName: 'GSYGitHubApp'
+        appName: 'GSYGitHubApp',
+        netError: '网络错误',
+        netTimeout: '网络超时',
     }
 };
 
