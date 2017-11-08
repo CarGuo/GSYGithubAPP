@@ -17,9 +17,9 @@ import address from '../funtion/net/address'
 class WelcomePage extends Component {
 
     componentDidMount() {
-        Api.getFetch(address.sreach("tetris")).then(()=>{
+        /*Api.getFetch(address.sreach("tetris")).then(()=>{
 
-        })
+        })*/
     }
 
     componentWillUnmount() {
