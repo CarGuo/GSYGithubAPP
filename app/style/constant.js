@@ -21,3 +21,10 @@ export const normalTextSize = 20;
 export const midlleTextSize = 18;
 export const smallTextSize = 14;
 export const minTextSize = 12;
+
+
+/****************常量****************/
+export const TOKEN_KEY = "token";
+export const USER_NAME_KEY = "user-name";
+export const PW_KEY = "user-pw";
+export const USER_BASIC_CODE = "user-basic-code";

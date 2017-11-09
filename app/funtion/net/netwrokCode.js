@@ -12,6 +12,9 @@ export const SUCCESS = 200;
 export default function (code) {
 
     switch (code) {
+        case 401:
+            //todo 授权逻辑
+            return "未授权或授权失败";//401 Unauthorized
         case 403:
             return "403权限错误";
         case 404:

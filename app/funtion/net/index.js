@@ -3,8 +3,9 @@
  */
 
 
-import  {NetInfo, Platform} from 'react-native';
+import  {NetInfo, Platform, AsyncStorage} from 'react-native';
 import I18n from '../../style/i18n'
+import * as Constant from '../../style/constant'
 import * as Code from './netwrokCode'
 import handlerError from './netwrokCode'
 
@@ -17,6 +18,8 @@ class HttpManager {
     constructor() {
         this.optionParams = {
             timeoutMs: 15000,
+            token: null,
+            authorizationCode: null,
         };
         this.requestParams = {
             method: 'GET',
@@ -57,6 +60,14 @@ class HttpManager {
 
         let headers = {};
         if (header) {
+            //授权码
+            if (!this.optionParams.authorizationCode) {
+                let authorizationCode = await this.getAuthorization();
+                if (authorizationCode)
+                    this.optionParams.authorizationCode = authorizationCode;
+            }
+            headers.authorizationCode = this.optionParams.authorizationCode;
+
             this.requestParams.header = Object.assign({}, headers, header)
         }
 
@@ -106,6 +117,25 @@ class HttpManager {
             code: Code.SUCCESS,
             response
         }
+    }
+
+    /**
+     * 获取授权token
+     */
+    async getAuthorization() {
+        let token = await AsyncStorage.getItem(Constant.TOKEN_KEY);
+        if (!token) {
+            let basic = await AsyncStorage.getItem(Constant.USER_BASIC_CODE);
+            if (!basic) {
+                //提示输入账号密码
+            } else {
+                //通过 basic 去获取token，获取到设置，返回token
+            }
+        } else {
+            this.optionParams.token = token;
+            return token;
+        }
+
     }
 
     /**
