@@ -14,6 +14,8 @@ buildscript {
 
 allprojects {
     repositories {
+				// Add jitpack repository (added by react-native-spinkit)
+				maven { url "https://jitpack.io" }
         mavenLocal()
         jcenter()
         maven {

@@ -10,7 +10,10 @@
     "react": "16.0.0",
     "react-native": "0.50.1",
     "react-native-i18n": "^2.0.9",
+    "react-native-modalbox": "^1.4.2",
     "react-native-router-flux": "^4.0.0-beta.22",
+    "react-native-spinkit": "^1.1.1",
+    "react-native-vector-icons": "^4.4.2",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
