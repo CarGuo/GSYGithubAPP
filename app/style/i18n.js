@@ -16,11 +16,17 @@ I18n.translations = {
         appName: 'GSYGitHubApp',
         netError: 'network error',
         netTimeout: 'network timeout',
+        tabRecommended: 'Recommend',
+        tabDynamic: 'Dynamic',
+        tabMy: 'My',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
         netError: '网络错误',
         netTimeout: '网络超时',
+        tabRecommended: '推荐',
+        tabDynamic: '动态',
+        tabMy: '我的',
     }
 };
 

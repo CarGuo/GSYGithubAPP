@@ -4,10 +4,13 @@
 
 /****************颜色****************/
 export const mainBackgroundColor = "#efefef";
+export const tabBackgroundColor = "#bdbdbd";
 
 export const primaryColor = '#34f0e6';
 export const mainTextColor = '#20252c';
 export const subTextColor = '#76767d';
+export const tabSelectedColor = '#05c1c4';
+export const tabUnSelectColor = '#a7a8b4';
 
 
 /****************大小****************/
@@ -21,6 +24,11 @@ export const normalTextSize = 20;
 export const midlleTextSize = 18;
 export const smallTextSize = 14;
 export const minTextSize = 12;
+
+
+// tabBar 高度
+export const tabBarHeight = 44;
+export const tabIconSize = 20;
 
 
 /****************常量****************/

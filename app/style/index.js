@@ -7,6 +7,16 @@ import * as constant from "./constant"
 export const {screenWidth, screenHeight} = Dimensions.get("window");
 
 export default StyleSheet.create({
+    routerStyle: {
+        //设置router的样式
+        flex: 1,
+        backgroundColor: '#fff',
+        shadowColor: null,
+        shadowOffset: null,
+        shadowOpacity: null,
+        shadowRadius: null,
+
+    },
     mainBgColor: {
         backgroundColor: constant.mainBackgroundColor
     },

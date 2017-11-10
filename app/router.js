@@ -8,36 +8,61 @@ import {
     Navigator,
     Platform,
     StatusBar
+
 } from 'react-native';
 import {
     Scene,
     Router,
     Modal
 } from 'react-native-router-flux';
-import {changeLocale} from './style/i18n'
+import DynamicPage from './components/DynamicPage'
+import MyPage from './components/MyPage'
+import RecommendPage from './components/RecommendPage'
+import TabIcon from './components/widget/TabIcon'
+import styles from './style'
+import I18n, {changeLocale} from './style/i18n'
+import * as Constant from './style/constant'
 
 import WelcomePage from "./components/WelcomePage"
-
-//设置router的样式
-const getSceneStyle = (props, computedProps) => {
-    const style = {
-        flex: 1,
-        backgroundColor: '#fff',
-        shadowColor: null,
-        shadowOffset: null,
-        shadowOpacity: null,
-        shadowRadius: null,
-    };
-    return style;
-};
 
 
 const getRouter = () => {
     changeLocale();
     return (
-        <Router getSceneStyle={getSceneStyle}>
+        <Router getSceneStyle={() => {return styles.routerStyle}}>
             <Scene key="modal" component={Modal}>
                 <Scene key="root">
+                    <Scene key="mainTabPage"
+                           tabs
+                           hideNavBar
+                           showLabel={false}
+                           tabBarPosition={"bottom"}
+                           tabBarStyle={{height:Constant.tabBarHeight,
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                          backgroundColor:Constant.tabBackgroundColor }}>
+                        <Scene
+                            hideNavBar
+                            key="RecommendPage"
+                            component={RecommendPage}
+                            icon={TabIcon}
+                            title={I18n('tabRecommended')}
+                        />
+                        <Scene
+                            hideNavBar
+                            key="DynamicPage"
+                            component={DynamicPage}
+                            icon={TabIcon}
+                            title={I18n('tabDynamic')}
+                        />
+                        <Scene
+                            hideNavBar
+                            key="MyPage"
+                            component={MyPage}
+                            icon={TabIcon}
+                            title={I18n('tabMy')}
+                        />
+                    </Scene>
                     <Scene key="main">
                         <Scene key="enter" component={WelcomePage} hideNavBar hideTabBar hide/>
                     </Scene>
