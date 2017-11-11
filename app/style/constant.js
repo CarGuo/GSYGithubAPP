@@ -7,6 +7,7 @@ export const mainBackgroundColor = "#ffffff";
 export const tabBackgroundColor = "#ececec";
 
 export const primaryColor = '#24292e';
+export const lineColor = '#d8d8d8';
 export const mainTextColor = '#000000';
 export const subTextColor = '#d2d2d2';
 
@@ -35,9 +36,15 @@ export const tabIconSize = 20;
 export const normalIconSize = 40;
 export const bigIconSize = 50;
 export const smallIconSize = 30;
+export const minIconSize = 20;
 
 
 export const normalMarginEdge = 10;
+/****************图标****************/
+export const nextIcon = 'chevron-right';
+export const tabRecommended = 'activity';
+export const tabDynamic = 'aperture';
+export const tabMy = 'users';
 
 
 /****************常量****************/

@@ -18,13 +18,13 @@ import {
 import * as Constant from '../../style/constant'
 import styles from '../../style'
 import I18n from '../../style/i18n'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/Feather'
 
 
 const config = {
-    [I18n('tabRecommended')]: 'rocket',
-    [I18n('tabDynamic')]: 'facebook',
-    [I18n('tabMy')]: 'facebook',
+    [I18n('tabRecommended')]: 'activity',
+    [I18n('tabDynamic')]: 'aperture',
+    [I18n('tabMy')]: 'users',
 };
 
 const propTypes = {

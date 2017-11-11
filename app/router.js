@@ -42,22 +42,22 @@ const getRouter = () => {
                                           justifyContent: 'center',
                                           backgroundColor:Constant.tabBackgroundColor }}>
                         <Scene
-                            hideNavBar
                             key="RecommendPage"
+                            navigationBarStyle={styles.navigationBar}
                             component={RecommendPage}
                             icon={TabIcon}
                             title={I18n('tabRecommended')}
                         />
                         <Scene
-                            hideNavBar
                             key="DynamicPage"
+                            navigationBarStyle={styles.navigationBar}
                             component={DynamicPage}
                             icon={TabIcon}
                             title={I18n('tabDynamic')}
                         />
                         <Scene
-                            hideNavBar
                             key="MyPage"
+                            navigationBarStyle={styles.navigationBar}
                             component={MyPage}
                             icon={TabIcon}
                             title={I18n('tabMy')}

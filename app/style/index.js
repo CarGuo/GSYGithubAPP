@@ -1,10 +1,11 @@
 /**
  * Created by guoshuyu on 2017/11/7.
  */
-import React, {StyleSheet, Dimensions, PixelRatio} from "react-native";
+import React, {StyleSheet, Dimensions, PixelRatio, Platform, StatusBar} from "react-native";
 import * as constant from "./constant"
 
 export const {screenWidth, screenHeight} = Dimensions.get("window");
+export const navBarHeight = Platform.OS == 'ios' ? constant.iosnavHeaderHeight : constant.andrnavHeaderHeight
 
 export default StyleSheet.create({
     routerStyle: {
@@ -16,6 +17,12 @@ export default StyleSheet.create({
         shadowOpacity: null,
         shadowRadius: null,
 
+    },
+    navigationBar: {
+        backgroundColor: constant.primaryColor,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: constant.lineColor,
+        paddingTop: StatusBar.currentHeight,
     },
     mainBgColor: {
         backgroundColor: constant.mainBackgroundColor

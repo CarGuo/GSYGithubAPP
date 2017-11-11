@@ -35,7 +35,7 @@ class EventItem extends Component {
     render() {
         let {actionTime, actionUser, actionUserPic, actionMode, actionTarget} = this.props;
         return (
-            <View style={[styles.flexDirectionRow, {height: 50}]}>
+            <View style={[styles.flexDirectionRowNotFlex, {height: 50}]}>
                 <Image source={{uri: actionUserPic}}
                        resizeMethod="scale"
                        style={[{height: Constant.smallIconSize, width: Constant.smallIconSize,

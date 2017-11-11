@@ -13,6 +13,7 @@ import loginActions from '../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import EventItem from './widget/EventItem'
+import CommonRowItem from './widget/CommonRowItem'
 
 /**
  * 推荐
@@ -30,17 +31,20 @@ class RecommendPage extends Component {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
-                <View style={[styles.centered, {flex:1}]}>
-                    <Text style={[styles.welcomeText]}>
-                        {I18n('tabRecommended')}
-                    </Text>
-                    <EventItem
-                        actionTime={1510369871000}
-                        actionUser={'CarGuo'}
-                        actionUserPic={'https://avatars0.githubusercontent.com/u/27534854?s=64&v=4'}
-                        actionMode={"publish"}
-                        actionTarget={"GSYGitHubApp"}/>
-                </View>
+
+                <EventItem
+                    actionTime={1510369871000}
+                    actionUser={'CarGuo'}
+                    actionUserPic={'https://avatars0.githubusercontent.com/u/27534854?s=64&v=4'}
+                    actionMode={"publish"}
+                    actionTarget={"GSYGitHubApp"}/>
+
+                <CommonRowItem
+                    itemIcon={"sc-github"}
+                    itemText={"介绍一下是什么"}
+                    onClickFun={()=>{
+                            alert("点我干啥")
+                        }}/>
             </View>
         )
     }
