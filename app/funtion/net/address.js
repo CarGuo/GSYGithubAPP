@@ -25,7 +25,7 @@ export default AddressLocal = {
         if (!page) {
             page = 0
         }
-        if (pageSize) {
+        if (!pageSize) {
             pageSize = 20
         }
 
@@ -139,7 +139,7 @@ export default AddressLocal = {
      * fork get
      */
     getForker: (reposOwner, reposName, sort) => {
-        if (sort) {
+        if (!sort) {
             sort = 'newest'
         }
         return `${host}repos/${reposOwner}/${reposName}/forks?sort=${sort}`
@@ -149,6 +149,27 @@ export default AddressLocal = {
      */
     getReadme: (reposOwner, reposName) => {
         return `${host}repos/${reposOwner}/${reposName}/readme`
+    },
+    /**
+     * 用户收到的事件信息
+     */
+    getEventReceived: (userName) => {
+        return `${host}${userName}/received_events`
+    },
+    /**
+     * 用户相关的事件信息
+     */
+    getEvent: (userName) => {
+        return `${host}${userName}/events`
+    },
+    /**
+     * 通知
+     */
+    getNotifation: (all) => {
+        if (!all) {
+            all = false
+        }
+        return `${host}notifications?all=${all}`
     }
 
 

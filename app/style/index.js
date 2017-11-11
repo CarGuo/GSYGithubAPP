@@ -24,6 +24,23 @@ export default StyleSheet.create({
         backgroundColor: constant.mainBackgroundColor,
         flex: 1
     },
+    flex: {
+        flex: 1,
+    },
+    flexDirectionRow: {
+        flexDirection: 'row',
+        flex: 1,
+    },
+    flexDirectionColumn: {
+        flexDirection: "column",
+        flex: 1,
+    },
+    flexDirectionRowNotFlex: {
+        flexDirection: 'row',
+    },
+    flexDirectionColumnNotFlex: {
+        flexDirection: "column",
+    },
     justifyCenter: {
         justifyContent: "center"
     },
@@ -31,11 +48,35 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    centerV: {
+        justifyContent: "center",
+    },
+
+    centerH: {
+        alignItems: "center"
+    },
     welcomeText: {
         color: constant.primaryColor,
         fontSize: constant.largetTextSize,
         fontWeight: "bold",
         textAlign: "center"
-    }
+    },
+    smallText: {
+        color: constant.mainTextColor,
+        fontSize: constant.smallTextSize
+    },
+    subSmallText: {
+        color: constant.subTextColor,
+        fontSize: constant.smallTextSize
+    },
+    normalText: {
+        color: constant.mainTextColor,
+        fontSize: constant.normalTextSize
+    },
+    subNormalText: {
+        color: constant.subTextColor,
+        fontSize: constant.normalTextSize
+    },
+
 
 });

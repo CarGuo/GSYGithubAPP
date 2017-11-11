@@ -19,6 +19,10 @@ I18n.translations = {
         tabRecommended: 'Recommend',
         tabDynamic: 'Dynamic',
         tabMy: 'My',
+        daysAgo: 'daysAgo',
+        hoursAgo: 'hoursAgo',
+        minutesAgo: 'minutesAgo',
+        justNow: 'justNow',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -27,6 +31,10 @@ I18n.translations = {
         tabRecommended: '推荐',
         tabDynamic: '动态',
         tabMy: '我的',
+        daysAgo: '天前',
+        hoursAgo: '小时前',
+        minutesAgo: '分钟前',
+        justNow: '刚刚',
     }
 };
 
