@@ -9,10 +9,12 @@ export const tabBackgroundColor = "#ececec";
 export const primaryColor = '#24292e';
 export const lineColor = '#d8d8d8';
 export const mainTextColor = '#000000';
-export const subTextColor = '#d2d2d2';
+export const subTextColor = '#959595';
 
 export const tabSelectedColor = '#24292e';
 export const tabUnSelectColor = '#d2d2d2';
+
+export const transparentColor = '#00000000';
 
 
 /****************大小****************/
@@ -37,6 +39,7 @@ export const normalIconSize = 40;
 export const bigIconSize = 50;
 export const smallIconSize = 30;
 export const minIconSize = 20;
+export const littleIconSize = 10;
 
 
 export const normalMarginEdge = 10;

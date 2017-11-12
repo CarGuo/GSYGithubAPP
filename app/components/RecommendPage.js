@@ -14,6 +14,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import EventItem from './widget/EventItem'
 import CommonRowItem from './widget/CommonRowItem'
+import RepositoryItem from './widget/RepositoryItem'
 
 /**
  * 推荐
@@ -45,6 +46,17 @@ class RecommendPage extends Component {
                     onClickFun={()=>{
                             alert("点我干啥")
                         }}/>
+
+                <RepositoryItem
+                    ownerName={"CarGuo"}
+                    ownerPic={"https://avatars0.githubusercontent.com/u/27534854?s=64&v=4"}
+                    repositoryName={"GSYGitHubApp"}
+                    repositoryStar={111}
+                    repositoryFork={222}
+                    repositoryWatch={333}
+                    repositoryType={"java"}
+                    repositoryDes={"这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！"}
+                />
             </View>
         )
     }

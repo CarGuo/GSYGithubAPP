@@ -58,9 +58,17 @@ export default StyleSheet.create({
     centerV: {
         justifyContent: "center",
     },
-
     centerH: {
         alignItems: "center"
+    },
+    justifyBetween: {
+        justifyContent: "space-between"
+    },
+    alignItemsEnd:{
+        alignItems: "flex-end"
+    },
+    justifyEnd: {
+        justifyContent: "flex-end"
     },
     welcomeText: {
         color: constant.primaryColor,
