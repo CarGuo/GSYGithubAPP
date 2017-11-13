@@ -23,6 +23,9 @@ I18n.translations = {
         hoursAgo: 'hoursAgo',
         minutesAgo: 'minutesAgo',
         justNow: 'justNow',
+        UserName: 'UserName',
+        Password: 'Password',
+        Login: 'Login',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -35,6 +38,9 @@ I18n.translations = {
         hoursAgo: '小时前',
         minutesAgo: '分钟前',
         justNow: '刚刚',
+        UserName: '用户名',
+        Password: '密码',
+        Login: '登陆',
     }
 };
 

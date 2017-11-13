@@ -44,7 +44,8 @@ class RecommendPage extends Component {
                     itemIcon={"sc-github"}
                     itemText={"介绍一下是什么"}
                     onClickFun={()=>{
-                            alert("点我干啥")
+                            //alert("点我干啥")
+                            Actions.LoginPage();
                         }}/>
 
                 <RepositoryItem

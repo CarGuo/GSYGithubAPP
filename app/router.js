@@ -13,9 +13,11 @@ import {
 import {
     Scene,
     Router,
-    Modal
+    Modal,
+    Lightbox
 } from 'react-native-router-flux';
 import DynamicPage from './components/DynamicPage'
+import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
 import TabIcon from './components/widget/TabIcon'
@@ -30,7 +32,7 @@ const getRouter = () => {
     changeLocale();
     return (
         <Router getSceneStyle={() => {return styles.routerStyle}}>
-            <Scene key="modal" component={Modal}>
+            <Lightbox>
                 <Scene key="root">
                     <Scene key="mainTabPage"
                            tabs
@@ -64,10 +66,11 @@ const getRouter = () => {
                         />
                     </Scene>
                     <Scene key="main">
-                        <Scene key="enter" component={WelcomePage} hideNavBar hideTabBar hide/>
+                        <Scene key="WelcomePage" component={WelcomePage} hideNavBar hideTabBar hide/>
                     </Scene>
                 </Scene>
-            </Scene>
+                <Scene key="LoginPage" component={LoginPage}/>
+            </Lightbox>
         </Router>
     )
 };
