@@ -66,7 +66,7 @@ class HttpManager {
                 if (authorizationCode)
                     this.optionParams.authorizationCode = authorizationCode;
             }
-            headers.authorizationCode = this.optionParams.authorizationCode;
+            headers.Authorization = this.optionParams.authorizationCode;
 
             this.requestParams.header = Object.assign({}, headers, header)
         }
@@ -130,6 +130,7 @@ class HttpManager {
                 //提示输入账号密码
             } else {
                 //通过 basic 去获取token，获取到设置，返回token
+                return `Basic${basic}`;
             }
         } else {
             this.optionParams.token = token;

@@ -103,7 +103,7 @@ export default AddressLocal = {
      * 我的用户信息 GET
      */
     getMyUserInfo: () => {
-        return `${host}users`;
+        return `${host}user`;
     },
     /**
      * 用户信息 get

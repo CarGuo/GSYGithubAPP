@@ -4,7 +4,9 @@
 import  {LOGIN} from '../type';
 import {createReducer} from '../'
 
-const initialState = {};
+const initialState = {
+    type: LOGIN.CLEAR,
+};
 
 const actionHandler = {
     [LOGIN.IN]: (state, action) => {

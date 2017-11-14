@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "buffer": "^5.0.8",
     "moment": "^2.19.1",
     "react": "16.0.0",
     "react-native": "0.50.1",

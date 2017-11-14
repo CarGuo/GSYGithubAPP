@@ -11,7 +11,9 @@ import {
     Dimensions,
     TextInput,
     BackHandler,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage,
+    InteractionManager
 } from 'react-native';
 import styles, {screenWidth} from "../style"
 import * as Constant from "../style/constant"
@@ -31,9 +33,20 @@ import {Isao, Fumi} from 'react-native-textinput-effects';
 class LoginPage extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.onOpen = this.onOpen.bind(this);
         this.onClose = this.onClose.bind(this);
+        this.userInputChange = this.userInputChange.bind(this);
+        this.passwordChange = this.passwordChange.bind(this);
+        this.toLogin = this.toLogin.bind(this);
+        this.params = {
+            userName: '',
+            password: ''
+        }
+        this.state = {
+            saveUserName: '',
+            savePassword: '',
+        }
     }
 
     componentDidMount() {
@@ -45,7 +58,22 @@ class LoginPage extends Component {
 
 
     onOpen() {
-        //todo get something when open
+        setTimeout(() => {
+            AsyncStorage.getItem(Constant.USER_NAME_KEY).then((text) => {
+                if (text) {
+                    this.setState({
+                        saveUserName: text
+                    })
+                }
+            });
+            AsyncStorage.getItem(Constant.PW_KEY).then((text) => {
+                if (text) {
+                    this.setState({
+                        savePassword: text
+                    })
+                }
+            })
+        }, 500);
     }
 
     onClose() {
@@ -56,12 +84,32 @@ class LoginPage extends Component {
         }
     }
 
+    userInputChange(text) {
+        this.params.userName = text;
+    }
+
+    passwordChange(text) {
+        this.params.password = text;
+    }
+
+    toLogin() {
+        if (!this.params.userName || this.params.userName.length == 0) {
+            alert(I18n('LoginNameTip'));
+            return
+        }
+        if (!this.params.password || this.params.password.length == 0) {
+            alert(I18n('LoginPWTip'));
+            return
+        }
+        AsyncStorage.setItem(Constant.USER_NAME_KEY, this.params.userName);
+        loginActions.doLogin(this.params.userName, this.params.password)
+    }
+
     render() {
         let textInputProps = {
             style: {width: 250, height: 70},
             activeColor: Constant.primaryColor,
             passiveColor: '#dadada',
-            keyboardType: 'email-address',
             iconClass: Icon,
             iconColor: Constant.actionColor,
             iconSize: 25,
@@ -77,23 +125,33 @@ class LoginPage extends Component {
                     </View>
                     <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
                         <Fumi
+                            ref={"userNameInput"}
                             {...textInputProps}
                             label={I18n('UserName')}
                             iconName={'user-circle-o'}
+                            value={this.state.saveUserName}
+                            onChangeText={this.userInputChange}
                         />
                     </View>
                     <View style={[styles.centered , {marginTop: Constant.normalMarginEdge}]}>
                         <Fumi
+                            ref={"passwordInput"}
                             {...textInputProps}
                             label={I18n('Password')}
                             returnKeyType={'send'}
                             secureTextEntry={true}
+                            password={true}
                             iconName={'keyboard-o'}
+                            value={this.state.savePassword}
+                            onChangeText={this.passwordChange}
                         />
                     </View>
                     <View>
                     </View>
-                    <TouchableOpacity style={[styles.centered, {marginTop: Constant.normalMarginEdge} ]}>
+                    <TouchableOpacity style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}
+                                      onPress={()=>{
+                                          this.toLogin();
+                                      }}>
                         <View
                             style={[styles.centered , {backgroundColor:Constant.primaryColor, width:230, marginTop: Constant.normalMarginEdge,
                                 paddingHorizontal: Constant.normalMarginEdge, paddingVertical: Constant.normalMarginEdge , borderRadius: 5}]}>
