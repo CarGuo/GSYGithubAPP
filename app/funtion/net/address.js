@@ -10,7 +10,7 @@ export default AddressLocal = {
      * 获取授权  post
      */
     getAuthorization: () => {
-        return `${host}authorization`
+        return `${host}authorizations`
     },
     /**
      * 搜索 get
@@ -154,7 +154,7 @@ export default AddressLocal = {
      * 用户收到的事件信息
      */
     getEventReceived: (userName) => {
-        return `${host}${userName}/received_events`
+        return `${host}users/${userName}/received_events`
     },
     /**
      * 用户相关的事件信息

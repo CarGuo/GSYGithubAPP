@@ -50,7 +50,7 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
-        this.refs.loginModal.open()
+        this.refs.loginModal.open();
     }
 
     componentWillUnmount() {
@@ -58,22 +58,22 @@ class LoginPage extends Component {
 
 
     onOpen() {
-        setTimeout(() => {
-            AsyncStorage.getItem(Constant.USER_NAME_KEY).then((text) => {
-                if (text) {
-                    this.setState({
-                        saveUserName: text
-                    })
-                }
-            });
-            AsyncStorage.getItem(Constant.PW_KEY).then((text) => {
-                if (text) {
-                    this.setState({
-                        savePassword: text
-                    })
-                }
-            })
-        }, 500);
+        AsyncStorage.getItem(Constant.USER_NAME_KEY).then((text) => {
+            if (text) {
+                this.setState({
+                    saveUserName: text
+                });
+                this.params.userName = text;
+            }
+        });
+        AsyncStorage.getItem(Constant.PW_KEY).then((text) => {
+            if (text) {
+                this.setState({
+                    savePassword: text
+                })
+                this.params.password = text;
+            }
+        })
     }
 
     onClose() {
@@ -93,6 +93,7 @@ class LoginPage extends Component {
     }
 
     toLogin() {
+        let {login} = this.props;
         if (!this.params.userName || this.params.userName.length == 0) {
             alert(I18n('LoginNameTip'));
             return
@@ -102,7 +103,7 @@ class LoginPage extends Component {
             return
         }
         AsyncStorage.setItem(Constant.USER_NAME_KEY, this.params.userName);
-        loginActions.doLogin(this.params.userName, this.params.password)
+        login.doLogin(this.params.userName, this.params.password)
     }
 
     render() {
@@ -165,6 +166,6 @@ class LoginPage extends Component {
 }
 
 export default connect(state => ( {state}), dispatch => ({
-        actions: bindActionCreators(loginActions, dispatch)
+        login: bindActionCreators(loginActions, dispatch)
     })
 )(LoginPage)

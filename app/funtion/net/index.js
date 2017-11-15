@@ -21,10 +21,6 @@ class HttpManager {
             token: null,
             authorizationCode: null,
         };
-        this.requestParams = {
-            method: 'GET',
-            header: {}
-        };
     };
 
     /**
@@ -60,37 +56,46 @@ class HttpManager {
 
         let headers = {};
         if (header) {
-            //授权码
-            if (!this.optionParams.authorizationCode) {
-                let authorizationCode = await this.getAuthorization();
-                if (authorizationCode)
-                    this.optionParams.authorizationCode = authorizationCode;
-            }
-            headers.Authorization = this.optionParams.authorizationCode;
-
-            this.requestParams.header = Object.assign({}, headers, header)
+            headers = Object.assign({}, headers, header)
         }
 
-        let requestParams = this.requestParams;
+        //授权码
+        if (!this.optionParams.authorizationCode) {
+            let authorizationCode = await this.getAuthorization();
+            if (authorizationCode)
+                this.optionParams.authorizationCode = authorizationCode;
+        }
+
+        let requestParams;
+
+        headers.Authorization = this.optionParams.authorizationCode;
+
         if (method != 'GET') {
             if (json) {
                 requestParams = this.formParamsJson(method, params, headers)
             } else {
                 requestParams = this.formParams(method, params, headers)
             }
+        } else {
+            requestParams = this.formParams(method, params, headers)
         }
 
         let response = await this.requestWithTimeout(this.optionParams.timeoutMs, fetch(url, requestParams));
 
         if (__DEV__) {
             console.log('请求url: ', url);
-            console.log('请求参数: ', this.requestParams);
+            console.log('请求参数: ', requestParams);
             console.log('返回参数: ', response);
         }
 
         try {
             let responseJson = await response.json();
-            if (responseJson.code == 200) {
+            if (response.status == 201 && responseJson.token) {
+                this.optionParams.authorizationCode = 'token ' + responseJson.token;
+                AsyncStorage.setItem(Constant.TOKEN_KEY, this.optionParams.authorizationCode);
+            }
+
+            if (response.status == 200 || responseJson.status == 201) {
                 return {
                     result: true,
                     code: Code.SUCCESS,
@@ -98,24 +103,18 @@ class HttpManager {
                 }
             } else {
                 return {
-                    result: true,
-                    code: responseJson.code,
-                    data: handlerError(responseJson.code)
+                    result: false,
+                    code: response.status,
+                    data: handlerError(response.status)
                 }
             }
         } catch (e) {
             console.log(e, url);
             return {
-                result: true,
+                result: false,
                 code: Code.NETWORK_JSON_EXCEPTION,
                 response
             }
-        }
-
-        return {
-            result: true,
-            code: Code.SUCCESS,
-            response
         }
     }
 
@@ -130,10 +129,10 @@ class HttpManager {
                 //提示输入账号密码
             } else {
                 //通过 basic 去获取token，获取到设置，返回token
-                return `Basic${basic}`;
+                return `Basic ${basic}`;
             }
         } else {
-            this.optionParams.token = token;
+            this.optionParams.authorizationCode = token;
             return token;
         }
 
@@ -163,7 +162,10 @@ class HttpManager {
         for (let p in params) {
             str.push(encodeURIComponent(p) + "=" + encodeURIComponent(params[p]));
         }
-        const body = str.join("&");
+        let body = null;
+        if (str.length > 0) {
+            body = str.join("&");
+        }
         const req = {
             method: method,
             headers: new Headers({

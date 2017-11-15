@@ -28,6 +28,7 @@ I18n.translations = {
         Login: 'Login',
         LoginNameTip: 'username can\'t not be empty',
         LoginPWTip: 'password can\'t not be empty',
+        refreshing: 'refreshing...',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -45,6 +46,7 @@ I18n.translations = {
         Login: '登陆',
         LoginNameTip: '用户名不能为空',
         LoginPWTip: '密码不能为空',
+        refreshing: '刷新中...',
     }
 };
 
