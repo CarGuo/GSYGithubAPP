@@ -50,7 +50,7 @@
 import {AsyncStorage} from 'react-native'
 import Api from '../../funtion/net'
 import Address from '../../funtion/net/address'
-import {LOGIN} from '../type'
+import {USER} from '../type'
 import * as Constant from '../../style/constant'
 import {Buffer} from 'buffer'
 
@@ -61,6 +61,12 @@ const create = (userInfo) => (dispatch, getState) => {
 const getEventReceived = () => async(dispatch, getState) => {
     let res = await Api.netFetch(Address.getEventReceived('CarGuo'));
     console.log(res)
+    if (res.result) {
+      dispatch({
+          type: USER.RECEIVED_EVENTS,
+          res:res.data
+      });
+    }
 };
 
 export default {
