@@ -5,9 +5,6 @@ import {applyMiddleware, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 
-let createAppStore = applyMiddleware(thunk)(createStore);
-
-
 export function createReducer(initialState, handlers) {
     return function reducer(state = initialState, action) {
         if (handlers.hasOwnProperty(action.type)) {
@@ -18,6 +15,6 @@ export function createReducer(initialState, handlers) {
     }
 }
 
-export default function configureStore() {
-    return (createAppStore)(reducers);
-}
+const createStoreWithMW = applyMiddleware(thunk)(createStore);
+const store = createStoreWithMW(reducers);
+export default store

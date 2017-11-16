@@ -12,11 +12,11 @@ import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
-import userState from '../store/reducers/user'
-import loginState from '../store/reducers/login'
+import eventActions from '../store/actions/event'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import EventItem from './widget/EventItem'
+import * as Config from '../config/'
 
 
 /**
@@ -40,13 +40,14 @@ class DynamicPage extends Component {
         this.state = {
             isRefresh: false,
             isLoadMore: false,
-            showLoadMore:false,
-            animating:false,
+            showLoadMore: false,
+            animating: false,
             dataSource: this.ds.cloneWithRows(this.listViewData)
         }
     }
 
     componentDidMount() {
+
     }
 
     componentWillUnmount() {
@@ -69,29 +70,29 @@ class DynamicPage extends Component {
     }
 
 
-            /**
-             * 绘制load more footer
-             * */
-            _renderFooter() {
+    /**
+     * 绘制load more footer
+     * */
+    _renderFooter() {
 
-                let footer = (this.state.showLoadMore) ?
-                    <View style={{
+        let footer = (this.state.showLoadMore) ?
+            <View style={{
                           flexDirection:'row',
                           justifyContent: 'center',
                           alignItems: 'center'
                           }}>
-                        <ActivityIndicator
-                            color={Constant.primaryColor}
-                            animating={true}
-                            style={ {height: 50}}
-                            size="large"/>
-                        <Text style={{fontSize: 15, color:'black'}}>
-                            正在加载更多···
-                        </Text>
-                    </View> : <View/>;
+                <ActivityIndicator
+                    color={Constant.primaryColor}
+                    animating={true}
+                    style={ {height: 50}}
+                    size="large"/>
+                <Text style={{fontSize: 15, color:'black'}}>
+                    正在加载更多···
+                </Text>
+            </View> : <View/>;
 
-                return (footer);
-            }
+        return (footer);
+    }
 
     /**
      * 刷新
@@ -100,45 +101,45 @@ class DynamicPage extends Component {
         this.setState({
             isRefresh: true
         });
-        let {userAction} = this.props;
-        userAction.getEventReceived();
+        let {eventAction} = this.props;
+        eventAction.getEventReceived(0, (res) => {
+            this.setState({
+                isRefresh: false
+            });
+            this.setState({
+                showLoadMore: (res && res.length >= Config.PAGE_SIZE)
+            })
+        })
     }
 
-        /**
-         * 加载更多
-         * */
-        _loadMore() {
+    /**
+     * 加载更多
+     * */
+    _loadMore() {
+        this.setState({
+            isLoadMore: true
+        });
+        setTimeout(() => {
+            let loadMoreData = Array(20).fill('').map((_, i) => `load item #${i + this.listViewData.length}`);
+            //注意此处，因为文本都是string的，如果string都相同，那么会导致list判断，数据都是一样的，不更新ui
+            //所以，需要用listViewData的长度，
+            this.listViewData = this.listViewData.concat(loadMoreData);
             this.setState({
-                isLoadMore: true
+                dataSource: this.ds.cloneWithRows(this.listViewData)
             });
-            setTimeout(() => {
-                let loadMoreData = Array(20).fill('').map((_, i) => `load item #${i + this.listViewData.length}`);
-                //注意此处，因为文本都是string的，如果string都相同，那么会导致list判断，数据都是一样的，不更新ui
-                //所以，需要用listViewData的长度，
-                this.listViewData = this.listViewData.concat(loadMoreData);
-                this.setState({
-                    dataSource: this.ds.cloneWithRows(this.listViewData)
-                });
-                this.setState({
-                    isLoadMore: false,
-                });
-            }, 5000);
-        }
+            this.setState({
+                isLoadMore: false,
+            });
+        }, 5000);
+    }
 
 
     render() {
-        let {userState} = this.props;
-        let dataSource = this.ds.cloneWithRows(userState.received_events_data_list);
-        console.log("************", userState);
-        if (userState.received_events_current_size < 20 && this.state.showLoadMore) {
-              this.setState({
-                showLoadMore : false
-              })
-        } else if (userState.received_events_current_size > 20 && !this.state.showLoadMore)  {
-            this.setState({
-                showLoadMore : true
-            })
-        }
+        let {eventState, userState} = this.props;
+        let dataSource = this.ds.cloneWithRows(eventState.received_events_data_list);
+        //console.log("************", eventState);
+        //console.log("************", userState);
+
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -172,7 +173,9 @@ class DynamicPage extends Component {
 export default connect(state => ({
     userState: state.user,
     loginState: state.login,
+    eventState: state.event,
 }), dispatch => ({
-    login: bindActionCreators(loginActions, dispatch),
-    userAction: bindActionCreators(userActions, dispatch)
+    loginAction: bindActionCreators(loginActions, dispatch),
+    userAction: bindActionCreators(userActions, dispatch),
+    eventAction: bindActionCreators(eventActions, dispatch)
 }))(DynamicPage)

@@ -4,8 +4,8 @@
 
 
 import  {NetInfo, Platform, AsyncStorage} from 'react-native';
-import I18n from '../../style/i18n'
-import * as Constant from '../../style/constant'
+import I18n from '../style/i18n'
+import * as Constant from '../style/constant'
 import * as Code from './netwrokCode'
 import handlerError from './netwrokCode'
 
@@ -95,7 +95,7 @@ class HttpManager {
                 AsyncStorage.setItem(Constant.TOKEN_KEY, this.optionParams.authorizationCode);
             }
 
-            if (response.status == 200 || responseJson.status == 201) {
+            if (response.status == 200 || response.status == 201) {
                 return {
                     result: true,
                     code: Code.SUCCESS,
@@ -117,6 +117,15 @@ class HttpManager {
             }
         }
     }
+
+    /**
+     * 清除授权
+     */
+    clearAuthorization() {
+        this.optionParams.authorizationCode = null;
+        AsyncStorage.removeItem(Constant.TOKEN_KEY);
+    }
+
 
     /**
      * 获取授权token

@@ -34,6 +34,9 @@ const getRouter = () => {
         <Router getSceneStyle={() => {return styles.routerStyle}}>
             <Lightbox>
                 <Scene key="root">
+                    <Scene key="main">
+                        <Scene key="WelcomePage" component={WelcomePage} hideNavBar hideTabBar hide/>
+                    </Scene>
                     <Scene key="mainTabPage"
                            tabs
                            hideNavBar
@@ -64,9 +67,6 @@ const getRouter = () => {
                             icon={TabIcon}
                             title={I18n('tabMy')}
                         />
-                    </Scene>
-                    <Scene key="main">
-                        <Scene key="WelcomePage" component={WelcomePage} hideNavBar hideTabBar hide/>
                     </Scene>
                 </Scene>
                 <Scene key="LoginPage" component={LoginPage}/>

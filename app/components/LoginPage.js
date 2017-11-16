@@ -70,7 +70,7 @@ class LoginPage extends Component {
             if (text) {
                 this.setState({
                     savePassword: text
-                })
+                });
                 this.params.password = text;
             }
         })

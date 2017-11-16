@@ -57,3 +57,4 @@ export const TOKEN_KEY = "token";
 export const USER_NAME_KEY = "user-name";
 export const PW_KEY = "user-pw";
 export const USER_BASIC_CODE = "user-basic-code";
+export const USER_INFO = "user-info";

@@ -48,28 +48,45 @@
  }
  **/
 import {AsyncStorage} from 'react-native'
-import Api from '../../funtion/net'
-import Address from '../../funtion/net/address'
+import Api from '../../net'
+import Address from '../../net/address'
 import {USER} from '../type'
 import * as Constant from '../../style/constant'
 import {Buffer} from 'buffer'
+import {bindActionCreators} from 'redux'
+import store from '../'
 
-const create = (userInfo) => (dispatch, getState) => {
+const {dispatch, getState} =  store;
 
+/**
+ * 初始化用户信息
+ */
+const initUserInfo = () => {
+    AsyncStorage.getItem(Constant.USER_INFO).then((text) => {
+        if (text) {
+            let res = JSON.parse(text);
+            dispatch({
+                type: USER.USER_INFO,
+                res: res
+            });
+        }
+    })
 };
 
-const getEventReceived = () => async(dispatch, getState) => {
-    let res = await Api.netFetch(Address.getEventReceived('CarGuo'));
-    console.log(res)
-    if (res.result) {
-      dispatch({
-          type: USER.RECEIVED_EVENTS,
-          res:res.data
-      });
+const getUserInfo = async() => {
+    let res = await Api.netFetch(Address.getMyUserInfo());
+    if (res && res.result) {
+        AsyncStorage.setItem(Constant.USER_INFO, JSON.stringify(res.data));
+        dispatch({
+            type: USER.USER_INFO,
+            res: res.data
+        });
     }
+    return res;
 };
+
 
 export default {
-    create,
-    getEventReceived
+    initUserInfo,
+    getUserInfo
 }

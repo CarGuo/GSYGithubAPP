@@ -2,6 +2,7 @@
  * Created by guoshuyu on 2017/11/8.
  */
 
+import * as Config from '../config/'
 
 let host = "https://api.github.com/";
 
@@ -170,7 +171,25 @@ export default AddressLocal = {
             all = false
         }
         return `${host}notifications?all=${all}`
-    }
+    },
 
+
+    /**
+     * 处理分页参数
+     * @param tab 表示是 ? 或者 &
+     * @param page 页数
+     * @param pageSize 每页数量
+     */
+    getPageParams: (tab, page, pageSize = Config.PAGE_SIZE) => {
+        if (page) {
+            if (pageSize) {
+                return `${tab}page=${page}&pageSize=${pageSize}`
+            } else {
+                return `${tab}page=${page}`
+            }
+        } else {
+            return ""
+        }
+    },
 
 };

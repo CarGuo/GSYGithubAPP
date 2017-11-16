@@ -12,16 +12,17 @@ import {
     View
 } from 'react-native';
 
-import configureStore from './app/store';
+import {configureStore} from './app/store';
 import getRouter from './app/router';
 import {Provider} from 'react-redux';
+import store from './app/store/'
 
 export default class App extends Component<{}> {
 
-    constructor(){
+    constructor() {
         super();
         this.state = {
-            store: configureStore()
+            store: store
         }
     }
 

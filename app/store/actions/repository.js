@@ -3,7 +3,7 @@
  */
 
 import {AsyncStorage} from 'react-native'
-import Api from '../../funtion/net'
-import Address from '../../funtion/net/address'
+import Api from '../../net'
+import Address from '../../net/address'
 import {LOGIN} from '../type'
 import * as Constant from '../../style/constant'

@@ -3,9 +3,10 @@
  */
 
 import {AsyncStorage} from 'react-native'
-import Api from '../../funtion/net'
-import Address from '../../funtion/net/address'
+import Api from '../../net'
+import Address from '../../net/address'
 import {LOGIN} from '../type'
+import userAction from './user'
 import * as Constant from '../../style/constant'
 import {Buffer} from 'buffer'
 import {CLIENT_ID, CLIENT_SECRET} from '../../config/ignoreConfig'
@@ -21,15 +22,16 @@ const doLogin = (userName, password) => async(dispatch, getState) => {
     let base64Str = Buffer(userName + ":" + password).toString('base64');
     AsyncStorage.setItem(Constant.USER_BASIC_CODE, base64Str);
     let requestParams = {
-        scopes: ['public_repo'],
+        scopes: ['user', 'repo', 'gist', 'notifications'],
         note: "admin_script",
         client_id: CLIENT_ID,
         client_secret: CLIENT_SECRET
     };
-
+    Api.clearAuthorization();
     let res = await Api.netFetch(Address.getAuthorization(), 'POST', requestParams, true);
     if (res && res.result) {
         AsyncStorage.setItem(Constant.PW_KEY, password);
+        await userAction.getUserInfo();
         dispatch({
             type: LOGIN.IN,
             res

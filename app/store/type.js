@@ -10,5 +10,10 @@ export const LOGIN = {
 };
 
 export const USER = {
+    USER_INFO: 'user_info',
+};
+
+
+export const EVENT = {
     RECEIVED_EVENTS: 'received_events',
 };
