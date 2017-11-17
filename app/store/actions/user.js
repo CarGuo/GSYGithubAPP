@@ -52,37 +52,34 @@ import Api from '../../net'
 import Address from '../../net/address'
 import {USER} from '../type'
 import * as Constant from '../../style/constant'
-import {Buffer} from 'buffer'
-import {bindActionCreators} from 'redux'
+import UserDao from '../../dao/userDao'
 import store from '../'
 
-const {dispatch, getState} =  store;
+const {dispatch, getState} = store;
 
 /**
  * 初始化用户信息
  */
 const initUserInfo = () => {
-    AsyncStorage.getItem(Constant.USER_INFO).then((text) => {
-        if (text) {
-            let res = JSON.parse(text);
+    UserDao.getUserInfoLocal().then((res) => {
+        if (res && res.result) {
             dispatch({
                 type: USER.USER_INFO,
                 res: res
             });
         }
-    })
+    });
 };
 
-const getUserInfo = async() => {
-    let res = await Api.netFetch(Address.getMyUserInfo());
-    if (res && res.result) {
-        AsyncStorage.setItem(Constant.USER_INFO, JSON.stringify(res.data));
-        dispatch({
-            type: USER.USER_INFO,
-            res: res.data
-        });
-    }
-    return res;
+const getUserInfo = () => {
+    UserDao.getUserInfoNet().then((res) => {
+        if (res && res.result) {
+            dispatch({
+                type: USER.USER_INFO,
+                res: res.data
+            });
+        }
+    });
 };
 
 

@@ -70,7 +70,7 @@ class HttpManager {
 
         headers.Authorization = this.optionParams.authorizationCode;
 
-        if (method != 'GET') {
+        if (method !== 'GET') {
             if (json) {
                 requestParams = this.formParamsJson(method, params, headers)
             } else {
@@ -90,12 +90,12 @@ class HttpManager {
 
         try {
             let responseJson = await response.json();
-            if (response.status == 201 && responseJson.token) {
+            if (response.status === 201 && responseJson.token) {
                 this.optionParams.authorizationCode = 'token ' + responseJson.token;
                 AsyncStorage.setItem(Constant.TOKEN_KEY, this.optionParams.authorizationCode);
             }
 
-            if (response.status == 200 || response.status == 201) {
+            if (response.status === 200 || response.status === 201) {
                 return {
                     result: true,
                     code: Code.SUCCESS,

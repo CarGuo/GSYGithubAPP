@@ -11,15 +11,16 @@ import * as Constant from '../../style/constant'
 import {Buffer} from 'buffer'
 import {CLIENT_ID, CLIENT_SECRET} from '../../config/ignoreConfig'
 
-const toLogin = () => async(dispatch, getState) => {
+const toLogin = () => async (dispatch, getState) => {
 
 };
 
 /**
  * 登陆请求
  */
-const doLogin = (userName, password) => async(dispatch, getState) => {
+const doLogin = (userName, password) => async (dispatch, getState) => {
     let base64Str = Buffer(userName + ":" + password).toString('base64');
+    AsyncStorage.setItem(Constant.USER_NAME_KEY, userName);
     AsyncStorage.setItem(Constant.USER_BASIC_CODE, base64Str);
     let requestParams = {
         scopes: ['user', 'repo', 'gist', 'notifications'],
@@ -31,7 +32,7 @@ const doLogin = (userName, password) => async(dispatch, getState) => {
     let res = await Api.netFetch(Address.getAuthorization(), 'POST', requestParams, true);
     if (res && res.result) {
         AsyncStorage.setItem(Constant.PW_KEY, password);
-        await userAction.getUserInfo();
+        userAction.getUserInfo();
         dispatch({
             type: LOGIN.IN,
             res
@@ -39,8 +40,17 @@ const doLogin = (userName, password) => async(dispatch, getState) => {
     }
 };
 
+const getLoginParams = async () => {
+    let userName = await AsyncStorage.getItem(Constant.USER_NAME_KEY);
+    let password = await AsyncStorage.getItem(Constant.PW_KEY);
+    return {
+        userName: (userName) ? userName : "",
+        password: (password) ? password : "",
+    }
+};
 
 export default {
     toLogin,
-    doLogin
+    doLogin,
+    getLoginParams
 }
