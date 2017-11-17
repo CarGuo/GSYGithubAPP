@@ -9,7 +9,8 @@ import {
     Animated,
     InteractionManager,
     StatusBar,
-    BackHandler
+    BackHandler,
+    Keyboard
 } from 'react-native';
 import styles, {screenHeight, screenWidth} from "../style"
 import * as Constant from "../style/constant"
@@ -94,6 +95,12 @@ class LoginPage extends Component {
         this.params.password = text;
     }
 
+    exitLoading() {
+        if (Actions.currentScene === 'LoadingModal') {
+            Actions.pop();
+        }
+    }
+
     toLogin() {
         let {login} = this.props;
         if (!this.params.userName || this.params.userName.length === 0) {
@@ -108,7 +115,14 @@ class LoginPage extends Component {
             saveUserName: this.params.userName,
             savePassword: this.params.password
         });
-        login.doLogin(this.params.userName, this.params.password)
+        Actions.LoadingModal({backExit: false});
+        Keyboard.dismiss();
+        login.doLogin(this.params.userName, this.params.password, (res) => {
+            this.exitLoading();
+            if (!res) {
+                alert(I18n('LoginFailTip'));
+            }
+        })
     }
 
     render() {

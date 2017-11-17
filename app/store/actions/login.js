@@ -18,7 +18,7 @@ const toLogin = () => async (dispatch, getState) => {
 /**
  * 登陆请求
  */
-const doLogin = (userName, password) => async (dispatch, getState) => {
+const doLogin = (userName, password, callback) => async (dispatch, getState) => {
     let base64Str = Buffer(userName + ":" + password).toString('base64');
     AsyncStorage.setItem(Constant.USER_NAME_KEY, userName);
     AsyncStorage.setItem(Constant.USER_BASIC_CODE, base64Str);
@@ -38,6 +38,7 @@ const doLogin = (userName, password) => async (dispatch, getState) => {
             res
         });
     }
+    callback && callback(res.result);
 };
 
 const getLoginParams = async () => {

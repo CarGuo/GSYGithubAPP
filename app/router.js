@@ -12,6 +12,7 @@ import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
 import TabIcon from './components/widget/TabIcon'
+import LoadingModal from './components/widget/LoadingModal'
 import styles from './style'
 import I18n, {changeLocale} from './style/i18n'
 import * as Constant from './style/constant'
@@ -22,7 +23,9 @@ import WelcomePage from "./components/WelcomePage"
 const getRouter = () => {
     changeLocale();
     return (
-        <Router getSceneStyle={() => {return styles.routerStyle}}>
+        <Router getSceneStyle={() => {
+            return styles.routerStyle
+        }}>
             <Lightbox>
                 <Scene key="root">
                     <Scene key="main">
@@ -33,10 +36,12 @@ const getRouter = () => {
                            hideNavBar
                            showLabel={false}
                            tabBarPosition={"bottom"}
-                           tabBarStyle={{height:Constant.tabBarHeight,
-                                          alignItems: 'center',
-                                          justifyContent: 'center',
-                                          backgroundColor:Constant.tabBackgroundColor }}>
+                           tabBarStyle={{
+                               height: Constant.tabBarHeight,
+                               alignItems: 'center',
+                               justifyContent: 'center',
+                               backgroundColor: Constant.tabBackgroundColor
+                           }}>
                         <Scene
                             key="RecommendPage"
                             navigationBarStyle={styles.navigationBar}
@@ -63,6 +68,7 @@ const getRouter = () => {
                            showLabel={false}
                            hideNavBar/>
                 </Scene>
+                <Scene key="LoadingModal" component={LoadingModal}/>
             </Lightbox>
         </Router>
     )
