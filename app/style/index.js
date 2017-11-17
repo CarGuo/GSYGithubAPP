@@ -4,8 +4,9 @@
 import React, {StyleSheet, Dimensions, PixelRatio, Platform, StatusBar} from "react-native";
 import * as constant from "./constant"
 
-export const {screenWidth, screenHeight} = Dimensions.get("window");
-export const navBarHeight = Platform.OS == 'ios' ? constant.iosnavHeaderHeight : constant.andrnavHeaderHeight
+export const screenWidth = Dimensions.get("window").width;
+export const screenHeight = Dimensions.get("window").height;
+export const navBarHeight = Platform.OS === 'ios' ? constant.iosnavHeaderHeight : constant.andrnavHeaderHeight
 
 export default StyleSheet.create({
     routerStyle: {

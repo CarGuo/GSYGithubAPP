@@ -18,22 +18,40 @@ import address from '../net/address'
 
 class WelcomePage extends Component {
 
-    componentDidMount() {
-        userActions.initUserInfo();
+    constructor(props) {
+        super(props);
+        this.toNext = this.toNext.bind(this);
+    }
 
+
+    componentDidMount() {
+        userActions.initUserInfo().then((res) => {
+            this.toNext(res)
+        });
     }
 
     componentWillUnmount() {
 
     }
 
+    toNext(res) {
+        setTimeout(() => {
+            if (res && res.result) {
+                Actions.reset("mainTabPage");
+            } else {
+                Actions.reset("LoginPage");
+            }
+        }, 1000);
+    }
+
     render() {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={true}/>
-                <View style={[styles.centered, {flex:1}]}>
+                <View style={[styles.centered, {flex: 1}]}>
                     <TouchableHighlight onPress={
-                        () => {Actions.mainTabPage()}
+                        () => {
+                        }
                     }>
                         <Text style={[styles.welcomeText]}>
                             {I18n('appName')}
@@ -49,5 +67,4 @@ export default connect(state => ({
     state
 }), dispatch => ({
     actions: bindActionCreators(loginActions, dispatch),
-    userActions: bindActionCreators(userActions, dispatch),
 }))(WelcomePage)

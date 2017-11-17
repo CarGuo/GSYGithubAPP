@@ -47,11 +47,7 @@
      }
  }
  **/
-import {AsyncStorage} from 'react-native'
-import Api from '../../net'
-import Address from '../../net/address'
 import {USER} from '../type'
-import * as Constant from '../../style/constant'
 import UserDao from '../../dao/userDao'
 import store from '../'
 
@@ -60,15 +56,16 @@ const {dispatch, getState} = store;
 /**
  * 初始化用户信息
  */
-const initUserInfo = () => {
-    UserDao.getUserInfoLocal().then((res) => {
-        if (res && res.result) {
-            dispatch({
-                type: USER.USER_INFO,
-                res: res
-            });
-        }
-    });
+const initUserInfo = async () => {
+    let res = await UserDao.getUserInfoLocal();
+    if (res && res.result) {
+        dispatch({
+            type: USER.USER_INFO,
+            res: res
+        });
+    }
+    return res;
+
 };
 
 const getUserInfo = () => {

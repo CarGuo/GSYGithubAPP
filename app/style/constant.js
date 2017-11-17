@@ -7,6 +7,8 @@ export const mainBackgroundColor = "#ffffff";
 export const tabBackgroundColor = "#ececec";
 
 export const primaryColor = '#24292e';
+export const primaryDarkColor = '#121917';
+export const primaryLightColor = '#42464b';
 export const actionColor = '#41464b';
 export const lineColor = '#d8d8d8';
 export const mainTextColor = '#000000';
@@ -14,6 +16,8 @@ export const subTextColor = '#959595';
 
 export const tabSelectedColor = '#24292e';
 export const tabUnSelectColor = '#d2d2d2';
+
+export const miWhite = '#ececec';
 
 export const transparentColor = '#00000000';
 

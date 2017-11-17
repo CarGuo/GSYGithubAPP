@@ -6,8 +6,12 @@ import {
     Text,
     View,
     TouchableOpacity,
+    Animated,
+    InteractionManager,
+    StatusBar,
+    BackHandler
 } from 'react-native';
-import styles, {screenWidth} from "../style"
+import styles, {screenHeight, screenWidth} from "../style"
 import * as Constant from "../style/constant"
 import PropTypes from 'prop-types';
 import I18n from '../style/i18n'
@@ -19,6 +23,7 @@ import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Fumi} from 'react-native-textinput-effects';
 
+const animaTime = 600;
 
 /**
  * 登陆Modal
@@ -39,14 +44,21 @@ class LoginPage extends Component {
         this.state = {
             saveUserName: '',
             savePassword: '',
+            opacity: new Animated.Value(0),
         }
     }
 
     componentDidMount() {
-        this.refs.loginModal.open();
+        this.onOpen();
+        BackHandler.addEventListener('hardwareBackPress', this.onClose)
+        Animated.timing(this.state.opacity, {
+            duration: animaTime,
+            toValue: 1,
+        }).start();
     }
 
     componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.onClose)
     }
 
 
@@ -62,11 +74,16 @@ class LoginPage extends Component {
     }
 
     onClose() {
-        try {
-            Actions.pop();
-        } catch (e) {
-
+        if (Actions.state.index === 0) {
+            BackHandler.exitApp();
+            return false;
         }
+        Animated.timing(this.state.opacity, {
+            duration: animaTime,
+            toValue: 0,
+        }).start(Actions.pop());
+        return true;
+
     }
 
     userInputChange(text) {
@@ -96,76 +113,74 @@ class LoginPage extends Component {
 
     render() {
         let textInputProps = {
-            style: {width: 250, height: 70},
+            style: {width: 250, height: 70, backgroundColor: Constant.miWhite},
             activeColor: Constant.primaryColor,
             passiveColor: '#dadada',
             iconClass: Icon,
-            iconColor: Constant.actionColor,
+            iconColor: Constant.primaryColor,
             iconSize: 25,
         };
-        let pageBg = (this.props.dialogMode) ? "#00000000" : Constant.primaryColor;
-        let modalProps = {
-            backdropOpacity: (this.props.dialogMode) ? 0.5 : 0,
-            swipeToClose: this.props.dialogMode,
-            backdropPressToClose: this.props.dialogMode,
-            animationDuration: (this.props.dialogMode) ? 600 : 0,
-        };
         return (
-            <View style={[styles.absoluteFull, {backgroundColor: pageBg}]}>
-                <Modal ref={"loginModal"}
-                       {...modalProps}
-                       style={[{height: 360, width: screenWidth - 80, marginRight: 50, borderRadius: 10}]}
-                       position={"center"}
-                       onClosed={this.onClose}
-                       onOpened={this.onOpen}>
-                    <View>
-                        <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
-                            <Icon name={"github-square"} size={Constant.largeIconSize} color={Constant.primaryColor}/>
-                        </View>
-                        <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
-                            <Fumi
-                                ref={"userNameInput"}
-                                {...textInputProps}
-                                label={I18n('UserName')}
-                                iconName={'user-circle-o'}
-                                value={this.state.saveUserName}
-                                onChangeText={this.userInputChange}
-                            />
-                        </View>
-                        <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
-                            <Fumi
-                                ref={"passwordInput"}
-                                {...textInputProps}
-                                label={I18n('Password')}
-                                returnKeyType={'send'}
-                                secureTextEntry={true}
-                                password={true}
-                                iconName={'keyboard-o'}
-                                value={this.state.savePassword}
-                                onChangeText={this.passwordChange}
-                            />
-                        </View>
-                        <View>
-                        </View>
-                        <TouchableOpacity style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}
-                                          onPress={() => {
-                                              this.toLogin();
-                                          }}>
-                            <View
-                                style={[styles.centered, {
-                                    backgroundColor: Constant.primaryColor,
-                                    width: 230,
-                                    marginTop: Constant.normalMarginEdge,
-                                    paddingHorizontal: Constant.normalMarginEdge,
-                                    paddingVertical: Constant.normalMarginEdge,
-                                    borderRadius: 5
-                                }]}>
-                                <Text style={[styles.normalTextWhite]}>{I18n('Login')}</Text>
-                            </View>
-                        </TouchableOpacity>
+            <Animated.View
+                style={[styles.centered, styles.absoluteFull, {backgroundColor: Constant.primaryColor}, {opacity: this.state.opacity}]}>
+                <StatusBar hidden={false} backgroundColor={Constant.primaryColor} translucent
+                           barStyle={'light-content'}/>
+                <View
+                    style={[{backgroundColor: Constant.miWhite}, {
+                        height: 360,
+                        width: screenWidth - 80,
+                        margin: 50,
+                        borderRadius: 10
+                    }]}
+                    onClosed={this.onClose}
+                    onOpened={this.onOpen}>
+                    <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
+                        <Icon name={"github-square"} size={Constant.largeIconSize}
+                              color={Constant.primaryColor}/>
                     </View>
-                </Modal>
-            </View>
+                    <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
+                        <Fumi
+                            ref={"userNameInput"}
+                            {...textInputProps}
+                            label={I18n('UserName')}
+                            iconName={'user-circle-o'}
+                            value={this.state.saveUserName}
+                            onChangeText={this.userInputChange}
+                        />
+                    </View>
+                    <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
+                        <Fumi
+                            ref={"passwordInput"}
+                            {...textInputProps}
+                            label={I18n('Password')}
+                            returnKeyType={'send'}
+                            secureTextEntry={true}
+                            password={true}
+                            iconName={'keyboard-o'}
+                            value={this.state.savePassword}
+                            onChangeText={this.passwordChange}
+                        />
+                    </View>
+                    <View>
+                    </View>
+                    <TouchableOpacity style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}
+                                      onPress={() => {
+                                          this.toLogin();
+                                      }}>
+                        <View
+                            style={[styles.centered, {
+                                backgroundColor: Constant.primaryColor,
+                                width: 230,
+                                marginTop: Constant.normalMarginEdge,
+                                paddingHorizontal: Constant.normalMarginEdge,
+                                paddingVertical: Constant.normalMarginEdge,
+                                borderRadius: 5
+                            }]}>
+                            <Text style={[styles.normalTextWhite]}>{I18n('Login')}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </Animated.View>
         )
     }
 }

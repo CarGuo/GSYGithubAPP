@@ -3,17 +3,8 @@
  */
 import React, {Component} from 'react';
 import {
-    AppRegistry,
-    StyleSheet,
-    Navigator,
-    Platform,
-    StatusBar
-
-} from 'react-native';
-import {
     Scene,
     Router,
-    Modal,
     Lightbox
 } from 'react-native-router-flux';
 import DynamicPage from './components/DynamicPage'
@@ -68,8 +59,10 @@ const getRouter = () => {
                             title={I18n('tabMy')}
                         />
                     </Scene>
+                    <Scene key="LoginPage" component={LoginPage}
+                           showLabel={false}
+                           hideNavBar/>
                 </Scene>
-                <Scene key="LoginPage" component={LoginPage}/>
             </Lightbox>
         </Router>
     )
