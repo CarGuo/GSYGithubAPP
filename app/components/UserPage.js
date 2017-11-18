@@ -15,6 +15,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconTextItem from './widget/IconTextItem'
+import IconTextAutoLinkItem from './widget/IconTextAutoLinkItem'
 
 class UserPage extends Component {
     componentDidMount() {
@@ -66,10 +67,10 @@ class UserPage extends Component {
                                 textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
                         </View>
                     </View>
-                    <IconTextItem text={'https://www.github.com'} icon={'link'}
-                                  textstyle={[{marginLeft: Constant.normalMarginEdge},
-                                      styles.subLightSmallText,]}
-                                  viewstyle={[{marginTop: halfEdge}]}/>
+                    <IconTextAutoLinkItem text={'https://www.github.com https://www.github.com'} icon={'link'}
+                                          textstyle={[{marginLeft: Constant.normalMarginEdge},
+                                              {fontSize: Constant.smallTextSize},]}
+                                          viewstyle={[{marginTop: halfEdge}]}/>
                     <IconTextItem text={'描述！！！！'}
                                   textstyle={[{marginVertical: Constant.normalMarginEdge},
                                       styles.subLightSmallText,]}/>
