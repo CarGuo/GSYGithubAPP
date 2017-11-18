@@ -23,6 +23,7 @@ import Modal from 'react-native-modalbox';
 import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Fumi} from 'react-native-textinput-effects';
+import Toast from './widget/ToastProxy'
 
 const animaTime = 600;
 
@@ -76,7 +77,6 @@ class LoginPage extends Component {
 
     onClose() {
         if (Actions.state.index === 0) {
-            BackHandler.exitApp();
             return false;
         }
         Animated.timing(this.state.opacity, {
@@ -104,11 +104,11 @@ class LoginPage extends Component {
     toLogin() {
         let {login} = this.props;
         if (!this.params.userName || this.params.userName.length === 0) {
-            alert(I18n('LoginNameTip'));
+            Toast(I18n('LoginNameTip'));
             return
         }
         if (!this.params.password || this.params.password.length === 0) {
-            alert(I18n('LoginPWTip'));
+            Toast(I18n('LoginPWTip'));
             return
         }
         this.setState({
@@ -120,7 +120,9 @@ class LoginPage extends Component {
         login.doLogin(this.params.userName, this.params.password, (res) => {
             this.exitLoading();
             if (!res) {
-                alert(I18n('LoginFailTip'));
+                Toast(I18n('LoginFailTip'));
+            } else {
+                Actions.reset("mainTabPage")
             }
         })
     }
@@ -198,13 +200,6 @@ class LoginPage extends Component {
         )
     }
 }
-
-LoginPage.propTypes = {
-    dialogMode: PropTypes.bool,
-};
-LoginPage.defaultProps = {
-    dialogMode: false,
-};
 
 export default connect(state => ( {state}), dispatch => ({
         login: bindActionCreators(loginActions, dispatch)

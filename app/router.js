@@ -16,6 +16,7 @@ import LoadingModal from './components/widget/LoadingModal'
 import styles from './style'
 import I18n, {changeLocale} from './style/i18n'
 import * as Constant from './style/constant'
+import BackUtils from './utils/BackUtils'
 
 import WelcomePage from "./components/WelcomePage"
 
@@ -23,9 +24,12 @@ import WelcomePage from "./components/WelcomePage"
 const getRouter = () => {
     changeLocale();
     return (
-        <Router getSceneStyle={() => {
-            return styles.routerStyle
-        }}>
+        <Router
+            getSceneStyle={() => {
+                return styles.routerStyle
+            }}
+            backAndroidHandler={
+                BackUtils()}>
             <Lightbox>
                 <Scene key="root">
                     <Scene key="main">

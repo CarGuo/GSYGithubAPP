@@ -31,6 +31,8 @@ I18n.translations = {
         LoginFailTip: 'login fail',
         refreshing: 'refreshing...',
         loading: 'loading...',
+        exitTip: 'loading...',
+        doublePressExit: 'Press again to Exit',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -51,6 +53,7 @@ I18n.translations = {
         LoginFailTip: '登陆失败',
         refreshing: '刷新中...',
         loading: '加载中...',
+        doublePressExit: '双击退出',
     }
 };
 

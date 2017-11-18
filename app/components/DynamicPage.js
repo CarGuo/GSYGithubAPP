@@ -25,7 +25,7 @@ import * as Config from '../config/'
 class DynamicPage extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this._renderRefreshControl = this._renderRefreshControl.bind(this);
         this._renderRow = this._renderRow.bind(this);
         this._refresh = this._refresh.bind(this);
@@ -33,16 +33,13 @@ class DynamicPage extends Component {
         this._renderFooter = this._renderFooter.bind(this);
 
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        //创建20条数据，从零开始遍历填充数据
-        this.listViewData = Array(20).fill('').map((_, i) => `item #${i}`);
-
         //设置state
         this.state = {
             isRefresh: false,
             isLoadMore: false,
             showLoadMore: false,
             animating: false,
-            dataSource: this.ds.cloneWithRows(this.listViewData)
+            dataSource: this.ds.cloneWithRows([])
         }
     }
 
@@ -120,13 +117,13 @@ class DynamicPage extends Component {
             isLoadMore: true
         });
         setTimeout(() => {
-            let loadMoreData = Array(20).fill('').map((_, i) => `load item #${i + this.listViewData.length}`);
+            /*let loadMoreData = Array(20).fill('').map((_, i) => `load item #${i + this.listViewData.length}`);
             //注意此处，因为文本都是string的，如果string都相同，那么会导致list判断，数据都是一样的，不更新ui
             //所以，需要用listViewData的长度，
             this.listViewData = this.listViewData.concat(loadMoreData);
             this.setState({
                 dataSource: this.ds.cloneWithRows(this.listViewData)
-            });
+            });*/
             this.setState({
                 isLoadMore: false,
             });
