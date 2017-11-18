@@ -35,7 +35,7 @@ class RecommendPage extends Component {
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
 
                 <EventItem
-                    actionTime={1510369871000}
+                    actionTime={"2017-11-17T07:58:31Z"}
                     actionUser={'CarGuo'}
                     actionUserPic={'https://avatars0.githubusercontent.com/u/27534854?s=64&v=4'}
                     actionMode={"publish"}

@@ -39,6 +39,17 @@ class EventItem extends Component {
                 marginTop: Constant.normalMarginEdge,
                 marginLeft: Constant.normalMarginEdge,
                 marginRight: Constant.normalMarginEdge,
+                padding: Constant.normalMarginEdge,
+                borderRadius: 4,
+                shadowColor: '#000',
+                shadowOffset: {
+                    width: 1,
+                    height: 2
+                },
+                shadowOpacity: 0.7,
+                shadowRadius: 5,
+                elevation: 2,
+                backgroundColor:"#FFFFFF"
             }]}>
                 <View style={[styles.flexDirectionRowNotFlex,]}>
                     <Image source={{uri: actionUserPic}}
@@ -73,7 +84,7 @@ class EventItem extends Component {
 }
 
 const propTypes = {
-    actionTime: PropTypes.number,
+    actionTime: PropTypes.string,
     actionUser: PropTypes.string,
     actionUserPic: PropTypes.string,
     actionMode: PropTypes.string,

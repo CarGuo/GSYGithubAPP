@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, ListView, RefreshControl, ActivityIndicator
+    View, Text, StatusBar, InteractionManager
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
@@ -15,6 +15,7 @@ import userActions from '../store/actions/user'
 import eventActions from '../store/actions/event'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {getActionAndDes} from '../utils/eventUtils'
 import EventItem from './widget/EventItem'
 import PullListView from './widget/PullLoadMoreListView'
 import * as Config from '../config/'
@@ -30,11 +31,14 @@ class DynamicPage extends Component {
         this._renderRow = this._renderRow.bind(this);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
-        this.page = 0;
+        this.page = 1;
     }
 
     componentDidMount() {
-
+        InteractionManager.runAfterInteractions(() => {
+            this.refs.pullList.showRefreshState();
+            this._refresh();
+        })
     }
 
     componentWillUnmount() {
@@ -42,13 +46,14 @@ class DynamicPage extends Component {
     }
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
+        let res = getActionAndDes(rowData);
         return (
             <EventItem
-                actionTime={1510369871000}
-                actionUser={'CarGuo'}
-                actionUserPic={'https://avatars0.githubusercontent.com/u/27534854?s=64&v=4'}
-                actionMode={"publish"}
-                actionTarget={"GSYGitHubApp"}/>
+                actionTime={rowData.created_at}
+                actionUser={rowData.actor.display_login}
+                actionUserPic={rowData.actor.avatar_url}
+                des={res.des}
+                actionTarget={res.actionStr}/>
         )
     }
 
@@ -58,7 +63,7 @@ class DynamicPage extends Component {
     _refresh() {
         let {eventAction} = this.props;
         eventAction.getEventReceived(0, (res) => {
-            this.page = 1;
+            this.page = 2;
             setTimeout(() => {
                 this.refs.pullList.refreshComplete((res && res.length >= Config.PAGE_SIZE));
             }, 500);

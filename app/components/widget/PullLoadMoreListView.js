@@ -113,6 +113,11 @@ class PullLoadMoreListView extends Component {
         )
     }
 
+    showRefreshState() {
+        this.setState({
+            isRefresh: true,
+        });
+    }
 
     refreshComplete(showLoadMore = false) {
         this.setState({

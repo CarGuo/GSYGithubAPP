@@ -5,12 +5,14 @@
 import moment from 'moment';
 import I18n from '../style/i18n'
 import momentLocale from 'moment/locale/zh-cn';
+
 moment.updateLocale('zh-cn', momentLocale);
 
 const second = 1000;
 const min = second * 60;
 const hour = min * 60;
 const day = hour * 24;
+const week = day * 7;
 
 /**
  * 时间转化
@@ -27,7 +29,7 @@ export default function resolveTime(longTime) {
 
 function calcTimer(delta, ori) {
     let res = '';
-    let list = Object.keys(calculator).sort((a, b) => b - a)
+    let list = Object.keys(calculator).sort((a, b) => b - a);
     for (let i = 0, key = list[i]; key; key = list[++i]) {
         if (delta > key) {
             let a = Math.floor(delta / key);
@@ -36,15 +38,18 @@ function calcTimer(delta, ori) {
             break
         }
     }
-    if (res == '') {
+    if (res === '') {
         res = I18n('justNow')
     }
     return res
 }
 
 const calculator = {
+    [week]: (a, b, ori) => {
+        return moment(ori).format('MM-DD HH:mm')
+    },
     [day]: (a, b, ori) => {
-        return moment(ori).format('YYYY-MM-DD HH:mm:ss')
+        return a + I18n('daysAgo')
     },
     [hour]: (a, b) => {
         return a + I18n('hoursAgo')

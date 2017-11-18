@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import resolveTime from '../../utils/timeUtil'
 
 const propTypes = {
-    time: PropTypes.number,
+    time: PropTypes.any,
 };
 
 /**

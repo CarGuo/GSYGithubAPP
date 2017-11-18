@@ -3,7 +3,9 @@
  */
 
 /****************颜色****************/
-export const mainBackgroundColor = "#ffffff";
+
+export const miWhite = '#ececec';
+export const mainBackgroundColor = miWhite;
 export const tabBackgroundColor = "#ececec";
 
 export const primaryColor = '#24292e';
@@ -16,8 +18,6 @@ export const subTextColor = '#959595';
 
 export const tabSelectedColor = '#24292e';
 export const tabUnSelectColor = '#d2d2d2';
-
-export const miWhite = '#ececec';
 
 export const transparentColor = '#00000000';
 

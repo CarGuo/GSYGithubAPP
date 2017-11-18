@@ -1,99 +1,99 @@
-export const getActionAndDesc = (event) => {
+export const getActionAndDes = (event) => {
     let actionStr;
     let des;
     switch (event.type) {
         case "CommitCommentEvent":
-            actionStr = "Commit comment at " + event.repo.full_name;
+            actionStr = "Commit comment at " + event.repo.name;
             break;
         case "CreateEvent":
             if (event.payload.ref_type.equals("repository")) {
-                actionStr = "Created repository " + event.repo.full_name;
+                actionStr = "Created repository " + event.repo.name;
             } else {
-                actionStr = "Created " + model.payload.ref_type + " "
-                    + model.payload.ref + " at "
-                    + model.repo.full_name;
+                actionStr = "Created " + event.payload.ref_type + " "
+                    + event.payload.ref + " at "
+                    + event.repo.name;
             }
             break;
         case "DeleteEvent":
-            actionStr = "Delete " + model.payload.ref_type + " " + model.payload.ref
-                + " at " + model.repo.full_name;
+            actionStr = "Delete " + event.payload.ref_type + " " + event.payload.ref
+                + " at " + event.repo.name;
             break;
         case "ForkEvent":
-            let oriRepo = model.repo.full_name;
-            let newRepo = model.actor.login + "/" + model.repo.name;
+            let oriRepo = event.repo.full_name;
+            let newRepo = event.actor.login + "/" + event.repo.name;
             actionStr = "Forked " + oriRepo + " to " + newRepo;
             break;
         case "GollumEvent":
-            actionStr = model.payload.action + " a wiki page ";
+            actionStr = event.payload.action + " a wiki page ";
             break;
 
         case "InstallationEvent":
-            actionStr = model.payload.action + " an GitHub App ";
+            actionStr = event.payload.action + " an GitHub App ";
             break;
         case "InstallationRepositoriesEvent":
-            actionStr = model.payload.action + " repository from an installation ";
+            actionStr = event.payload.action + " repository from an installation ";
             break;
         case "IssueCommentEvent":
-            actionStr = model.payload.action + " comment on issue "
-                + model.payload.issue.number + " in " +
-                model.repo.full_name;
-            des = model.payload.comment.body;
+            actionStr = event.payload.action + " comment on issue "
+                + event.payload.issue.number + " in " +
+                event.repo.name;
+            des = event.payload.comment.body;
             break;
         case "IssuesEvent":
-            actionStr = model.payload.action + " issue "
-                + model.payload.issue.number + " in " +
-                model.repo.full_name;
-            des = model.payload.issue.title;
+            actionStr = event.payload.action + " issue "
+                + event.payload.issue.number + " in " +
+                event.repo.name;
+            des = event.payload.issue.title;
             break;
 
         case "MarketplacePurchaseEvent":
-            actionStr = model.payload.action + " marketplace plan ";
+            actionStr = event.payload.action + " marketplace plan ";
             break;
         case "MemberEvent":
-            actionStr = model.payload.action + " member to " +
-                model.repo.full_name;
+            actionStr = event.payload.action + " member to " +
+                event.repo.name;
             break;
         case "OrgBlockEvent":
-            actionStr = model.payload.action + " a user ";
+            actionStr = event.payload.action + " a user ";
             break;
         case "ProjectCardEvent":
-            actionStr = model.payload.action + " a project ";
+            actionStr = event.payload.action + " a project ";
             break;
         case "ProjectColumnEvent":
-            actionStr = model.payload.action + " a project ";
+            actionStr = event.payload.action + " a project ";
             break;
 
         case "ProjectEvent":
-            actionStr = model.payload.action + " a project ";
+            actionStr = event.payload.action + " a project ";
             break;
         case "PublicEvent":
-            actionStr = "Made " + model.repo.full_name + "public";
+            actionStr = "Made " + event.repo.name + "public";
             break;
         case "PullRequestEvent":
-            actionStr = model.payload.action + " pull request " + model.repo.full_name;
+            actionStr = event.payload.action + " pull request " + event.repo.name;
             break;
         case "PullRequestReviewEvent":
-            actionStr = model.payload.action + " pull request review at"
-                + model.repo.full_name;
+            actionStr = event.payload.action + " pull request review at"
+                + event.repo.name;
             break;
         case "PullRequestReviewCommentEvent":
-            actionStr = model.payload.action + " pull request review comment at"
-                + model.repo.full_name;
+            actionStr = event.payload.action + " pull request review comment at"
+                + event.repo.name;
             break;
 
         case "PushEvent":
-            let ref = model.payload.ref;
+            let ref = event.payload.ref;
             ref = ref.substring(ref.lastIndexOf("/") + 1);
             actionStr = "Push to " + ref +
-                " at " + model.repo.full_name;
+                " at " + event.repo.name;
 
             des = '';
-            let count = model.payload.comment.size;
+            let count = event.payload.comment.size;
             let maxLines = 4;
             let max = count > maxLines ? maxLines - 1 : count;
 
             for (let i = 0; i < max; i++) {
-                let commit = model.payload.comment.get(i);
+                let commit = event.payload.comment.get(i);
                 if (i !== 0) {
                     descSpan += ("\n");
                 }
@@ -107,12 +107,12 @@ export const getActionAndDesc = (event) => {
             }
             break;
         case "ReleaseEvent":
-            actionStr = model.payload.action + " release " +
-                model.payload.release.tag_name + " at " +
-                model.repo.full_name;
+            actionStr = event.payload.action + " release " +
+                event.payload.release.tag_name + " at " +
+                event.repo.name;
             break;
         case "WatchEvent":
-            actionStr = model.payload.action + " " + model.repo.full_name;
+            actionStr = event.payload.action + " " + event.repo.name;
             break;
     }
 
