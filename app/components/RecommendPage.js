@@ -39,6 +39,7 @@ class RecommendPage extends Component {
                     actionUser={'CarGuo'}
                     actionUserPic={'https://avatars0.githubusercontent.com/u/27534854?s=64&v=4'}
                     actionMode={"publish"}
+                    des={"asdfafdas"}
                     actionTarget={"GSYGitHubApp"}/>
 
                 <CommonRowItem

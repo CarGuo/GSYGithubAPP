@@ -16,6 +16,7 @@ import eventActions from '../store/actions/event'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import EventItem from './widget/EventItem'
+import PullListView from './widget/PullLoadMoreListView'
 import * as Config from '../config/'
 
 
@@ -26,23 +27,9 @@ class DynamicPage extends Component {
 
     constructor(props) {
         super(props);
-        this._renderRefreshControl = this._renderRefreshControl.bind(this);
         this._renderRow = this._renderRow.bind(this);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
-        this._renderFooter = this._renderFooter.bind(this);
-
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        //设置state
-        this.state = {
-            isRefresh: false,
-            isRefreshing: false,
-            isLoadMore: false,
-            showLoadMore: false,
-            showRefresh: true,
-            animating: false,
-            dataSource: this.ds.cloneWithRows([])
-        };
         this.page = 0;
     }
 
@@ -54,11 +41,7 @@ class DynamicPage extends Component {
 
     }
 
-    _renderRefreshControl() {
-
-    }
-
-    _renderRow() {
+    _renderRow(rowData, sectionID, rowID, highlightRow) {
         return (
             <EventItem
                 actionTime={1510369871000}
@@ -69,49 +52,16 @@ class DynamicPage extends Component {
         )
     }
 
-
-    /**
-     * 绘制load more footer
-     * */
-    _renderFooter() {
-
-        let footer = (this.state.showLoadMore) ?
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
-                <ActivityIndicator
-                    color={Constant.primaryColor}
-                    animating={true}
-                    style={{height: 50}}
-                    size="large"/>
-                <Text style={{fontSize: 15, color: 'black'}}>
-                    正在加载更多···
-                </Text>
-            </View> : <View/>;
-
-        return (footer);
-    }
-
     /**
      * 刷新
      * */
     _refresh() {
-        if (this.state.isRefreshing) {
-            return
-        }
-        this.setState({
-            isRefreshing: true,
-            showLoadMore: false
-        });
         let {eventAction} = this.props;
         eventAction.getEventReceived(0, (res) => {
             this.page = 1;
-            this.setState({
-                isRefreshing: false,
-                showLoadMore: (res && res.length >= Config.PAGE_SIZE)
-            });
+            setTimeout(() => {
+                this.refs.pullList.refreshComplete((res && res.length >= Config.PAGE_SIZE));
+            }, 500);
         })
     }
 
@@ -119,57 +69,30 @@ class DynamicPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        if (this.state.isRefreshing) {
-            return
-        }
-        let {eventState} = this.props;
-        if (eventState.received_events_data_list.length === 0) {
-            return
-        }
-        this.setState({
-            isRefreshing: true,
-            showRefresh: false,
-        });
         let {eventAction} = this.props;
         eventAction.getEventReceived(this.page, (res) => {
             this.page++;
-            this.setState({
-                isRefreshing: false,
-                showRefresh: true,
-                showLoadMore: (res && res.length >= Config.PAGE_SIZE),
-            });
+            setTimeout(() => {
+                this.refs.pullList.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
+            }, 300);
         });
     }
 
 
     render() {
         let {eventState, userState} = this.props;
-        let dataSource = this.ds.cloneWithRows(eventState.received_events_data_list);
-
+        let dataSource = (eventState.received_events_data_list);
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
-                <ListView
+                <PullListView
                     style={{flex: 1}}
-                    removeClippedSubviews={false}
-                    ref="list"
-                    enableEmptySections
-                    initialListSize={30}
-                    pageSize={30}
-                    onEndReachedThreshold={20}
-                    refreshControl={
-                        <RefreshControl
-                            enable={this.state.showRefresh}
-                            refreshing={this.state.isRefresh}
-                            onRefresh={this._refresh}
-                            tintColor={Constant.primaryColor}
-                            title={I18n('refreshing')}
-                            colors={[Constant.primaryColor, Constant.actionColor]}/>}
+                    ref="pullList"
                     renderRow={(rowData, sectionID, rowID, highlightRow) =>
                         this._renderRow(rowData, sectionID, rowID, highlightRow)
                     }
-                    onEndReached={this._loadMore}
-                    renderFooter={this._renderFooter}
+                    refresh={this._refresh}
+                    loadMore={this._loadMore}
                     dataSource={dataSource}
                 />
             </View>

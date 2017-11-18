@@ -35,27 +35,38 @@ class EventItem extends Component {
     render() {
         let {actionTime, actionUser, actionUserPic, actionMode, actionTarget} = this.props;
         return (
-            <View style={[styles.flexDirectionRowNotFlex, {height: 50, marginTop:Constant.normalMarginEdge}]}>
-                <Image source={{uri: actionUserPic}}
-                       resizeMethod="scale"
-                       style={[{height: Constant.smallIconSize, width: Constant.smallIconSize,
-                       marginLeft: Constant.normalMarginEdge,
-                       marginRight: Constant.normalMarginEdge,
-                       marginTop: 5,
-                       }]}/>
-
-                <View style={[styles.flexDirectionColumn,{height: 50}]}>
-                    <View style={[styles.flexDirectionRowNotFlex]}>
-                        <Text style={[styles.smallText, {fontWeight: "bold"}]}>{actionUser}</Text>
-                        <Text
-                            style={[styles.subSmallText, {marginLeft: Constant.normalMarginEdge, marginRight:Constant.normalMarginEdge,}]}>
-                            {actionMode}
+            <View style={[{
+                marginTop: Constant.normalMarginEdge,
+                marginLeft: Constant.normalMarginEdge,
+                marginRight: Constant.normalMarginEdge,
+            }]}>
+                <View style={[styles.flexDirectionRowNotFlex,]}>
+                    <Image source={{uri: actionUserPic}}
+                           resizeMethod="scale"
+                           style={[{
+                               height: Constant.smallIconSize, width: Constant.smallIconSize,
+                               marginTop: 5,
+                               borderRadius: Constant.smallIconSize / 2
+                           }]}/>
+                    <View style={[styles.flex, styles.centerH, styles.flexDirectionRowNotFlex]}>
+                        <Text style={[styles.flex, styles.smallText, {
+                            fontWeight: "bold",
+                            marginLeft: Constant.normalMarginEdge / 2
+                        }]}>
+                            {actionUser}
                         </Text>
-                        <Text style={[styles.smallText, {fontWeight: "bold"}]}>{actionTarget}</Text>
+                        <TimeText style={[styles.subSmallText,
+                            {marginTop: -20}]}
+                                  time={actionTime}/>
                     </View>
-                    <TimeText style={[styles.subSmallText]} time={actionTime}/>
-
                 </View>
+                <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
+                    <Text style={[styles.smallText, {fontWeight: "bold"}]}>{actionTarget}</Text>
+                </View>
+                <Text style={[styles.subSmallText,
+                    {marginTop: Constant.normalMarginEdge}]}>
+                    {this.props.des}
+                </Text>
             </View>
         )
     }
@@ -67,6 +78,7 @@ const propTypes = {
     actionUserPic: PropTypes.string,
     actionMode: PropTypes.string,
     actionTarget: PropTypes.string,
+    des: PropTypes.string,
 };
 
 EventItem.propTypes = propTypes;

@@ -16,7 +16,7 @@ import LoadingModal from './components/widget/LoadingModal'
 import styles from './style'
 import I18n, {changeLocale} from './style/i18n'
 import * as Constant from './style/constant'
-import BackUtils from './utils/BackUtils'
+import BackUtils from './utils/backUtils'
 
 import WelcomePage from "./components/WelcomePage"
 

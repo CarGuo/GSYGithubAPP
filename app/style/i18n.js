@@ -31,7 +31,7 @@ I18n.translations = {
         LoginFailTip: 'login fail',
         refreshing: 'refreshing...',
         loading: 'loading...',
-        exitTip: 'loading...',
+        loadMoreing: 'loading...',
         doublePressExit: 'Press again to Exit',
     },
     'zh-CN': {
@@ -52,6 +52,7 @@ I18n.translations = {
         LoginPWTip: '密码不能为空',
         LoginFailTip: '登陆失败',
         refreshing: '刷新中...',
+        loadMoreing: '正在加载更多···',
         loading: '加载中...',
         doublePressExit: '双击退出',
     }
