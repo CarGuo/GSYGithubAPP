@@ -20,11 +20,19 @@ const getEventReceived = (page = 0, callback) => async (dispatch, getState) => {
     }
     let res = await EventDao.getEventReceivedFromNet(page, user.userInfo.login);
     if (res && res.result) {
+        if (page === 0) {
+            dispatch({
+                type: EVENT.RECEIVED_EVENTS,
+                res: res.data
+            });
+        } else {
+            let event = getState()['event'].received_events_data_list;
+            dispatch({
+                type: EVENT.RECEIVED_EVENTS,
+                res: event.concat(res.data)
+            });
+        }
         callback && callback(res.data);
-        dispatch({
-            type: EVENT.RECEIVED_EVENTS,
-            res: res.data
-        });
     } else {
         callback && callback(null);
     }

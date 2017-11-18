@@ -6,7 +6,7 @@ import {EVENT} from '../type';
 import {createReducer} from '../'
 
 const initialState = {
-    received_events_data_list: {},
+    received_events_data_list: [],
     received_events_current_size: 0,
 };
 
