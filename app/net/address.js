@@ -181,9 +181,9 @@ export default AddressLocal = {
      * @param pageSize 每页数量
      */
     getPageParams: (tab, page, pageSize = Config.PAGE_SIZE) => {
-        if (page) {
-            if (pageSize) {
-                return `${tab}page=${page}&pageSize=${pageSize}`
+        if (page !== null) {
+            if (pageSize !== null) {
+                return `${tab}page=${page}&per_page=${pageSize}`
             } else {
                 return `${tab}page=${page}`
             }

@@ -11,14 +11,14 @@ import * as Constant from '../../style/constant'
 import {Buffer} from 'buffer'
 import EventDao from '../../dao/eventDao'
 
-const getEventReceived = (page = 0, callback) => async(dispatch, getState) => {
+const getEventReceived = (page = 0, callback) => async (dispatch, getState) => {
     let user = getState()['user'];
-    console.log('getEventReceived', getState);
-    if (!user) {
+    if (!user && user.userInfo) {
         //todo 提示用户信息异常
+        callback && callback(null);
         return;
     }
-    let res = await EventDao.getEventReceivedFromNet(0, user.login);
+    let res = await EventDao.getEventReceivedFromNet(page, user.userInfo.login);
     if (res && res.result) {
         callback && callback(res.data);
         dispatch({

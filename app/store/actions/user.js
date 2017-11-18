@@ -49,7 +49,9 @@
  **/
 import {USER} from '../type'
 import UserDao from '../../dao/userDao'
+import * as Constant from '../../style/constant'
 import store from '../'
+import {AsyncStorage} from 'react-native'
 
 const {dispatch, getState} = store;
 
@@ -57,14 +59,18 @@ const {dispatch, getState} = store;
  * 初始化用户信息
  */
 const initUserInfo = async () => {
+    let token = await AsyncStorage.getItem(Constant.TOKEN_KEY);
     let res = await UserDao.getUserInfoLocal();
-    if (res && res.result) {
+    if (res && res.result && token) {
         dispatch({
             type: USER.USER_INFO,
-            res: res
+            res: res.data
         });
     }
-    return res;
+    return {
+        result: res.result && (token !== null),
+        data: res.data
+    };
 
 };
 
@@ -79,8 +85,17 @@ const getUserInfo = () => {
     });
 };
 
+const clearUserInfo = () => {
+    AsyncStorage.removeItem(Constant.USER_INFO);
+    dispatch({
+        type: USER.USER_INFO,
+        res: null
+    });
+};
+
 
 export default {
     initUserInfo,
-    getUserInfo
+    getUserInfo,
+    clearUserInfo
 }

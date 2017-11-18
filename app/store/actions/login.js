@@ -41,6 +41,15 @@ const doLogin = (userName, password, callback) => async (dispatch, getState) => 
     callback && callback(res.result);
 };
 
+const loginOut = () => async (dispatch, getState) => {
+    Api.clearAuthorization();
+    AsyncStorage.removeItem(Constant.USER_BASIC_CODE);
+    userAction.clearUserInfo();
+    dispatch({
+        type: LOGIN.CLEAR,
+    });
+};
+
 const getLoginParams = async () => {
     let userName = await AsyncStorage.getItem(Constant.USER_NAME_KEY);
     let password = await AsyncStorage.getItem(Constant.PW_KEY);
@@ -53,5 +62,7 @@ const getLoginParams = async () => {
 export default {
     toLogin,
     doLogin,
-    getLoginParams
+    getLoginParams,
+    loginOut
+
 }

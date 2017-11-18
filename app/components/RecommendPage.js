@@ -29,6 +29,7 @@ class RecommendPage extends Component {
 
 
     render() {
+        let {loginActions} = this.props;
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -43,11 +44,16 @@ class RecommendPage extends Component {
                 <CommonRowItem
                     itemIcon={"sc-github"}
                     itemText={"介绍一下是什么"}
-                    onClickFun={()=>{
-                            //alert("点我干啥")
-                            Actions.LoginPage();
-                        }}/>
-
+                    onClickFun={() => {
+                        Actions.LoginPage();
+                    }}/>
+                <CommonRowItem
+                    itemIcon={"sc-github"}
+                    itemText={"退出登陆"}
+                    onClickFun={() => {
+                        Actions.reset("LoginPage")
+                        loginActions.loginOut();
+                    }}/>
                 <RepositoryItem
                     ownerName={"CarGuo"}
                     ownerPic={"https://avatars0.githubusercontent.com/u/27534854?s=64&v=4"}
@@ -65,6 +71,6 @@ class RecommendPage extends Component {
 
 
 export default connect(state => ( {state}), dispatch => ({
-        actions: bindActionCreators(loginActions, dispatch)
+        loginActions: bindActionCreators(loginActions, dispatch)
     })
 )(RecommendPage)
