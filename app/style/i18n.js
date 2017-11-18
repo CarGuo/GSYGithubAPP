@@ -33,6 +33,7 @@ I18n.translations = {
         loading: 'loading...',
         loadMoreing: 'loading...',
         doublePressExit: 'Press again to Exit',
+        userInfoNoting: 'nothing',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -55,6 +56,7 @@ I18n.translations = {
         loadMoreing: '正在加载更多···',
         loading: '加载中...',
         doublePressExit: '双击退出',
+        userInfoNoting: 'Ta什么都没留下',
     }
 };
 
