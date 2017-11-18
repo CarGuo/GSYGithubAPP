@@ -30,12 +30,12 @@ const getUserInfoNet = async() => {
         AsyncStorage.setItem(Constant.USER_INFO, JSON.stringify(res.data));
         return {
             result: true,
-            data:res
+            data:res.data
         }
     } else {
         return {
             result: false,
-            data:res
+            data:res.data
         }
     }
 };
