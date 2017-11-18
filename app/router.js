@@ -9,7 +9,7 @@ import {
 } from 'react-native-router-flux';
 import DynamicPage from './components/DynamicPage'
 import LoginPage from './components/LoginPage'
-import MyPage from './components/MyPage'
+import MyPage from './components/UserPage'
 import RecommendPage from './components/RecommendPage'
 import TabIcon from './components/widget/TabIcon'
 import LoadingModal from './components/widget/LoadingModal'

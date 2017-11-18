@@ -15,6 +15,7 @@ export const actionColor = '#41464b';
 export const lineColor = '#d8d8d8';
 export const mainTextColor = '#000000';
 export const subTextColor = '#959595';
+export const subLightTextColor = '#c4c4c4';
 
 export const tabSelectedColor = '#24292e';
 export const tabUnSelectColor = '#d2d2d2';
@@ -28,7 +29,7 @@ export const iosnavHeaderHeight = 64;
 export const andrnavHeaderHeight = 44;
 
 export const largetTextSize = 30;
-export const bigTextSize = 25;
+export const bigTextSize = 23;
 export const normalTextSize = 18;
 export const midlleTextSize = 16;
 export const smallTextSize = 14;

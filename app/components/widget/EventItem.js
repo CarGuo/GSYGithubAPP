@@ -41,16 +41,7 @@ class EventItem extends Component {
                 marginRight: Constant.normalMarginEdge,
                 padding: Constant.normalMarginEdge,
                 borderRadius: 4,
-                shadowColor: '#000',
-                shadowOffset: {
-                    width: 1,
-                    height: 2
-                },
-                shadowOpacity: 0.7,
-                shadowRadius: 5,
-                elevation: 2,
-                backgroundColor:"#FFFFFF"
-            }]}>
+            }, styles.shadowCard]}>
                 <View style={[styles.flexDirectionRowNotFlex,]}>
                     <Image source={{uri: actionUserPic}}
                            resizeMethod="scale"

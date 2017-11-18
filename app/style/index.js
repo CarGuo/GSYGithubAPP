@@ -21,8 +21,6 @@ export default StyleSheet.create({
     },
     navigationBar: {
         backgroundColor: constant.primaryColor,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: constant.lineColor,
         paddingTop: StatusBar.currentHeight,
     },
     mainBgColor: {
@@ -77,8 +75,16 @@ export default StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center"
     },
+    smallTextWhite: {
+        color: '#FFF',
+        fontSize: constant.smallTextSize
+    },
     smallText: {
         color: constant.mainTextColor,
+        fontSize: constant.smallTextSize
+    },
+    subLightSmallText: {
+        color: constant.subLightTextColor,
         fontSize: constant.smallTextSize
     },
     subSmallText: {
@@ -101,6 +107,10 @@ export default StyleSheet.create({
         color: constant.mainTextColor,
         fontSize: constant.bigTextSize
     },
+    largeTextWhite: {
+        color: "#FFF",
+        fontSize: constant.bigTextSize
+    },
     absoluteFull: {
         position: "absolute",
         left: 0,
@@ -109,6 +119,17 @@ export default StyleSheet.create({
         bottom: 0,
         zIndex: 999,
     },
+    shadowCard: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 1,
+            height: 2
+        },
+        shadowOpacity: 0.7,
+        shadowRadius: 5,
+        elevation: 2,
+        backgroundColor: "#FFFFFF"
+    }
 
 
 });
