@@ -3,7 +3,7 @@
  */
 
 
-import  {NetInfo, Platform, AsyncStorage} from 'react-native';
+import {NetInfo, Platform, AsyncStorage} from 'react-native';
 import I18n from '../style/i18n'
 import * as Constant from '../style/constant'
 import * as Code from './netwrokCode'
@@ -44,7 +44,7 @@ class HttpManager {
      * @return {Promise.<*>}
      */
     async netFetch(url, method = 'GET', params, json, header) {
-        let isConnected = await NetInfo.isConnected.fetch();
+        let isConnected = await NetInfo.isConnected.fetch().done;
 
         if (!isConnected) {
             return {
@@ -99,13 +99,14 @@ class HttpManager {
                 return {
                     result: true,
                     code: Code.SUCCESS,
-                    data: responseJson
+                    data: responseJson,
+                    headers: response.headers
                 }
             } else {
                 return {
                     result: false,
                     code: response.status,
-                    data: handlerError(response.status)
+                    data: handlerError(response.status),
                 }
             }
         } catch (e) {

@@ -39,6 +39,10 @@ class UserPage extends Component {
                     location={userInfo.location}
                     link={userInfo.blog}
                     des={userInfo.bio}
+                    star={(userInfo.starred) ? userInfo.starred : "---"}
+                    repos={userInfo.public_repos + ""}
+                    follower={userInfo.followers + ""}
+                    followed={userInfo.following + ""}
                 />
             </View>
         )

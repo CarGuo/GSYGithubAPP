@@ -7,13 +7,13 @@ import * as Constant from '../style/constant'
 /**
  *
  */
-const getUserInfoLocal = async() => {
+const getUserInfoLocal = async () => {
     let userText = await AsyncStorage.getItem(Constant.USER_INFO);
     if (userText) {
         let res = JSON.parse(userText);
         return {
             result: true,
-            data:res
+            data: res
         }
     } else {
         return {
@@ -23,19 +23,59 @@ const getUserInfoLocal = async() => {
 };
 
 
-
-const getUserInfoNet = async() => {
+const getUserInfoNet = async () => {
     let res = await Api.netFetch(Address.getMyUserInfo());
     if (res && res.result) {
-        AsyncStorage.setItem(Constant.USER_INFO, JSON.stringify(res.data));
+        let countRes = await getUserStaredCountNet(res.data.login);
+        let starred = "---";
+        if (countRes.result) {
+            starred = countRes.data;
+        }
+        let totalInfo = Object.assign({}, res.data, {starred: starred});
+        AsyncStorage.setItem(Constant.USER_INFO, JSON.stringify(totalInfo));
         return {
             result: true,
-            data:res.data
+            data: totalInfo
         }
     } else {
         return {
             result: false,
-            data:res.data
+            data: res.data
+        }
+    }
+};
+
+/**
+ * 在header中提起stared count
+ */
+const getUserStaredCountNet = async (userName) => {
+    let res = await Api.netFetch(Address.userStar(userName) + "&per_page=1");
+    if (res && res.result && res.headers && res.headers.map) {
+        try {
+            let link = res.headers.map['link'];
+            if (link && (typeof link) === 'object') {
+                let indexStart = link[0].lastIndexOf("page=") + 5;
+                let indexEnd = link[0].lastIndexOf(">");
+                if (indexStart >= 0 && indexEnd >= 0) {
+                    let count = link[0].substring(indexStart, indexEnd);
+                    return {
+                        result: true,
+                        data: count
+                    }
+                }
+            }
+            return {
+                result: true,
+            }
+        } catch (e) {
+            console.log(e)
+        }
+        return {
+            result: false,
+        }
+    } else {
+        return {
+            result: false,
         }
     }
 };
@@ -44,4 +84,5 @@ const getUserInfoNet = async() => {
 export default {
     getUserInfoLocal,
     getUserInfoNet,
+    getUserStaredCountNet
 }

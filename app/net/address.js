@@ -76,7 +76,7 @@ export default AddressLocal = {
         if (!sort) {
             sort = 'updated'
         }
-        return `${host}users/${userName}/starred=${sort}`
+        return `${host}users/${userName}/starred?sort=${sort}`
     },
     /**
      * 关注仓库 put

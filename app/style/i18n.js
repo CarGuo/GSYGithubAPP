@@ -34,6 +34,10 @@ I18n.translations = {
         loadMoreing: 'loading...',
         doublePressExit: 'Press again to Exit',
         userInfoNoting: 'nothing',
+        staredText: 'stared',
+        FollowersText: 'follower',
+        FollowedText: 'followed',
+        repositoryText: 'repository',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -57,6 +61,10 @@ I18n.translations = {
         loading: '加载中...',
         doublePressExit: '双击退出',
         userInfoNoting: 'Ta什么都没留下',
+        staredText: '星标',
+        FollowersText: '粉丝',
+        FollowedText: '关注',
+        repositoryText: '仓库',
     }
 };
 
