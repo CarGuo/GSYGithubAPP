@@ -16,6 +16,7 @@ import loginActions from '../../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import TimeText from './TimeText'
+import UserImage from './UserImage'
 
 /**
  * 事件列表Item
@@ -34,6 +35,11 @@ class EventItem extends Component {
 
     render() {
         let {actionTime, actionUser, actionUserPic, actionMode, actionTarget} = this.props;
+        let bottomDes = (this.props.des) ?
+            <Text style={[styles.subSmallText,
+                {marginTop: Constant.normalMarginEdge}]}>
+                {this.props.des}
+            </Text> : <View/>;
         return (
             <View style={[{
                 marginTop: Constant.normalMarginEdge,
@@ -43,13 +49,14 @@ class EventItem extends Component {
                 borderRadius: 4,
             }, styles.shadowCard]}>
                 <View style={[styles.flexDirectionRowNotFlex,]}>
-                    <Image source={{uri: actionUserPic}}
-                           resizeMethod="scale"
-                           style={[{
-                               height: Constant.smallIconSize, width: Constant.smallIconSize,
-                               marginTop: 5,
-                               borderRadius: Constant.smallIconSize / 2
-                           }]}/>
+                    <UserImage uri={actionUserPic}
+                               userName={actionUser}
+                               resizeMethod="scale"
+                               style={[{
+                                   height: Constant.smallIconSize, width: Constant.smallIconSize,
+                                   marginTop: 5,
+                                   borderRadius: Constant.smallIconSize / 2
+                               }]}/>
                     <View style={[styles.flex, styles.centerH, styles.flexDirectionRowNotFlex]}>
                         <Text style={[styles.flex, styles.smallText, {
                             fontWeight: "bold",
@@ -65,10 +72,7 @@ class EventItem extends Component {
                 <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
                     <Text style={[styles.smallText, {fontWeight: "bold"}]}>{actionTarget}</Text>
                 </View>
-                <Text style={[styles.subSmallText,
-                    {marginTop: Constant.normalMarginEdge}]}>
-                    {this.props.des}
-                </Text>
+                {bottomDes}
             </View>
         )
     }

@@ -85,6 +85,10 @@ const getUserInfo = () => {
     });
 };
 
+const getOtherUserInfo = async (userName) => {
+    return UserDao.getUserInfoNet(userName);
+};
+
 const clearUserInfo = () => {
     AsyncStorage.removeItem(Constant.USER_INFO);
     dispatch({
@@ -93,9 +97,9 @@ const clearUserInfo = () => {
     });
 };
 
-
 export default {
     initUserInfo,
     getUserInfo,
+    getOtherUserInfo,
     clearUserInfo
 }

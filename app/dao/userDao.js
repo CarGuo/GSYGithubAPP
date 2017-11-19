@@ -22,9 +22,13 @@ const getUserInfoLocal = async () => {
     }
 };
 
-
-const getUserInfoNet = async () => {
-    let res = await Api.netFetch(Address.getMyUserInfo());
+const getUserInfoNet = async (userName) => {
+    let res;
+    if (!userName) {
+        res = await Api.netFetch(Address.getMyUserInfo());
+    } else {
+        res = await Api.netFetch(Address.getUserInfo(userName));
+    }
     if (res && res.result) {
         let countRes = await getUserStaredCountNet(res.data.login);
         let starred = "---";
@@ -32,7 +36,9 @@ const getUserInfoNet = async () => {
             starred = countRes.data;
         }
         let totalInfo = Object.assign({}, res.data, {starred: starred});
-        AsyncStorage.setItem(Constant.USER_INFO, JSON.stringify(totalInfo));
+        if (!userName) {
+            AsyncStorage.setItem(Constant.USER_INFO, JSON.stringify(totalInfo));
+        }
         return {
             result: true,
             data: totalInfo
