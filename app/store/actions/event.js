@@ -13,7 +13,7 @@ import EventDao from '../../dao/eventDao'
 
 const getEventReceived = (page = 0, callback) => async (dispatch, getState) => {
     let user = getState()['user'];
-    if (!user && user.userInfo) {
+    if (!user || !user.userInfo || !user.userInfo.login) {
         //todo 提示用户信息异常
         callback && callback(null);
         return;

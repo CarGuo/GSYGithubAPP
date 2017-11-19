@@ -65,7 +65,9 @@ class DynamicPage extends Component {
         eventAction.getEventReceived(0, (res) => {
             this.page = 2;
             setTimeout(() => {
-                this.refs.pullList.refreshComplete((res && res.length >= Config.PAGE_SIZE));
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((res && res.length >= Config.PAGE_SIZE));
+                }
             }, 500);
         })
     }
@@ -78,7 +80,9 @@ class DynamicPage extends Component {
         eventAction.getEventReceived(this.page, (res) => {
             this.page++;
             setTimeout(() => {
-                this.refs.pullList.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
+                if (this.refs.pullList) {
+                    this.refs.pullList.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
+                }
             }, 300);
         });
     }

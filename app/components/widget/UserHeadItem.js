@@ -9,16 +9,13 @@ import IconTextItem from './IconTextItem'
 import IconTextAutoLinkItem from './IconTextAutoLinkItem'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import I18n from '../../style/i18n'
+import NameValueItem from './NameValueItem'
 
 class UserHeadItem extends Component {
 
 
     render() {
         let halfEdge = Constant.normalMarginEdge / 2;
-        let bottomTopTextStyle = [styles.subSmallText, {
-            marginTop: halfEdge
-        },];
-        let bottomBottomTextStyle = [styles.subLightSmallText, {marginVertical: halfEdge}];
         let hint = I18n('userInfoNoting');
         let {
             link, userPic, userName, userDisPlayName, des, location, groupName,
@@ -75,26 +72,38 @@ class UserHeadItem extends Component {
                     {borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Constant.primaryLightColor},
                     {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.primaryLightColor},
                 ]}>
-                    <View style={[styles.flex, styles.centered,]}>
-                        <Text style={[...bottomTopTextStyle]}>{I18n("repositoryText")}</Text>
-                        <Text style={[...bottomBottomTextStyle]}>{repos}</Text>
-                    </View>
-                    <View style={[styles.flex, styles.centered,
-                        {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.primaryLightColor},
-                        {borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.primaryLightColor},
-                    ]}>
-                        <Text style={[...bottomTopTextStyle]}>{I18n("FollowersText")}</Text>
-                        <Text style={[...bottomBottomTextStyle]}>{follower}</Text>
-                    </View>
-                    <View style={[styles.flex, styles.centered,]}>
-                        <Text style={[...bottomTopTextStyle]}>{I18n("FollowedText")}</Text>
-                        <Text style={[...bottomBottomTextStyle]}>{followed}</Text>
-                    </View>
-                    <View style={[styles.flex, styles.centered,
-                        {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.primaryLightColor},]}>
-                        <Text style={[...bottomTopTextStyle]}>{I18n("staredText")}</Text>
-                        <Text style={[...bottomBottomTextStyle]}>{star}</Text>
-                    </View>
+                    <NameValueItem
+                        itemStyle={[styles.flex, styles.centered,]}
+                        itemName={I18n("repositoryText")}
+                        itemValue={repos}
+                        onItemPress={() => {
+
+                        }}/>
+                    <NameValueItem
+                        itemStyle={[styles.flex, styles.centered,
+                            {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.primaryLightColor},
+                            {borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.primaryLightColor},
+                        ]}
+                        itemName={I18n("FollowersText")}
+                        itemValue={follower}
+                        onItemPress={() => {
+
+                        }}/>
+                    <NameValueItem
+                        itemStyle={[styles.flex, styles.centered,]}
+                        itemName={I18n("FollowedText")}
+                        itemValue={followed}
+                        onItemPress={() => {
+
+                        }}/>
+                    <NameValueItem
+                        itemStyle={[styles.flex, styles.centered,
+                            {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.primaryLightColor},]}
+                        itemName={I18n("staredText")}
+                        itemValue={star}
+                        onItemPress={() => {
+
+                        }}/>
                 </View>
             </View>
         )

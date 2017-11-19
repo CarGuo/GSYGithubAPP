@@ -52,6 +52,7 @@ const getRouter = () => {
                             component={RecommendPage}
                             icon={TabIcon}
                             title={I18n('tabRecommended')}
+                            tabIconName={'tabRecommended'}
                         />
                         <Scene
                             key="DynamicPage"
@@ -59,6 +60,7 @@ const getRouter = () => {
                             component={DynamicPage}
                             icon={TabIcon}
                             title={I18n('tabDynamic')}
+                            tabIconName={'tabDynamic'}
                         />
                         <Scene
                             key="MyPage"
@@ -66,6 +68,7 @@ const getRouter = () => {
                             component={MyPage}
                             icon={TabIcon}
                             title={I18n('tabMy')}
+                            tabIconName={'tabMy'}
                         />
                     </Scene>
                     <Scene key="LoginPage" component={LoginPage}
