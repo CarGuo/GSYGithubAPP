@@ -39,6 +39,15 @@ const getEventReceived = (page = 0, callback) => async (dispatch, getState) => {
 };
 
 
+const getEvent = async (page = 0, userName) => {
+    if (!userName) {
+        return null;
+    }
+    let res =  EventDao.getEventFromNet(page, userName);
+    return res;
+}
+
 export default {
     getEventReceived,
+    getEvent
 }

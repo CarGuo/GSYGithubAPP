@@ -161,7 +161,7 @@ export default AddressLocal = {
      * 用户相关的事件信息
      */
     getEvent: (userName) => {
-        return `${host}${userName}/events`
+        return `${host}users/${userName}/events`
     },
     /**
      * 通知

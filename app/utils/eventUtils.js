@@ -6,7 +6,7 @@ export const getActionAndDes = (event) => {
             actionStr = "Commit comment at " + event.repo.name;
             break;
         case "CreateEvent":
-            if (event.payload.ref_type.equals("repository")) {
+            if (event.payload.ref_type = "repository") {
                 actionStr = "Created repository " + event.repo.name;
             } else {
                 actionStr = "Created " + event.payload.ref_type + " "
@@ -88,7 +88,9 @@ export const getActionAndDes = (event) => {
                 " at " + event.repo.name;
 
             des = '';
-            let count = event.payload.comment.size;
+
+            // todo let count = event.payload.comment.size;
+            let count = event.comments;
             let maxLines = 4;
             let max = count > maxLines ? maxLines - 1 : count;
 
