@@ -38,6 +38,7 @@ I18n.translations = {
         FollowersText: 'follower',
         FollowedText: 'followed',
         repositoryText: 'repository',
+        personDynamic: 'Activity',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -65,6 +66,7 @@ I18n.translations = {
         FollowersText: '粉丝',
         FollowedText: '关注',
         repositoryText: '仓库',
+        personDynamic: '个人动态',
     }
 };
 

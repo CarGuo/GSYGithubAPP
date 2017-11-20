@@ -43,7 +43,7 @@ const getEvent = async (page = 0, userName) => {
     if (!userName) {
         return null;
     }
-    let res =  EventDao.getEventFromNet(page, userName);
+    let res = await EventDao.getEventFromNet(page, userName);
     return res;
 }
 

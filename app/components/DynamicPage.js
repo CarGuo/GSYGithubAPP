@@ -62,7 +62,7 @@ class DynamicPage extends Component {
      * */
     _refresh() {
         let {eventAction} = this.props;
-        eventAction.getEventReceived(0, (res) => {
+        eventAction.getEventReceived(1, (res) => {
             this.page = 2;
             setTimeout(() => {
                 if (this.refs.pullList) {

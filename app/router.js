@@ -37,8 +37,11 @@ const getRouter = () => {
                     </Scene>
                     <Scene key="mainTabPage"
                            tabs
-                           hideNavBar
+                           lazy
+                           wrap={false}
+                           navigationBarStyle={styles.navigationBar}
                            showLabel={false}
+                           title={I18n('appName')}
                            tabBarPosition={"bottom"}
                            tabBarStyle={{
                                height: Constant.tabBarHeight,
@@ -48,7 +51,6 @@ const getRouter = () => {
                            }}>
                         <Scene
                             key="RecommendPage"
-                            navigationBarStyle={styles.navigationBar}
                             component={RecommendPage}
                             icon={TabIcon}
                             title={I18n('tabRecommended')}
@@ -56,7 +58,6 @@ const getRouter = () => {
                         />
                         <Scene
                             key="DynamicPage"
-                            navigationBarStyle={styles.navigationBar}
                             component={DynamicPage}
                             icon={TabIcon}
                             title={I18n('tabDynamic')}
@@ -64,7 +65,6 @@ const getRouter = () => {
                         />
                         <Scene
                             key="MyPage"
-                            navigationBarStyle={styles.navigationBar}
                             component={MyPage}
                             icon={TabIcon}
                             title={I18n('tabMy')}

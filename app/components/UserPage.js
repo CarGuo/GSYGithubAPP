@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, Image
+    View, Text, StatusBar, Image, InteractionManager
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
@@ -21,6 +21,7 @@ import PullListView from './widget/PullLoadMoreListView'
 import EventItem from './widget/EventItem'
 import {getActionAndDes} from '../utils/eventUtils'
 import * as Config from '../config/'
+import I18n from '../style/i18n'
 
 class UserPage extends Component {
 
@@ -35,6 +36,10 @@ class UserPage extends Component {
     }
 
     componentDidMount() {
+        InteractionManager.runAfterInteractions(() => {
+            this.refs.pullList.showRefreshState();
+            this._refresh();
+        })
     }
 
     componentWillUnmount() {
@@ -59,7 +64,7 @@ class UserPage extends Component {
     _refresh() {
         let {userState} = this.props;
         let userInfo = (this.props.ownUser && userState.userInfo) ? userState.userInfo : {};
-        eventActions.getEvent(0, userInfo.login).then((res) => {
+        eventActions.getEvent(1, userInfo.login).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;
@@ -80,13 +85,23 @@ class UserPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        eventActions.getEvent(this.page).then((res) => {
+        let {userState} = this.props;
+        let userInfo = (this.props.ownUser && userState.userInfo) ? userState.userInfo : {};
+        eventActions.getEvent(this.page, userInfo.login).then((res) => {
             this.page++;
+            let size = 0;
+            if (res && res.result) {
+                let localData = this.state.dataSource.concat(res.data);
+                this.setState({
+                    dataSource: localData
+                });
+                size = res.data.length;
+            }
             setTimeout(() => {
                 if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
+                    this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
                 }
-            }, 300);
+            }, 500);
         });
     }
 
@@ -96,22 +111,36 @@ class UserPage extends Component {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
-                <UserHeadItem
-                    userDisPlayName={userInfo.login}
-                    userName={userInfo.name}
-                    userPic={userInfo.avatar_url}
-                    groupName={userInfo.company}
-                    location={userInfo.location}
-                    link={userInfo.blog}
-                    des={userInfo.bio}
-                    star={(userInfo.starred) ? userInfo.starred : "---"}
-                    repos={userInfo.public_repos + ""}
-                    follower={userInfo.followers + ""}
-                    followed={userInfo.following + ""}
-                />
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
+                    renderHeader={() => {
+                        return (
+                            <View>
+                                <UserHeadItem
+                                    userDisPlayName={userInfo.login}
+                                    userName={userInfo.name}
+                                    userPic={userInfo.avatar_url}
+                                    groupName={userInfo.company}
+                                    location={userInfo.location}
+                                    link={userInfo.blog}
+                                    des={userInfo.bio}
+                                    star={(userInfo.starred) ? userInfo.starred : "---"}
+                                    repos={userInfo.public_repos + ""}
+                                    follower={userInfo.followers + ""}
+                                    followed={userInfo.following + ""}
+                                />
+                                <View style={styles.flex}>
+                                    <Text style={[styles.normalText, {
+                                        fontWeight: "bold", margin: Constant.normalMarginEdge
+                                    }]}>
+                                        {I18n('personDynamic')}
+                                    </Text>
+                                </View>
+                            </View>
+                        );
+                    }}
+                    render
                     renderRow={(rowData, sectionID, rowID, highlightRow) =>
                         this._renderRow(rowData, sectionID, rowID, highlightRow)
                     }
