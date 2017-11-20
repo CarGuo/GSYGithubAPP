@@ -40,6 +40,10 @@ I18n.translations = {
         FollowedText: 'followed',
         repositoryText: 'repository',
         personDynamic: 'Activity',
+        trendDay: 'Day',
+        trendWeek: 'Week',
+        trendMonth: 'Month',
+        trendAll: 'All',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -69,20 +73,24 @@ I18n.translations = {
         FollowedText: '关注',
         repositoryText: '仓库',
         personDynamic: '个人动态',
+        trendDay: '今日',
+        trendWeek: '本周',
+        trendMonth: '本月',
+        trendAll: '全部',
     }
 };
 
 export const changeLocale = function (multilingual) {
-    if (multilingual == 'local' || !multilingual) {
+    if (multilingual === 'local' || !multilingual) {
         I18n.locale = (RNI18n && RNI18n.locale) ? RNI18n.locale.replace(/_/, '-') : ''
     } else {
         I18n.locale = multilingual
     }
 
     // for ios
-    if (I18n.locale.indexOf('zh-Hans') != -1) {
+    if (I18n.locale.indexOf('zh-Hans') !== -1) {
         I18n.locale = 'zh-CN'
-    } else if (I18n.locale.indexOf('zh-Hant') != -1 || I18n.locale == 'zh-HK' || I18n.locale == 'zh-MO') {
+    } else if (I18n.locale.indexOf('zh-Hant') !== -1 || I18n.locale === 'zh-HK' || I18n.locale === 'zh-MO') {
         I18n.locale = 'zh-CN'
     }
 };

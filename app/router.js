@@ -12,6 +12,7 @@ import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
 import PersonPage from './components/PersonPage'
+import TrendPage from './components/TrendPage'
 import TabIcon from './components/widget/TabIcon'
 import LoadingModal from './components/widget/LoadingModal'
 import styles from './style'
@@ -66,12 +67,20 @@ const getRouter = () => {
                             tabIconName={'tabDynamic'}
                         />
                         <Scene
+                            key="TrendPage"
+                            component={TrendPage}
+                            icon={TabIcon}
+                            title={I18n('tabRecommended')}
+                            tabIconName={'tabRecommended'}
+                        />
+                        <Scene
                             key="MyPage"
                             component={MyPage}
                             icon={TabIcon}
                             title={I18n('tabMy')}
                             tabIconName={'tabMy'}
                         />
+
                     </Scene>
                     <Scene key="LoginPage" component={LoginPage}
                            showLabel={false}
