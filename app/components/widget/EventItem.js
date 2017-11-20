@@ -37,7 +37,8 @@ class EventItem extends Component {
         let {actionTime, actionUser, actionUserPic, actionMode, actionTarget} = this.props;
         let bottomDes = (this.props.des) ?
             <Text style={[styles.subSmallText,
-                {marginTop: Constant.normalMarginEdge}]}>
+                {marginTop: Constant.normalMarginEdge,}]}
+                  numberOfLines={Constant.normalNumberOfLine}>
                 {this.props.des}
             </Text> : <View/>;
         return (

@@ -24,6 +24,9 @@ export default StyleSheet.create({
         paddingTop: StatusBar.currentHeight,
         height: navBarHeight,
     },
+    titleTextStyle:{
+        color: constant.titleTextColor,
+    },
     mainBgColor: {
         backgroundColor: constant.mainBackgroundColor
     },

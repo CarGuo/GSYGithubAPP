@@ -132,7 +132,8 @@ class UserPage extends Component {
                                 />
                                 <View style={styles.flex}>
                                     <Text style={[styles.normalText, {
-                                        fontWeight: "bold", margin: Constant.normalMarginEdge
+                                        fontWeight: "bold", marginTop: Constant.normalMarginEdge,
+                                        marginLeft: Constant.normalMarginEdge,
                                     }]}>
                                         {I18n('personDynamic')}
                                     </Text>
