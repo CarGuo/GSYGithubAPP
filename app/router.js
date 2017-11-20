@@ -9,8 +9,9 @@ import {
 } from 'react-native-router-flux';
 import DynamicPage from './components/DynamicPage'
 import LoginPage from './components/LoginPage'
-import MyPage from './components/UserPage'
+import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
+import PersonPage from './components/PersonPage'
 import TabIcon from './components/widget/TabIcon'
 import LoadingModal from './components/widget/LoadingModal'
 import styles from './style'
@@ -74,6 +75,9 @@ const getRouter = () => {
                     </Scene>
                     <Scene key="LoginPage" component={LoginPage}
                            showLabel={false}
+                           hideNavBar/>
+                    <Scene key="PersonPage" component={PersonPage}
+                           title={I18n('appName')}
                            hideNavBar/>
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>

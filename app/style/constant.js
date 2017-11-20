@@ -8,7 +8,7 @@ export const miWhite = '#ececec';
 export const transparentColor = '#00000000';
 
 export const mainBackgroundColor = miWhite;
-export const tabBackgroundColor = '#d0d0d0';
+export const tabBackgroundColor = '#ffffff';
 export const cardBackgroundColor = '#FFF';
 export const cardShadowColor = '#000000';
 

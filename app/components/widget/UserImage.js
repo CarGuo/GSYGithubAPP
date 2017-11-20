@@ -5,6 +5,7 @@ import {
     View, Text, Image, TouchableWithoutFeedback
 } from 'react-native';
 import PropTypes from 'prop-types';
+import {Actions} from 'react-native-router-flux';
 import userActions from '../../store/actions/user'
 
 
@@ -13,10 +14,7 @@ export default class UserImage extends Component {
     render() {
         return (
             <TouchableWithoutFeedback onPress={() => {
-                alert(this.props.userName)
-                userActions.getOtherUserInfo(this.props.userName).then((res) => {
-                    console.log(res);
-                })
+                Actions.PersonPage({userName: this.props.userName})
             }}>
                 <Image source={{uri: this.props.uri}}
                        resizeMethod="scale"

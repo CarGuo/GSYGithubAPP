@@ -6,24 +6,17 @@ import React, {Component} from 'react';
 import {
     View, Text, StatusBar, Image, InteractionManager
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
-import styles from "../style"
-import PropTypes from 'prop-types';
-import * as Constant from '../style/constant'
-import loginActions from '../store/actions/login'
-import userActions from '../store/actions/user'
-import eventActions from '../store/actions/event'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import UserHeadItem from './widget/UserHeadItem'
-import PullListView from './widget/PullLoadMoreListView'
-import EventItem from './widget/EventItem'
-import {getActionAndDes} from '../utils/eventUtils'
-import * as Config from '../config/'
-import I18n from '../style/i18n'
+import styles from "../../style"
+import * as Constant from '../../style/constant'
+import eventActions from '../../store/actions/event'
+import UserHeadItem from './UserHeadItem'
+import PullListView from './PullLoadMoreListView'
+import EventItem from './EventItem'
+import {getActionAndDes} from '../../utils/eventUtils'
+import * as Config from '../../config/'
+import I18n from '../../style/i18n'
 
-class UserPage extends Component {
+class BasePersonPage extends Component {
 
     constructor(props) {
         super(props);
@@ -62,8 +55,7 @@ class UserPage extends Component {
      * 刷新
      * */
     _refresh() {
-        let {userState} = this.props;
-        let userInfo = (this.props.ownUser && userState.userInfo) ? userState.userInfo : {};
+        let userInfo = this.getUserInfo();
         eventActions.getEvent(1, userInfo.login).then((res) => {
             let size = 0;
             if (res && res.result) {
@@ -85,8 +77,7 @@ class UserPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        let {userState} = this.props;
-        let userInfo = (this.props.ownUser && userState.userInfo) ? userState.userInfo : {};
+        let userInfo = this.getUserInfo();
         eventActions.getEvent(this.page, userInfo.login).then((res) => {
             this.page++;
             let size = 0;
@@ -105,9 +96,12 @@ class UserPage extends Component {
         });
     }
 
+    getUserInfo() {
+        return {}
+    }
+
     render() {
-        let {userState} = this.props;
-        let userInfo = (this.props.ownUser && userState.userInfo) ? userState.userInfo : {};
+        let userInfo = this.getUserInfo();
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -154,19 +148,4 @@ class UserPage extends Component {
     }
 }
 
-UserPage.propTypes = {
-    ownUser: PropTypes.bool,
-};
-
-
-UserPage.defaultProps = {
-    ownUser: true,
-};
-
-
-export default connect(state => ({
-    userState: state.user,
-}), dispatch => ({
-    loginAction: bindActionCreators(loginActions, dispatch),
-    userAction: bindActionCreators(userActions, dispatch)
-}))(UserPage)
+export default BasePersonPage
