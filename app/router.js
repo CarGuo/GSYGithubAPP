@@ -77,8 +77,7 @@ const getRouter = () => {
                            showLabel={false}
                            hideNavBar/>
                     <Scene key="PersonPage" component={PersonPage}
-                           title={I18n('appName')}
-                           hideNavBar/>
+                           backButtonTintColor={Constant.titleTextColor}/>
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
             </Lightbox>
