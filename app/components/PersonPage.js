@@ -1,5 +1,4 @@
 import {BackHandler} from "react-native"
-import MyPage from "./MyPage";
 import BasePersonPage from "./widget/BasePersonPage";
 import userAction from "../store/actions/user";
 import {Actions} from "react-native-router-flux";
@@ -9,7 +8,13 @@ class PersonPage extends BasePersonPage {
         super(props);
         this._onClose = this._onClose.bind(this);
         this.state = {
-            userInfo: {}
+            userInfo: {
+                login: this.props.userName,
+                followers: '---',
+                star: '---',
+                followed: '---',
+                repos: '---',
+            },
         }
     }
 

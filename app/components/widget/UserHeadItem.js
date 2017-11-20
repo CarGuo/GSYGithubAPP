@@ -11,6 +11,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import I18n from '../../style/i18n'
 import NameValueItem from './NameValueItem'
 
+const hintNum = '---';
+
 class UserHeadItem extends Component {
 
 
@@ -38,18 +40,22 @@ class UserHeadItem extends Component {
                 elevation: 2,
             }]}>
                 <View style={[styles.flexDirectionRowNotFlex]}>
-                    <Image source={{uri: userPic}}
-                           resizeMethod="scale"
-                           style={[styles.centerH, {
-                               height: Constant.largeIconSize, width: Constant.largeIconSize,
-                               borderRadius: Constant.largeIconSize / 2,
-                               marginTop: 5
-                           }]}/>
+                    <View style={[{
+                        height: Constant.largeIconSize, width: Constant.largeIconSize,
+                    }]}>
+                        <Image source={{uri: userPic}}
+                               resizeMethod="scale"
+                               style={[styles.centerH, {
+                                   height: Constant.largeIconSize, width: Constant.largeIconSize,
+                                   borderRadius: Constant.largeIconSize / 2,
+                                   marginTop: 5
+                               }]}/>
+                    </View>
                     <View style={{marginLeft: Constant.normalMarginEdge}}>
                         <Text style={[styles.largeTextWhite, {fontWeight: "bold",}]}>
-                            {userDisPlayName}
+                            {(userDisPlayName) ? userDisPlayName : hintNum}
                         </Text>
-                        <Text style={[styles.subLightSmallText,]}>{userName}</Text>
+                        <Text style={[styles.subLightSmallText,]}>{(userName) ? userName : hintNum}</Text>
                         <IconTextItem
                             text={(groupName) ? groupName : hint} icon={'map-marker'}
                             viewstyle={[{marginTop: halfEdge}]}
@@ -75,7 +81,7 @@ class UserHeadItem extends Component {
                     <NameValueItem
                         itemStyle={[styles.flex, styles.centered,]}
                         itemName={I18n("repositoryText")}
-                        itemValue={repos}
+                        itemValue={repos ? repos : hintNum}
                         onItemPress={() => {
 
                         }}/>
@@ -85,14 +91,14 @@ class UserHeadItem extends Component {
                             {borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.primaryLightColor},
                         ]}
                         itemName={I18n("FollowersText")}
-                        itemValue={follower}
+                        itemValue={follower ? follower : hintNum}
                         onItemPress={() => {
 
                         }}/>
                     <NameValueItem
                         itemStyle={[styles.flex, styles.centered,]}
                         itemName={I18n("FollowedText")}
-                        itemValue={followed}
+                        itemValue={followed ? followed : hintNum}
                         onItemPress={() => {
 
                         }}/>
@@ -100,7 +106,7 @@ class UserHeadItem extends Component {
                         itemStyle={[styles.flex, styles.centered,
                             {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.primaryLightColor},]}
                         itemName={I18n("staredText")}
-                        itemValue={star}
+                        itemValue={star ? star : hintNum}
                         onItemPress={() => {
 
                         }}/>
@@ -127,10 +133,12 @@ UserHeadItem.propTypes = {
 
 
 UserHeadItem.defaultProps = {
-    star: '',
-    follower: '',
-    followed: '',
-    repos: '',
+    userDisPlayName: ' ',
+    userName: ' ',
+    star: hintNum,
+    follower: hintNum,
+    followed: hintNum,
+    repos: hintNum,
 };
 
 

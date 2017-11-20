@@ -48,7 +48,15 @@ class PullLoadMoreListView extends Component {
                 <Text style={{fontSize: 15, color: 'black'}}>
                     {I18n('loadMoreing')}
                 </Text>
-            </View> : <View/>;
+            </View> : <View style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <Text style={{fontSize: 15, color: 'black', margin: Constant.normalMarginEdge}}>
+                    {this.props.dataSource.length > 0 ? I18n('loadMoreEnd') : " "}
+                </Text>
+            </View>;
 
         return (footer);
     }
