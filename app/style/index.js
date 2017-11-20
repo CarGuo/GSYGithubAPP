@@ -6,13 +6,13 @@ import * as constant from "./constant"
 
 export const screenWidth = Dimensions.get("window").width;
 export const screenHeight = Dimensions.get("window").height;
-export const navBarHeight = Platform.OS === 'ios' ? constant.iosnavHeaderHeight : constant.andrnavHeaderHeight
+export const navBarHeight = (Platform.OS === 'ios') ? constant.iosnavHeaderHeight : constant.andrnavHeaderHeight;
 
 export default StyleSheet.create({
     routerStyle: {
         //设置router的样式
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: constant.mainBackgroundColor,
         shadowColor: null,
         shadowOffset: null,
         shadowOpacity: null,
@@ -22,6 +22,7 @@ export default StyleSheet.create({
     navigationBar: {
         backgroundColor: constant.primaryColor,
         paddingTop: StatusBar.currentHeight,
+        height: navBarHeight,
     },
     mainBgColor: {
         backgroundColor: constant.mainBackgroundColor
@@ -76,7 +77,7 @@ export default StyleSheet.create({
         textAlign: "center"
     },
     smallTextWhite: {
-        color: '#FFF',
+        color: constant.TextColorWhite,
         fontSize: constant.smallTextSize
     },
     smallText: {
@@ -100,7 +101,7 @@ export default StyleSheet.create({
         fontSize: constant.normalTextSize
     },
     normalTextWhite: {
-        color: "#FFF",
+        color: constant.TextColorWhite,
         fontSize: constant.normalTextSize
     },
     largeText: {
@@ -108,7 +109,7 @@ export default StyleSheet.create({
         fontSize: constant.bigTextSize
     },
     largeTextWhite: {
-        color: "#FFF",
+        color: constant.TextColorWhite,
         fontSize: constant.bigTextSize
     },
     absoluteFull: {
@@ -120,7 +121,7 @@ export default StyleSheet.create({
         zIndex: 999,
     },
     shadowCard: {
-        shadowColor: '#000',
+        shadowColor: constant.cardShadowColor,
         shadowOffset: {
             width: 1,
             height: 2
@@ -128,7 +129,7 @@ export default StyleSheet.create({
         shadowOpacity: 0.7,
         shadowRadius: 5,
         elevation: 2,
-        backgroundColor: "#FFFFFF"
+        backgroundColor: constant.cardBackgroundColor
     }
 
 

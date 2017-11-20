@@ -31,7 +31,9 @@ const getRouter = () => {
             backAndroidHandler={
                 BackUtils()}>
             <Lightbox>
-                <Scene key="root">
+                <Scene key="root"
+                       navigationBarStyle={styles.navigationBar}
+                       titleStyle={{color: Constant.titleTextColor}}>
                     <Scene key="main">
                         <Scene key="WelcomePage" component={WelcomePage} hideNavBar hideTabBar hide/>
                     </Scene>
@@ -39,7 +41,6 @@ const getRouter = () => {
                            tabs
                            lazy
                            wrap={false}
-                           navigationBarStyle={styles.navigationBar}
                            showLabel={false}
                            title={I18n('appName')}
                            tabBarPosition={"bottom"}

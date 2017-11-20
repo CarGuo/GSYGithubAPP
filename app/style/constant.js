@@ -5,28 +5,34 @@
 /****************颜色****************/
 
 export const miWhite = '#ececec';
+export const transparentColor = '#00000000';
+
 export const mainBackgroundColor = miWhite;
-export const tabBackgroundColor = "#ececec";
+export const tabBackgroundColor = '#d0d0d0';
+export const cardBackgroundColor = '#FFF';
+export const cardShadowColor = '#000000';
+
+export const lineColor = '#42464b';
 
 export const primaryColor = '#24292e';
 export const primaryDarkColor = '#121917';
 export const primaryLightColor = '#42464b';
-export const actionColor = '#41464b';
-export const lineColor = '#d8d8d8';
-export const mainTextColor = '#000000';
+
+export const titleTextColor = miWhite;
+export const mainTextColor = primaryDarkColor;
 export const subTextColor = '#959595';
 export const subLightTextColor = '#c4c4c4';
+export const TextColorWhite = '#FFFFFF';
+export const TextColorMiWhtte = miWhite;
 
-export const tabSelectedColor = '#24292e';
-export const tabUnSelectColor = '#d2d2d2';
-
-export const transparentColor = '#00000000';
+export const tabSelectedColor = primaryColor;
+export const tabUnSelectColor = '#a6aaaf';
 
 
 /****************大小****************/
 // navbar 高度
-export const iosnavHeaderHeight = 64;
-export const andrnavHeaderHeight = 44;
+export const iosnavHeaderHeight = 70;
+export const andrnavHeaderHeight = 70;
 
 export const largetTextSize = 30;
 export const bigTextSize = 23;

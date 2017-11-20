@@ -105,7 +105,7 @@ class PullLoadMoreListView extends Component {
                         onRefresh={this._refresh}
                         tintColor={Constant.primaryColor}
                         title={I18n('refreshing')}
-                        colors={[Constant.primaryColor, Constant.actionColor]}/>}
+                        colors={[Constant.primaryColor, Constant.primaryLightColor]}/>}
                 onEndReached={this._loadMore}
                 renderFooter={this._renderFooter}
                 dataSource={dataList}
