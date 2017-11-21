@@ -17,6 +17,8 @@ import {
 import * as Constant from '../../style/constant'
 import styles from '../../style'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import UserImage from './UserImage'
+import IconTextItem from './IconTextItem'
 
 /**
  * 仓库相关Item显示
@@ -50,51 +52,59 @@ class RepositoryItem extends Component {
 
         let bottomIconStyle = {
             backgroundColor: Constant.transparentColor,
-            color: Constant.subTextColor, size: Constant.minIconSize
+            color: Constant.subTextColor, size: Constant.minIconSize,
+            marginTop: Constant.normalMarginEdge / 2,
+            marginLeft: -Constant.normalMarginEdge / 2
         };
         return (
-            <View>
-                <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
-                    <Image source={{uri: ownerPic}}
-                           resizeMethod="scale"
-                           style={[{height: Constant.normalIconSize, width: Constant.normalIconSize,
-                       marginLeft: Constant.normalMarginEdge,
-                       marginRight: Constant.normalMarginEdge,
-                       marginTop: 5,
-                       }]}/>
-                    <View style={styles.flex}>
-                        <View style={[styles.flexDirectionRowNotFlex]}>
-                            <Text style={[styles.smallText, {fontWeight: "bold"}]}>{ownerName}</Text>
-                            <Text
-                                style={[styles.subSmallText,]}>
-                                {"/"}
-                            </Text>
-                            <Text style={[styles.smallText, {fontWeight: "bold"}]}>{repositoryName}</Text>
-                            <View
-                                style={[styles.flex, styles.alignItemsEnd, {marginRight: Constant.normalMarginEdge, marginTop: -5}]}>
-                                <Text
-                                    style={{ color: Constant.subTextColor, fontSize: Constant.minTextSize}}>{repositoryType}</Text>
-                            </View>
+            <View style={[{
+                backgroundColor: Constant.white,
+                marginTop: Constant.normalMarginEdge,
+                marginHorizontal: Constant.normalMarginEdge,
+                paddingHorizontal: Constant.normalMarginEdge,
+                paddingTop: Constant.normalMarginEdge,
+                borderRadius: 4,
+            }, styles.shadowCard]}>
+                <View style={[styles.flexDirectionRowNotFlex]}>
+                    <UserImage uri={ownerPic}
+                               userName={ownerName}
+                               resizeMethod="scale"
+                               style={[{
+                                   height: Constant.normalIconSize, width: Constant.normalIconSize,
+                                   marginRight: Constant.normalMarginEdge,
+                                   borderRadius: Constant.normalIconSize / 2,
+                                   marginTop: 2
+                               }]}/>
+                    <View style={[styles.flexDirectionRow]}>
+                        <View>
+                            <Text style={[styles.normalText, {fontWeight: "bold"}]}>{repositoryName}</Text>
+                            <IconTextItem
+                                iconColor={Constant.subLightTextColor}
+                                text={ownerName} icon={'group'}
+                                textstyle={[styles.subLightSmallText]}/>
                         </View>
-                        <Text style={[styles.subSmallText,
-                                {marginBottom:Constant.normalMarginEdge,}]}>
-                            {repositoryDes}
-                        </Text>
+                        <View style={[styles.flex, styles.alignItemsEnd, {
+                            marginRight: Constant.normalMarginEdge / 2,
+                            marginTop: -5
+                        }]}>
+                            <Text style={{color: Constant.subTextColor, fontSize: Constant.minTextSize}}>
+                                {repositoryType}
+                            </Text>
+                        </View>
                     </View>
                 </View>
-                <View style={[styles.flexDirectionRowNotFlex,
-                        {borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Constant.lineColor},
-                        {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor},
-                        ]}>
+                <Text
+                    numberOfLines={Constant.normalNumberOfLine}
+                    style={[styles.subSmallText, {marginTop: Constant.normalMarginEdge / 2,}]}>
+                    {repositoryDes}
+                </Text>
+                <View style={[styles.flexDirectionRowNotFlex,]}>
                     <View style={[styles.flex, styles.centered,]}>
                         <Icon.Button name="star-o" {...bottomIconStyle}>
                             <Text style={[styles.subSmallText]}>{repositoryStar}</Text>
                         </Icon.Button>
                     </View>
-                    <View style={[styles.flex, styles.centered,
-                        {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor},
-                        {borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor},
-                    ]}>
+                    <View style={[styles.flex, styles.centered,]}>
                         <Icon.Button name="code-fork" {...bottomIconStyle}>
                             <Text style={[styles.subSmallText]}>{repositoryFork}</Text>
                         </Icon.Button>
@@ -127,6 +137,10 @@ const propTypes = {
 RepositoryItem.propTypes = propTypes;
 RepositoryItem.defaultProps = {
     repositoryDes: '---',
+    repositoryStar: '---',
+    repositoryFork: '---',
+    repositoryWatch: '---',
+    repositoryType: '---',
     repositoryStared: false,
     repositoryForked: false,
     repositoryWatched: false,

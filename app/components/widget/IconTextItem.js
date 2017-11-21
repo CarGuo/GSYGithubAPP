@@ -19,7 +19,7 @@ class IconTextItem extends Component {
         let smallIconTextStyle = [styles.flexDirectionRowNotFlex, styles.centerH];
         let halfEdge = (this.props.icon) ? Constant.normalMarginEdge / 2 : 0;
         let iconView = (this.props.icon) ?
-            <Icon name={this.props.icon} size={Constant.littleIconSize} color={Constant.miWhite}/>
+            <Icon name={this.props.icon} size={Constant.littleIconSize} color={this.props.iconColor}/>
             : <View/>;
         return (
             <View
@@ -38,6 +38,7 @@ class IconTextItem extends Component {
 IconTextItem.propTypes = {
     text: PropTypes.string,
     icon: PropTypes.string,
+    iconColor: PropTypes.string,
     textstyle: PropTypes.any,
     viewstyle: PropTypes.any,
 };
@@ -46,6 +47,7 @@ IconTextItem.propTypes = {
 IconTextItem.defaultProps = {
     textstyle: [],
     viewstyle: [],
+    iconColor: Constant.miWhite,
 };
 
 export default IconTextItem;
