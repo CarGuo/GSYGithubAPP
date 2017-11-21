@@ -2,8 +2,31 @@
  * Created by guoshuyu on 2017/11/15.
  */
 
-import {AsyncStorage} from 'react-native'
-import Api from '../../net'
-import Address from '../../net/address'
-import {LOGIN} from '../type'
-import * as Constant from '../../style/constant'
+import {REPOSITORY} from '../type'
+import RepositoryDao from '../../dao/repositoryDao'
+
+const getTrend = (page = 0, since = 'daily', callback) => async (dispatch, getState) => {
+    let res = await RepositoryDao.getTrendDao(page, since);
+    if (res && res.result) {
+        if (page === 0) {
+            dispatch({
+                type: REPOSITORY.TREND_REPOSITORY,
+                res: res.data
+            });
+        } else {
+            let trend = getState()['repository'].trend_repos_data_list;
+            dispatch({
+                type: REPOSITORY.TREND_REPOSITORY,
+                res: trend.concat(res.data)
+            });
+        }
+        callback && callback(res.data);
+    } else {
+        callback && callback(null);
+    }
+};
+
+
+export default {
+    getTrend,
+}

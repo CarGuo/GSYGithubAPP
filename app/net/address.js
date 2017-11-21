@@ -172,8 +172,16 @@ export default AddressLocal = {
         }
         return `${host}notifications?all=${all}`
     },
-
-
+    /**
+     * 趋势
+     * @param since daily，weekly， monthly
+     */
+    trending: (since, type) => {
+        if (type) {
+            return `https://github.com/trending/${type}?since=${since}`
+        }
+        return `https://github.com/trending?since=${since}`
+    },
     /**
      * 处理分页参数
      * @param tab 表示是 ? 或者 &

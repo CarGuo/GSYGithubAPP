@@ -12,7 +12,7 @@ import reposAction from '../store/actions/repository'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {getActionAndDes} from '../utils/eventUtils'
-import EventItem from './widget/EventItem'
+import RepositoryItem from './widget/RepositoryItem'
 import PullListView from './widget/PullLoadMoreListView'
 import * as Config from '../config/'
 import PickerItem from './widget/PickerItem';
@@ -22,6 +22,9 @@ class TrendPage extends Component {
 
     constructor(props) {
         super(props);
+        this._renderRow = this._renderRow.bind(this);
+        this._refresh = this._refresh.bind(this);
+        this._loadMore = this._loadMore.bind(this);
     }
 
     componentDidMount() {
@@ -31,23 +34,56 @@ class TrendPage extends Component {
     componentWillUnmount() {
     }
 
+
+    _renderRow(rowData, sectionID, rowID, highlightRow) {
+        //let res = getActionAndDes(rowData);
+        return (
+            <RepositoryItem
+                ownerName={"CarGuo"}
+                ownerPic={"https://avatars0.githubusercontent.com/u/27534854?s=64&v=4"}
+                repositoryName={"GSYGitHubApp"}
+                repositoryStar={111}
+                repositoryFork={222}
+                repositoryWatch={333}
+                repositoryType={"java"}
+                repositoryDes={"这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！"}
+            />
+        )
+    }
+
+    /**
+     * 刷新
+     * */
+    _refresh() {
+        let {reposAction} = this.props;
+        reposAction.getTrend(1, 'daily', (res) => {
+            this.page = 2;
+            setTimeout(() => {
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((res && res.length >= Config.PAGE_SIZE));
+                }
+            }, 500);
+        })
+    }
+
+    /**
+     * 加载更多
+     * */
+    _loadMore() {
+        let {reposAction} = this.props;
+        reposAction.getTrend(this.page, 'daily', (res) => {
+            this.page++;
+            setTimeout(() => {
+                if (this.refs.pullList) {
+                    this.refs.pullList.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
+                }
+            }, 300);
+        });
+    }
+
     render() {
-        let pickerViewStyle = [{flex: 1,}, styles.centerV];
-        let pickerTextStyle = [{
-            textAlign: 'center',
-            textAlignVertical: 'center',
-            color: Constant.selectedColor,
-            fontSize: Constant.middleTextWhite
-        },];
-        let dropDownStyle = [{
-            width: screenWidth,
-            backgroundColor: "#FFF"
-        }, styles.shadowCard];
-        let filterItemHeight = 40;
-        let adjustFrame = (style) => {
-            style.left = 0;
-            style.top = navBarHeight + StatusBar.currentHeight;
-        };
+        let {reposState} = this.props;
+        let dataSource = (reposState.trend_repos_data_list);
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -84,17 +120,43 @@ class TrendPage extends Component {
                         }}
                     />
                 </View>
+                <PullListView
+                    style={{flex: 1}}
+                    ref="pullList"
+                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
+                        this._renderRow(rowData, sectionID, rowID, highlightRow)
+                    }
+                    refresh={this._refresh}
+                    loadMore={this._loadMore}
+                    dataSource={dataSource}
+                />
             </View>
         );
     }
 
 }
 
+let pickerViewStyle = [{flex: 1,}, styles.centerV];
+let pickerTextStyle = [{
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: Constant.selectedColor,
+    fontSize: Constant.middleTextWhite
+},];
+let dropDownStyle = [{
+    width: screenWidth,
+    backgroundColor: "#FFF"
+}, styles.shadowCard];
+let filterItemHeight = 40;
+let adjustFrame = (style) => {
+    style.left = 0;
+    style.top = navBarHeight + StatusBar.currentHeight;
+};
 
 export default connect(state => ({
     userState: state.user,
     loginState: state.login,
-    reposState: state.repos,
+    reposState: state.repository,
 }), dispatch => ({
     loginAction: bindActionCreators(loginActions, dispatch),
     userAction: bindActionCreators(userActions, dispatch),

@@ -2,17 +2,17 @@ import I18n from '../style/i18n'
 
 export const TrendTime = [
     {
-        "name": I18n('trendDay'), "value": 30, toString() {
+        "name": I18n('trendDay'), "value": 'daily', toString() {
         return I18n('trendDay')
     }
     },
     {
-        "name": I18n('trendWeek'), "value": 25, toString() {
+        "name": I18n('trendWeek'), "value": 'weekly', toString() {
         return I18n('trendWeek')
     }
     },
     {
-        "name": I18n('trendMonth'), "value": 41, toString() {
+        "name": I18n('trendMonth'), "value": 'monthly', toString() {
         return I18n('trendMonth')
     }
     },
