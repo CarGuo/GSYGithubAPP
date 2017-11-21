@@ -19,7 +19,7 @@ export const getActionAndDes = (event) => {
                 + " at " + event.repo.name;
             break;
         case "ForkEvent":
-            let oriRepo = event.repo.full_name;
+            let oriRepo = event.repo.name;
             let newRepo = event.actor.login + "/" + event.repo.name;
             actionStr = "Forked " + oriRepo + " to " + newRepo;
             break;
@@ -89,7 +89,6 @@ export const getActionAndDes = (event) => {
 
             des = '';
 
-            // todo let count = event.payload.comment.size;
             let count = event.comments;
             let maxLines = 4;
             let max = count > maxLines ? maxLines - 1 : count;
