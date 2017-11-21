@@ -69,6 +69,10 @@ export default class TrendingUtil {
         var url = htmlBaseInfo.slice(urlIndex, htmlBaseInfo.indexOf('">', urlIndex));
         repo.url = url;
         repo.fullName = url.slice(1, url.length);
+        if (repo.fullName && repo.fullName.indexOf('/') !== -1) {
+            repo.name = repo.fullName.split('/')[0];
+            repo.reposName = repo.fullName.split('/')[1];
+        }
 
         var description = this.parseContentWithNote(htmlBaseInfo, '<p class="col-9 d-inline-block text-gray m-0 pr-4">', '</p>');
         repo.description = description;

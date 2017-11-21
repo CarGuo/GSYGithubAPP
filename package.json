@@ -12,6 +12,7 @@
     "react": "16.0.0",
     "react-native": "0.50.1",
     "react-native-autolink": "^1.1.1",
+    "react-native-htmlview": "^0.12.1",
     "react-native-i18n": "^2.0.9",
     "react-native-modal-dropdown": "^0.5.0",
     "react-native-modalbox": "^1.4.2",

@@ -19,6 +19,7 @@ import styles from '../../style'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import UserImage from './UserImage'
 import IconTextItem from './IconTextItem'
+import HTMLView from 'react-native-htmlview';
 
 /**
  * 仓库相关Item显示
@@ -80,12 +81,12 @@ class RepositoryItem extends Component {
                             <Text style={[styles.normalText, {fontWeight: "bold"}]}>{repositoryName}</Text>
                             <IconTextItem
                                 iconColor={Constant.subLightTextColor}
-                                text={ownerName} icon={'group'}
+                                text={ownerName} icon={'user'}
                                 textstyle={[styles.subLightSmallText]}/>
                         </View>
                         <View style={[styles.flex, styles.alignItemsEnd, {
                             marginRight: Constant.normalMarginEdge / 2,
-                            marginTop: -5
+                            marginTop: -5,
                         }]}>
                             <Text style={{color: Constant.subTextColor, fontSize: Constant.minTextSize}}>
                                 {repositoryType}
@@ -93,11 +94,18 @@ class RepositoryItem extends Component {
                         </View>
                     </View>
                 </View>
-                <Text
+                <HTMLView
+                    style={{marginTop: Constant.normalMarginEdge / 2,}}
                     numberOfLines={Constant.normalNumberOfLine}
-                    style={[styles.subSmallText, {marginTop: Constant.normalMarginEdge / 2,}]}>
-                    {repositoryDes}
-                </Text>
+                    value={repositoryDes}
+                    textComponentProps={{style:styles.subSmallText,
+                        numberOfLines:Constant.normalNumberOfLine}}
+                    textComponent={() => {
+                        return (
+                            <Text/>
+                        )
+                    }}
+                />
                 <View style={[styles.flexDirectionRowNotFlex,]}>
                     <View style={[styles.flex, styles.centered,]}>
                         <Icon.Button name="star-o" {...bottomIconStyle}>
@@ -124,9 +132,9 @@ const propTypes = {
     ownerName: PropTypes.string,
     ownerPic: PropTypes.string,
     repositoryName: PropTypes.string,
-    repositoryStar: PropTypes.number,
-    repositoryFork: PropTypes.number,
-    repositoryWatch: PropTypes.number,
+    repositoryStar: PropTypes.string,
+    repositoryFork: PropTypes.string,
+    repositoryWatch: PropTypes.string,
     repositoryType: PropTypes.string,
     repositoryDes: PropTypes.string,
     repositoryStared: PropTypes.bool,

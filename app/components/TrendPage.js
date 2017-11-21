@@ -36,17 +36,16 @@ class TrendPage extends Component {
 
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
-        //let res = getActionAndDes(rowData);
         return (
             <RepositoryItem
-                ownerName={"CarGuo"}
-                ownerPic={"https://avatars0.githubusercontent.com/u/27534854?s=64&v=4"}
-                repositoryName={"GSYGitHubApp"}
-                repositoryStar={111}
-                repositoryFork={222}
-                repositoryWatch={333}
-                repositoryType={"java"}
-                repositoryDes={"这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！"}
+                ownerName={rowData.name}
+                ownerPic={rowData.contributors[0]}
+                repositoryName={rowData.reposName}
+                repositoryStar={rowData.starCount}
+                repositoryFork={rowData.forkCount}
+                repositoryWatch={'---'}
+                repositoryType={rowData.language}
+                repositoryDes={rowData.description}
             />
         )
     }
@@ -60,7 +59,7 @@ class TrendPage extends Component {
             this.page = 2;
             setTimeout(() => {
                 if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((res && res.length >= Config.PAGE_SIZE));
+                    this.refs.pullList.refreshComplete(false);
                 }
             }, 500);
         })
@@ -75,7 +74,7 @@ class TrendPage extends Component {
             this.page++;
             setTimeout(() => {
                 if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
+                    this.refs.pullList.loadMoreComplete(false);
                 }
             }, 300);
         });
@@ -84,6 +83,7 @@ class TrendPage extends Component {
     render() {
         let {reposState} = this.props;
         let dataSource = (reposState.trend_repos_data_list);
+        console.log('&&&&&&&&&&&&', reposState);
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>

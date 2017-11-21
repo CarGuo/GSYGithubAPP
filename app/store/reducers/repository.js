@@ -10,7 +10,7 @@ const actionHandler = {
     [REPOSITORY.TREND_REPOSITORY]: (state, action) => {
         return {
             ...state,
-            received_events_data_list: action.res,
+            trend_repos_data_list: action.res,
             trend_repos_current_size: action.res.length
         }
     },

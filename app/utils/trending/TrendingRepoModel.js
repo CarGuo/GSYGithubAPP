@@ -6,7 +6,8 @@
  */
 
 export default class TrendingRepoModel {
-    constructor(fullName, url, description, language, meta, contributors, contributorsUrl, starCount, forkCount) {
+    constructor(fullName, url, description, language, meta, contributors, contributorsUrl,
+                starCount, forkCount, name, reposName) {
         this.fullName = fullName;
         this.url = url;
         this.description = description;
@@ -16,5 +17,7 @@ export default class TrendingRepoModel {
         this.contributorsUrl = contributorsUrl;
         this.starCount = starCount;
         this.forkCount = forkCount;
+        this.name = name;
+        this.reposName = reposName;
     }
 }

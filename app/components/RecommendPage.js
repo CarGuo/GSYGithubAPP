@@ -59,9 +59,9 @@ class RecommendPage extends Component {
                     ownerName={"CarGuo"}
                     ownerPic={"https://avatars0.githubusercontent.com/u/27534854?s=64&v=4"}
                     repositoryName={"GSYGitHubApp"}
-                    repositoryStar={111}
-                    repositoryFork={222}
-                    repositoryWatch={333}
+                    repositoryStar={""}
+                    repositoryFork={""}
+                    repositoryWatch={""}
                     repositoryType={"java"}
                     repositoryDes={"这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！"}
                 />
