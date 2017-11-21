@@ -25,15 +25,22 @@ class TrendPage extends Component {
         this._renderRow = this._renderRow.bind(this);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
+        this._refreshData = this._refreshData.bind(this);
+        this.timeLine = 'daily'
+
     }
 
     componentDidMount() {
-
+        this._refreshData();
     }
 
     componentWillUnmount() {
     }
 
+    _refreshData() {
+        this.refs.pullList.showRefreshState();
+        this._refresh();
+    }
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
         return (
@@ -55,7 +62,7 @@ class TrendPage extends Component {
      * */
     _refresh() {
         let {reposAction} = this.props;
-        reposAction.getTrend(1, 'daily', (res) => {
+        reposAction.getTrend(0, this.timeLine, (res) => {
             this.page = 2;
             setTimeout(() => {
                 if (this.refs.pullList) {
@@ -70,7 +77,7 @@ class TrendPage extends Component {
      * */
     _loadMore() {
         let {reposAction} = this.props;
-        reposAction.getTrend(this.page, 'daily', (res) => {
+        reposAction.getTrend(this.page, this.timeLine, (res) => {
             this.page++;
             setTimeout(() => {
                 if (this.refs.pullList) {
@@ -83,7 +90,6 @@ class TrendPage extends Component {
     render() {
         let {reposState} = this.props;
         let dataSource = (reposState.trend_repos_data_list);
-        console.log('&&&&&&&&&&&&', reposState);
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -101,8 +107,9 @@ class TrendPage extends Component {
                         dropdownStyle={[...dropDownStyle,
                             {height: filterItemHeight * TrendTime.length}]}
                         options={TrendTime}
-                        onSelect={() => {
-
+                        onSelect={(rowID, rowData) => {
+                            this.timeLine = rowData.value;
+                            this._refreshData();
                         }}
                     />
                     <PickerItem
@@ -120,6 +127,7 @@ class TrendPage extends Component {
                         }}
                     />
                 </View>
+                <View style={{height: 25, opacity: 0.3}}/>
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"

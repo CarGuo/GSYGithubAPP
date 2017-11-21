@@ -32,7 +32,7 @@ class PickerItem extends Component {
                 dropdownStyle={this.props.dropdownStyle}
                 options={this.props.options}
                 onSelect={(rowID, rowData) => {
-                    this.onSelect && this.onSelect(rowID, rowData);
+                    this.props.onSelect && this.props.onSelect(rowID, rowData);
                     return true
                 }}
                 defaultIndex={this.props.defaultIndex}
