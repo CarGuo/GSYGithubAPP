@@ -3,7 +3,7 @@ import {
     View, Text, StatusBar, StyleSheet
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import styles, {screenWidth} from "../style"
+import styles, {screenWidth, navBarHeight} from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
@@ -32,61 +32,56 @@ class TrendPage extends Component {
     }
 
     render() {
+        let pickerViewStyle = [{flex: 1,}, styles.centerV];
+        let pickerTextStyle = [{
+            textAlign: 'center',
+            textAlignVertical: 'center',
+            color: Constant.selectedColor,
+            fontSize: Constant.middleTextWhite
+        },];
+        let dropDownStyle = [{
+            width: screenWidth,
+            backgroundColor: "#FFF"
+        }, styles.shadowCard];
+        let filterItemHeight = 40;
+        let adjustFrame = (style) => {
+            style.left = 0;
+            style.top = navBarHeight + StatusBar.currentHeight;
+        };
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
-                <View style={[styles.flexDirectionRowNotFlex, {height: Constant.tabBarHeight}]}>
+                <View style={[styles.shadowCard, styles.flexDirectionRowNotFlex, {
+                    height: filterItemHeight,
+                    backgroundColor: Constant.white,
+                }]}>
                     <PickerItem
                         defaultValue={TrendTime[0].toString()}
                         defaultIndex={0}
-                        style={{
-                            flex: 1,
-                            marginHorizontal: Constant.normalMarginEdge,
-                            backgroundColor: Constant.transparentColor,
-                            borderRightColor: Constant.lineColor,
-                            borderRightWidth: StyleSheet.hairlineWidth
-                        }}
-                        textStyle={{
-                            marginVertical: 10,
-                            marginHorizontal: 6,
-                            fontSize: 18,
-                            color: Constant.mainTextColor,
-                            textAlign: 'center',
-                            textAlignVertical: 'center',
-                        }}
-                        dropdownStyle={{
-                            width: screenWidth / 2,
-                            height: 300,
-                            borderColor: 'cornflowerblue',
-                            borderWidth: 2,
-                            borderRadius: 3,
-                        }}
+                        adjustFrame={adjustFrame}
+                        itemHeight={filterItemHeight}
+                        style={pickerViewStyle}
+                        textStyle={pickerTextStyle}
+                        dropdownStyle={[...dropDownStyle,
+                            {height: filterItemHeight * TrendTime.length}]}
                         options={TrendTime}
+                        onSelect={() => {
+
+                        }}
                     />
                     <PickerItem
                         defaultValue={TrendType[0].toString()}
                         defaultIndex={0}
-                        style={{
-                            flex: 1,
-                            marginHorizontal: Constant.normalMarginEdge,
-                            backgroundColor: Constant.transparentColor,
-                        }}
-                        textStyle={{
-                            marginVertical: 10,
-                            marginHorizontal: 6,
-                            fontSize: 18,
-                            color: Constant.mainTextColor,
-                            textAlign: 'center',
-                            textAlignVertical: 'center',
-                        }}
-                        dropdownStyle={{
-                            width: screenWidth / 2,
-                            height: 300,
-                            borderColor: 'cornflowerblue',
-                            borderWidth: 2,
-                            borderRadius: 3,
-                        }}
+                        adjustFrame={adjustFrame}
+                        itemHeight={filterItemHeight}
+                        style={pickerViewStyle}
+                        textStyle={pickerTextStyle}
+                        dropdownStyle={[...dropDownStyle,
+                            {height: filterItemHeight * TrendType.length}]}
                         options={TrendType}
+                        onSelect={() => {
+
+                        }}
                     />
                 </View>
             </View>

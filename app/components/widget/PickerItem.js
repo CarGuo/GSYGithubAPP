@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {
-    View, Text, TouchableHighlight, Image
+    View, Text, TouchableHighlight, StyleSheet
 } from 'react-native';
 import styles from "../../style"
 import * as Constant from "../../style/constant"
 import * as Config from '../../config/'
 import ModalDropdown from 'react-native-modal-dropdown';
+import PropTypes from 'prop-types';
+
 
 
 class PickerItem extends Component {
@@ -25,8 +27,9 @@ class PickerItem extends Component {
         return (
             <ModalDropdown
                 style={this.props.style}
+                adjustFrame={this.props.adjustFrame}
                 textStyle={this.props.textStyle}
-                dropdownStyle={[...this.props.dropdownStyle]}
+                dropdownStyle={this.props.dropdownStyle}
                 options={this.props.options}
                 onSelect={(rowID, rowData) => {
                     this.onSelect && this.onSelect(rowID, rowData);
@@ -49,15 +52,12 @@ class PickerItem extends Component {
                         flexDirection: 'row',
                         flex: 1,
                         paddingHorizontal: Constant.normalMarginEdge,
-                        height: 40,
-                        alignItems: 'center',
-                    }, {backgroundColor: evenRow ? 'lemonchiffon' : 'white'}]}>
-                    <Text style={[{
+                        height: this.props.itemHeight,
+                    }, {backgroundColor: Constant.white}]}>
+                    <Text style={[styles.middleText, {
                         marginHorizontal: 4,
-                        fontSize: 16,
-                        color: 'navy',
                         textAlignVertical: 'center',
-                    }, highlighted && {color: 'mediumaquamarine'}]}>
+                    }, highlighted && {color: Constant.selectedColor}, styles.centered]}>
                         {`${rowData.name}`}
                     </Text>
                 </View>
@@ -69,11 +69,22 @@ class PickerItem extends Component {
         if (rowID === this.props.options.length - 1) return;
         let key = `spr_${rowID}`;
         return (
-            <View style={{height: 1, backgroundColor: 'cornflowerblue',}}
+            <View style={{height: StyleSheet.hairlineWidth, backgroundColor: Constant.lineColor,}}
                   key={key}/>
         );
     }
 }
+
+PickerItem.propTypes = {
+    itemHeight:PropTypes.number,
+    defaultIndex:PropTypes.number,
+    defaultValue:PropTypes.string,
+    options:PropTypes.array,
+    dropdownStyle:PropTypes.any,
+    textStyle:PropTypes.any,
+    adjustFrame:PropTypes.any,
+    onSelect:PropTypes.func,
+};
 
 
 export default PickerItem

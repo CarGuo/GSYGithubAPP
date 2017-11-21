@@ -95,6 +95,10 @@ export default StyleSheet.create({
         color: constant.subTextColor,
         fontSize: constant.smallTextSize
     },
+    middleText: {
+        color: constant.mainTextColor,
+        fontSize: constant.middleTextWhite
+    },
     normalText: {
         color: constant.mainTextColor,
         fontSize: constant.normalTextSize
@@ -107,6 +111,11 @@ export default StyleSheet.create({
         color: constant.TextColorWhite,
         fontSize: constant.normalTextSize
     },
+    middleTextWhite: {
+        color: constant.TextColorWhite,
+        fontSize: constant.middleTextWhite
+    },
+
     largeText: {
         color: constant.mainTextColor,
         fontSize: constant.bigTextSize

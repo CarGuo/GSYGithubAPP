@@ -5,6 +5,7 @@
 /****************颜色****************/
 
 export const miWhite = '#ececec';
+export const white = '#FFF';
 export const transparentColor = '#00000000';
 
 export const mainBackgroundColor = miWhite;
@@ -17,6 +18,9 @@ export const lineColor = '#42464b';
 export const primaryColor = '#24292e';
 export const primaryDarkColor = '#121917';
 export const primaryLightColor = '#42464b';
+
+
+export const selectedColor = primaryDarkColor;
 
 export const titleTextColor = miWhite;
 export const mainTextColor = primaryDarkColor;
@@ -37,7 +41,7 @@ export const andrnavHeaderHeight = 70;
 export const largetTextSize = 30;
 export const bigTextSize = 23;
 export const normalTextSize = 18;
-export const midlleTextSize = 16;
+export const middleTextWhite = 16;
 export const smallTextSize = 14;
 export const minTextSize = 12;
 
