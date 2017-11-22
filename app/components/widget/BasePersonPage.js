@@ -100,6 +100,10 @@ class BasePersonPage extends Component {
         return {}
     }
 
+    getSetting() {
+        return false;
+    }
+
     render() {
         let userInfo = this.getUserInfo();
         return (
@@ -123,6 +127,7 @@ class BasePersonPage extends Component {
                                     repos={userInfo.public_repos + ""}
                                     follower={userInfo.followers + ""}
                                     followed={userInfo.following + ""}
+                                    setting={this.getSetting()}
                                 />
                                 <View style={styles.flex}>
                                     <Text style={[styles.normalText, {

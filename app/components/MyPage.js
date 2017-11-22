@@ -20,6 +20,9 @@ class MyPage extends BasePersonPage {
         return (userState.userInfo) ? userState.userInfo : {};
     }
 
+    getSetting() {
+        return true
+    }
 }
 
 export default connect(state => ({

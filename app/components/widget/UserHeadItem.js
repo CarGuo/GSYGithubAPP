@@ -22,7 +22,7 @@ class UserHeadItem extends Component {
         let hint = I18n('userInfoNoting');
         let {
             link, userPic, userName, userDisPlayName, des, location, groupName,
-            follower, followed, repos, star
+            follower, followed, repos, star, setting
         } = this.props;
         return (
             <View style={[{
@@ -41,17 +41,20 @@ class UserHeadItem extends Component {
                 elevation: 2,
             }]}>
                 <View style={[styles.flexDirectionRowNotFlex,
-                    {position: "absolute",
+                    {
+                        position: "absolute",
                         left: Constant.normalMarginEdge,
-                        right:  2* Constant.normalMarginEdge,
+                        right: 2 * Constant.normalMarginEdge,
                         top: Constant.normalMarginEdge,
                         bottom: 0,
-                        zIndex: 12,}]}>
+                        zIndex: 12,
+                    }]}>
                     <TouchableOpacity style={[styles.flex, styles.alignItemsEnd]}
-                                      onPress={()=>{
+                                      onPress={() => {
                                           Actions.SettingPage();
                                       }}>
-                        <Icon name={'ios-settings'} size={Constant.smallIconSize} color={Constant.miWhite}/>
+                        <Icon name={'ios-settings'} size={setting ? Constant.smallIconSize : 0}
+                              color={Constant.miWhite}/>
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.flexDirectionRowNotFlex]}>
@@ -144,6 +147,7 @@ UserHeadItem.propTypes = {
     follower: PropTypes.string,
     followed: PropTypes.string,
     repos: PropTypes.string,
+    setting: PropTypes.bool,
 };
 
 
@@ -154,6 +158,7 @@ UserHeadItem.defaultProps = {
     follower: hintNum,
     followed: hintNum,
     repos: hintNum,
+    setting: false,
 };
 
 
