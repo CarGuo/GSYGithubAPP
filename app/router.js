@@ -17,6 +17,7 @@ import TrendPage from './components/TrendPage'
 import TabIcon from './components/widget/TabIcon'
 import LoadingModal from './components/widget/LoadingModal'
 import CustomBackButton from './components/widget/CustomBackButton'
+import SearchButton from './components/widget/CustomSearchButton'
 import styles from './style'
 import I18n, {changeLocale} from './style/i18n'
 import * as Constant from './style/constant'
@@ -48,6 +49,9 @@ const getRouter = () => {
                            showLabel={false}
                            tabBarPosition={"bottom"}
                            title={I18n('appName')}
+                           renderRightButton={
+                               () => <SearchButton/>
+                           }
                            tabBarStyle={{
                                height: Constant.tabBarHeight,
                                alignItems: 'center',
@@ -88,9 +92,9 @@ const getRouter = () => {
                            showLabel={false}
                            hideNavBar/>
                     <Scene key="PersonPage" component={PersonPage}
-                           renderBackButton={() => <CustomBackButton/>}/>
+                           renderLeftButton={() => <CustomBackButton/>}/>
                     <Scene key="SettingPage" component={SettingPage} title={I18n('setting')}
-                           renderBackButton={() => <CustomBackButton/>}
+                           renderLeftButton={() => <CustomBackButton/>}
                     />
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>

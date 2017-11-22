@@ -40,20 +40,21 @@ class UserHeadItem extends Component {
                 borderBottomLeftRadius: 2,
                 elevation: 2,
             }]}>
-                <View style={[styles.flexDirectionRowNotFlex,
+                <View style={[
                     {
                         position: "absolute",
                         left: Constant.normalMarginEdge,
-                        right: 2 * Constant.normalMarginEdge,
+                        right: Constant.normalMarginEdge,
                         top: Constant.normalMarginEdge,
-                        bottom: 0,
+                        bottom: Constant.normalMarginEdge,
                         zIndex: 12,
-                    }]}>
-                    <TouchableOpacity style={[styles.flex, styles.alignItemsEnd]}
-                                      onPress={() => {
-                                          Actions.SettingPage();
-                                      }}>
-                        <Icon name={'ios-settings'} size={setting ? Constant.smallIconSize : 0}
+                    },styles.alignItemsEnd]}>
+                    <TouchableOpacity
+                        style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2,}]}
+                        onPress={() => {
+                            Actions.SettingPage();
+                        }}>
+                        <Icon name={'ios-settings'} size={setting ? 25 : 0}
                               color={Constant.miWhite}/>
                     </TouchableOpacity>
                 </View>

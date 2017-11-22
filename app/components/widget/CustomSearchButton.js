@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 /**
  * 推荐
  */
-class BackButton extends Component {
+class SearchButton extends Component {
     componentDidMount() {
     }
 
@@ -26,24 +26,15 @@ class BackButton extends Component {
 
 
     render() {
-        if (Actions.state.routes[0].index === 0 || this.props.hideBackButton) {
-            return <View/>;
-        }
         return (
-            <TouchableOpacity style={[styles.centered, {marginHorizontal: 2 * Constant.normalMarginEdge, marginTop:5}]} onPress={() => {
-                Actions.pop();
+            <TouchableOpacity style={[styles.centered, {marginHorizontal: Constant.normalMarginEdge}]} onPress={() => {
+
+
             }}>
-                <Icon name={'md-arrow-round-back'} size={20} color={Constant.miWhite}/>
+                <Icon name={'md-search'} size={25} color={Constant.miWhite}/>
             </TouchableOpacity>
         )
     }
 }
 
-BackButton.propTypes = {
-    hideBackButton: PropTypes.bool
-};
-BackButton.defaultProps = {
-    hideBackButton: false
-};
-
-export default BackButton
+export default SearchButton
