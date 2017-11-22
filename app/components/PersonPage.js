@@ -12,8 +12,8 @@ class PersonPage extends BasePersonPage {
                 login: this.props.userName,
                 followers: '---',
                 star: '---',
-                followed: '---',
-                repos: '---',
+                following: '---',
+                public_repos: '---',
             },
         }
     }

@@ -62,7 +62,7 @@ class TrendPage extends Component {
      * */
     _refresh() {
         let {reposAction} = this.props;
-        reposAction.getTrend(0, this.timeLine, (res) => {
+        reposAction.getTrend(0, this.timeLine, () => {
             this.page = 2;
             setTimeout(() => {
                 if (this.refs.pullList) {
@@ -76,15 +76,9 @@ class TrendPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        let {reposAction} = this.props;
-        reposAction.getTrend(this.page, this.timeLine, (res) => {
-            this.page++;
-            setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete(false);
-                }
-            }, 300);
-        });
+        if (this.refs.pullList) {
+            this.refs.pullList.loadMoreComplete(false);
+        }
     }
 
     render() {
