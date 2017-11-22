@@ -12,9 +12,11 @@ import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
 import PersonPage from './components/PersonPage'
+import SettingPage from './components/SettingPage'
 import TrendPage from './components/TrendPage'
 import TabIcon from './components/widget/TabIcon'
 import LoadingModal from './components/widget/LoadingModal'
+import CustomBackButton from './components/widget/CustomBackButton'
 import styles from './style'
 import I18n, {changeLocale} from './style/i18n'
 import * as Constant from './style/constant'
@@ -44,8 +46,8 @@ const getRouter = () => {
                            lazy
                            wrap={false}
                            showLabel={false}
-                           title={I18n('appName')}
                            tabBarPosition={"bottom"}
+                           title={I18n('appName')}
                            tabBarStyle={{
                                height: Constant.tabBarHeight,
                                alignItems: 'center',
@@ -86,7 +88,10 @@ const getRouter = () => {
                            showLabel={false}
                            hideNavBar/>
                     <Scene key="PersonPage" component={PersonPage}
-                           backButtonTintColor={Constant.titleTextColor}/>
+                           renderBackButton={() => <CustomBackButton/>}/>
+                    <Scene key="SettingPage" component={SettingPage} title={I18n('setting')}
+                           renderBackButton={() => <CustomBackButton/>}
+                    />
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
             </Lightbox>

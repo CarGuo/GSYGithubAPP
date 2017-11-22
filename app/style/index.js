@@ -26,6 +26,8 @@ export default StyleSheet.create({
     },
     titleTextStyle:{
         color: constant.titleTextColor,
+        fontSize: constant.normalTextSize,
+        fontWeight:"bold"
     },
     mainBgColor: {
         backgroundColor: constant.mainBackgroundColor

@@ -18,17 +18,6 @@ import * as Constant from '../../style/constant'
 import styles from '../../style'
 import Icon from 'react-native-vector-icons/EvilIcons'
 
-const propTypes = {
-    itemText: PropTypes.string,
-    onClickFun: PropTypes.func,
-    showIconNext: PropTypes.bool,
-    topLine: PropTypes.bool,
-    bottomLine: PropTypes.bool,
-    itemIcon: PropTypes.string,
-    itemIconColor: PropTypes.string,
-    itemIconSize: PropTypes.number,
-    textStyle: PropTypes.number,
-};
 
 /**
  * 通用行Item
@@ -63,14 +52,17 @@ class CommonRowItem extends Component {
             : <View/>;
         return (
             <TouchableOpacity
-                onPress={()=>{onClickFun && onClickFun()}}
-                style={[{height: 50, marginLeft: Constant.normalMarginEdge, marginRight:Constant.normalMarginEdge}]}>
-                <View
-                    style={[styles.flexDirectionRow, styles.centerH,
-                    {borderTopWidth: tl, borderTopColor: Constant.lineColor},
-                    {borderBottomWidth: bl, borderBottomColor: Constant.lineColor},]}>
+                onPress={() => {
+                    onClickFun && onClickFun()
+                }}
+                style={[{
+                    height: 50, marginLeft: Constant.normalMarginEdge, marginRight: Constant.normalMarginEdge,
+                }, ...this.props.viewStyle]}>
+                <View style={[styles.flexDirectionRow, styles.centerH,
+                        {borderTopWidth: tl, borderTopColor: Constant.lineColor},
+                        {borderBottomWidth: bl, borderBottomColor: Constant.lineColor},]}>
                     {leftIcon}
-                    <Text style={[{flex:1}, textStyle]}>{itemText}</Text>
+                    <Text style={[{flex: 1}, ...textStyle]}>{itemText}</Text>
                     {IconComponent}
                 </View>
             </TouchableOpacity>
@@ -78,6 +70,18 @@ class CommonRowItem extends Component {
     }
 }
 
+const propTypes = {
+    itemText: PropTypes.string,
+    onClickFun: PropTypes.func,
+    showIconNext: PropTypes.bool,
+    topLine: PropTypes.bool,
+    bottomLine: PropTypes.bool,
+    itemIcon: PropTypes.string,
+    itemIconColor: PropTypes.string,
+    itemIconSize: PropTypes.number,
+    textStyle: PropTypes.any,
+    viewStyle: PropTypes.array,
+};
 CommonRowItem.propTypes = propTypes;
 CommonRowItem.defaultProps = {
     showIconNext: true,
@@ -86,6 +90,7 @@ CommonRowItem.defaultProps = {
     textStyle: styles.smallText,
     itemIconColor: Constant.primaryColor,
     itemIconSize: Constant.smallIconSize,
+    viewStyle: [],
 };
 
 export default CommonRowItem;

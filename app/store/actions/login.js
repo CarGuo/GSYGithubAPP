@@ -45,6 +45,7 @@ const loginOut = () => async (dispatch, getState) => {
     Api.clearAuthorization();
     AsyncStorage.removeItem(Constant.USER_BASIC_CODE);
     userAction.clearUserInfo();
+    //todo clear all state
     dispatch({
         type: LOGIN.CLEAR,
     });

@@ -79,6 +79,10 @@ export const TrendType = [
         return 'CSS'
     }
     },
-
+    {
+        "name": 'unknown', "value": 'unknown', toString() {
+        return 'unknown'
+    }
+    },
 
 ];

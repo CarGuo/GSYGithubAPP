@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {
-    View, Text, Image, StyleSheet
+    View, Text, Image, StyleSheet, TouchableOpacity
 } from 'react-native';
 import styles from "../../style"
 import PropTypes from 'prop-types';
 import * as Constant from '../../style/constant'
 import IconTextItem from './IconTextItem'
 import IconTextAutoLinkItem from './IconTextAutoLinkItem'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/Ionicons'
+import {Actions} from "react-native-router-flux";
 import I18n from '../../style/i18n'
 import NameValueItem from './NameValueItem'
 
@@ -26,7 +27,7 @@ class UserHeadItem extends Component {
         return (
             <View style={[{
                 paddingHorizontal: Constant.normalMarginEdge,
-                paddingTop: 3 * Constant.normalMarginEdge,
+                paddingTop: 2 * Constant.normalMarginEdge,
                 backgroundColor: Constant.primaryColor,
                 shadowColor: '#000',
                 shadowOffset: {
@@ -39,6 +40,20 @@ class UserHeadItem extends Component {
                 borderBottomLeftRadius: 2,
                 elevation: 2,
             }]}>
+                <View style={[styles.flexDirectionRowNotFlex,
+                    {position: "absolute",
+                        left: Constant.normalMarginEdge,
+                        right:  2* Constant.normalMarginEdge,
+                        top: Constant.normalMarginEdge,
+                        bottom: 0,
+                        zIndex: 12,}]}>
+                    <TouchableOpacity style={[styles.flex, styles.alignItemsEnd]}
+                                      onPress={()=>{
+                                          Actions.SettingPage();
+                                      }}>
+                        <Icon name={'ios-settings'} size={Constant.smallIconSize} color={Constant.miWhite}/>
+                    </TouchableOpacity>
+                </View>
                 <View style={[styles.flexDirectionRowNotFlex]}>
                     <View style={[{
                         height: Constant.largeIconSize, width: Constant.largeIconSize,
