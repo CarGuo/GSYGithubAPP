@@ -2,18 +2,21 @@ import React, {Component} from 'react';
 import {
     View, Text, TouchableHighlight, StyleSheet
 } from 'react-native';
-import styles from "../../style"
+import styles, {screenWidth} from "../../style"
 import * as Constant from "../../style/constant"
 import * as Config from '../../config/'
 import ModalDropdown from 'react-native-modal-dropdown';
 import PropTypes from 'prop-types';
-
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 class PickerItem extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            icon:'md-arrow-dropdown'
+        }
     }
 
     componentDidMount() {
@@ -25,21 +28,43 @@ class PickerItem extends Component {
 
     render() {
         return (
-            <ModalDropdown
-                style={this.props.style}
-                adjustFrame={this.props.adjustFrame}
-                textStyle={this.props.textStyle}
-                dropdownStyle={this.props.dropdownStyle}
-                options={this.props.options}
-                onSelect={(rowID, rowData) => {
-                    this.props.onSelect && this.props.onSelect(rowID, rowData);
-                    return true
-                }}
-                defaultIndex={this.props.defaultIndex}
-                defaultValue={this.props.defaultValue}
-                renderRow={this.renderRow.bind(this)}
-                renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => this.renderSeparator(sectionID, rowID, adjacentRowHighlighted)}
-            />
+            <View style={styles.flexDirectionRow}>
+                <ModalDropdown
+                    style={this.props.style}
+                    adjustFrame={this.props.adjustFrame}
+                    textStyle={this.props.textStyle}
+                    dropdownStyle={this.props.dropdownStyle}
+                    options={this.props.options}
+                    onSelect={(rowID, rowData) => {
+                        this.props.onSelect && this.props.onSelect(rowID, rowData);
+                        return true
+                    }}
+                    defaultIndex={this.props.defaultIndex}
+                    defaultValue={this.props.defaultValue}
+                    onDropdownWillShow={()=>{
+                        this.setState({
+                            icon:'md-arrow-dropup'
+                        })
+                    }}
+                    onDropdownWillHide={()=>{
+                        this.setState({
+                            icon:'md-arrow-dropdown'
+                        })
+                    }}
+                    renderRow={this.renderRow.bind(this)}
+                    renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => this.renderSeparator(sectionID, rowID, adjacentRowHighlighted)}
+                />
+                <View style={[{
+                    backgroundColor: Constant.transparentColor,
+                    position: "absolute",
+                    left: screenWidth / 3,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                }, styles.centerV]}>
+                    <Icon name={this.state.icon} size={20} color={Constant.mainTextColor}/>
+                </View>
+            </View>
         );
     }
 
@@ -53,7 +78,7 @@ class PickerItem extends Component {
                         flex: 1,
                         paddingHorizontal: Constant.normalMarginEdge,
                         height: this.props.itemHeight,
-                    }, {backgroundColor: Constant.white}]}>
+                    }, {backgroundColor: Constant.white}, styles.centerH]}>
                     <Text style={[styles.middleText, {
                         marginHorizontal: 4,
                         textAlignVertical: 'center',
@@ -76,14 +101,14 @@ class PickerItem extends Component {
 }
 
 PickerItem.propTypes = {
-    itemHeight:PropTypes.number,
-    defaultIndex:PropTypes.number,
-    defaultValue:PropTypes.string,
-    options:PropTypes.array,
-    dropdownStyle:PropTypes.any,
-    textStyle:PropTypes.any,
-    adjustFrame:PropTypes.any,
-    onSelect:PropTypes.func,
+    itemHeight: PropTypes.number,
+    defaultIndex: PropTypes.number,
+    defaultValue: PropTypes.string,
+    options: PropTypes.array,
+    dropdownStyle: PropTypes.any,
+    textStyle: PropTypes.any,
+    adjustFrame: PropTypes.any,
+    onSelect: PropTypes.func,
 };
 
 

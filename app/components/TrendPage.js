@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, StyleSheet
+    View, Text, StatusBar, Platform
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles, {screenWidth, navBarHeight} from "../style"
@@ -140,12 +140,13 @@ class TrendPage extends Component {
 
 }
 
-let pickerViewStyle = [{flex: 1,}, styles.centerV];
+let pickerViewStyle = [{flex: 1}, styles.centerV];
 let pickerTextStyle = [{
     textAlign: 'center',
     textAlignVertical: 'center',
     color: Constant.selectedColor,
-    fontSize: Constant.middleTextWhite
+    fontSize: Constant.middleTextWhite,
+    paddingRight:45
 },];
 let dropDownStyle = [{
     width: screenWidth,
@@ -154,7 +155,8 @@ let dropDownStyle = [{
 let filterItemHeight = 40;
 let adjustFrame = (style) => {
     style.left = 0;
-    style.top = navBarHeight + StatusBar.currentHeight;
+    style.top =  Platform.OS ==='android' ? navBarHeight + StatusBar.currentHeight :
+        navBarHeight + filterItemHeight + 25;
 };
 
 export default connect(state => ({
