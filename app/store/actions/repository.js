@@ -26,7 +26,15 @@ const getTrend = (page = 0, since = 'daily', languageType, callback) => async (d
     }
 };
 
+const searchRepository = async (q, sort, order, page = 1, pageSize) => {
+    let res = await RepositoryDao.searchRepositoryDao(q, sort, order, page, pageSize);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
 
 export default {
     getTrend,
+    searchRepository
 }

@@ -14,6 +14,7 @@ import RecommendPage from './components/RecommendPage'
 import PersonPage from './components/PersonPage'
 import SettingPage from './components/SettingPage'
 import TrendPage from './components/TrendPage'
+import SearchPage from './components/SearchPage'
 import TabIcon from './components/widget/TabIcon'
 import LoadingModal from './components/widget/LoadingModal'
 import CustomBackButton from './components/widget/CustomBackButton'
@@ -94,6 +95,9 @@ const getRouter = () => {
                     <Scene key="PersonPage" component={PersonPage}
                            renderLeftButton={() => <CustomBackButton/>}/>
                     <Scene key="SettingPage" component={SettingPage} title={I18n('setting')}
+                           renderLeftButton={() => <CustomBackButton/>}
+                    />
+                    <Scene key="SearchPage" component={SearchPage} title={I18n('search')}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                 </Scene>

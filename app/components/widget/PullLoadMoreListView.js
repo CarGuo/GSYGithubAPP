@@ -108,7 +108,7 @@ class PullLoadMoreListView extends Component {
                 onEndReachedThreshold={50}
                 refreshControl={
                     <RefreshControl
-                        enable={this.state.showRefresh}
+                        enable={this.state.showRefresh && this.props.enableRefresh}
                         refreshing={this.state.isRefresh}
                         onRefresh={this._refresh}
                         tintColor={Constant.primaryColor}
@@ -150,10 +150,12 @@ PullLoadMoreListView.propTypes = {
     dataSource: PropTypes.any,
     refresh: PropTypes.func,
     loadMore: PropTypes.func,
+    enableRefresh: PropTypes.bool,
 };
 PullLoadMoreListView.defaultProps = {
     pageSize: Config.PAGE_SIZE,
     dataSource: [],
+    enableRefresh: true,
 };
 
 export default PullLoadMoreListView;

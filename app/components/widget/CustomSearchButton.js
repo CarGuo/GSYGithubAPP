@@ -14,7 +14,7 @@ import * as Constant from '../../style/constant'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 /**
- * 推荐
+ * 自定义搜索按键
  */
 class SearchButton extends Component {
     componentDidMount() {
@@ -28,8 +28,7 @@ class SearchButton extends Component {
     render() {
         return (
             <TouchableOpacity style={[styles.centered, {marginHorizontal: Constant.normalMarginEdge}]} onPress={() => {
-
-
+                Actions.SearchPage();
             }}>
                 <Icon name={'md-search'} size={25} color={Constant.miWhite}/>
             </TouchableOpacity>

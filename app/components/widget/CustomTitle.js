@@ -14,7 +14,7 @@ import * as Constant from '../../style/constant'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 /**
- * 推荐
+ * 自定义title
  */
 class CustomTitle extends Component {
     componentDidMount() {

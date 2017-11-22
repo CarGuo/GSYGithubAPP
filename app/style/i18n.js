@@ -46,6 +46,7 @@ I18n.translations = {
         trendWeek: 'Week',
         trendMonth: 'Month',
         trendAll: 'All',
+        search: 'search',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -81,6 +82,7 @@ I18n.translations = {
         trendWeek: '本周',
         trendMonth: '本月',
         trendAll: '全部',
+        search: '搜索',
     }
 };
 

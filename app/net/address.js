@@ -24,10 +24,10 @@ export default AddressLocal = {
             order = "desc"
         }
         if (!page) {
-            page = 0
+            page = 1
         }
         if (!pageSize) {
-            pageSize = 20
+            pageSize = Config.PAGE_SIZE
         }
 
         return `${host}search/repositories?q=${q}&sort=${sort}&order=${order}&page=${page}&per_page=${pageSize}`

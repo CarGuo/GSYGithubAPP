@@ -16,7 +16,7 @@ import {bindActionCreators} from 'redux'
 import CommonRowItem from './widget/CommonRowItem'
 
 /**
- * 推荐
+ * 设置
  */
 class SettingPage extends Component {
     componentDidMount() {

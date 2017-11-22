@@ -17,6 +17,7 @@ import {
 import * as Constant from '../../style/constant'
 import styles from '../../style'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import IconC from 'react-native-vector-icons/Octicons'
 import UserImage from './UserImage'
 import IconTextItem from './IconTextItem'
 import HTMLView from 'react-native-htmlview';
@@ -88,7 +89,8 @@ class RepositoryItem extends Component {
                             marginRight: Constant.normalMarginEdge / 2,
                             marginTop: -5,
                         }]}>
-                            <Text style={{color: Constant.subTextColor, fontSize: Constant.minTextSize}}>
+                            <Text style={{color: Constant.subTextColor, fontSize: Constant.minTextSize}}
+                                  numberOfLines={1}>
                                 {repositoryType}
                             </Text>
                         </View>
@@ -98,8 +100,10 @@ class RepositoryItem extends Component {
                     style={{marginTop: Constant.normalMarginEdge / 2,}}
                     numberOfLines={Constant.normalNumberOfLine}
                     value={repositoryDes}
-                    textComponentProps={{style:styles.subSmallText,
-                        numberOfLines:Constant.normalNumberOfLine}}
+                    textComponentProps={{
+                        style: styles.subSmallText,
+                        numberOfLines: Constant.normalNumberOfLine
+                    }}
                     textComponent={() => {
                         return (
                             <Text/>
@@ -118,9 +122,9 @@ class RepositoryItem extends Component {
                         </Icon.Button>
                     </View>
                     <View style={[styles.flex, styles.centered,]}>
-                        <Icon.Button name="eye" {...bottomIconStyle}>
+                        <IconC.Button name="issue-opened" {...bottomIconStyle}>
                             <Text style={[styles.subSmallText]}>{repositoryWatch}</Text>
-                        </Icon.Button>
+                        </IconC.Button>
                     </View>
                 </View>
             </View>

@@ -11,7 +11,17 @@ const getTrendDao = async (page = 0, since, languageType) => {
     };
 };
 
+const searchRepositoryDao = async (q, sort, order, page, pageSize) => {
+    let url = Address.sreach(q, sort, order, page, pageSize);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data ? res.data.items : res.data,
+        result: res.result
+    };
+};
+
 
 export default {
     getTrendDao,
+    searchRepositoryDao,
 }

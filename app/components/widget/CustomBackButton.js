@@ -14,7 +14,7 @@ import * as Constant from '../../style/constant'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 /**
- * 推荐
+ * 自定义返回按键
  */
 class BackButton extends Component {
     componentDidMount() {
