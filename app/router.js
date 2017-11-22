@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {
     Scene,
     Router,
-    Lightbox
+    Lightbox, Drawer
 } from 'react-native-router-flux';
 import DynamicPage from './components/DynamicPage'
 import LoginPage from './components/LoginPage'
@@ -18,6 +18,7 @@ import SearchPage from './components/SearchPage'
 import TabIcon from './components/widget/TabIcon'
 import LoadingModal from './components/widget/LoadingModal'
 import CustomBackButton from './components/widget/CustomBackButton'
+import CustomDrawerButton from './components/widget/CustomDrawerButton'
 import SearchButton from './components/widget/CustomSearchButton'
 import styles from './style'
 import I18n, {changeLocale} from './style/i18n'
@@ -97,9 +98,12 @@ const getRouter = () => {
                     <Scene key="SettingPage" component={SettingPage} title={I18n('setting')}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
-                    <Scene key="SearchPage" component={SearchPage} title={I18n('search')}
-                           renderLeftButton={() => <CustomBackButton/>}
-                    />
+                    <Drawer key="SearchPage" title={I18n('search')} hideNavBar
+                            drawerPosition={'right'}
+                            drawerIcon={<CustomDrawerButton/>}
+                            renderLeftButton={() => <CustomBackButton/>}>
+                        <Scene component={SearchPage} />
+                    </Drawer>
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
             </Lightbox>
