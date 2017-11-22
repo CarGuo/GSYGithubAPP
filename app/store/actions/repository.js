@@ -5,8 +5,8 @@
 import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 
-const getTrend = (page = 0, since = 'daily', callback) => async (dispatch, getState) => {
-    let res = await RepositoryDao.getTrendDao(page, since);
+const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
+    let res = await RepositoryDao.getTrendDao(page, since, languageType);
     if (res && res.result) {
         if (page === 0) {
             dispatch({

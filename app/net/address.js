@@ -176,9 +176,9 @@ export default AddressLocal = {
      * 趋势
      * @param since daily，weekly， monthly
      */
-    trending: (since, type) => {
-        if (type) {
-            return `https://github.com/trending/${type}?since=${since}`
+    trending: (since, languageType) => {
+        if (languageType) {
+            return `https://github.com/trending/${languageType}?since=${since}`
         }
         return `https://github.com/trending?since=${since}`
     },

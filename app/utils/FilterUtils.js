@@ -20,33 +20,65 @@ export const TrendTime = [
 
 export const TrendType = [
     {
-        "name": I18n('trendAll'), "value": 30, toString() {
+        "name": I18n('trendAll'), "value": null, toString() {
         return I18n('trendAll')
     }
     },
     {
-        "name": 'Android', "value": 30, toString() {
-        return 'Android'
+        "name": 'Java', "value": 'Java', toString() {
+        return 'Java'
     }
     },
     {
-        "name": 'IOS', "value": 30, toString() {
-        return 'IOS'
+        "name": 'Kotlin', "value": 'Kotlin', toString() {
+        return 'Kotlin'
     }
     },
     {
-        "name": 'Python', "value": 30, toString() {
-        return 'Python'
+        "name": 'Objective-C', "value": 'Objective-C', toString() {
+        return 'Objective-C'
     }
     },
     {
-        "name": 'JavaScript', "value": 30, toString() {
+        "name": 'Swift', "value": 'Swift', toString() {
+        return 'Swift'
+    }
+    },
+    {
+        "name": 'JavaScript', "value": 'JavaScript', toString() {
         return 'JavaScript'
     }
     },
     {
-        "name": 'JAVA', "value": 30, toString() {
-        return 'JAVA'
+        "name": 'PHP', "value": 'PHP', toString() {
+        return 'PHP'
     }
     },
+    {
+        "name": 'Go', "value": 'Go', toString() {
+        return 'Go'
+    }
+    },
+    {
+        "name": 'C++', "value": 'C++', toString() {
+        return 'C++'
+    }
+    },
+    {
+        "name": 'C', "value": 'C', toString() {
+        return 'C'
+    }
+    },
+    {
+        "name": 'HTML', "value": 'HTML', toString() {
+        return 'HTML'
+    }
+    },
+    {
+        "name": 'CSS', "value": 'CSS', toString() {
+        return 'CSS'
+    }
+    },
+
+
 ];

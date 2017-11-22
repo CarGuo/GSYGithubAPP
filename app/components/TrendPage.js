@@ -26,7 +26,8 @@ class TrendPage extends Component {
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this._refreshData = this._refreshData.bind(this);
-        this.timeLine = 'daily'
+        this.timeLine = 'daily';
+        this.languageType = null;
 
     }
 
@@ -62,7 +63,7 @@ class TrendPage extends Component {
      * */
     _refresh() {
         let {reposAction} = this.props;
-        reposAction.getTrend(0, this.timeLine, () => {
+        reposAction.getTrend(0, this.timeLine, this.languageType, () => {
             this.page = 2;
             setTimeout(() => {
                 if (this.refs.pullList) {
@@ -116,12 +117,13 @@ class TrendPage extends Component {
                         dropdownStyle={[...dropDownStyle,
                             {height: filterItemHeight * TrendType.length}]}
                         options={TrendType}
-                        onSelect={() => {
-
+                        onSelect={(rowID, rowData) => {
+                            this.languageType = rowData.value;
+                            this._refreshData();
                         }}
                     />
                 </View>
-                <View style={{height: 25, opacity: 0.3}}/>
+                <View style={{height: 2, opacity: 0.3}}/>
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
