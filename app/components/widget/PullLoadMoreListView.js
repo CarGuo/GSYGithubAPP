@@ -108,7 +108,7 @@ class PullLoadMoreListView extends Component {
                 onEndReachedThreshold={50}
                 refreshControl={
                     <RefreshControl
-                        enable={this.state.showRefresh && this.props.enableRefresh}
+                        enable={(this.state.showRefresh && this.props.enableRefresh)}
                         refreshing={this.state.isRefresh}
                         onRefresh={this._refresh}
                         tintColor={Constant.primaryColor}

@@ -52,6 +52,12 @@ class SearchPage extends Component {
     }
 
     _searchText() {
+        if (this.searchText === null || this.searchText.trim().length === 0) {
+            if (this.refs.pullList) {
+                this.refs.pullList.refreshComplete(false);
+            }
+            return
+        }
         if (this.refs.pullList) {
             this.refs.pullList.showRefreshState();
         }
@@ -91,6 +97,7 @@ class SearchPage extends Component {
      * 刷新
      * */
     _refresh() {
+        this._searchText();
     }
 
     /**
