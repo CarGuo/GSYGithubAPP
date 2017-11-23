@@ -1,18 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, Text, View, ViewPropTypes, TouchableOpacity} from 'react-native';
-import {Actions} from 'react-native-router-flux';
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'transparent',
-        borderWidth: 2,
-        borderColor: 'red',
-    },
-});
+import {StyleSheet, Text, View, ViewPropTypes, TouchableOpacity, StatusBar} from 'react-native';
+import {Router, Actions, Scene} from 'react-native-router-flux';
+import styles, {statusHeight, drawerWidth} from "../../style"
+import I18n from '../../style/i18n'
+import * as Constant from '../../style/constant'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 class DrawerFilter extends React.Component {
     static propTypes = {
@@ -27,9 +20,14 @@ class DrawerFilter extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={[styles.flex, styles.centerH, {
+                backgroundColor: 'transparent',
+            }]}>
+                <View style={{backgroundColor: "#F0000000", height: statusHeight, width: drawerWidth}}>
+                    <View style={{backgroundColor: Constant.primaryDarkColor, height: statusHeight, width: drawerWidth}}/>
+                </View>
                 <Text>Drawer Content</Text>
-                <TouchableOpacity onPress={()=>Actions.closeDrawer}>
+                <TouchableOpacity onPress={() => Actions.closeDrawer}>
                     <Text>Back</Text>
                 </TouchableOpacity>
                 <Text>Title: {this.props.title}</Text>

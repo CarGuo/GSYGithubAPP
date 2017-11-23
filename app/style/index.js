@@ -7,6 +7,8 @@ import * as constant from "./constant"
 export const screenWidth = Dimensions.get("window").width;
 export const screenHeight = Dimensions.get("window").height;
 export const navBarHeight = (Platform.OS === 'ios') ? constant.iosnavHeaderHeight : constant.andrnavHeaderHeight;
+export const statusHeight = (Platform.OS === 'android') ? StatusBar.currentHeight : 25;
+export const drawerWidth = screenWidth / 3 *2;
 
 export default StyleSheet.create({
     routerStyle: {
@@ -24,10 +26,10 @@ export default StyleSheet.create({
         paddingTop: StatusBar.currentHeight,
         height: navBarHeight,
     },
-    titleTextStyle:{
+    titleTextStyle: {
         color: constant.titleTextColor,
         fontSize: constant.normalTextSize,
-        fontWeight:"bold"
+        fontWeight: "bold"
     },
     mainBgColor: {
         backgroundColor: constant.mainBackgroundColor

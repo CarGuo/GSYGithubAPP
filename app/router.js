@@ -27,6 +27,7 @@ import * as Constant from './style/constant'
 import BackUtils from './utils/backUtils'
 
 import WelcomePage from "./components/WelcomePage"
+import {screenWidth, drawerWidth} from "./style/index";
 
 
 const getRouter = () => {
@@ -99,12 +100,14 @@ const getRouter = () => {
                     <Scene key="SettingPage" component={SettingPage} title={I18n('setting')}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
-                    <Drawer title={I18n('search')} hideNavBar
+                    <Drawer key="SearchPageDrawer" title={I18n('search')}
                             contentComponent={DrawerFilter}
                             drawerPosition={'right'}
+                            hideNavBar
+                            drawerWidth={drawerWidth}
                             drawerIcon={<CustomDrawerButton/>}
                             renderLeftButton={() => <CustomBackButton/>}>
-                        <Scene key="SearchPage" component={SearchPage}/>
+                        <Scene key="SearchPage"  component={SearchPage}/>
                     </Drawer>
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>

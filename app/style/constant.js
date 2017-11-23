@@ -62,7 +62,6 @@ export const littleIconSize = 10;
 export const normalMarginEdge = 10;
 export const normalNumberOfLine = 4;
 
-
 /****************图标****************/
 export const nextIcon = 'chevron-right';
 export const tabRecommended = 'activity';
