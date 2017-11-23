@@ -29,7 +29,7 @@ class CustomDrawerButton extends Component {
         return (
             <View style={[styles.centered, {
                 marginRight: Constant.normalMarginEdge,
-                marginTop: Constant.normalMarginEdge + 5
+                marginTop: Constant.normalMarginEdge
             }]}>
                 <Icon name={'filter'} size={20} color={Constant.miWhite}/>
             </View>

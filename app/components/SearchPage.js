@@ -148,6 +148,7 @@ class SearchPage extends Component {
                         underlineColorAndroid="transparent"
                         clearButtonMode="always"
                         style={[styles.smallText, {
+                            padding: 0,
                             paddingLeft: Constant.normalMarginEdge / 2,
                             marginHorizontal: Constant.normalMarginEdge / 2,
                             borderRadius: 3,
@@ -155,7 +156,7 @@ class SearchPage extends Component {
                         }, styles.flex]}/>
 
                     <TouchableOpacity
-                        style={[styles.centered, {marginTop: 5, marginHorizontal: Constant.normalMarginEdge}]}
+                        style={[styles.centered, {marginTop: 2, marginHorizontal: Constant.normalMarginEdge}]}
                         onPress={() => {
                             this._searchText()
                         }}>

@@ -98,11 +98,11 @@ const getRouter = () => {
                     <Scene key="SettingPage" component={SettingPage} title={I18n('setting')}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
-                    <Drawer key="SearchPage" title={I18n('search')} hideNavBar
+                    <Drawer title={I18n('search')} hideNavBar
                             drawerPosition={'right'}
                             drawerIcon={<CustomDrawerButton/>}
                             renderLeftButton={() => <CustomBackButton/>}>
-                        <Scene component={SearchPage} />
+                        <Scene key="SearchPage" component={SearchPage}/>
                     </Drawer>
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
