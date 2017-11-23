@@ -27,7 +27,10 @@ class SearchButton extends Component {
 
     render() {
         return (
-            <TouchableOpacity style={[styles.centered, {marginHorizontal: Constant.normalMarginEdge}]} onPress={() => {
+            <TouchableOpacity style={[styles.centered, {
+                marginHorizontal: Constant.normalMarginEdge,
+                paddingLeft: 20
+            }]} onPress={() => {
                 Actions.SearchPage();
             }}>
                 <Icon name={'md-search'} size={25} color={Constant.miWhite}/>

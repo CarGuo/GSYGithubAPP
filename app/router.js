@@ -17,6 +17,7 @@ import TrendPage from './components/TrendPage'
 import SearchPage from './components/SearchPage'
 import TabIcon from './components/widget/TabIcon'
 import LoadingModal from './components/widget/LoadingModal'
+import DrawerFilter from './components/widget/DrawerFilter'
 import CustomBackButton from './components/widget/CustomBackButton'
 import CustomDrawerButton from './components/widget/CustomDrawerButton'
 import SearchButton from './components/widget/CustomSearchButton'
@@ -99,6 +100,7 @@ const getRouter = () => {
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Drawer title={I18n('search')} hideNavBar
+                            contentComponent={DrawerFilter}
                             drawerPosition={'right'}
                             drawerIcon={<CustomDrawerButton/>}
                             renderLeftButton={() => <CustomBackButton/>}>
