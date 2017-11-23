@@ -86,3 +86,17 @@ export const TrendType = [
     },
 
 ];
+
+export const SortType = [
+    {name: 'desc', value: 'desc', select: true},
+    {name: 'asc', value: 'asc', select: false},
+];
+
+export const SearchFilterType = [
+    {name: "best_match", value: 'best%20match', select: true},
+    {name: "fewest_stars", value: 'most%20stars', select: false},
+    {name: "most_forks", value: 'most%20forks', select: false},
+    {name: "fewest_forks", value: 'fewest%20forks', select: false},
+    {name: "recently_updated", value: 'recently%20updated', select: false},
+    {name: "least_recently_updated", value: 'least%20recently%20updated', select: false},
+];
