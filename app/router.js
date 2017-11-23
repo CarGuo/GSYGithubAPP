@@ -63,13 +63,6 @@ const getRouter = () => {
                                backgroundColor: Constant.tabBackgroundColor
                            }}>
                         <Scene
-                            key="RecommendPage"
-                            component={RecommendPage}
-                            icon={TabIcon}
-                            title={I18n('tabRecommended')}
-                            tabIconName={'tabRecommended'}
-                        />
-                        <Scene
                             key="DynamicPage"
                             component={DynamicPage}
                             icon={TabIcon}
@@ -90,7 +83,6 @@ const getRouter = () => {
                             title={I18n('tabMy')}
                             tabIconName={'tabMy'}
                         />
-
                     </Scene>
                     <Scene key="LoginPage" component={LoginPage}
                            showLabel={false}

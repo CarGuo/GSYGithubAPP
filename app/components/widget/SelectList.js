@@ -58,7 +58,7 @@ class SelectList extends Component {
                     this.setState({
                         dataSource: this.ds.cloneWithRowsAndSections(selectMap),
                     });
-                    this.props.onSelect && this.props.onSelect(data);
+                    this.props.onSelect && this.props.onSelect(sectionID, data.value);
                 }}
             >
                 <Text style={[(data.select)

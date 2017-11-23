@@ -35,6 +35,9 @@ class SearchPage extends Component {
         this._loadMore = this._loadMore.bind(this);
         this.searchText = "";
         this.page = 2;
+        this.selectTypeData = null;
+        this.selectSortData = null;
+        this.selectLanguageData = null;
         this.state = {
             dataSource: []
         }
@@ -45,6 +48,25 @@ class SearchPage extends Component {
 
     componentWillUnmount() {
 
+    }
+
+    componentWillReceiveProps(newProps) {
+        let changed = false;
+        if (newProps.selectTypeData !== this.selectTypeData) {
+            this.selectTypeData = newProps.selectTypeData;
+            changed = true;
+        }
+        if (newProps.selectSortData !== this.selectSortData) {
+            this.selectSortData = newProps.selectSortData;
+            changed = true;
+        }
+        if (newProps.selectLanguageData !== this.selectLanguageData) {
+            this.selectLanguageData = newProps.selectLanguageData;
+            changed = true;
+        }
+        if (changed) {
+            this._searchText();
+        }
     }
 
     _searchTextChange(text) {
@@ -62,7 +84,7 @@ class SearchPage extends Component {
         if (this.refs.pullList) {
             this.refs.pullList.showRefreshState();
         }
-        repositoryActions.searchRepository(this.searchText, 'Java').then((res) => {
+        repositoryActions.searchRepository(this.searchText, this.selectLanguageData, this.selectTypeData, this.selectSortData, 1).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;
@@ -105,7 +127,7 @@ class SearchPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        repositoryActions.searchRepository(this.searchText, 'Java', null, null, this.page).then((res) => {
+        repositoryActions.searchRepository(this.searchText, this.selectLanguageData, this.selectTypeData, this.selectSortData, this.page).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page++;

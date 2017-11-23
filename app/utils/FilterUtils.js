@@ -94,9 +94,20 @@ export const SortType = [
 
 export const SearchFilterType = [
     {name: "best_match", value: 'best%20match', select: true},
-    {name: "fewest_stars", value: 'most%20stars', select: false},
-    {name: "most_forks", value: 'most%20forks', select: false},
-    {name: "fewest_forks", value: 'fewest%20forks', select: false},
-    {name: "recently_updated", value: 'recently%20updated', select: false},
-    {name: "least_recently_updated", value: 'least%20recently%20updated', select: false},
+    {name: "stars", value: 'stars', select: false},
+    {name: "forks", value: 'forks', select: false},
+    {name: "updated", value: 'updated', select: false},
+];
+
+export const SearchLanguageType = [
+    {name: "trendAll", value: null, select: true},
+    {name: "Java", value: 'Java', select: false},
+    {name: "Objective_C", value: 'Objective-C', select: false},
+    {name: "Swift", value: 'Swift', select: false},
+    {name: "JavaScript", value: 'JavaScript', select: false},
+    {name: "PHP", value: 'PHP', select: false},
+    {name: "C__", value: 'C__', select: false},
+    {name: "C", value: 'C', select: false},
+    {name: "HTML", value: 'HTML', select: false},
+    {name: "CSS", value: 'CSS', select: false},
 ];

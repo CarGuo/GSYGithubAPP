@@ -1,11 +1,10 @@
 # GSYGithubAPP
 
-react native 的 Github App，开发中～～Σ(￣。￣ﾉ)ﾉ
+react native 的 Github App，开发中，终于有进展了！！～～Σ(￣。￣ﾉ)ﾉ
 
 已完成部分
 
-* 路由框架
-* redux
-* model box
-* 网络请求与地址
-* 多语言
+* 主页三个tab
+* 个人动态
+* 个人主页
+* 搜索页面

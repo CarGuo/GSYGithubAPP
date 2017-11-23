@@ -5,7 +5,7 @@ import {Router, Actions, Scene} from 'react-native-router-flux';
 import styles, {statusHeight, drawerWidth} from "../../style"
 import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
-import {SortType, SearchFilterType} from '../../utils/FilterUtils'
+import {SortType, SearchFilterType, SearchLanguageType} from '../../utils/FilterUtils'
 import SelectList from './SelectList'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -31,13 +31,25 @@ class DrawerFilter extends React.Component {
                 </View>
                 <SelectList
                     listStyle={{flex: 1, backgroundColor: Constant.white, marginTop: Constant.normalMarginEdge * 2}}
-                    selectIndex={{'filerType': 0, 'filterSort': 0}}
+                    selectIndex={{'filerType': 0, 'filterSort': 0, "filterLanguage": 0}}
                     selectMap={{
                         'filerType': SearchFilterType,
                         'filterSort': SortType,
+                        'filterLanguage': SearchLanguageType,
                     }}
-                    onSelect={(data)=>{
-                        Actions.pop();
+                    onSelect={(selection, data) => {
+                        switch (selection) {
+                            case "filerType":
+                                Actions.pop({refresh: {selectTypeData: data}});
+                                break;
+                            case "filterLanguage":
+                                Actions.pop({refresh: {selectLanguageData: data}});
+                                break;
+                            case "filterSort":
+                                Actions.pop({refresh: {selectSortData: data}});
+                                break;
+                        }
+
                     }}
                 />
             </View>
