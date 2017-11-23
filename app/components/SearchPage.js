@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, TextInput, TouchableOpacity
+    View, Text, StatusBar, TextInput, TouchableOpacity, Keyboard
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
@@ -52,6 +52,7 @@ class SearchPage extends Component {
     }
 
     _searchText() {
+        Keyboard.dismiss();
         if (this.searchText === null || this.searchText.trim().length === 0) {
             if (this.refs.pullList) {
                 this.refs.pullList.refreshComplete(false);
@@ -61,7 +62,7 @@ class SearchPage extends Component {
         if (this.refs.pullList) {
             this.refs.pullList.showRefreshState();
         }
-        repositoryActions.searchRepository(this.searchText).then((res) => {
+        repositoryActions.searchRepository(this.searchText, 'Java').then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;
@@ -104,7 +105,7 @@ class SearchPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        repositoryActions.searchRepository(this.searchText, null, null, this.page).then((res) => {
+        repositoryActions.searchRepository(this.searchText, 'Java', null, null, this.page).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page++;
