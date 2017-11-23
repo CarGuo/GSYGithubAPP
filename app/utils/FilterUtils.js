@@ -2,17 +2,17 @@ import I18n from '../style/i18n'
 
 export const TrendTime = [
     {
-        "name": I18n('trendDay'), "value": 'daily', toString() {
+        "name": 'trendDay', "value": 'daily', toString() {
         return I18n('trendDay')
     }
     },
     {
-        "name": I18n('trendWeek'), "value": 'weekly', toString() {
+        "name": 'trendWeek', "value": 'weekly', toString() {
         return I18n('trendWeek')
     }
     },
     {
-        "name": I18n('trendMonth'), "value": 'monthly', toString() {
+        "name": 'trendMonth', "value": 'monthly', toString() {
         return I18n('trendMonth')
     }
     },
@@ -20,7 +20,7 @@ export const TrendTime = [
 
 export const TrendType = [
     {
-        "name": I18n('trendAll'), "value": null, toString() {
+        "name": 'trendAll', "value": null, toString() {
         return I18n('trendAll')
     }
     },
@@ -35,8 +35,8 @@ export const TrendType = [
     }
     },
     {
-        "name": 'Objective-C', "value": 'Objective-C', toString() {
-        return 'Objective-C'
+        "name": 'Objective_C', "value": 'Objective-C', toString() {
+        return 'Objective_C'
     }
     },
     {
@@ -60,8 +60,8 @@ export const TrendType = [
     }
     },
     {
-        "name": 'C++', "value": 'C++', toString() {
-        return 'C++'
+        "name": 'C__', "value": 'C++', toString() {
+        return 'C__'
     }
     },
     {
