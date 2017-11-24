@@ -38,6 +38,12 @@ class UserListPage extends ListPage {
                     this._refreshRes(res)
                 });
                 break;
+            case 'followed':
+                userActions.getFollowedList(this.props.currentUser, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+
         }
 
 
@@ -50,6 +56,11 @@ class UserListPage extends ListPage {
         switch (this.props.dataType) {
             case 'follower':
                 userActions.getFollowerList(this.props.currentUser, this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
+            case 'followed':
+                userActions.getFollowedList(this.props.currentUser, this.page).then((res) => {
                     this._loadMoreRes(res)
                 });
                 break;

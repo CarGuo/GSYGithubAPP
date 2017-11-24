@@ -105,10 +105,20 @@ const getFollowerList = async (userName, page = 1) => {
     }
 };
 
+const getFollowedList = async (userName, page = 1) => {
+    let res = await UserDao.getFollowedListDao(userName, page);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
+
 export default {
     initUserInfo,
     getUserInfo,
     getOtherUserInfo,
     clearUserInfo,
-    getFollowerList
+    getFollowerList,
+    getFollowedList
 }

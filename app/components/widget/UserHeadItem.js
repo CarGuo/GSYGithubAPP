@@ -122,7 +122,10 @@ class UserHeadItem extends Component {
                         itemName={I18n("FollowedText")}
                         itemValue={followed ? followed : hintNum}
                         onItemPress={() => {
-
+                            Actions.UserListPage({
+                                dataType: 'followed', showType: 'user',
+                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowedText')
+                            })
                         }}/>
                     <NameValueItem
                         itemStyle={[styles.flex, styles.centered,
