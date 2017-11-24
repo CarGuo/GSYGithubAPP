@@ -97,9 +97,18 @@ const clearUserInfo = () => {
     });
 };
 
+const getFollowerList = async (userName, page = 1) => {
+    let res = await UserDao.getFollowerListDao(userName, page);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
 export default {
     initUserInfo,
     getUserInfo,
     getOtherUserInfo,
-    clearUserInfo
+    clearUserInfo,
+    getFollowerList
 }

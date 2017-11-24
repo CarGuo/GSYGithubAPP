@@ -87,8 +87,18 @@ const getUserStaredCountNet = async (userName) => {
 };
 
 
+const getFollowerListDao = async (userName, page) => {
+    let res = await Api.netFetch(Address.getUserFollower(userName) + Address.getPageParams("?", page));
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
+
 export default {
     getUserInfoLocal,
     getUserInfoNet,
-    getUserStaredCountNet
+    getUserStaredCountNet,
+    getFollowerListDao
 }

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     View, Text, Image, StyleSheet, TouchableOpacity
 } from 'react-native';
-import styles from "../../style"
+import styles, {screenWidth} from "../../style"
 import PropTypes from 'prop-types';
 import * as Constant from '../../style/constant'
 import IconTextItem from './IconTextItem'
@@ -43,12 +43,12 @@ class UserHeadItem extends Component {
                 <View style={[
                     {
                         position: "absolute",
-                        left: Constant.normalMarginEdge,
+                        left: screenWidth - 100,
                         right: Constant.normalMarginEdge,
                         top: Constant.normalMarginEdge,
-                        bottom: Constant.normalMarginEdge,
+                        bottom: 80,
                         zIndex: 12,
-                    },styles.alignItemsEnd]}>
+                    }, styles.alignItemsEnd]}>
                     <TouchableOpacity
                         style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2,}]}
                         onPress={() => {
@@ -76,11 +76,11 @@ class UserHeadItem extends Component {
                         </Text>
                         <Text style={[styles.subLightSmallText,]}>{(userName) ? userName : hintNum}</Text>
                         <IconTextItem
-                            text={(groupName) ? groupName : hint} icon={'map-marker'}
+                            text={(groupName) ? groupName : hint} icon={'group'}
                             viewstyle={[{marginTop: halfEdge}]}
                             textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
                         <IconTextItem
-                            text={(location) ? location : hint} icon={'group'}
+                            text={(location) ? location : hint} icon={'map-marker'}
                             viewstyle={[{marginTop: halfEdge}]}
                             textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
                     </View>
@@ -112,7 +112,10 @@ class UserHeadItem extends Component {
                         itemName={I18n("FollowersText")}
                         itemValue={follower ? follower : hintNum}
                         onItemPress={() => {
-
+                            Actions.UserListPage({
+                                dataType: 'follower', showType: 'user',
+                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowersText')
+                            })
                         }}/>
                     <NameValueItem
                         itemStyle={[styles.flex, styles.centered,]}

@@ -1,11 +1,8 @@
-/**
- * Created by guoshuyu on 2017/11/11.
- */
 import React, {
     Component,
 } from 'react'
 import {
-    View, Text, Image
+    View, Text, Image, TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from '../../style'
@@ -19,9 +16,9 @@ import TimeText from './TimeText'
 import UserImage from './UserImage'
 
 /**
- * 事件列表Item
+ * 用户列表Item
  */
-class EventItem extends Component {
+class UserItem extends Component {
     constructor(props) {
         super(props)
     }
@@ -34,7 +31,7 @@ class EventItem extends Component {
     }
 
     render() {
-        let {actionTime, actionUser, actionUserPic, actionMode, actionTarget} = this.props;
+        let {location, actionUser, actionUserPic} = this.props;
         let bottomDes = (this.props.des) ?
             <Text style={[styles.subSmallText,
                 {marginTop: Constant.normalMarginEdge,}]}
@@ -42,13 +39,17 @@ class EventItem extends Component {
                 {this.props.des}
             </Text> : <View/>;
         return (
-            <View style={[{
-                marginTop: Constant.normalMarginEdge,
-                marginLeft: Constant.normalMarginEdge,
-                marginRight: Constant.normalMarginEdge,
-                padding: Constant.normalMarginEdge,
-                borderRadius: 4,
-            }, styles.shadowCard]}>
+            <TouchableOpacity
+                style={[{
+                    marginTop: Constant.normalMarginEdge,
+                    marginLeft: Constant.normalMarginEdge,
+                    marginRight: Constant.normalMarginEdge,
+                    padding: Constant.normalMarginEdge,
+                    borderRadius: 4,
+                }, styles.shadowCard]}
+                onPress={() => {
+                    Actions.PersonPage({currentUser: actionUser})
+                }}>
                 <View style={[styles.flexDirectionRowNotFlex,]}>
                     <UserImage uri={actionUserPic}
                                loginUser={actionUser}
@@ -65,33 +66,25 @@ class EventItem extends Component {
                         }]}>
                             {actionUser}
                         </Text>
-                        <TimeText style={[styles.subSmallText,
-                            {marginTop: -20}]}
-                                  time={actionTime}/>
+                        <Text style={[styles.subSmallText,
+                            {marginTop: -20}]}>
+                            {location}
+                        </Text>
                     </View>
                 </View>
-                <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
-                    <Text style={[styles.smallText, {fontWeight: "bold"}]}>{actionTarget}</Text>
-                </View>
                 {bottomDes}
-            </View>
+            </TouchableOpacity>
         )
     }
 }
 
 const propTypes = {
-    actionTime: PropTypes.string,
+    location: PropTypes.string,
     actionUser: PropTypes.string,
     actionUserPic: PropTypes.string,
-    actionMode: PropTypes.string,
-    actionTarget: PropTypes.string,
     des: PropTypes.string,
 };
 
-EventItem.propTypes = propTypes;
+UserItem.propTypes = propTypes;
 
-export default connect(state => ({
-    state
-}), dispatch => ({
-    actions: bindActionCreators(loginActions, dispatch)
-}))(EventItem)
+export default UserItem

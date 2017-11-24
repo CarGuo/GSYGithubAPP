@@ -9,7 +9,7 @@ class PersonPage extends BasePersonPage {
         this._onClose = this._onClose.bind(this);
         this.state = {
             userInfo: {
-                login: this.props.userName,
+                login: this.props.currentUser,
                 followers: '---',
                 star: '---',
                 following: '---',
@@ -20,7 +20,7 @@ class PersonPage extends BasePersonPage {
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this._onClose);
-        userAction.getOtherUserInfo(this.props.userName).then((res) => {
+        userAction.getOtherUserInfo(this.props.currentUser).then((res) => {
             if (res && res.result) {
                 this.setState({
                     userInfo: res.data

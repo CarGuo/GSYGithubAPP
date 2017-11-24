@@ -69,7 +69,7 @@ class RepositoryItem extends Component {
             }, styles.shadowCard]}>
                 <View style={[styles.flexDirectionRowNotFlex]}>
                     <UserImage uri={ownerPic}
-                               userName={ownerName}
+                               loginUser={ownerName}
                                resizeMethod="scale"
                                style={[{
                                    height: Constant.normalIconSize, width: Constant.normalIconSize,

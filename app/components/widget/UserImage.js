@@ -14,7 +14,7 @@ export default class UserImage extends Component {
     render() {
         return (
             <TouchableWithoutFeedback onPress={() => {
-                Actions.PersonPage({userName: this.props.userName})
+                Actions.PersonPage({currentUser: this.props.loginUser})
             }}>
                 <Image source={{uri: this.props.uri}}
                        resizeMethod="scale"
@@ -25,6 +25,6 @@ export default class UserImage extends Component {
 }
 
 UserImage.propTypes = {
-    userName: PropTypes.string,
+    loginUser: PropTypes.string,
     uri: PropTypes.string,
 };

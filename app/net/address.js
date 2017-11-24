@@ -122,7 +122,7 @@ export default AddressLocal = {
      * 用户关注 get
      */
     getUserFollow: (userName) => {
-        return `${host}user/${userName}/following`;
+        return `${host}users/${userName}/following`;
     },
     /**
      * 我的关注者 get
@@ -134,7 +134,7 @@ export default AddressLocal = {
      * 用户的关注者 get
      */
     getUserFollower: (userName) => {
-        return `${host}user/${userName}/followers`;
+        return `${host}users/${userName}/followers`;
     },
     /**
      * fork get

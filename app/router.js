@@ -15,6 +15,7 @@ import PersonPage from './components/PersonPage'
 import SettingPage from './components/SettingPage'
 import TrendPage from './components/TrendPage'
 import SearchPage from './components/SearchPage'
+import UserListPage from './components/UserListPage'
 import TabIcon from './components/widget/TabIcon'
 import LoadingModal from './components/widget/LoadingModal'
 import DrawerFilter from './components/widget/DrawerFilter'
@@ -92,6 +93,9 @@ const getRouter = () => {
                     <Scene key="SettingPage" component={SettingPage} title={I18n('setting')}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
+                    <Scene key="UserListPage" component={UserListPage}
+                           renderLeftButton={() => <CustomBackButton/>}
+                    />
                     <Drawer key="SearchPageDrawer" title={I18n('search')}
                             contentComponent={DrawerFilter}
                             drawerPosition={'right'}
@@ -99,7 +103,7 @@ const getRouter = () => {
                             drawerWidth={drawerWidth}
                             drawerIcon={<CustomDrawerButton/>}
                             renderLeftButton={() => <CustomBackButton/>}>
-                        <Scene key="SearchPage"  component={SearchPage}/>
+                        <Scene key="SearchPage" component={SearchPage}/>
                     </Drawer>
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
