@@ -20,8 +20,28 @@ const searchRepositoryDao = async (q, sort, order, page, pageSize) => {
     };
 };
 
+const getUserRepositoryDao = async (userName, page) => {
+    let url = Address.userRepos(userName) + Address.getPageParams("&", page);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+const getStarRepositoryDao = async (userName, page) => {
+    let url = Address.userStar(userName) + Address.getPageParams("&", page);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 
 export default {
     getTrendDao,
     searchRepositoryDao,
+    getUserRepositoryDao,
+    getStarRepositoryDao
 }

@@ -7,19 +7,20 @@ import {
     View, Text, StatusBar, InteractionManager, TouchableOpacity, Keyboard
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import styles from "../../style/index"
-import * as Constant from "../../style/constant"
-import I18n from '../../style/i18n'
-import repositoryActions from '../../store/actions/repository'
+import styles from "../style/index"
+import * as Constant from "../style/constant"
+import userActions from '../store/actions/user'
+import repositoryActions from '../store/actions/repository'
+import I18n from '../style/i18n'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import UserItem from './UserItem'
-import CommonRowItem from './CommonRowItem'
-import CustomSearchButton from './CustomSearchButton'
-import PullListView from './PullLoadMoreListView'
-import RepositoryItem from './RepositoryItem'
+import UserItem from './widget/UserItem'
+import CommonRowItem from './widget/CommonRowItem'
+import CustomSearchButton from './widget/CustomSearchButton'
+import PullListView from './widget/PullLoadMoreListView'
+import RepositoryItem from './widget/RepositoryItem'
 import Icon from 'react-native-vector-icons/Ionicons'
-import * as Config from '../../config/index'
+import * as Config from '../config/index'
 import PropTypes from 'prop-types';
 
 
@@ -78,10 +79,36 @@ class ListPage extends Component {
         }
     }
 
+
+
     /**
      * 刷新
      * */
     _refresh() {
+        switch (this.props.dataType) {
+            case 'follower':
+                userActions.getFollowerList(this.props.currentUser, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+            case 'followed':
+                userActions.getFollowedList(this.props.currentUser, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+            case 'user_repos':
+                repositoryActions.getUserRepository(this.props.currentUser, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+            case 'user_star':
+                repositoryActions.getStarRepository(this.props.currentUser, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+
+        }
+
 
     }
 
@@ -89,7 +116,28 @@ class ListPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-
+        switch (this.props.dataType) {
+            case 'follower':
+                userActions.getFollowerList(this.props.currentUser, this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
+            case 'followed':
+                userActions.getFollowedList(this.props.currentUser, this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
+            case 'user_repos':
+                repositoryActions.getUserRepository(this.props.currentUser, this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
+            case 'user_star':
+                repositoryActions.getStarRepository(this.props.currentUser, this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
+        }
     }
 
 
@@ -99,6 +147,7 @@ class ListPage extends Component {
     _refreshRes(res) {
         let size = 0;
         if (res && res.result) {
+            this.page = 2;
             this.setState({
                 dataSource: res.data
             });
@@ -152,9 +201,10 @@ class ListPage extends Component {
     }
 }
 
-
 ListPage.propTypes = {
-    showType: PropTypes.string
+    showType: PropTypes.string,
+    dataType: PropTypes.string,
+    currentUser: PropTypes.string
 };
 
 export default ListPage

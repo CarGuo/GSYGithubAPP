@@ -67,7 +67,7 @@ export default AddressLocal = {
         if (!sort) {
             sort = 'updated'
         }
-        return `${host}user/starred?sort=${sort}`;
+        return `${host}users/starred?sort=${sort}`;
     },
     /**
      * 用户的star get

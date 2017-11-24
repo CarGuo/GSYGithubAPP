@@ -102,7 +102,10 @@ class UserHeadItem extends Component {
                         itemName={I18n("repositoryText")}
                         itemValue={repos ? repos : hintNum}
                         onItemPress={() => {
-
+                            Actions.ListPage({
+                                dataType: 'user_repos', showType: 'repository',
+                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('repositoryText')
+                            })
                         }}/>
                     <NameValueItem
                         itemStyle={[styles.flex, styles.centered,
@@ -112,7 +115,7 @@ class UserHeadItem extends Component {
                         itemName={I18n("FollowersText")}
                         itemValue={follower ? follower : hintNum}
                         onItemPress={() => {
-                            Actions.UserListPage({
+                            Actions.ListPage({
                                 dataType: 'follower', showType: 'user',
                                 currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowersText')
                             })
@@ -122,7 +125,7 @@ class UserHeadItem extends Component {
                         itemName={I18n("FollowedText")}
                         itemValue={followed ? followed : hintNum}
                         onItemPress={() => {
-                            Actions.UserListPage({
+                            Actions.ListPage({
                                 dataType: 'followed', showType: 'user',
                                 currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowedText')
                             })
@@ -133,7 +136,10 @@ class UserHeadItem extends Component {
                         itemName={I18n("staredText")}
                         itemValue={star ? star : hintNum}
                         onItemPress={() => {
-
+                            Actions.ListPage({
+                                dataType: 'user_star', showType: 'repository',
+                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('repositoryText')
+                            })
                         }}/>
                 </View>
             </View>

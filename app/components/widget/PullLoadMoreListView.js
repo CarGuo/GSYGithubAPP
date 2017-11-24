@@ -84,6 +84,9 @@ class PullLoadMoreListView extends Component {
         if (this.state.isRefreshing) {
             return
         }
+        if (this.state.showLoadMore) {
+            return
+        }
         if (this.props.dataSource.length === 0) {
             return
         }

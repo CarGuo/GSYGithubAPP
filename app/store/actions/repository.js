@@ -37,7 +37,26 @@ const searchRepository = async (q, language, sort, order, page = 1, pageSize) =>
     }
 };
 
+const getUserRepository = async (userName, page = 1) => {
+    let res = await RepositoryDao.getUserRepositoryDao(userName, page);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
+const getStarRepository = async (userName, page = 1) => {
+    let res = await RepositoryDao.getStarRepositoryDao(userName, page);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
 export default {
     getTrend,
-    searchRepository
+    searchRepository,
+    getUserRepository,
+    getStarRepository,
+
 }
