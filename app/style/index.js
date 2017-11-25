@@ -115,6 +115,11 @@ export default StyleSheet.create({
         color: constant.TextColorWhite,
         fontSize: constant.normalTextSize
     },
+
+    normalTextLight: {
+        color: constant.primaryLightColor,
+        fontSize: constant.normalTextSize
+    },
     middleTextWhite: {
         color: constant.TextColorWhite,
         fontSize: constant.middleTextWhite

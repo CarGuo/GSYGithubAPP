@@ -13,6 +13,7 @@ import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
 import PersonPage from './components/PersonPage'
 import SettingPage from './components/SettingPage'
+import RepositoryDetail from './components/RepositoryDetail'
 import TrendPage from './components/TrendPage'
 import SearchPage from './components/SearchPage'
 import ListPage from './components/ListPage'
@@ -105,6 +106,9 @@ const getRouter = () => {
                             renderLeftButton={() => <CustomBackButton/>}>
                         <Scene key="SearchPage" component={SearchPage}/>
                     </Drawer>
+                    <Scene key="RepositoryDetail" component={RepositoryDetail}
+                           renderLeftButton={() => <CustomBackButton/>}
+                    />
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
             </Lightbox>

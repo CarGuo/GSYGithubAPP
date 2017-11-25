@@ -38,10 +38,20 @@ const getStarRepositoryDao = async (userName, page) => {
     };
 };
 
+const getRepositoryDetailDao = async (userName, reposName) => {
+    let url = Address.getReposDetail(userName, reposName);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 
 export default {
     getTrendDao,
     searchRepositoryDao,
     getUserRepositoryDao,
-    getStarRepositoryDao
+    getStarRepositoryDao,
+    getRepositoryDetailDao
 }

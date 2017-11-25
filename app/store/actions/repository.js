@@ -53,10 +53,20 @@ const getStarRepository = async (userName, page = 1) => {
     }
 };
 
+const getRepositoryDetail = async (userName, reposName) => {
+    let res = await RepositoryDao.getRepositoryDetailDao(userName, reposName);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
+
 export default {
     getTrend,
     searchRepository,
     getUserRepository,
     getStarRepository,
+    getRepositoryDetail,
 
 }

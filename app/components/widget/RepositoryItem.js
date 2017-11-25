@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import * as Constant from '../../style/constant'
+import {Actions} from 'react-native-router-flux'
 import styles from '../../style'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Octicons'
@@ -59,14 +60,19 @@ class RepositoryItem extends Component {
             marginLeft: -Constant.normalMarginEdge / 2
         };
         return (
-            <View style={[{
-                backgroundColor: Constant.white,
-                marginTop: Constant.normalMarginEdge,
-                marginHorizontal: Constant.normalMarginEdge,
-                paddingHorizontal: Constant.normalMarginEdge,
-                paddingTop: Constant.normalMarginEdge,
-                borderRadius: 4,
-            }, styles.shadowCard]}>
+            <TouchableOpacity
+                style={[{
+                    backgroundColor: Constant.white,
+                    marginTop: Constant.normalMarginEdge,
+                    marginHorizontal: Constant.normalMarginEdge,
+                    paddingHorizontal: Constant.normalMarginEdge,
+                    paddingTop: Constant.normalMarginEdge,
+                    borderRadius: 4,
+                }, styles.shadowCard]}
+                onPress={() => {
+                    Actions.RepositoryDetail({repositoryName: repositoryName, ownerName: ownerName});
+                }}
+            >
                 <View style={[styles.flexDirectionRowNotFlex]}>
                     <UserImage uri={ownerPic}
                                loginUser={ownerName}
@@ -127,7 +133,7 @@ class RepositoryItem extends Component {
                         </IconC.Button>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }

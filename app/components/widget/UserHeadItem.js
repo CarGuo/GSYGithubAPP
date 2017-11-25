@@ -54,7 +54,7 @@ class UserHeadItem extends Component {
                         onPress={() => {
                             Actions.SettingPage();
                         }}>
-                        <Icon name={'ios-settings'} size={setting ? 25 : 0}
+                        <Icon name={'ios-settings'} size={setting ? 25 : 1}
                               color={Constant.miWhite}/>
                     </TouchableOpacity>
                 </View>
