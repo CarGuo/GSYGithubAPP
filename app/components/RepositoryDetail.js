@@ -2,11 +2,11 @@
  * Created by guoshuyu on 2017/11/10.
  */
 
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import {
-    View, Text, StatusBar, TextInput, TouchableOpacity, Keyboard
+    View, Text, StatusBar, Dimensions, TouchableOpacity, Keyboard
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {Actions, Tabs} from 'react-native-router-flux';
 import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
@@ -20,11 +20,31 @@ import PullListView from './widget/PullLoadMoreListView'
 import RepositoryHeader from './widget/RepositoryHeader'
 import Icon from 'react-native-vector-icons/Ionicons'
 import resolveTime from '../utils/timeUtil'
+import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
+
+const initialLayout = {
+    height: 0,
+    width: Dimensions.get('window').width,
+};
+
+const FirstRoute = () => <View style={[{flex: 1}, {backgroundColor: '#ff4081'}]}/>;
+const SecondRoute = () => <View style={[{flex: 1}, {backgroundColor: '#673ab7'}]}/>;
+
 
 /**
  * 详情
  */
 class RepositoryDetail extends Component {
+
+    _handleIndexChange = index => this.setState({index});
+
+    _renderHeader = props => <TabBar {...props} />;
+
+    _renderScene = SceneMap({
+        first: FirstRoute,
+        second: SecondRoute,
+    });
+
 
     constructor(props) {
         super(props);
@@ -32,7 +52,12 @@ class RepositoryDetail extends Component {
         this._loadMore = this._loadMore.bind(this);
         this.page = 2;
         this.state = {
-            dataDetail: {}
+            dataDetail: {},
+            index: 0,
+            routes: [
+                {key: 'first', title: 'First'},
+                {key: 'second', title: 'Second'},
+            ],
         }
     }
 
@@ -98,6 +123,16 @@ class RepositoryDetail extends Component {
                     repositoryParentName={parent ? parent.full_name : null}
                     created_at={resolveTime(created_at)}
                     push_at={resolveTime(pushed_at)}
+                />
+                <TabViewAnimated
+                    style={{
+                        flex: 1,
+                    }}
+                    navigationState={this.state}
+                    renderScene={this._renderScene}
+                    renderHeader={this._renderHeader}
+                    onIndexChange={this._handleIndexChange}
+                    initialLayout={initialLayout}
                 />
             </View>
         )
