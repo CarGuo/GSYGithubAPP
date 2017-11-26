@@ -21,14 +21,12 @@ import RepositoryHeader from './widget/RepositoryHeader'
 import Icon from 'react-native-vector-icons/Ionicons'
 import resolveTime from '../utils/timeUtil'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
+import HTMLView from 'react-native-htmlview';
 
 const initialLayout = {
     height: 0,
     width: Dimensions.get('window').width,
 };
-
-const FirstRoute = () => <View style={[{flex: 1}, {backgroundColor: '#ff4081'}]}/>;
-const SecondRoute = () => <View style={[{flex: 1}, {backgroundColor: '#673ab7'}]}/>;
 
 
 /**
@@ -40,12 +38,6 @@ class RepositoryDetail extends Component {
 
     _renderHeader = props => <TabBar {...props} />;
 
-    _renderScene = SceneMap({
-        first: FirstRoute,
-        second: SecondRoute,
-    });
-
-
     constructor(props) {
         super(props);
         this._refresh = this._refresh.bind(this);
@@ -55,11 +47,51 @@ class RepositoryDetail extends Component {
             dataDetail: {},
             index: 0,
             routes: [
-                {key: 'first', title: 'First'},
-                {key: 'second', title: 'Second'},
+                { key: '1', title: 'First' },
+                { key: '2', title: 'Second' },
+                { key: '3', title: 'Third' },
+                { key: '4', title: 'Fourth' },
             ],
         }
     }
+
+    _renderScene = ({ route }) => {
+        switch (route.key) {
+            case '1':
+                return (
+                    <View style={[{flex: 1}, {backgroundColor: '#ff4081'}]}>
+                        <HTMLView
+                            style={{marginTop: Constant.normalMarginEdge / 2,}}
+                            numberOfLines={100}
+                            value={this.state.dataDetail.description}
+                            textComponentProps={{
+                                style: styles.subSmallText,
+                                numberOfLines: 100
+                            }}
+                            textComponent={() => {
+                                return (
+                                    <Text/>
+                                )
+                            }}
+                        />
+                    </View>
+                );
+            case '2':
+                return (
+                    <View style={[{flex: 1}, {backgroundColor: '#673ab7'}]}/>
+                );
+            case '3':
+                return (
+                    <View style={[{flex: 1}, {backgroundColor: '#673ab7'}]}/>
+                );
+            case '4':
+                return (
+                    <View style={[{flex: 1}, {backgroundColor: '#673ab7'}]}/>
+                );
+            default:
+                return null;
+        }
+    };
 
     componentDidMount() {
         repositoryActions.getRepositoryDetail(this.props.ownerName, this.props.repositoryName)
@@ -129,7 +161,7 @@ class RepositoryDetail extends Component {
                         flex: 1,
                     }}
                     navigationState={this.state}
-                    renderScene={this._renderScene}
+                    renderScene={this._renderScene.bind(this)}
                     renderHeader={this._renderHeader}
                     onIndexChange={this._handleIndexChange}
                     initialLayout={initialLayout}

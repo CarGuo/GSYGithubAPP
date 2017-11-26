@@ -70,7 +70,8 @@ class RepositoryItem extends Component {
                     borderRadius: 4,
                 }, styles.shadowCard]}
                 onPress={() => {
-                    Actions.RepositoryDetail({repositoryName: repositoryName, ownerName: ownerName});
+                    Actions.RepositoryDetail({repositoryName: repositoryName, ownerName: ownerName
+                    , title: repositoryName});
                 }}
             >
                 <View style={[styles.flexDirectionRowNotFlex]}>
