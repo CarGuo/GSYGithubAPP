@@ -84,10 +84,9 @@ class RepositoryHeader extends Component {
                 borderRadius: 4,
             }, styles.shadowCard]}>
                 <View style={[styles.flexDirectionRowNotFlex]}>
-                    <IconTextItem
-                        iconColor={Constant.subLightTextColor}
-                        text={ownerName} icon={'user'}
-                        textstyle={[styles.normalTextLight]}/>
+                    <Text style={[styles.normalTextLight, {fontWeight: "bold"}]}>{ownerName}</Text>
+                    <Text style={[styles.normalTextLight, {fontWeight: "bold"}]}>{" / "}</Text>
+                    <Text style={[styles.normalText, {fontWeight: "bold"}]}>{repositoryName}</Text>
                 </View>
                 <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2}]}>
                     <Text style={{
@@ -103,6 +102,20 @@ class RepositoryHeader extends Component {
                         {repositorySize}
                     </Text>
                 </View>
+                <HTMLView
+                    style={{marginTop: Constant.normalMarginEdge / 2,}}
+                    numberOfLines={100}
+                    value={repositoryDes}
+                    textComponentProps={{
+                        style: styles.subSmallText,
+                        numberOfLines: 100
+                    }}
+                    textComponent={() => {
+                        return (
+                            <Text/>
+                        )
+                    }}
+                />
                 <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
                     <TouchableOpacity style={[styles.flex, styles.centered,]}>
                         <Icon name="star-o" {...bottomIconStyle}/>

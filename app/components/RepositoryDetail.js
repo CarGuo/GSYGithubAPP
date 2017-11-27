@@ -34,10 +34,6 @@ const initialLayout = {
  */
 class RepositoryDetail extends Component {
 
-    _handleIndexChange = index => this.setState({index});
-
-    _renderHeader = props => <TabBar {...props} />;
-
     constructor(props) {
         super(props);
         this._refresh = this._refresh.bind(this);
@@ -47,34 +43,46 @@ class RepositoryDetail extends Component {
             dataDetail: {},
             index: 0,
             routes: [
-                { key: '1', title: 'First' },
-                { key: '2', title: 'Second' },
-                { key: '3', title: 'Third' },
-                { key: '4', title: 'Fourth' },
+                {key: '1', title: 'First'},
+                {key: '2', title: 'Second'},
+                {key: '3', title: 'Third'},
+                {key: '4', title: 'Fourth'},
             ],
         }
     }
 
-    _renderScene = ({ route }) => {
+    _handleIndexChange = index => this.setState({index});
+
+    _renderHeader = props =>
+        <TabBar {...props}
+                style={{backgroundColor: Constant.primaryColor}}
+                labelStyle={{color: Constant.white}}
+                indicatorStyle={{backgroundColor: Constant.miWhite}}
+        />;
+
+    _renderScene = ({route}) => {
         switch (route.key) {
             case '1':
+                let {
+                    forks_count, fork, open_issues_count, size, watchers_count,
+                    subscribers_count, description, language, created_at, pushed_at, parent
+                } = this.state.dataDetail;
                 return (
-                    <View style={[{flex: 1}, {backgroundColor: '#ff4081'}]}>
-                        <HTMLView
-                            style={{marginTop: Constant.normalMarginEdge / 2,}}
-                            numberOfLines={100}
-                            value={this.state.dataDetail.description}
-                            textComponentProps={{
-                                style: styles.subSmallText,
-                                numberOfLines: 100
-                            }}
-                            textComponent={() => {
-                                return (
-                                    <Text/>
-                                )
-                            }}
-                        />
-                    </View>
+                    <RepositoryHeader
+                        ownerName={this.props.ownerName}
+                        repositoryName={this.props.repositoryName}
+                        repositoryStar={watchers_count + ""}
+                        repositoryFork={forks_count + ""}
+                        repositoryWatch={subscribers_count + ""}
+                        repositoryIssue={open_issues_count + ""}
+                        repositorySize={(size / 1024).toFixed(2) + "M"}
+                        repositoryType={language}
+                        repositoryDes={description}
+                        repositoryIsFork={fork}
+                        repositoryParentName={parent ? parent.full_name : null}
+                        created_at={resolveTime(created_at)}
+                        push_at={resolveTime(pushed_at)}
+                    />
                 );
             case '2':
                 return (
@@ -96,7 +104,6 @@ class RepositoryDetail extends Component {
     componentDidMount() {
         repositoryActions.getRepositoryDetail(this.props.ownerName, this.props.repositoryName)
             .then((res) => {
-                console.log("****************", res);
                 if (res && res.result) {
                     this.setState({
                         dataDetail: res.data
@@ -141,21 +148,6 @@ class RepositoryDetail extends Component {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
-                <RepositoryHeader
-                    ownerName={this.props.ownerName}
-                    repositoryName={this.props.repositoryName}
-                    repositoryStar={watchers_count + ""}
-                    repositoryFork={forks_count + ""}
-                    repositoryWatch={subscribers_count + ""}
-                    repositoryIssue={open_issues_count + ""}
-                    repositorySize={(size / 1024).toFixed(2) + "M"}
-                    repositoryType={language}
-                    repositoryDes={description}
-                    repositoryIsFork={fork}
-                    repositoryParentName={parent ? parent.full_name : null}
-                    created_at={resolveTime(created_at)}
-                    push_at={resolveTime(pushed_at)}
-                />
                 <TabViewAnimated
                     style={{
                         flex: 1,
