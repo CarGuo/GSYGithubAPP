@@ -15,6 +15,7 @@
     "react-native-gesture-handler": "^1.0.0-alpha.33",
     "react-native-htmlview": "^0.12.1",
     "react-native-i18n": "^2.0.9",
+    "react-native-markdown-view": "^1.1.4",
     "react-native-modal-dropdown": "^0.5.0",
     "react-native-modalbox": "^1.4.2",
     "react-native-root-toast": "^2.2.0",

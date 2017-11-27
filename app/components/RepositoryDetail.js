@@ -4,7 +4,7 @@
 
 import React, {Component, PureComponent} from 'react';
 import {
-    View, Text, StatusBar, Dimensions, TouchableOpacity, Keyboard
+    View, Text, StatusBar, Dimensions, ScrollView, Keyboard
 } from 'react-native';
 import {Actions, Tabs} from 'react-native-router-flux';
 import styles from "../style"
@@ -25,6 +25,7 @@ import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 import HTMLView from 'react-native-htmlview';
 import Markdown from 'react-native-simple-markdown'
 import address from "../net/address";
+import { MarkdownView } from 'react-native-markdown-view'
 
 const initialLayout = {
     height: 0,
@@ -90,13 +91,17 @@ class RepositoryDetail extends Component {
                 );
             case '2':
                 return (
+                    <ScrollView>
                     <WebComponent
                         source={{html: this.state.dataDetailReadme}}
                         startInLoadingState={true}/>
+                    </ScrollView>
                 );
             case '3':
                 return (
-                    <Markdown>{""}</Markdown>
+                    <ScrollView>
+                    <MarkdownView>{this.state.dataDetailReadme}</MarkdownView>
+                    </ScrollView>
                 );
             case '4':
                 return (

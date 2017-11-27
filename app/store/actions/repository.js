@@ -7,6 +7,9 @@ import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
 
 import showdown from 'showdown'
+var marked = require('marked');
+
+console.log(marked('I am using __markdown__.'));
 
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
@@ -69,14 +72,31 @@ const getRepositoryDetailReadme = async (userName, reposName) => {
     if (res.result) {
         let b = Buffer(res.data.content, 'base64');
         let data = b.toString('utf8');
-        console.log("11111111111", data);
         let converter = new showdown.Converter();
         converter.setFlavor('github');
         let html = converter.makeHtml(data);
-        console.log("***********", html);
+
+        marked.setOptions({
+            renderer: new marked.Renderer(),
+            gfm: true,
+            tables: true,
+            breaks: false,
+            pedantic: false,
+            sanitize: false,
+            smartLists: true,
+            smartypants: false
+        });
+        console.log("***********", marked(data));
         return {
             result: true,
-            data: html,
+            da3ta: '<header>' +
+            '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' +
+            '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">'+
+            '</header>\n' +
+            '<div id="content">'+
+                marked(data) + '' +
+            '</div>',
+            data:data
         }
     } else {
         return {
