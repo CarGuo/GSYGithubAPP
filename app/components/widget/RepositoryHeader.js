@@ -63,7 +63,6 @@ class RepositoryHeader extends Component {
         let bottomIconStyle = {
             backgroundColor: Constant.transparentColor,
             color: Constant.subTextColor, size: 15,
-            iconStyle: {marginRight: 3}
         };
 
         let createStr = repositoryIsFork ? I18n("forked_at") + " " + repositoryParentName + '\n'
@@ -133,29 +132,31 @@ class RepositoryHeader extends Component {
                     paddingVertical: Constant.normalMarginEdge / 2,
                     borderColor: Constant.lineColor, borderTopWidth: StyleSheet.hairlineWidth
                 }]}>
-                    <TouchableOpacity style={[styles.flex, styles.centered,]}>
-                        <Icon.Button name="star-o" {...bottomIconStyle}>
-                            <Text style={[styles.subSmallText,]}>{repositoryStar}</Text>
-                        </Icon.Button>
+                    <TouchableOpacity style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
+                        <Icon name="star-o" {...bottomIconStyle}>
+                            <Text style={[styles.subSmallText,]}>{" " + repositoryStar}</Text>
+                        </Icon>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.flex, styles.centered,
-                        {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth}]}>
-                        <Icon.Button name="code-fork" {...bottomIconStyle}>
-                            <Text style={[styles.subSmallText,]}>{repositoryFork}</Text>
-                        </Icon.Button>
+                        {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth}
+                        , {paddingVertical: Constant.normalMarginEdge}]}>
+                        <Icon name="code-fork" {...bottomIconStyle} >
+                            <Text style={[styles.subSmallText,]}>{" " + repositoryFork}</Text>
+                        </Icon>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={[styles.flex, styles.centered,
                         {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth},
-                        {borderColor: Constant.lineColor, borderRightWidth: StyleSheet.hairlineWidth}]}>
-                        <IconC.Button name="eye" {...bottomIconStyle}>
-                            <Text style={[styles.subSmallText,]}>{repositoryWatch}</Text>
-                        </IconC.Button>
+                        {borderColor: Constant.lineColor, borderRightWidth: StyleSheet.hairlineWidth}
+                        , {paddingVertical: Constant.normalMarginEdge}]}>
+                        <IconC name="eye" {...bottomIconStyle}>
+                            <Text style={[styles.subSmallText,]}>{" " + repositoryWatch}</Text>
+                        </IconC>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.flex, styles.centered,]}>
-                        <IconC.Button name="issue-opened" {...bottomIconStyle}>
-                            <Text style={[styles.subSmallText,]}>{repositoryIssue}</Text>
-                        </IconC.Button>
+                    <TouchableOpacity style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
+                        <IconC name="issue-opened" {...bottomIconStyle}>
+                            <Text style={[styles.subSmallText,]}>{" " + repositoryIssue}</Text>
+                        </IconC>
                     </TouchableOpacity>
                 </View>
             </View>
