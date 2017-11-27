@@ -15,7 +15,7 @@ import userActions from '../store/actions/user'
 import eventActions from '../store/actions/event'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {getActionAndDes} from '../utils/eventUtils'
+import {getActionAndDes, ActionUtils} from '../utils/eventUtils'
 import EventItem from './widget/EventItem'
 import PullListView from './widget/PullLoadMoreListView'
 import * as Config from '../config/'
@@ -53,6 +53,9 @@ class DynamicPage extends Component {
                 actionUser={rowData.actor.display_login}
                 actionUserPic={rowData.actor.avatar_url}
                 des={res.des}
+                onPressItem={()=>{
+                    ActionUtils(rowData)
+                }}
                 actionTarget={res.actionStr}/>
         )
     }

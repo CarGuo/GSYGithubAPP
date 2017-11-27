@@ -5,7 +5,7 @@ import React, {
     Component,
 } from 'react'
 import {
-    View, Text, Image
+    View, Text, Image, TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from '../../style'
@@ -42,13 +42,18 @@ class EventItem extends Component {
                 {this.props.des}
             </Text> : <View/>;
         return (
-            <View style={[{
-                marginTop: Constant.normalMarginEdge,
-                marginLeft: Constant.normalMarginEdge,
-                marginRight: Constant.normalMarginEdge,
-                padding: Constant.normalMarginEdge,
-                borderRadius: 4,
-            }, styles.shadowCard]}>
+            <TouchableOpacity
+                style={[{
+                    marginTop: Constant.normalMarginEdge,
+                    marginLeft: Constant.normalMarginEdge,
+                    marginRight: Constant.normalMarginEdge,
+                    padding: Constant.normalMarginEdge,
+                    borderRadius: 4,
+                }, styles.shadowCard]}
+                onPress={() => {
+                    this.props.onPressItem && this.props.onPressItem();
+                }}
+            >
                 <View style={[styles.flexDirectionRowNotFlex,]}>
                     <UserImage uri={actionUserPic}
                                loginUser={actionUser}
@@ -74,7 +79,7 @@ class EventItem extends Component {
                     <Text style={[styles.smallText, {fontWeight: "bold"}]}>{actionTarget}</Text>
                 </View>
                 {bottomDes}
-            </View>
+            </TouchableOpacity>
         )
     }
 }
@@ -86,6 +91,7 @@ const propTypes = {
     actionMode: PropTypes.string,
     actionTarget: PropTypes.string,
     des: PropTypes.string,
+    onPressItem: PropTypes.func,
 };
 
 EventItem.propTypes = propTypes;

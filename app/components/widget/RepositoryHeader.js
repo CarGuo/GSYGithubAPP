@@ -62,9 +62,8 @@ class RepositoryHeader extends Component {
 
         let bottomIconStyle = {
             backgroundColor: Constant.transparentColor,
-            color: Constant.subTextColor, size: Constant.minIconSize,
-            marginTop: Constant.normalMarginEdge / 2,
-            marginLeft: -Constant.normalMarginEdge / 2
+            color: Constant.subTextColor, size: 15,
+            iconStyle: {marginRight: 3}
         };
 
         let createStr = repositoryIsFork ? I18n("forked_at") + " " + repositoryParentName + '\n'
@@ -116,39 +115,48 @@ class RepositoryHeader extends Component {
                         )
                     }}
                 />
-                <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge}]}>
+                <View style={[styles.flexDirectionRowNotFlex, {
+                    justifyContent: "flex-end",
+                    marginTop: Constant.normalMarginEdge,
+                    marginBottom: Constant.normalMarginEdge,
+                }]}>
+                    <Text
+                        style={{
+                            color: Constant.primaryLightColor, fontSize: Constant.minTextSize,
+                        }}
+                        numberOfLines={2}>
+                        {infoText}
+                    </Text>
+                </View>
+                <View style={[styles.flexDirectionRowNotFlex, {
+                    marginTop: Constant.normalMarginEdge / 2,
+                    paddingVertical: Constant.normalMarginEdge / 2,
+                    borderColor: Constant.lineColor, borderTopWidth: StyleSheet.hairlineWidth
+                }]}>
                     <TouchableOpacity style={[styles.flex, styles.centered,]}>
-                        <Icon name="star-o" {...bottomIconStyle}/>
-                        <Text style={[styles.subSmallText, {marginTop: 3}]}>{repositoryStar}</Text>
+                        <Icon.Button name="star-o" {...bottomIconStyle}>
+                            <Text style={[styles.subSmallText,]}>{repositoryStar}</Text>
+                        </Icon.Button>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.flex, styles.centered,
                         {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth}]}>
-                        <Icon name="code-fork" {...bottomIconStyle}/>
-                        <Text style={[styles.subSmallText, {marginTop: 3}]}>{repositoryFork}</Text>
+                        <Icon.Button name="code-fork" {...bottomIconStyle}>
+                            <Text style={[styles.subSmallText,]}>{repositoryFork}</Text>
+                        </Icon.Button>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={[styles.flex, styles.centered,
                         {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth},
                         {borderColor: Constant.lineColor, borderRightWidth: StyleSheet.hairlineWidth}]}>
-                        <IconC name="eye" {...bottomIconStyle}/>
-                        <Text style={[styles.subSmallText, {marginTop: 3}]}>{repositoryWatch}</Text>
+                        <IconC.Button name="eye" {...bottomIconStyle}>
+                            <Text style={[styles.subSmallText,]}>{repositoryWatch}</Text>
+                        </IconC.Button>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.flex, styles.centered,]}>
-                        <IconC name="issue-opened" {...bottomIconStyle}/>
-                        <Text style={[styles.subSmallText, {marginTop: 3}]}>{repositoryIssue}</Text>
+                        <IconC.Button name="issue-opened" {...bottomIconStyle}>
+                            <Text style={[styles.subSmallText,]}>{repositoryIssue}</Text>
+                        </IconC.Button>
                     </TouchableOpacity>
-                </View>
-                <View style={[styles.flexDirectionRowNotFlex, {
-                    justifyContent: "flex-end"
-                }]}>
-                    <Text
-                        style={{
-                            color: Constant.primaryLightColor, fontSize: Constant.minTextSize,
-                            marginVertical: Constant.normalMarginEdge
-                        }}
-                        numberOfLines={2}>
-                        {infoText}
-                    </Text>
                 </View>
             </View>
         );

@@ -1,3 +1,5 @@
+import {Actions} from 'react-native-router-flux'
+
 export const getActionAndDes = (event) => {
     let actionStr;
     let des;
@@ -122,4 +124,47 @@ export const getActionAndDes = (event) => {
         des: des
     }
 
-}
+};
+
+
+export const ActionUtils = (event) => {
+    if (!event.repo) {
+        Actions.PersonPage({currentUser: event.actor.login})
+        return;
+    }
+    let owner = event.repo.name.split("/")[0];
+    let repositoryName = event.repo.name.split("/")[1];
+    switch (event.type) {
+        case 'ForkEvent':
+            Actions.RepositoryDetail({
+                repositoryName: repositoryName, ownerName: event.actor.login
+                , title: repositoryName
+            });
+            break;
+        case 'PushEvent':
+            if (!event.payload.comments) {
+                Actions.RepositoryDetail({
+                    repositoryName: repositoryName, ownerName: owner
+                    , title: repositoryName
+                });
+            } else if (event.payload.comments.length === 1) {
+                //todo 去提交列表
+            } else {
+
+            }
+            break;
+        case 'ReleaseEvent':
+            //todo release 相关
+            break;
+        case 'IssueCommentEvent':
+        case 'IssuesEvent':
+            //todo 去issue
+            break;
+        default:
+            Actions.RepositoryDetail({
+                repositoryName: repositoryName, ownerName: owner
+                , title: repositoryName
+            });
+            break;
+    }
+};

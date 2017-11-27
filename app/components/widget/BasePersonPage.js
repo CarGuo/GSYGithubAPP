@@ -12,7 +12,7 @@ import eventActions from '../../store/actions/event'
 import UserHeadItem from './UserHeadItem'
 import PullListView from './PullLoadMoreListView'
 import EventItem from './EventItem'
-import {getActionAndDes} from '../../utils/eventUtils'
+import {getActionAndDes, ActionUtils} from '../../utils/eventUtils'
 import * as Config from '../../config/'
 import I18n from '../../style/i18n'
 
@@ -47,6 +47,9 @@ class BasePersonPage extends Component {
                 actionUser={rowData.actor.display_login}
                 actionUserPic={rowData.actor.avatar_url}
                 des={res.des}
+                onPressItem={()=>{
+                    ActionUtils(rowData)
+                }}
                 actionTarget={res.actionStr}/>
         )
     }
