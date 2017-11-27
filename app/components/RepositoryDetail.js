@@ -91,12 +91,12 @@ class RepositoryDetail extends Component {
             case '2':
                 return (
                     <WebComponent
-                        source={{uri: address.readmeWebUrl(this.props.ownerName + "/" + this.props.repositoryName, 'master')}}
+                        source={{html: this.state.dataDetailReadme}}
                         startInLoadingState={true}/>
                 );
             case '3':
                 return (
-                    <Markdown>{this.state.dataDetailReadme}</Markdown>
+                    <Markdown>{""}</Markdown>
                 );
             case '4':
                 return (

@@ -6,6 +6,8 @@ import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
 
+import showdown from 'showdown'
+
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
     if (res && res.result) {
@@ -66,10 +68,15 @@ const getRepositoryDetailReadme = async (userName, reposName) => {
     let res = await RepositoryDao.getRepositoryDetailReadmeDao(userName, reposName);
     if (res.result) {
         let b = Buffer(res.data.content, 'base64');
-        let data = b.toString();
+        let data = b.toString('utf8');
+        console.log("11111111111", data);
+        let converter = new showdown.Converter();
+        converter.setFlavor('github');
+        let html = converter.makeHtml(data);
+        console.log("***********", html);
         return {
             result: true,
-            data: data
+            data: html,
         }
     } else {
         return {
