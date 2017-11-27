@@ -4,6 +4,7 @@
 
 import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
+import {Buffer} from 'buffer'
 
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
@@ -61,6 +62,23 @@ const getRepositoryDetail = async (userName, reposName) => {
     }
 };
 
+const getRepositoryDetailReadme = async (userName, reposName) => {
+    let res = await RepositoryDao.getRepositoryDetailReadmeDao(userName, reposName);
+    if (res.result) {
+        let b = Buffer(res.data.content, 'base64');
+        let data = b.toString();
+        return {
+            result: true,
+            data: data
+        }
+    } else {
+        return {
+            result: false,
+            data: ""
+        }
+    }
+};
+
 
 export default {
     getTrend,
@@ -68,5 +86,6 @@ export default {
     getUserRepository,
     getStarRepository,
     getRepositoryDetail,
+    getRepositoryDetailReadme
 
 }

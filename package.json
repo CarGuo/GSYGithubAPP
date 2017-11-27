@@ -19,6 +19,7 @@
     "react-native-modalbox": "^1.4.2",
     "react-native-root-toast": "^2.2.0",
     "react-native-router-flux": "^4.0.0-beta.22",
+    "react-native-simple-markdown": "git://github.com/CarSmallGuo/react-native-simple-markdown.git",
     "react-native-spinkit": "^1.1.1",
     "react-native-tab-view": "0.0.70",
     "react-native-textinput-effects": "^0.4.1",

@@ -17,11 +17,14 @@ import EventItem from './widget/EventItem'
 import CommonRowItem from './widget/CommonRowItem'
 import CustomSearchButton from './widget/CustomSearchButton'
 import PullListView from './widget/PullLoadMoreListView'
+import WebComponent from './widget/WebComponent'
 import RepositoryHeader from './widget/RepositoryHeader'
 import Icon from 'react-native-vector-icons/Ionicons'
 import resolveTime from '../utils/timeUtil'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 import HTMLView from 'react-native-htmlview';
+import Markdown from 'react-native-simple-markdown'
+import address from "../net/address";
 
 const initialLayout = {
     height: 0,
@@ -41,6 +44,7 @@ class RepositoryDetail extends Component {
         this.page = 2;
         this.state = {
             dataDetail: {},
+            dataDetailReadme: '',
             index: 0,
             routes: [
                 {key: '1', title: 'First'},
@@ -86,11 +90,13 @@ class RepositoryDetail extends Component {
                 );
             case '2':
                 return (
-                    <View style={[{flex: 1}, {backgroundColor: '#673ab7'}]}/>
+                    <WebComponent
+                        source={{uri: address.readmeWebUrl(this.props.ownerName + "/" + this.props.repositoryName, 'master')}}
+                        startInLoadingState={true}/>
                 );
             case '3':
                 return (
-                    <View style={[{flex: 1}, {backgroundColor: '#673ab7'}]}/>
+                    <Markdown>{this.state.dataDetailReadme}</Markdown>
                 );
             case '4':
                 return (
@@ -109,7 +115,17 @@ class RepositoryDetail extends Component {
                         dataDetail: res.data
                     })
                 }
-            })
+            });
+
+        repositoryActions.getRepositoryDetailReadme(this.props.ownerName, this.props.repositoryName)
+            .then((res) => {
+                if (res && res.result) {
+                    console.log(res.data);
+                    this.setState({
+                        dataDetailReadme: res.data
+                    })
+                }
+            });
     }
 
     componentWillUnmount() {

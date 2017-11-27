@@ -5,6 +5,7 @@
 import * as Config from '../config/'
 
 let host = "https://api.github.com/";
+let hostWeb = "https://github.com/";
 
 export default AddressLocal = {
     /**
@@ -182,6 +183,20 @@ export default AddressLocal = {
         }
         return `https://github.com/trending?since=${since}`
     },
+    /**
+     * README 文件地址
+     */
+    readmeFile: (reposNameFullName, curBranch) => {
+        return host + "repos/" + reposNameFullName + "/" + "readme" + ((!curBranch) ? "" : "?ref=" + curBranch);
+    },
+    /**
+     * README web url地址
+     */
+    readmeWebUrl: (reposNameFullName, curBranch, defaultBranch) => {
+        let branch = (!curBranch) ? defaultBranch : curBranch;
+        return hostWeb + reposNameFullName + "/blob/" + branch + "/" + "README.md";
+    },
+
     /**
      * 处理分页参数
      * @param tab 表示是 ? 或者 &

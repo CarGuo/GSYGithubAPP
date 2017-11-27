@@ -47,11 +47,20 @@ const getRepositoryDetailDao = async (userName, reposName) => {
     };
 };
 
+const getRepositoryDetailReadmeDao = async (userName, reposName, branch) => {
+    let url = Address.readmeFile(userName + '/' + reposName, branch);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
 
 export default {
     getTrendDao,
     searchRepositoryDao,
     getUserRepositoryDao,
     getStarRepositoryDao,
-    getRepositoryDetailDao
+    getRepositoryDetailDao,
+    getRepositoryDetailReadmeDao
 }
