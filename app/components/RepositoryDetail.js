@@ -93,7 +93,7 @@ class RepositoryDetail extends Component {
                 return (
                     <ScrollView>
                         <WebComponent
-                            source={{html: this.state.dataDetailReadme}}
+                            source={{html: this.state.datahtml}}
                             startInLoadingState={true}/>
                     </ScrollView>
                 );
@@ -107,9 +107,6 @@ class RepositoryDetail extends Component {
                                         return source.match("src=\"(.*?)\"");
                                     },
                                     parse: function(capture, recurseParse, state) {
-                                        console.log("&&&&&&", capture)
-                                        console.log("222222", recurseParse)
-                                        console.log("&&&333&&&", capture)
                                         return {
                                             content: [],
                                         };
@@ -146,9 +143,9 @@ class RepositoryDetail extends Component {
         repositoryActions.getRepositoryDetailReadme(this.props.ownerName, this.props.repositoryName)
             .then((res) => {
                 if (res && res.result) {
-                    console.log(res.data);
                     this.setState({
-                        dataDetailReadme: res.data
+                        dataDetailReadme: res.data,
+                        datahtml: res.datahtml,
                     })
                 }
             });

@@ -7,9 +7,8 @@ import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
 
 import showdown from 'showdown'
-var marked = require('marked');
 
-console.log(marked('I am using __markdown__.'));
+var marked = require('marked');
 
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
@@ -86,17 +85,12 @@ const getRepositoryDetailReadme = async (userName, reposName) => {
             smartLists: true,
             smartypants: false
         });
-        console.log("***********", marked(data));
+        let dd = fixLinks(marked(data), null, userName, reposName);
+        console.log("***********", dd);
         return {
             result: true,
-            da3ta: '<header>' +
-            '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' +
-            '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">'+
-            '</header>\n' +
-            '<div id="content">'+
-                marked(data) + '' +
-            '</div>',
-            data:data
+            datahtml: generateCodeHtml(dd, true, 'markdown_dark.css', '#FFFFFF', '#FF00FF', '#FF00FF'),
+            data: data
         }
     } else {
         return {
@@ -106,6 +100,44 @@ const getRepositoryDetailReadme = async (userName, reposName) => {
     }
 };
 
+const generateCodeHtml = (mdSource, wrapCode,
+                          skin, backgroundColor, accentColor) => {
+    return "<html>\n" +
+        "<head>\n" +
+        "<meta charset=\"utf-8\" />\n" +
+        "<title>MD View</title>\n" +
+        "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
+        "<link rel=\"stylesheet\" type=\"text/css\" href=\"./" + skin + "\">\n" +
+        "<style>" +
+        "body{background: " + backgroundColor + ";}" +
+        "a {color:" + accentColor + " !important;}" +
+        ".highlight pre, pre {" +
+        " word-wrap: " + (wrapCode ? "break-word" : "normal") + "; " +
+        " white-space: " + (wrapCode ? "pre-wrap" : "pre") + "; " +
+        " background-color:" + (wrapCode ? "#FF0000" : "#F00000") + "; " +
+        "}" +
+        "</style>" +
+        "</head>\n" +
+        "<body>\n" +
+        mdSource +
+        "</body>\n" +
+        "</html>";
+};
+
+const fixLinks = (source, baseUrl, owner, repo, branch = 'master') => {
+    //let imagesMatcher = source.match("src=\"(.*?)\"");
+    let imagesMatcher = /src="(.*?)"/.exec(source);
+    if (imagesMatcher) {
+        imagesMatcher.forEach((oriUrl) => {
+            console.log('%%%%%%', oriUrl)
+            let subUrl = oriUrl.substring(oriUrl.lastIndexOf('/'), oriUrl.length);
+            let fixedUrl = "https://raw.githubusercontent.com/" + owner + "/" + repo + "/" + branch + subUrl;
+            source = source.replace("src=\"" + oriUrl + "\"", "src=\"" + fixedUrl + "\"");
+
+        })
+    }
+    return source;
+}
 
 export default {
     getTrend,
