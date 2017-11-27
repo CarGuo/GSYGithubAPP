@@ -25,7 +25,7 @@ import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 import HTMLView from 'react-native-htmlview';
 import Markdown from 'react-native-simple-markdown'
 import address from "../net/address";
-import { MarkdownView } from 'react-native-markdown-view'
+import {MarkdownView} from 'react-native-markdown-view'
 
 const initialLayout = {
     height: 0,
@@ -92,15 +92,36 @@ class RepositoryDetail extends Component {
             case '2':
                 return (
                     <ScrollView>
-                    <WebComponent
-                        source={{html: this.state.dataDetailReadme}}
-                        startInLoadingState={true}/>
+                        <WebComponent
+                            source={{html: this.state.dataDetailReadme}}
+                            startInLoadingState={true}/>
                     </ScrollView>
                 );
             case '3':
                 return (
                     <ScrollView>
-                    <MarkdownView>{this.state.dataDetailReadme}</MarkdownView>
+                        <MarkdownView
+                            rules={{
+                                untickedCheckbox: {
+                                    match: function(source, state, lookbehind) {
+                                        return source.match("src=\"(.*?)\"");
+                                    },
+                                    parse: function(capture, recurseParse, state) {
+                                        console.log("&&&&&&", capture)
+                                        console.log("222222", recurseParse)
+                                        console.log("&&&333&&&", capture)
+                                        return {
+                                            content: [],
+                                        };
+                                    },
+                                    render: (node, output, state, styles) => {
+                                        return(
+                                        <Text style={{fontFamily: 'FontAwesome'}}>dfasdfsdf</Text>
+                                        )
+                                    }
+                                },
+                            }}
+                        >{this.state.dataDetailReadme}</MarkdownView>
                     </ScrollView>
                 );
             case '4':
