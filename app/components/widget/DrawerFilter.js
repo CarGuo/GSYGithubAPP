@@ -5,7 +5,7 @@ import {Router, Actions, Scene} from 'react-native-router-flux';
 import styles, {statusHeight, drawerWidth} from "../../style"
 import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
-import {SortType, SearchFilterType, SearchLanguageType} from '../../utils/FilterUtils'
+import {SortType, SearchFilterType, SearchLanguageType} from '../../utils/filterUtils'
 import SelectList from './SelectList'
 import Icon from 'react-native-vector-icons/Ionicons'
 

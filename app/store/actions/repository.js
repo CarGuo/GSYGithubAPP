@@ -5,10 +5,11 @@
 import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
-import marked from 'marked'
-import {highlightAuto, configure} from 'highlight.js'
-import * as Constant from '../../style/constant'
+import {generateMd2Html} from "../../utils/htmlUtils";
 
+/**
+ * 趋势数据
+ */
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
     if (res && res.result) {
@@ -30,6 +31,9 @@ const getTrend = (page = 0, since = 'daily', languageType, callback) => async (d
     }
 };
 
+/**
+ * 搜索仓库
+ */
 const searchRepository = async (q, language, sort, order, page = 1, pageSize) => {
     if (language) {
         q = q + `%2Blanguage%3A${language}`;
@@ -41,6 +45,9 @@ const searchRepository = async (q, language, sort, order, page = 1, pageSize) =>
     }
 };
 
+/**
+ * 用户自己的仓库
+ */
 const getUserRepository = async (userName, page = 1) => {
     let res = await RepositoryDao.getUserRepositoryDao(userName, page);
     return {
@@ -49,6 +56,9 @@ const getUserRepository = async (userName, page = 1) => {
     }
 };
 
+/**
+ * 用户收藏的
+ */
 const getStarRepository = async (userName, page = 1) => {
     let res = await RepositoryDao.getStarRepositoryDao(userName, page);
     return {
@@ -57,6 +67,9 @@ const getStarRepository = async (userName, page = 1) => {
     }
 };
 
+/**
+ * 详情
+ */
 const getRepositoryDetail = async (userName, reposName) => {
     let res = await RepositoryDao.getRepositoryDetailDao(userName, reposName);
     return {
@@ -65,55 +78,17 @@ const getRepositoryDetail = async (userName, reposName) => {
     }
 };
 
+/**
+ * 详情的remde数据
+ */
 const getRepositoryDetailReadme = async (userName, reposName, branch = 'master') => {
     let res = await RepositoryDao.getRepositoryDetailReadmeDao(userName, reposName);
     if (res.result) {
         let b = Buffer(res.data.content, 'base64');
         let data = b.toString('utf8');
-        data = data.replace(new RegExp("<img src=\"https://github.com", "gm"), "<img src=\"https://raw.githubusercontent.com")
-            .replace(new RegExp("/blob/", "gm"), "/");
-        let renderer = new marked.Renderer();
-        renderer.image = function (href, title, text) {
-            if (href.indexOf('https://github.com/') === 0) {
-                let subUrl = href.substring(href.lastIndexOf('/'), href.length);
-                let fixedUrl = "https://raw.githubusercontent.com/" + userName + "/" + reposName + "/" + branch + subUrl;
-                href = fixedUrl;
-            }
-            let out = '<img src="' + href + '" alt="' + text + '"';
-            if (title) {
-                out += ' title="' + title + '"';
-            }
-            out += '/>';
-            return out;
-        };
-
-        configure({
-            'useBR': true
-        });
-
-        marked.setOptions({
-            renderer: renderer,
-            gfm: true,
-            tables: true,
-            breaks: true,
-            pedantic: false,
-            sanitize: false,
-            smartLists: true,
-            smartypants: false,
-            highlight: function (code) {
-                let newCode = highlightAuto(code).value;
-                /*if (newCode && newCode.indexOf("\n") !== -1) {
-                    return newCode.replace(/[\n]/g, '<br>');
-                }*/
-                return newCode;
-            }
-        });
-
-
         return {
             result: true,
-            datahtml: generateCodeHtml(marked(data), false, 'markdown_dark.css'),
-            data: data
+            data: generateMd2Html(data, userName, reposName, branch)
         }
     } else {
         return {
@@ -121,54 +96,6 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
             data: ""
         }
     }
-};
-
-const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor = Constant.white, accentColor = Constant.actionBlue) => {
-    console.log("&&&&&&", mdSource)
-    return "<html>\n" +
-        "<head>\n" +
-        "<meta charset=\"utf-8\" />\n" +
-        "<title></title>\n" +
-        "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
-        "<link rel=\"stylesheet\" type=\"text/css\" href=\"./" + skin + "\">\n" +
-        "<link href=\"https:\/\/cdn.bootcss.com/highlight.js/9.12.0/styles/androidstudio.min.css\" rel=\"stylesheet\">\n" +
-        "<script src=\"https:\/\/cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js\"></script>  " +
-        "<script>hljs.initHighlightingOnLoad();</script>  " +
-        "<style>" +
-        "body{background: " + backgroundColor + ";}" +
-        "img{display: " + "block" + ";max-width:100%;}" +
-        "a {color:" + accentColor + " !important;}" +
-        ".highlight pre, pre {" +
-        " word-wrap: " + (wrapCode ? "break-word" : "normal") + "; " +
-        " white-space: " + (wrapCode ? "pre-wrap" : "pre") + "; " +
-        "}" +
-        "code{overflow: auto;}"+
-        "thead, tr {" +
-        "background:" + Constant.miWhite + ";}" +
-        "td, th {" +
-        "padding: 5px 10px;" +
-        "font-size: 12px;" +
-        "direction:hor"+
-        "}" +
-        "tr:nth-child(even) {" +
-        "background:" + Constant.primaryLightColor + ";" +
-        "color:" + Constant.miWhite + ";" +
-        "}" +
-        "tr:nth-child(odd) {" +
-        "background: " + Constant.miWhite  +";" +
-        "color:" + Constant.primaryLightColor + ";" +
-        "}" +
-        "th {" +
-        "font-size: 14px;" +
-        "color:" + Constant.miWhite + ";" +
-        "background:" + Constant.primaryLightColor + ";" +
-        "}" +
-        "</style>" +
-        "</head>\n" +
-        "<body>\n" +
-        mdSource +
-        "</body>\n" +
-        "</html>";
 };
 
 export default {

@@ -19,13 +19,8 @@ import CustomSearchButton from './widget/CustomSearchButton'
 import PullListView from './widget/PullLoadMoreListView'
 import WebComponent from './widget/WebComponent'
 import RepositoryHeader from './widget/RepositoryHeader'
-import Icon from 'react-native-vector-icons/Ionicons'
 import resolveTime from '../utils/timeUtil'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
-import HTMLView from 'react-native-htmlview';
-import Markdown from 'react-native-simple-markdown'
-import address from "../net/address";
-import {MarkdownView} from 'react-native-markdown-view'
 
 const initialLayout = {
     height: 0,
@@ -91,9 +86,11 @@ class RepositoryDetail extends Component {
                 );
             case '2':
                 return (
-                        <WebComponent
-                            source={{html: this.state.datahtml}}
-                            startInLoadingState={true}/>
+                    <WebComponent
+                        source={{html: this.state.dataDetailReadme}}
+                        userName={this.props.ownerName}
+                        reposName={this.props.repositoryName}
+                        startInLoadingState={true}/>
                 );
             case '3':
                 return (
@@ -123,7 +120,6 @@ class RepositoryDetail extends Component {
                 if (res && res.result) {
                     this.setState({
                         dataDetailReadme: res.data,
-                        datahtml: res.datahtml,
                     })
                 }
             });

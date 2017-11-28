@@ -26,36 +26,14 @@ const injectedScript = function () {
 };
 
 export default class WebComponent extends Component {
-    state = {
-        webViewHeight: Number
-    };
-
-    static defaultProps = {
-        autoHeight: true,
-    };
 
     constructor(props: Object) {
         super(props);
-        this.state = {
-            webViewHeight: this.props.defaultHeight
-        };
-
-        this._onMessage = this._onMessage.bind(this);
     }
 
-    _onMessage(e) {
-        this.setState({
-            webViewHeight: parseInt(e.nativeEvent.data)
-        });
-    }
-
-    stopLoading() {
-        this.webview.stopLoading();
-    }
 
     render() {
         const _w = this.props.width || Dimensions.get('window').width;
-        const _h = this.props.autoHeight ? this.state.webViewHeight : this.props.defaultHeight;
         return (
             <WebView
                 ref={(ref) => {
