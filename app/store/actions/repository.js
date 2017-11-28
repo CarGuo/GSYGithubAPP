@@ -5,10 +5,8 @@
 import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
-
 import showdown from 'showdown'
-
-var marked = require('marked');
+import marked from'marked'
 
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
@@ -83,15 +81,15 @@ const getRepositoryDetailReadme = async (userName, reposName) => {
             pedantic: false,
             sanitize: false,
             smartLists: true,
-            smartypants: false,
+            smartypants: false
         });
         let dd = fixLinks(marked(data), null, userName, reposName);
 
-        console.log("***********", dd);
+        //console.log("***********", dd);
         return {
             result: true,
-            datahtml: generateCodeHtml(dd, true, 'markdown_dark.css', '#FFFFFF', '#FF00FF', '#FF00FF'),
-            data: []
+            datahtml: generateCodeHtml(marked(data), true, 'markdown_dark.css', '#FFFFFF', '#FF00FF', '#FF00FF'),
+            data: data
         }
     } else {
         return {
@@ -101,8 +99,7 @@ const getRepositoryDetailReadme = async (userName, reposName) => {
     }
 };
 
-const generateCodeHtml = (mdSource, wrapCode,
-                          skin, backgroundColor, accentColor) => {
+const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor) => {
     return "<html>\n" +
         "<head>\n" +
         "<meta charset=\"utf-8\" />\n" +
@@ -115,7 +112,6 @@ const generateCodeHtml = (mdSource, wrapCode,
         ".highlight pre, pre {" +
         " word-wrap: " + (wrapCode ? "break-word" : "normal") + "; " +
         " white-space: " + (wrapCode ? "pre-wrap" : "pre") + "; " +
-        " background-color:" + (wrapCode ? "#FF0000" : "#F00000") + "; " +
         "}" +
         "</style>" +
         "</head>\n" +
@@ -130,7 +126,7 @@ const fixLinks = (source, baseUrl, owner, repo, branch = 'master') => {
     let imagesMatcher = /src="(.*?)"/.exec(source);
     if (imagesMatcher) {
         imagesMatcher.forEach((oriUrl) => {
-            console.log('%%%%%%', oriUrl)
+            //console.log('%%%%%%', oriUrl)
             let subUrl = oriUrl.substring(oriUrl.lastIndexOf('/'), oriUrl.length);
             let fixedUrl = "https://raw.githubusercontent.com/" + owner + "/" + repo + "/" + branch + subUrl;
             source = source.replace("src=\"" + oriUrl + "\"", "src=\"" + fixedUrl + "\"");

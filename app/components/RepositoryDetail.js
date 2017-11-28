@@ -93,33 +93,13 @@ class RepositoryDetail extends Component {
                 return (
                     <ScrollView>
                         <WebComponent
-                            source={{html: this.state.datahtml}}
+                            source={{baseUrl: '"file:///android_asset/code_prettify/"', html: this.state.datahtml}}
                             startInLoadingState={true}/>
                     </ScrollView>
                 );
             case '3':
                 return (
-                    <ScrollView>
-                        <MarkdownView
-                            rules={{
-                                untickedCheckbox: {
-                                    match: function(source, state, lookbehind) {
-                                        return source.match("src=\"(.*?)\"");
-                                    },
-                                    parse: function(capture, recurseParse, state) {
-                                        return {
-                                            content: [],
-                                        };
-                                    },
-                                    render: (node, output, state, styles) => {
-                                        return(
-                                        <Text style={{fontFamily: 'FontAwesome'}}>dfasdfsdf</Text>
-                                        )
-                                    }
-                                },
-                            }}
-                        >{this.state.dataDetailReadme}</MarkdownView>
-                    </ScrollView>
+                    <View style={[{flex: 1}, {backgroundColor: '#673ab7'}]}/>
                 );
             case '4':
                 return (
