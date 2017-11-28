@@ -7,6 +7,7 @@ import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
 import marked from 'marked'
 import {highlightAuto, configure} from 'highlight.js'
+import * as Constant from '../../style/constant'
 
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
@@ -111,7 +112,7 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
 
         return {
             result: true,
-            datahtml: generateCodeHtml(marked(data), false, 'markdown_dark.css', '#FFFFFF', '#FF00FF', '#FF00FF'),
+            datahtml: generateCodeHtml(marked(data), false, 'markdown_dark.css'),
             data: data
         }
     } else {
@@ -122,7 +123,7 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
     }
 };
 
-const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor) => {
+const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor = Constant.white, accentColor = Constant.actionBlue) => {
     console.log("&&&&&&", mdSource)
     return "<html>\n" +
         "<head>\n" +
@@ -130,8 +131,8 @@ const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor
         "<title></title>\n" +
         "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
         "<link rel=\"stylesheet\" type=\"text/css\" href=\"./" + skin + "\">\n" +
-        "<link href=\"https:\/\/cdn.bootcss.com/highlight.js/8.0/styles/github.min.css\" rel=\"stylesheet\">\n" +
-        "<script src=\"https:\/\/cdn.bootcss.com/highlight.js/8.0/highlight.min.js\"></script>  " +
+        "<link href=\"https:\/\/cdn.bootcss.com/highlight.js/9.12.0/styles/androidstudio.min.css\" rel=\"stylesheet\">\n" +
+        "<script src=\"https:\/\/cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js\"></script>  " +
         "<script>hljs.initHighlightingOnLoad();</script>  " +
         "<style>" +
         "body{background: " + backgroundColor + ";}" +
@@ -143,23 +144,25 @@ const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor
         "}" +
         "code{overflow: auto;}"+
         "thead, tr {" +
-        "border-top: 1px solid rgb(230, 189, 189);}" +
-        "table{" +
-        "border-bottom: 1px solid rgb(230, 189, 189);border-top: 1px solid rgb(230, 189, 189);}" +
+        "background:" + Constant.miWhite + ";}" +
         "td, th {" +
         "padding: 5px 10px;" +
         "font-size: 12px;" +
         "direction:hor"+
-        "font-family: Verdana;" +
-        "color: rgb(177, 106, 104);" +
         "}" +
         "tr:nth-child(even) {" +
-        "background: rgb(238, 211, 210)" +
+        "background:" + Constant.primaryLightColor + ";" +
+        "color:" + Constant.miWhite + ";" +
         "}" +
         "tr:nth-child(odd) {" +
-        "background: #FFF" +
+        "background: " + Constant.miWhite  +";" +
+        "color:" + Constant.primaryLightColor + ";" +
         "}" +
-        "th:{word-break: keep-all;white-space:nowrap;}" +
+        "th {" +
+        "font-size: 14px;" +
+        "color:" + Constant.miWhite + ";" +
+        "background:" + Constant.primaryLightColor + ";" +
+        "}" +
         "</style>" +
         "</head>\n" +
         "<body>\n" +

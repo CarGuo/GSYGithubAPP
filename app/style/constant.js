@@ -12,6 +12,7 @@ export const mainBackgroundColor = miWhite;
 export const tabBackgroundColor = '#ffffff';
 export const cardBackgroundColor = '#FFF';
 export const cardShadowColor = '#000000';
+export const actionBlue = '#267aff';
 
 export const lineColor = '#42464b';
 
