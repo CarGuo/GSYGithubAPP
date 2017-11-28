@@ -43,10 +43,10 @@ class RepositoryDetail extends Component {
             dataDetailReadme: '',
             index: 0,
             routes: [
-                {key: '1', title: 'First'},
-                {key: '2', title: 'Second'},
-                {key: '3', title: 'Third'},
-                {key: '4', title: 'Fourth'},
+                {key: '1', title: I18n('reposActivity')},
+                {key: '2', title: I18n('reposReadme')},
+                {key: '3', title: I18n('reposFile')},
+                {key: '4', title: I18n('reposIssue')},
             ],
         }
     }

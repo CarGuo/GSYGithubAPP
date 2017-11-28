@@ -72,6 +72,10 @@ I18n.translations = {
         forked_at: "Forked from",
         latest_update: "Latest update",
         latest_commit: "Latest commit",
+        reposActivity: "activity",
+        reposReadme: "readme",
+        reposFile: "files",
+        reposIssue: "Issues",
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -133,6 +137,10 @@ I18n.translations = {
         forked_at: "Forked from",
         latest_update: "最后更新",
         latest_commit: "最后提交",
+        reposActivity: "动态",
+        reposReadme: "详情信息",
+        reposFile: "文件",
+        reposIssue: "Issues",
     }
 };
 

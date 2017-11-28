@@ -3,7 +3,9 @@ import marked from 'marked'
 import {highlightAuto, configure} from 'highlight.js'
 import * as Constant from '../style/constant'
 
-
+/**
+ * markdown to html parser
+ */
 export const generateMd2Html = (mdData, userName, reposName, branch = 'master') => {
     let data = mdData.replace(new RegExp("<img src=\"https://github.com", "gm"), "<img src=\"https://raw.githubusercontent.com")
         .replace(new RegExp("/blob/", "gm"), "/");
@@ -46,6 +48,9 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master') 
     return generateCodeHtml(marked(data), false);
 };
 
+/**
+ * style for mdHTml
+ */
 export const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white, actionColor = Constant.actionBlue) => {
     return "<html>\n" +
         "<head>\n" +
