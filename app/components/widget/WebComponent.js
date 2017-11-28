@@ -62,15 +62,14 @@ export default class WebComponent extends Component {
                     this.webview = ref;
                 }}
                 injectedJavaScript={'(' + String(injectedScript) + ')();'}
-                scrollEnabled={this.props.scrollEnabled || false}
-                onMessage={this._onMessage}
+                scrollEnabled={this.props.scrollEnabled || true}
                 javaScriptEnabled={true}
                 automaticallyAdjustContentInsets={true}
                 mixedContentMode={'always'}
                 allowUniversalAccessFromFileURLs={true}
                 mediaPlaybackRequiresUserAction={true}
                 {...this.props}
-                style={[{width: _w}, this.props.style, {height: _h}]}
+                style={[{width: _w}, {flex:1}]}
             />
         )
     }

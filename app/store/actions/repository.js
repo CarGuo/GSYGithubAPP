@@ -101,9 +101,9 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
             smartypants: false,
             highlight: function (code) {
                 let newCode = highlightAuto(code).value;
-                if (newCode && newCode.indexOf("\n") !== -1) {
+                /*if (newCode && newCode.indexOf("\n") !== -1) {
                     return newCode.replace(/[\n]/g, '<br>');
-                }
+                }*/
                 return newCode;
             }
         });
@@ -111,7 +111,7 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
 
         return {
             result: true,
-            datahtml: generateCodeHtml(marked(data), true, 'markdown_dark.css', '#FFFFFF', '#FF00FF', '#FF00FF'),
+            datahtml: generateCodeHtml(marked(data), false, 'markdown_dark.css', '#FFFFFF', '#FF00FF', '#FF00FF'),
             data: data
         }
     } else {
@@ -123,14 +123,15 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
 };
 
 const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor) => {
+    console.log("&&&&&&", mdSource)
     return "<html>\n" +
         "<head>\n" +
         "<meta charset=\"utf-8\" />\n" +
         "<title></title>\n" +
         "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
         "<link rel=\"stylesheet\" type=\"text/css\" href=\"./" + skin + "\">\n" +
-        "<link href=\"http:\/\/cdn.bootcss.com/highlight.js/8.0/styles/github.min.css\" rel=\"stylesheet\">\n" +
-        "<script src=\"http:\/\/cdn.bootcss.com/highlight.js/8.0/highlight.min.js\"></script>  " +
+        "<link href=\"https:\/\/cdn.bootcss.com/highlight.js/8.0/styles/github.min.css\" rel=\"stylesheet\">\n" +
+        "<script src=\"https:\/\/cdn.bootcss.com/highlight.js/8.0/highlight.min.js\"></script>  " +
         "<script>hljs.initHighlightingOnLoad();</script>  " +
         "<style>" +
         "body{background: " + backgroundColor + ";}" +
@@ -140,6 +141,7 @@ const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor
         " word-wrap: " + (wrapCode ? "break-word" : "normal") + "; " +
         " white-space: " + (wrapCode ? "pre-wrap" : "pre") + "; " +
         "}" +
+        "code{overflow: auto;}"+
         "thead, tr {" +
         "border-top: 1px solid rgb(230, 189, 189);}" +
         "table{" +

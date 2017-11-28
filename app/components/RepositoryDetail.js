@@ -91,13 +91,9 @@ class RepositoryDetail extends Component {
                 );
             case '2':
                 return (
-                    <ScrollView
-                        horizontal={false}
-                        >
                         <WebComponent
                             source={{html: this.state.datahtml}}
                             startInLoadingState={true}/>
-                    </ScrollView>
                 );
             case '3':
                 return (
