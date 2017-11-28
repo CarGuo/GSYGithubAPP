@@ -6,7 +6,7 @@ import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
 import marked from 'marked'
-import {highlightAuto, fixMarkup, configure} from 'highlight.js'
+import {highlightAuto, configure} from 'highlight.js'
 
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
@@ -123,7 +123,6 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
 };
 
 const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor) => {
-    console.log('***********', mdSource);
     return "<html>\n" +
         "<head>\n" +
         "<meta charset=\"utf-8\" />\n" +
@@ -140,6 +139,25 @@ const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor
         ".highlight pre, pre {" +
         " word-wrap: " + (wrapCode ? "break-word" : "normal") + "; " +
         " white-space: " + (wrapCode ? "pre-wrap" : "pre") + "; " +
+        "}" +
+        "thead, tr {" +
+        "border-top: 1px solid rgb(230, 189, 189);}" +
+        "table{" +
+        "border-bottom: 1px solid rgb(230, 189, 189);}" +
+        "/* Padding and font style */" +
+        "td, th {" +
+        "padding: 5px 10px;" +
+        "font-size: 12px;" +
+        "font-family: Verdana;" +
+        "color: rgb(177, 106, 104);" +
+        "}" +
+        "" +
+        "/* Alternating background colors */" +
+        "tr:nth-child(even) {" +
+        "background: rgb(238, 211, 210)" +
+        "}" +
+        "tr:nth-child(odd) {" +
+        "background: #FFF" +
         "}" +
         "</style>" +
         "</head>\n" +
