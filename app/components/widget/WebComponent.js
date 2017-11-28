@@ -64,6 +64,8 @@ export default class WebComponent extends Component {
                 injectedJavaScript={'(' + String(injectedScript) + ')();'}
                 scrollEnabled={this.props.scrollEnabled || true}
                 javaScriptEnabled={true}
+                dataDetectorTypes={'none'}
+                domStorageEnabled={true}
                 automaticallyAdjustContentInsets={true}
                 mixedContentMode={'always'}
                 allowUniversalAccessFromFileURLs={true}
