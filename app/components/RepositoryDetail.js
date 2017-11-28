@@ -39,7 +39,16 @@ class RepositoryDetail extends Component {
         this._loadMore = this._loadMore.bind(this);
         this.page = 2;
         this.state = {
-            dataDetail: {},
+            dataDetail: {
+                forks_count:"---",
+                fork:false,
+                open_issues_count:"---",
+                size:0,
+                watchers_count:"---",
+                subscribers_count:"---",
+                description:'---',
+                language:'---',
+            },
             dataDetailReadme: '',
             index: 0,
             routes: [
