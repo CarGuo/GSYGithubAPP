@@ -95,7 +95,7 @@ class RepositoryDetail extends Component {
                         horizontal={false}
                         >
                         <WebComponent
-                            source={{baseUrl: '"file:///android_asset/code_prettify/"', html: this.state.datahtml}}
+                            source={{html: this.state.datahtml}}
                             startInLoadingState={true}/>
                     </ScrollView>
                 );

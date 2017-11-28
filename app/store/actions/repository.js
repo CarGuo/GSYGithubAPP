@@ -5,7 +5,6 @@
 import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
-import showdown from 'showdown'
 import marked from 'marked'
 import {highlightAuto} from 'highlight.js'
 
@@ -70,12 +69,11 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
     if (res.result) {
         let b = Buffer(res.data.content, 'base64');
         let data = b.toString('utf8');
-        let converter = new showdown.Converter();
-        converter.setFlavor('github');
-        let html = converter.makeHtml(data);
+        data= data.replace(new RegExp("<img src=\"https://github.com","gm"),"<img src=\"https://raw.githubusercontent.com")
+            .replace(new RegExp("/blob/", "gm"),"/");
         let renderer = new marked.Renderer();
         renderer.image = function (href, title, text) {
-            if (href.indexOf('https://github.com/') !== -1) {
+            if (href.indexOf('https://github.com/') === 0) {
                 let subUrl = href.substring(href.lastIndexOf('/'), href.length);
                 let fixedUrl = "https://raw.githubusercontent.com/" + userName + "/" + reposName + "/" + branch + subUrl;
                 href = fixedUrl;
@@ -101,6 +99,8 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
                 return highlightAuto(code).value;
             }
         });
+
+
         return {
             result: true,
             datahtml: generateCodeHtml(marked(data), true, 'markdown_dark.css', '#FFFFFF', '#FF00FF', '#FF00FF'),
@@ -115,13 +115,14 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
 };
 
 const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor) => {
+    console.log('***********', mdSource);
     return "<html>\n" +
         "<head>\n" +
         "<meta charset=\"utf-8\" />\n" +
-        "<title>MD View</title>\n" +
+        "<title></title>\n" +
         "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
         "<link rel=\"stylesheet\" type=\"text/css\" href=\"./" + skin + "\">\n" +
-        "<link href=\"http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css\" rel=\"stylesheet\">\n"+
+        "<link href=\"http:\/\/cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css\" rel=\"stylesheet\">\n"+
         "<script src=\"http:\/\/cdn.bootcss.com/highlight.js/8.0/highlight.min.js\"></script>  "+
         "<script>hljs.initHighlightingOnLoad();</script>  "+
         "<style>" +
