@@ -67,7 +67,8 @@ export default class WebComponent extends Component {
                 javaScriptEnabled={true}
                 automaticallyAdjustContentInsets={true}
                 mixedContentMode={'always'}
-                saveFormDataDisabled={true}
+                allowUniversalAccessFromFileURLs={true}
+                mediaPlaybackRequiresUserAction={true}
                 {...this.props}
                 style={[{width: _w}, this.props.style, {height: _h}]}
             />

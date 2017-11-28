@@ -6,7 +6,8 @@ import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
 import showdown from 'showdown'
-import marked from'marked'
+import marked from 'marked'
+import {highlightAuto} from 'highlight.js'
 
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
@@ -64,7 +65,7 @@ const getRepositoryDetail = async (userName, reposName) => {
     }
 };
 
-const getRepositoryDetailReadme = async (userName, reposName) => {
+const getRepositoryDetailReadme = async (userName, reposName, branch = 'master') => {
     let res = await RepositoryDao.getRepositoryDetailReadmeDao(userName, reposName);
     if (res.result) {
         let b = Buffer(res.data.content, 'base64');
@@ -72,17 +73,36 @@ const getRepositoryDetailReadme = async (userName, reposName) => {
         let converter = new showdown.Converter();
         converter.setFlavor('github');
         let html = converter.makeHtml(data);
-
+        let renderer = new marked.Renderer();
+        renderer.image = function (href, title, text) {
+            if (href.indexOf('https://github.com/') !== -1) {
+                let subUrl = href.substring(href.lastIndexOf('/'), href.length);
+                let fixedUrl = "https://raw.githubusercontent.com/" + userName + "/" + reposName + "/" + branch + subUrl;
+                href = fixedUrl;
+            }
+            let out = '<img src="' + href + '" alt="' + text + '"';
+            if (title) {
+                out += ' title="' + title + '"';
+            }
+            out += '/>';
+            return out;
+        };
         marked.setOptions({
-            renderer: new marked.Renderer(),
+            renderer: renderer,
             gfm: true,
             tables: true,
             breaks: true,
             pedantic: false,
             sanitize: false,
             smartLists: true,
-            smartypants: false
+            smartypants: false,
+            highlight: function (code) {
+                console.log("************1", code);
+                console.log("************2", highlightAuto(code).value);
+                return highlightAuto(code).value;
+            }
         });
+
         let dd = fixLinks(marked(data), null, userName, reposName);
 
         //console.log("***********", dd);
@@ -106,6 +126,9 @@ const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor
         "<title>MD View</title>\n" +
         "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
         "<link rel=\"stylesheet\" type=\"text/css\" href=\"./" + skin + "\">\n" +
+        "<link href=\"http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css\" rel=\"stylesheet\">\n"+
+        "<script src=\"http:\/\/cdn.bootcss.com/highlight.js/8.0/highlight.min.js\"></script>  "+
+        "<script>hljs.initHighlightingOnLoad();</script>  "+
         "<style>" +
         "body{background: " + backgroundColor + ";}" +
         "img{display: " + "block" + ";max-width:100%;}" +
