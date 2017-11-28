@@ -7,6 +7,7 @@ import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
 
 import showdown from 'showdown'
+
 var marked = require('marked');
 
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
@@ -78,11 +79,11 @@ const getRepositoryDetailReadme = async (userName, reposName) => {
             renderer: new marked.Renderer(),
             gfm: true,
             tables: true,
-            breaks: false,
+            breaks: true,
             pedantic: false,
             sanitize: false,
             smartLists: true,
-            smartypants: false
+            smartypants: false,
         });
         let dd = fixLinks(marked(data), null, userName, reposName);
 
