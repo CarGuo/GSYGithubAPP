@@ -143,22 +143,21 @@ const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor
         "thead, tr {" +
         "border-top: 1px solid rgb(230, 189, 189);}" +
         "table{" +
-        "border-bottom: 1px solid rgb(230, 189, 189);}" +
-        "/* Padding and font style */" +
+        "border-bottom: 1px solid rgb(230, 189, 189);border-top: 1px solid rgb(230, 189, 189);}" +
         "td, th {" +
         "padding: 5px 10px;" +
         "font-size: 12px;" +
+        "direction:hor"+
         "font-family: Verdana;" +
         "color: rgb(177, 106, 104);" +
         "}" +
-        "" +
-        "/* Alternating background colors */" +
         "tr:nth-child(even) {" +
         "background: rgb(238, 211, 210)" +
         "}" +
         "tr:nth-child(odd) {" +
         "background: #FFF" +
         "}" +
+        "th:{word-break: keep-all;white-space:nowrap;}" +
         "</style>" +
         "</head>\n" +
         "<body>\n" +
