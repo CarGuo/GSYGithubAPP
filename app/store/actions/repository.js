@@ -108,10 +108,13 @@ const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor
         "<link rel=\"stylesheet\" type=\"text/css\" href=\"./" + skin + "\">\n" +
         "<style>" +
         "body{background: " + backgroundColor + ";}" +
+        "img{display: " + "block" + ";max-width:100%;}" +
         "a {color:" + accentColor + " !important;}" +
         ".highlight pre, pre {" +
         " word-wrap: " + (wrapCode ? "break-word" : "normal") + "; " +
         " white-space: " + (wrapCode ? "pre-wrap" : "pre") + "; " +
+        " background: " + ('#929292') + "; " +
+        " padding:10px " + "; " +
         "}" +
         "</style>" +
         "</head>\n" +

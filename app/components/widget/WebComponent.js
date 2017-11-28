@@ -66,6 +66,8 @@ export default class WebComponent extends Component {
                 onMessage={this._onMessage}
                 javaScriptEnabled={true}
                 automaticallyAdjustContentInsets={true}
+                mixedContentMode={'always'}
+                saveFormDataDisabled={true}
                 {...this.props}
                 style={[{width: _w}, this.props.style, {height: _h}]}
             />
