@@ -6,7 +6,7 @@ import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
 import marked from 'marked'
-import {highlightAuto} from 'highlight.js'
+import {highlightAuto, fixMarkup, configure} from 'highlight.js'
 
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
@@ -69,8 +69,8 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
     if (res.result) {
         let b = Buffer(res.data.content, 'base64');
         let data = b.toString('utf8');
-        data= data.replace(new RegExp("<img src=\"https://github.com","gm"),"<img src=\"https://raw.githubusercontent.com")
-            .replace(new RegExp("/blob/", "gm"),"/");
+        data = data.replace(new RegExp("<img src=\"https://github.com", "gm"), "<img src=\"https://raw.githubusercontent.com")
+            .replace(new RegExp("/blob/", "gm"), "/");
         let renderer = new marked.Renderer();
         renderer.image = function (href, title, text) {
             if (href.indexOf('https://github.com/') === 0) {
@@ -86,6 +86,10 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
             return out;
         };
 
+        configure({
+            'useBR': true
+        });
+
         marked.setOptions({
             renderer: renderer,
             gfm: true,
@@ -96,7 +100,8 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
             smartLists: true,
             smartypants: false,
             highlight: function (code) {
-                return highlightAuto(code).value;
+                let newCode = highlightAuto(code).value;
+                return newCode.replace(/[\n]/g,'<br>');;
             }
         });
 
@@ -122,9 +127,9 @@ const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor
         "<title></title>\n" +
         "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
         "<link rel=\"stylesheet\" type=\"text/css\" href=\"./" + skin + "\">\n" +
-        "<link href=\"http:\/\/cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css\" rel=\"stylesheet\">\n"+
-        "<script src=\"http:\/\/cdn.bootcss.com/highlight.js/8.0/highlight.min.js\"></script>  "+
-        "<script>hljs.initHighlightingOnLoad();</script>  "+
+        "<link href=\"http:\/\/cdn.bootcss.com/highlight.js/8.0/styles/github.min.css\" rel=\"stylesheet\">\n" +
+        "<script src=\"http:\/\/cdn.bootcss.com/highlight.js/8.0/highlight.min.js\"></script>  " +
+        "<script>hljs.initHighlightingOnLoad();</script>  " +
         "<style>" +
         "body{background: " + backgroundColor + ";}" +
         "img{display: " + "block" + ";max-width:100%;}" +
