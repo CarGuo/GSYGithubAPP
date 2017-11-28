@@ -101,7 +101,10 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
             smartypants: false,
             highlight: function (code) {
                 let newCode = highlightAuto(code).value;
-                return newCode.replace(/[\n]/g,'<br>');;
+                if (newCode && newCode.indexOf("\n") !== -1) {
+                    return newCode.replace(/[\n]/g, '<br>');
+                }
+                return newCode;
             }
         });
 
