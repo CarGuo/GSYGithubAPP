@@ -87,6 +87,7 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
             out += '/>';
             return out;
         };
+
         marked.setOptions({
             renderer: renderer,
             gfm: true,
@@ -97,15 +98,9 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
             smartLists: true,
             smartypants: false,
             highlight: function (code) {
-                console.log("************1", code);
-                console.log("************2", highlightAuto(code).value);
                 return highlightAuto(code).value;
             }
         });
-
-        let dd = fixLinks(marked(data), null, userName, reposName);
-
-        //console.log("***********", dd);
         return {
             result: true,
             datahtml: generateCodeHtml(marked(data), true, 'markdown_dark.css', '#FFFFFF', '#FF00FF', '#FF00FF'),
@@ -136,8 +131,6 @@ const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor
         ".highlight pre, pre {" +
         " word-wrap: " + (wrapCode ? "break-word" : "normal") + "; " +
         " white-space: " + (wrapCode ? "pre-wrap" : "pre") + "; " +
-        " background: " + ('#929292') + "; " +
-        " padding:10px " + "; " +
         "}" +
         "</style>" +
         "</head>\n" +
@@ -146,21 +139,6 @@ const generateCodeHtml = (mdSource, wrapCode, skin, backgroundColor, accentColor
         "</body>\n" +
         "</html>";
 };
-
-const fixLinks = (source, baseUrl, owner, repo, branch = 'master') => {
-    //let imagesMatcher = source.match("src=\"(.*?)\"");
-    let imagesMatcher = /src="(.*?)"/.exec(source);
-    if (imagesMatcher) {
-        imagesMatcher.forEach((oriUrl) => {
-            //console.log('%%%%%%', oriUrl)
-            let subUrl = oriUrl.substring(oriUrl.lastIndexOf('/'), oriUrl.length);
-            let fixedUrl = "https://raw.githubusercontent.com/" + owner + "/" + repo + "/" + branch + subUrl;
-            source = source.replace("src=\"" + oriUrl + "\"", "src=\"" + fixedUrl + "\"");
-
-        })
-    }
-    return source;
-}
 
 export default {
     getTrend,
