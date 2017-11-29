@@ -15,6 +15,7 @@ import {bindActionCreators} from 'redux'
 import EventItem from './widget/EventItem'
 import CommonRowItem from './widget/CommonRowItem'
 import RepositoryItem from './widget/RepositoryItem'
+import IssueItem from './widget/IssueItem'
 
 /**
  * 推荐
@@ -46,14 +47,6 @@ class RecommendPage extends Component {
                     itemIcon={"sc-github"}
                     itemText={"介绍一下是什么"}
                     onClickFun={() => {
-                        Actions.LoginPage();
-                    }}/>
-                <CommonRowItem
-                    itemIcon={"sc-github"}
-                    itemText={"退出登陆"}
-                    onClickFun={() => {
-                        Actions.reset("LoginPage")
-                        loginActions.loginOut();
                     }}/>
                 <RepositoryItem
                     ownerName={"CarGuo"}
@@ -65,6 +58,13 @@ class RecommendPage extends Component {
                     repositoryType={"java"}
                     repositoryDes={"这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！这是很长很长的简介！"}
                 />
+                <IssueItem
+                    actionTime={"2017-11-17T07:58:31Z"}
+                    actionUser={'CarGuo'}
+                    actionUserPic={'https://avatars0.githubusercontent.com/u/27534854?s=64&v=4'}
+                    issueComment={"asdfafdas"}
+                    commentCount={"222"}
+                    issueTag={"GSYGitHubApp/ASDFASDFASDF"}/>
             </View>
         )
     }
