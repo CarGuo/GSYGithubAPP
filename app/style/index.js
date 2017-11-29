@@ -95,6 +95,10 @@ export default StyleSheet.create({
         color: constant.subLightTextColor,
         fontSize: constant.smallTextSize
     },
+    miLightSmallText: {
+        color: constant.miWhite,
+        fontSize: constant.smallTextSize
+    },
     subSmallText: {
         color: constant.subTextColor,
         fontSize: constant.smallTextSize
@@ -115,7 +119,10 @@ export default StyleSheet.create({
         color: constant.TextColorWhite,
         fontSize: constant.normalTextSize
     },
-
+    normalTextMitWhite: {
+        color: constant.miWhite,
+        fontSize: constant.normalTextSize
+    },
     normalTextLight: {
         color: constant.primaryLightColor,
         fontSize: constant.normalTextSize
@@ -151,7 +158,6 @@ export default StyleSheet.create({
         shadowRadius: 5,
         elevation: 2,
         backgroundColor: constant.cardBackgroundColor
-    }
-
+    },
 
 });

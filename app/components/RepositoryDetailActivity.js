@@ -65,7 +65,7 @@ class RepositoryDetailActivity extends Component {
      * 刷新
      * */
     _refresh() {
-        eventActions.getRepositoryEvent(0, this.props.owerName, this.props.repositoryName).then((res) => {
+        eventActions.getRepositoryEvent(0, this.props.ownerName, this.props.repositoryName).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;
@@ -85,7 +85,7 @@ class RepositoryDetailActivity extends Component {
      * 加载更多
      * */
     _loadMore() {
-        eventActions.getRepositoryEvent(this.page, this.props.owerName, this.props.repositoryName).then((res) => {
+        eventActions.getRepositoryEvent(this.page, this.props.ownerName, this.props.repositoryName).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page++;
@@ -104,12 +104,13 @@ class RepositoryDetailActivity extends Component {
 
     render() {
         let {
-            forks_count, fork, open_issues_count, size, watchers_count,
-            subscribers_count, description, language, created_at, pushed_at, parent
+            forks_count, fork, open_issues_count, size, watchers_count,owner,
+            subscribers_count, description, language, created_at, pushed_at, parent,
         } = this.props.dataDetail;
         let header =
             <RepositoryHeader
                 ownerName={this.props.ownerName}
+                ownerPic={owner.avatar_url}
                 repositoryName={this.props.repositoryName}
                 repositoryStar={watchers_count + ""}
                 repositoryFork={forks_count + ""}
@@ -146,14 +147,14 @@ class RepositoryDetailActivity extends Component {
 
 RepositoryDetailActivity.propTypes = {
     dataDetail: PropTypes.object,
-    owerName: PropTypes.string,
+    ownerName: PropTypes.string,
     repositoryName: PropTypes.string,
 };
 
 
 RepositoryDetailActivity.defaultProps = {
     dataDetail: {},
-    owerName: '',
+    ownerName: '',
     repositoryName: '',
 };
 

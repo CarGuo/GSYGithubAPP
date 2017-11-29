@@ -88,7 +88,7 @@ class RepositoryDetail extends Component {
                 return (
                     <RepositoryDetailActivity
                         dataDetail={this.state.dataDetail}
-                        owerName={this.props.ownerName}
+                        ownerName={this.props.ownerName}
                         repositoryName={this.props.repositoryName}
                     />
                 );

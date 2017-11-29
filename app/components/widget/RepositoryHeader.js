@@ -10,7 +10,7 @@ import {
     Image,
     View,
     TouchableOpacity,
-    Dimensions,
+    ImageBackground,
     StyleSheet
 } from 'react-native';
 
@@ -62,7 +62,7 @@ class RepositoryHeader extends Component {
 
         let bottomIconStyle = {
             backgroundColor: Constant.transparentColor,
-            color: Constant.subTextColor, size: 15,
+            color: Constant.miWhite, size: 15,
         };
 
         let createStr = repositoryIsFork ? I18n("forked_at") + " " + repositoryParentName + '\n'
@@ -73,39 +73,60 @@ class RepositoryHeader extends Component {
         let infoText = createStr + ((push_at) ? updateStr : '');
 
         return (
-            <View style={[{
-                backgroundColor: Constant.white,
-                marginTop: Constant.normalMarginEdge,
-                marginHorizontal: Constant.normalMarginEdge,
-                paddingHorizontal: Constant.normalMarginEdge,
-                paddingTop: Constant.normalMarginEdge,
-                borderRadius: 4,
-            }, styles.shadowCard]}>
-                <View style={[styles.flexDirectionRowNotFlex]}>
-                    <Text style={[styles.normalTextLight, {fontWeight: "bold"}]}>{ownerName}</Text>
-                    <Text style={[styles.normalTextLight, {fontWeight: "bold"}]}>{" / "}</Text>
-                    <Text style={[styles.normalText, {fontWeight: "bold"}]}>{repositoryName}</Text>
+            <ImageBackground
+                style={[styles.shadowCard, {
+                    backgroundColor: Constant.primaryColor,
+                    marginTop: Constant.normalMarginEdge,
+                    marginHorizontal: Constant.normalMarginEdge,
+                    paddingHorizontal: Constant.normalMarginEdge,
+                    paddingTop: Constant.normalMarginEdge,
+                    borderRadius: 4,
+                }]}
+                blurRadius={14}
+                source={{uri: ownerPic}}
+                resizeMethod="scale">
+                <View style={[styles.flexDirectionRowNotFlex, {
+                    backgroundColor: Constant.transparentColor,
+                }]}>
+                    <Text style={[styles.normalTextMitWhite, {fontWeight: "bold"}, {
+                        backgroundColor: Constant.transparentColor,
+                    }]}>{ownerName}</Text>
+                    <Text style={[styles.normalTextMitWhite, {fontWeight: "bold"}, {
+                        backgroundColor: Constant.transparentColor,
+                    }]}>{" / "}</Text>
+                    <Text style={[styles.normalTextMitWhite, {fontWeight: "bold"}, {
+                        backgroundColor: Constant.transparentColor,
+                    }]}>{repositoryName}</Text>
                 </View>
-                <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2}]}>
+                <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2}, {
+                    backgroundColor: Constant.transparentColor,
+                }]}>
                     <Text style={{
-                        color: Constant.subTextColor,
+                        color: Constant.miWhite,
                         fontSize: Constant.minTextSize,
-                        marginRight: Constant.normalMarginEdge
+                        marginRight: Constant.normalMarginEdge,
+                        backgroundColor: Constant.transparentColor,
                     }}
                           numberOfLines={1}>
                         {repositoryType}
                     </Text>
-                    <Text style={{color: Constant.subTextColor, fontSize: Constant.minTextSize}}
+                    <Text style={{
+                        color: Constant.miWhite, fontSize: Constant.minTextSize,
+                        backgroundColor: Constant.transparentColor,
+                    }}
                           numberOfLines={1}>
                         {repositorySize}
                     </Text>
                 </View>
                 <HTMLView
-                    style={{marginTop: Constant.normalMarginEdge / 2,}}
+                    style={{
+                        marginTop: Constant.normalMarginEdge / 2,
+                        backgroundColor: Constant.transparentColor,
+                    }}
                     numberOfLines={100}
                     value={repositoryDes}
                     textComponentProps={{
-                        style: styles.subSmallText,
+                        style: styles.miLightSmallText,
                         numberOfLines: 100
                     }}
                     textComponent={() => {
@@ -118,10 +139,12 @@ class RepositoryHeader extends Component {
                     justifyContent: "flex-end",
                     marginTop: Constant.normalMarginEdge,
                     marginBottom: Constant.normalMarginEdge,
+                    backgroundColor: Constant.transparentColor,
                 }]}>
                     <Text
                         style={{
-                            color: Constant.primaryLightColor, fontSize: Constant.minTextSize,
+                            color: Constant.white, fontSize: Constant.minTextSize,
+                            backgroundColor: Constant.transparentColor,
                         }}
                         numberOfLines={2}>
                         {infoText}
@@ -130,18 +153,20 @@ class RepositoryHeader extends Component {
                 <View style={[styles.flexDirectionRowNotFlex, {
                     marginTop: Constant.normalMarginEdge / 2,
                     paddingVertical: Constant.normalMarginEdge / 2,
-                    borderColor: Constant.lineColor, borderTopWidth: StyleSheet.hairlineWidth
+                    borderColor: Constant.lineColor, borderTopWidth: StyleSheet.hairlineWidth,
+                    backgroundColor: Constant.transparentColor,
                 }]}>
-                    <TouchableOpacity style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
+                    <TouchableOpacity
+                        style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
                         <Icon name="star-o" {...bottomIconStyle}>
-                            <Text style={[styles.subSmallText,]}>{" " + repositoryStar}</Text>
+                            <Text style={[styles.miLightSmallText,]}>{" " + repositoryStar}</Text>
                         </Icon>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.flex, styles.centered,
                         {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth}
                         , {paddingVertical: Constant.normalMarginEdge}]}>
                         <Icon name="code-fork" {...bottomIconStyle} >
-                            <Text style={[styles.subSmallText,]}>{" " + repositoryFork}</Text>
+                            <Text style={[styles.miLightSmallText,]}>{" " + repositoryFork}</Text>
                         </Icon>
                     </TouchableOpacity>
 
@@ -150,16 +175,17 @@ class RepositoryHeader extends Component {
                         {borderColor: Constant.lineColor, borderRightWidth: StyleSheet.hairlineWidth}
                         , {paddingVertical: Constant.normalMarginEdge}]}>
                         <IconC name="eye" {...bottomIconStyle}>
-                            <Text style={[styles.subSmallText,]}>{" " + repositoryWatch}</Text>
+                            <Text style={[styles.miLightSmallText,]}>{" " + repositoryWatch}</Text>
                         </IconC>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
+                    <TouchableOpacity
+                        style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
                         <IconC name="issue-opened" {...bottomIconStyle}>
-                            <Text style={[styles.subSmallText,]}>{" " + repositoryIssue}</Text>
+                            <Text style={[styles.miLightSmallText,]}>{" " + repositoryIssue}</Text>
                         </IconC>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </ImageBackground>
         );
     }
 }
