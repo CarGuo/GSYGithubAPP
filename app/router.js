@@ -11,6 +11,7 @@ import DynamicPage from './components/DynamicPage'
 import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
+import IssueDetail from './components/IssueDetail'
 import PersonPage from './components/PersonPage'
 import SettingPage from './components/SettingPage'
 import RepositoryDetail from './components/RepositoryDetail'
@@ -107,6 +108,9 @@ const getRouter = () => {
                         <Scene key="SearchPage" component={SearchPage}/>
                     </Drawer>
                     <Scene key="RepositoryDetail" component={RepositoryDetail}
+                           renderLeftButton={() => <CustomBackButton/>}
+                    />
+                    <Scene key="IssueDetail" component={IssueDetail}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                 </Scene>

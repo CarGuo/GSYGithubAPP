@@ -99,3 +99,15 @@ export const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white,
         "</body>\n" +
         "</html>";
 };
+
+
+export const getFullName = (repository_url) => {
+    let fullName = '';
+    if (repository_url) {
+        let splicurl = repository_url.split("/");
+        if (splicurl.length > 2) {
+            fullName = splicurl[splicurl.length - 2] + "/" + splicurl[splicurl.length - 1] + "--";
+        }
+    }
+    return fullName;
+};

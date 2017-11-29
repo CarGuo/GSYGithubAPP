@@ -14,6 +14,7 @@ import I18n from '../style/i18n'
 import issueActions from '../store/actions/issue'
 import PullListView from './widget/PullLoadMoreListView'
 import IssueItem from './widget/IssueItem'
+import {getFullName} from '../utils/htmlUtils'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/'
 
@@ -112,15 +113,23 @@ class IssueListPage extends Component {
     }
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
+        let fullName = getFullName(rowData.repository_url);
         return (
             <IssueItem
                 actionTime={rowData.created_at}
                 actionUser={rowData.user.login}
                 actionUserPic={rowData.user.avatar_url}
-                issueComment={rowData.title}
+                issueComment={fullName + rowData.title}
                 commentCount={rowData.comments + ""}
                 state={rowData.state}
-                issueTag={"#" + rowData.number}/>
+                issueTag={"#" + rowData.number}
+                onPressItem={() => {
+                    Actions.IssueDetail({
+                        issue: rowData, title: fullName,
+                        repositoryName: this.props.repositoryName,
+                        userName: this.props.userName
+                    })
+                }}/>
         )
     }
 

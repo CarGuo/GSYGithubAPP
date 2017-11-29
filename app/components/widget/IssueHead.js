@@ -63,33 +63,36 @@ class IssueItem extends Component {
                             <TimeText style={[styles.miLightSmallText, {marginTop: -3}]}
                                       time={actionTime}/>
                         </View>
-                        <View style={[styles.centerV, {marginTop: Constant.normalMarginEdge / 2}]}>
-                            <IconC name={this.props.state === 'open' ? "issue-opened" : "issue-closed"}
-                                   backgroundColor={Constant.transparentColor}
-                                   color={Constant.miWhite} size={14}>
-                                <Text style={[styles.miLightSmallText]}>
-                                    {this.props.state + " "}
-                                </Text>
-                            </IconC>
-                            <Text style={[styles.miLightSmallText, {marginTop: Constant.normalMarginEdge / 2}]}
+                        <View
+                            style={[styles.flexDirectionRowNotFlex, styles.centerH, {marginVertical: Constant.normalMarginEdge / 2}]}>
+                            <Text style={[styles.miLightSmallText, {marginRight: Constant.normalMarginEdge / 2}]}
                                   numberOfLines={Constant.normalNumberOfLine}>
                                 {this.props.issueTag}
                             </Text>
-                        </View>
-                        <View
-                            style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2}]}>
-                            <Text style={[styles.miLightSmallText,]}>{issueComment}</Text>
-                        </View>
-                        <View
-                            style={[styles.flexDirectionRowNotFlex, styles.centerH, {marginVertical: Constant.normalMarginEdge / 2}]}>
+                            <IconC name={this.props.state === 'open' ? "issue-opened" : "issue-closed"}
+                                   backgroundColor={Constant.transparentColor}
+                                   color={Constant.miWhite} size={14}
+                                   style={styles.centerH}>
+                                <Text style={[styles.miLightSmallText]}>
+                                    {this.props.state + "  "}
+                                </Text>
+                            </IconC>
                             <Icon name="comment"
                                   iconStyle={{marginRight: 3}}
                                   backgroundColor={Constant.transparentColor}
-                                  color={Constant.miWhite} size={11}>
+                                  color={Constant.miWhite} size={11}
+                                  style={styles.centerH}>
                                 <Text style={[styles.miLightSmallText, {fontSize: Constant.minTextSize}]}>
-                                    {"  " + this.props.commentCount}
+                                    {"   " + this.props.commentCount}
                                 </Text>
                             </Icon>
+                        </View>
+                        <View
+                            style={[styles.flexDirectionRowNotFlex, {
+                                marginTop: Constant.normalMarginEdge / 2,
+                                marginBottom: Constant.normalMarginEdge / 2
+                            }]}>
+                            <Text style={[styles.miLightSmallText,]}>{issueComment}</Text>
                         </View>
                     </View>
                 </View>

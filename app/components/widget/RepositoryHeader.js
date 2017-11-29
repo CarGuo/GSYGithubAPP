@@ -78,112 +78,118 @@ class RepositoryHeader extends Component {
                     backgroundColor: Constant.primaryColor,
                     marginTop: Constant.normalMarginEdge,
                     marginHorizontal: Constant.normalMarginEdge,
-                    paddingHorizontal: Constant.normalMarginEdge,
-                    paddingTop: Constant.normalMarginEdge,
-                    borderRadius: 4,
                 }]}
                 blurRadius={14}
                 source={{uri: (ownerPic) ? ownerPic : ""}}
                 resizeMethod="scale">
-                <View style={[styles.flexDirectionRowNotFlex, {
-                    backgroundColor: Constant.transparentColor,
-                }]}>
-                    <Text style={[styles.normalTextMitWhite, {fontWeight: "bold"}, {
+                <View style={{
+                    backgroundColor: Constant.primaryColor, opacity: 0.5,
+                    padding: Constant.normalMarginEdge,
+                }}>
+                    <View style={[styles.flexDirectionRowNotFlex, {
                         backgroundColor: Constant.transparentColor,
-                    }]}>{ownerName}</Text>
-                    <Text style={[styles.normalTextMitWhite, {fontWeight: "bold"}, {
-                        backgroundColor: Constant.transparentColor,
-                    }]}>{" / "}</Text>
-                    <Text style={[styles.normalTextMitWhite, {fontWeight: "bold"}, {
-                        backgroundColor: Constant.transparentColor,
-                    }]}>{repositoryName}</Text>
-                </View>
-                <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2}, {
-                    backgroundColor: Constant.transparentColor,
-                }]}>
-                    <Text style={{
-                        color: Constant.miWhite,
-                        fontSize: Constant.minTextSize,
-                        marginRight: Constant.normalMarginEdge,
-                        backgroundColor: Constant.transparentColor,
-                    }}
-                          numberOfLines={1}>
-                        {repositoryType}
-                    </Text>
-                    <Text style={{
-                        color: Constant.miWhite, fontSize: Constant.minTextSize,
-                        backgroundColor: Constant.transparentColor,
-                    }}
-                          numberOfLines={1}>
-                        {repositorySize}
-                    </Text>
-                </View>
-                <HTMLView
-                    style={{
-                        marginTop: Constant.normalMarginEdge / 2,
-                        backgroundColor: Constant.transparentColor,
-                    }}
-                    numberOfLines={100}
-                    value={repositoryDes}
-                    textComponentProps={{
-                        style: styles.miLightSmallText,
-                        numberOfLines: 100
-                    }}
-                    textComponent={() => {
-                        return (
-                            <Text/>
-                        )
-                    }}
-                />
-                <View style={[styles.flexDirectionRowNotFlex, {
-                    justifyContent: "flex-end",
-                    marginTop: Constant.normalMarginEdge,
-                    marginBottom: Constant.normalMarginEdge,
-                    backgroundColor: Constant.transparentColor,
-                }]}>
-                    <Text
-                        style={{
-                            color: Constant.white, fontSize: Constant.minTextSize,
+                    }]}>
+                        <Text style={[styles.normalTextMitWhite, styles.shadowText, {fontWeight: "bold"}, {
                             backgroundColor: Constant.transparentColor,
+                        }]}>{ownerName}</Text>
+                        <Text style={[styles.normalTextMitWhite, styles.shadowText, {fontWeight: "bold"}, {
+                            backgroundColor: Constant.transparentColor,
+                        }]}>{" / "}</Text>
+                        <Text style={[styles.normalTextMitWhite, styles.shadowText, {fontWeight: "bold"}, {
+                            backgroundColor: Constant.transparentColor,
+                        }]}>{repositoryName}</Text>
+                    </View>
+                    <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2}, {
+                        backgroundColor: Constant.transparentColor,
+                    }]}>
+                        <Text style={[styles.shadowText, {
+                            color: Constant.miWhite,
+                            fontSize: Constant.minTextSize,
+                            marginRight: Constant.normalMarginEdge,
+                            backgroundColor: Constant.transparentColor,
+                        }]}
+                              numberOfLines={1}>
+                            {repositoryType}
+                        </Text>
+                        <Text style={[styles.shadowText, {
+                            color: Constant.miWhite, fontSize: Constant.minTextSize,
+                            backgroundColor: Constant.transparentColor,
+                        }]}
+                              numberOfLines={1}>
+                            {repositorySize}
+                        </Text>
+                    </View>
+                    <HTMLView
+                        style={[{
+                            marginTop: Constant.normalMarginEdge / 2,
+                            backgroundColor: Constant.transparentColor
+                        }]}
+                        numberOfLines={100}
+                        value={repositoryDes}
+                        textComponentProps={{
+                            style: styles.miLightSmallText,
+                            numberOfLines: 100,
                         }}
-                        numberOfLines={2}>
-                        {infoText}
-                    </Text>
-                </View>
-                <View style={[styles.flexDirectionRowNotFlex, {
-                    marginTop: Constant.normalMarginEdge / 2,
-                    paddingVertical: Constant.normalMarginEdge / 2,
-                    borderColor: Constant.lineColor, borderTopWidth: StyleSheet.hairlineWidth,
-                    backgroundColor: Constant.transparentColor,
-                }]}>
-                    <TouchableOpacity
-                        style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
-                        <Icon name="star-o" {...bottomIconStyle}>
-                            <Text style={[styles.miLightSmallText,]}>{" " + repositoryStar}</Text>
-                        </Icon>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.flex, styles.centered,
-                        {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth}
-                        , {paddingVertical: Constant.normalMarginEdge}]}>
-                        <Icon name="code-fork" {...bottomIconStyle} >
-                            <Text style={[styles.miLightSmallText,]}>{" " + repositoryFork}</Text>
-                        </Icon>
-                    </TouchableOpacity>
+                        textComponent={() => {
+                            return (
+                                <Text/>
+                            )
+                        }}
+                    />
+                    <View style={[styles.flexDirectionRowNotFlex, {
+                        justifyContent: "flex-end",
+                        marginTop: Constant.normalMarginEdge,
+                        marginBottom: Constant.normalMarginEdge,
+                        backgroundColor: Constant.transparentColor,
+                    }]}>
+                        <Text
+                            style={[styles.shadowText, {
+                                color: Constant.white, fontSize: Constant.minTextSize,
+                                backgroundColor: Constant.transparentColor,
+                            }]}
+                            numberOfLines={2}>
+                            {infoText}
+                        </Text>
+                    </View>
+                    <View style={[styles.flexDirectionRowNotFlex, {
+                        marginTop: Constant.normalMarginEdge / 2,
+                        paddingVertical: Constant.normalMarginEdge / 2,
+                        borderColor: Constant.lineColor, borderTopWidth: StyleSheet.hairlineWidth,
+                        backgroundColor: Constant.transparentColor,
+                    }]}>
+                        <TouchableOpacity
+                            style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
+                            <Icon name="star-o" {...bottomIconStyle}>
+                                <Text
+                                    style={[styles.miLightSmallText, styles.shadowText,]}>{" " + repositoryStar}</Text>
+                            </Icon>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.flex, styles.centered,
+                            {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth}
+                            , {paddingVertical: Constant.normalMarginEdge}]}>
+                            <Icon name="code-fork" {...bottomIconStyle} >
+                                <Text
+                                    style={[styles.miLightSmallText, styles.shadowText,]}>{" " + repositoryFork}</Text>
+                            </Icon>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={[styles.flex, styles.centered,
-                        {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth},
-                        {borderColor: Constant.lineColor, borderRightWidth: StyleSheet.hairlineWidth}
-                        , {paddingVertical: Constant.normalMarginEdge}]}>
-                        <IconC name="eye" {...bottomIconStyle}>
-                            <Text style={[styles.miLightSmallText,]}>{" " + repositoryWatch}</Text>
-                        </IconC>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
-                        <IconC name="issue-opened" {...bottomIconStyle}>
-                            <Text style={[styles.miLightSmallText,]}>{" " + repositoryIssue}</Text>
-                        </IconC>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={[styles.flex, styles.centered,
+                            {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth},
+                            {borderColor: Constant.lineColor, borderRightWidth: StyleSheet.hairlineWidth}
+                            , {paddingVertical: Constant.normalMarginEdge}]}>
+                            <IconC name="eye" {...bottomIconStyle}>
+                                <Text
+                                    style={[styles.miLightSmallText, styles.shadowText,]}>{" " + repositoryWatch}</Text>
+                            </IconC>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
+                            <IconC name="issue-opened" {...bottomIconStyle}>
+                                <Text
+                                    style={[styles.miLightSmallText, styles.shadowText,]}>{" " + repositoryIssue}</Text>
+                            </IconC>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </ImageBackground>
         );

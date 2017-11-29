@@ -44,8 +44,7 @@ class IssueItem extends Component {
                 }, styles.shadowCard]}
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem();
-                }}
-            >
+                }} >
                 <View style={[styles.flexDirectionRowNotFlex,]}>
                     <UserImage uri={actionUserPic}
                                loginUser={actionUser}

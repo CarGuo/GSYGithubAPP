@@ -8,7 +8,7 @@ export const screenWidth = Dimensions.get("window").width;
 export const screenHeight = Dimensions.get("window").height;
 export const navBarHeight = (Platform.OS === 'ios') ? constant.iosnavHeaderHeight : constant.andrnavHeaderHeight;
 export const statusHeight = (Platform.OS === 'android') ? StatusBar.currentHeight : 25;
-export const drawerWidth = screenWidth / 3 *2;
+export const drawerWidth = screenWidth / 3 * 2;
 
 export default StyleSheet.create({
     routerStyle: {
@@ -159,5 +159,9 @@ export default StyleSheet.create({
         elevation: 2,
         backgroundColor: constant.cardBackgroundColor
     },
-
+    shadowText: {
+        textShadowColor: constant.cardShadowColor,
+        textShadowOffset: {width: 0, height: 0.4},
+        textShadowRadius: 0.4
+    },
 });
