@@ -84,6 +84,19 @@ export default AddressLocal = {
         return `${host}repos/${reposOwner}/${reposName}/issues?state=${state}&sort=${sort}&direction=${direction}`
     },
     /**
+     * 仓库Issue评论
+     */
+    getIssueComment: (reposOwner, reposName, issueNumber) => {
+        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}/comments`;
+
+    },
+    /**
+     * 仓库Issue
+     */
+    getIssueInfo: (reposOwner, reposName, issueNumber) => {
+        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}`;
+    },
+    /**
      * 自己的star get
      */
     myStar: (sort) => {

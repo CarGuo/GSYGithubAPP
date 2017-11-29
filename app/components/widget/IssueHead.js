@@ -31,9 +31,9 @@ class IssueItem extends Component {
     }
 
     render() {
-        let {actionTime, actionUser, actionUserPic, issueComment} = this.props;
+        let {actionTime, actionUser, actionUserPic, issueComment, issueDes} = this.props;
         return (
-            <TouchableOpacity
+            <View
                 style={[{
                     marginTop: Constant.normalMarginEdge,
                     marginLeft: Constant.normalMarginEdge,
@@ -94,7 +94,10 @@ class IssueItem extends Component {
                         </View>
                     </View>
                 </View>
-            </TouchableOpacity>
+                <View style={[styles.centerV, {marginBottom: issueDes ? Constant.normalMarginEdge : 0}]}>
+                    <Text style={[styles.miLightSmallText,]}>{issueDes}</Text>
+                </View>
+            </View>
         )
     }
 }
@@ -102,6 +105,7 @@ class IssueItem extends Component {
 const propTypes = {
     actionTime: PropTypes.string,
     actionUser: PropTypes.string,
+    issueDes: PropTypes.string,
     actionUserPic: PropTypes.string,
     issueComment: PropTypes.string,
     issueTag: PropTypes.string,

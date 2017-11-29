@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, TextInput, TouchableOpacity, Keyboard
+    View, Text, StatusBar, TextInput, InteractionManager, Keyboard
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
@@ -31,25 +31,16 @@ class IssueDetail extends Component {
         this._loadMore = this._loadMore.bind(this);
         this.page = 2;
         this.state = {
-            dataSource: []
+            dataSource: [],
+            detailInfo: null,
         }
     }
 
     componentDidMount() {
-        /*issueActions.getRepositoryIssue(0, this.props.userName, this.props.repositoryName).then((res) => {
-            let size = 0;
-            if (res && res.result) {
-                this.page = 2;
-                let dataList = res.data;
-                this.setState({
-                    dataSource: dataList
-                });
-                size = res.data.length;
-            }
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-            }
-        })*/
+        InteractionManager.runAfterInteractions(() => {
+            this.refs.pullList.showRefreshState();
+            this._refresh();
+        })
     }
 
     componentWillUnmount() {
@@ -63,9 +54,7 @@ class IssueDetail extends Component {
                 actionTime={rowData.created_at}
                 actionUser={rowData.user.login}
                 actionUserPic={rowData.user.avatar_url}
-                issueComment={rowData.title}
-                commentCount={rowData.comments + ""}
-                state={rowData.state}/>
+                issueComment={rowData.body}/>
         )
     }
 
@@ -73,13 +62,36 @@ class IssueDetail extends Component {
      * 刷新
      * */
     _refresh() {
+        let {issue} = this.props;
+        issueActions.getIssueComment(0, this.props.userName, this.props.repositoryName, issue.number).then((res) => {
+            let size = 0;
+            if (res && res.result) {
+                this.page = 2;
+                let dataList = res.data;
+                this.setState({
+                    dataSource: dataList
+                });
+                size = res.data.length;
+            }
+            if (this.refs.pullList) {
+                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+            }
+        });
+        issueActions.getIssueInfo(this.props.userName, this.props.repositoryName, issue.number).then((res) => {
+            if (res && res.result) {
+                this.setState({
+                    detailInfo: res.data
+                })
+            }
+        })
     }
 
     /**
      * 加载更多
      * */
     _loadMore() {
-        /*issueActions.getRepositoryIssue(this.page, this.props.userName, this.props.repositoryName).then((res) => {
+        let {issue} = this.props;
+        issueActions.getIssueComment(this.page, this.props.userName, this.props.repositoryName, issue.number).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page++;
@@ -92,13 +104,12 @@ class IssueDetail extends Component {
             if (this.refs.pullList) {
                 this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
             }
-        });*/
+        });
     }
 
 
     render() {
         let {issue} = this.props;
-        let fullName = getFullName(issue.repository_url);
         let header =
             <IssueHead
                 actionTime={issue.created_at}
@@ -107,6 +118,7 @@ class IssueDetail extends Component {
                 issueComment={issue.title}
                 commentCount={issue.comments + ""}
                 state={issue.state}
+                issueDes={(this.state.detailInfo) ? ((I18n('issueInfo') + ": " + this.state.detailInfo.body)) : null}
                 issueTag={"#" + issue.number}/>;
         return (
             <View style={styles.mainBox}>

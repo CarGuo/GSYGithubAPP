@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, TextInput, TouchableOpacity, Keyboard
+    View, InteractionManager, StatusBar, TextInput, TouchableOpacity, Keyboard
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
@@ -41,20 +41,22 @@ class IssueListPage extends Component {
     }
 
     componentDidMount() {
-        issueActions.getRepositoryIssue(0, this.props.userName, this.props.repositoryName).then((res) => {
-            let size = 0;
-            if (res && res.result) {
-                this.page = 2;
-                let dataList = res.data;
-                this.setState({
-                    dataSource: dataList
-                });
-                size = res.data.length;
-            }
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-            }
-        })
+        InteractionManager.runAfterInteractions(() => {
+            issueActions.getRepositoryIssue(0, this.props.userName, this.props.repositoryName).then((res) => {
+                let size = 0;
+                if (res && res.result) {
+                    this.page = 2;
+                    let dataList = res.data;
+                    this.setState({
+                        dataSource: dataList
+                    });
+                    size = res.data.length;
+                }
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                }
+            })
+        });
     }
 
     componentWillUnmount() {

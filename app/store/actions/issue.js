@@ -16,6 +16,38 @@ const getRepositoryIssue = async (page = 0, userName, repository, state, sort, d
 
 };
 
+const getIssueComment = async (page = 0, userName, repository, number) => {
+    let res = await IssueDao.getIssueCommentDao(page, userName, repository, number);
+    if (res && res.result) {
+        return {
+            data: res.data,
+            result: true
+        };
+    } else {
+        return {
+            result: false
+        };
+    }
+
+};
+
+const getIssueInfo = async (userName, repository, number) => {
+    let res = await IssueDao.getIssueInfoDao(userName, repository, number);
+    if (res && res.result) {
+        return {
+            data: res.data,
+            result: true
+        };
+    } else {
+        return {
+            result: false
+        };
+    }
+
+};
+
 export default {
     getRepositoryIssue,
+    getIssueComment,
+    getIssueInfo
 }

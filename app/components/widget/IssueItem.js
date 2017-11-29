@@ -32,6 +32,28 @@ class IssueItem extends Component {
 
     render() {
         let {actionTime, actionUser, actionUserPic, issueComment} = this.props;
+        let bottom = (this.props.issueTag) ? <View style={[styles.flexDirectionRowNotFlex, styles.centerH]}>
+            <IconC name={this.props.state === 'open' ? "issue-opened" : "issue-closed"}
+                   backgroundColor={Constant.transparentColor}
+                   color={Constant.subLightTextColor} size={14}>
+                <Text style={[styles.subLightSmallText]}>
+                    {this.props.state + " "}
+                </Text>
+            </IconC>
+            <Text style={[styles.subLightSmallText, {flex: 1}]}
+                  numberOfLines={Constant.normalNumberOfLine}>
+                {this.props.issueTag}
+            </Text>
+            <Icon.Button name="comment"
+                         iconStyle={{marginRight: 3}}
+                         backgroundColor={Constant.transparentColor}
+                         color={Constant.subLightTextColor} size={10}>
+                <Text style={[styles.subLightSmallText, {fontSize: Constant.minTextSize}]}>
+                    {this.props.commentCount}
+                </Text>
+            </Icon.Button>
+        </View> : <View/>;
+        let bottomMargin = (this.props.issueTag) ? 0 : Constant.normalMarginEdge;
         return (
             <TouchableOpacity
                 style={[{
@@ -44,7 +66,7 @@ class IssueItem extends Component {
                 }, styles.shadowCard]}
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem();
-                }} >
+                }}>
                 <View style={[styles.flexDirectionRowNotFlex,]}>
                     <UserImage uri={actionUserPic}
                                loginUser={actionUser}
@@ -54,7 +76,11 @@ class IssueItem extends Component {
                                    marginTop: 5,
                                    borderRadius: Constant.normalIconSize / 2
                                }]}/>
-                    <View style={{flex: 1, marginLeft: Constant.normalMarginEdge}}>
+                    <View style={{
+                        flex: 1,
+                        marginLeft: Constant.normalMarginEdge,
+                        marginBottom: bottomMargin
+                    }}>
                         <View style={[styles.flexDirectionRowNotFlex, styles.centerH]}>
                             <Text style={[styles.flex, styles.normalText, {fontWeight: "bold",}]}>
                                 {actionUser}
@@ -66,27 +92,7 @@ class IssueItem extends Component {
                             style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2}]}>
                             <Text style={[styles.subSmallText,]}>{issueComment}</Text>
                         </View>
-                        <View style={[styles.flexDirectionRowNotFlex, styles.centerH]}>
-                            <IconC name={this.props.state === 'open' ? "issue-opened" : "issue-closed"}
-                                   backgroundColor={Constant.transparentColor}
-                                   color={Constant.subLightTextColor} size={14}>
-                                <Text style={[styles.subLightSmallText]}>
-                                    {this.props.state + " "}
-                                </Text>
-                            </IconC>
-                            <Text style={[styles.subLightSmallText, {flex: 1}]}
-                                  numberOfLines={Constant.normalNumberOfLine}>
-                                {this.props.issueTag}
-                            </Text>
-                            <Icon.Button name="comment"
-                                         iconStyle={{marginRight: 3}}
-                                         backgroundColor={Constant.transparentColor}
-                                         color={Constant.subLightTextColor} size={10}>
-                                <Text style={[styles.subLightSmallText, {fontSize: Constant.minTextSize}]}>
-                                    {this.props.commentCount}
-                                </Text>
-                            </Icon.Button>
-                        </View>
+                        {bottom}
                     </View>
                 </View>
             </TouchableOpacity>
