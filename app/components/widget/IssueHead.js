@@ -44,8 +44,7 @@ class IssueItem extends Component {
                 }, styles.shadowCard, {backgroundColor: Constant.primaryColor}]}
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem();
-                }}
-            >
+                }}>
                 <View style={[styles.flexDirectionRowNotFlex,]}>
                     <UserImage uri={actionUserPic}
                                loginUser={actionUser}
@@ -74,7 +73,7 @@ class IssueItem extends Component {
                                    color={Constant.miWhite} size={14}
                                    style={styles.centerH}>
                                 <Text style={[styles.miLightSmallText]}>
-                                    {this.props.state + "  "}
+                                    {"  " + this.props.state + "  "}
                                 </Text>
                             </IconC>
                             <Icon name="comment"
@@ -89,8 +88,7 @@ class IssueItem extends Component {
                         </View>
                         <View
                             style={[styles.flexDirectionRowNotFlex, {
-                                marginTop: Constant.normalMarginEdge / 2,
-                                marginBottom: Constant.normalMarginEdge / 2
+                                marginBottom: Constant.normalMarginEdge
                             }]}>
                             <Text style={[styles.miLightSmallText,]}>{issueComment}</Text>
                         </View>

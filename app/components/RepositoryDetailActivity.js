@@ -104,13 +104,13 @@ class RepositoryDetailActivity extends Component {
 
     render() {
         let {
-            forks_count, fork, open_issues_count, size, watchers_count,owner,
+            forks_count, fork, open_issues_count, size, watchers_count, owner,
             subscribers_count, description, language, created_at, pushed_at, parent,
         } = this.props.dataDetail;
         let header =
             <RepositoryHeader
                 ownerName={this.props.ownerName}
-                ownerPic={owner.avatar_url}
+                ownerPic={owner ? owner.avatar_url : ""}
                 repositoryName={this.props.repositoryName}
                 repositoryStar={watchers_count + ""}
                 repositoryFork={forks_count + ""}
