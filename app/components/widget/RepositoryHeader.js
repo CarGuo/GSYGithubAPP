@@ -83,7 +83,7 @@ class RepositoryHeader extends Component {
                     borderRadius: 4,
                 }]}
                 blurRadius={14}
-                source={{uri: ownerPic}}
+                source={{uri: (ownerPic) ? ownerPic : ""}}
                 resizeMethod="scale">
                 <View style={[styles.flexDirectionRowNotFlex, {
                     backgroundColor: Constant.transparentColor,

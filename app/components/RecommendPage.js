@@ -15,7 +15,7 @@ import {bindActionCreators} from 'redux'
 import EventItem from './widget/EventItem'
 import CommonRowItem from './widget/CommonRowItem'
 import RepositoryItem from './widget/RepositoryItem'
-import IssueItem from './widget/IssueItem'
+import IssueItem from './widget/IssueHead'
 
 /**
  * 推荐
