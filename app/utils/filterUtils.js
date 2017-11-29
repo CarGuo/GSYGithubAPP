@@ -111,3 +111,21 @@ export const SearchLanguageType = [
     {name: "HTML", value: 'HTML', select: false},
     {name: "CSS", value: 'CSS', select: false},
 ];
+
+export const IssueState = [
+    {name: "issue_open", value: 'open', select: true},
+    {name: "issue_closed", value: 'closed', select: false},
+];
+
+export const IssueFilterType = [
+    {name: "issue_all", value: 'all', select: true},
+    {name: "issue_created", value: 'created', select: false},
+    {name: "issue_assigned", value: 'assigned', select: false},
+    {name: "issue_mentioned", value: 'mentioned', select: false},
+];
+
+export const IssueSortType = [
+    {name: "issue_created", value: 'created', select: true},
+    {name: "issue_updated", value: 'updated', select: false},
+    {name: "issue_comments", value: 'comments', select: false},
+];

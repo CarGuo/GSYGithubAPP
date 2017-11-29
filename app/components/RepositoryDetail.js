@@ -12,6 +12,7 @@ import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import repositoryActions from '../store/actions/repository'
 import WebComponent from './widget/WebComponent'
+import IssueListPage from './IssueListPage'
 import RepositoryDetailActivity from './RepositoryDetailActivity'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 
@@ -97,7 +98,10 @@ class RepositoryDetail extends Component {
                 );
             case '4':
                 return (
-                    <View style={[{flex: 1}, {backgroundColor: Constant.primaryColor}]}/>
+                    <IssueListPage
+                        userName={this.props.ownerName}
+                        repositoryName={this.props.repositoryName}
+                    />
                 );
             default:
                 return null;
@@ -112,6 +116,7 @@ class RepositoryDetail extends Component {
                     style={{
                         flex: 1,
                     }}
+                    lazy={true}
                     swipeEnabled={false}
                     navigationState={this.state}
                     renderScene={this._renderScene.bind(this)}
@@ -127,7 +132,7 @@ class RepositoryDetail extends Component {
     }
 }
 
-RepositoryDetail.defaultProps ={
+RepositoryDetail.defaultProps = {
     dataDetail: {
         forks_count: "---",
         fork: false,

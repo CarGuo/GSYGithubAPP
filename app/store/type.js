@@ -22,3 +22,6 @@ export const EVENT = {
 export const REPOSITORY = {
     TREND_REPOSITORY: 'trend_repository',
 };
+
+export const ISSUSE = {
+};

@@ -64,9 +64,24 @@ export default AddressLocal = {
     /**
      * 仓库活动 get
      */
-    getReposEvent: (reposOwner, reposName)=> {
+    getReposEvent: (reposOwner, reposName) => {
         return `${host}networks/${reposOwner}/${reposName}/events`
 
+    },
+    /**
+     * 仓库Issue get
+     */
+    getReposIssue: (reposOwner, reposName, state, sort, direction) => {
+        if (!state) {
+            state = 'all'
+        }
+        if (!sort) {
+            sort = 'all'
+        }
+        if (!direction) {
+            direction = 'desc'
+        }
+        return `${host}repos/${reposOwner}/${reposName}/issues?state=${state}&sort=${sort}&direction=${direction}`
     },
     /**
      * 自己的star get

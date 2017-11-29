@@ -13,6 +13,7 @@ import * as Constant from '../../style/constant'
 import TimeText from './TimeText'
 import UserImage from './UserImage'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import IconC from 'react-native-vector-icons/Octicons'
 
 /**
  * Issue列表Item
@@ -59,15 +60,22 @@ class IssueItem extends Component {
                             <Text style={[styles.flex, styles.normalText, {fontWeight: "bold",}]}>
                                 {actionUser}
                             </Text>
-                            <TimeText style={[styles.subSmallText,{marginTop: -3}]}
+                            <TimeText style={[styles.subSmallText, {marginTop: -3}]}
                                       time={actionTime}/>
                         </View>
                         <View
                             style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2}]}>
-                            <Text style={[styles.normalText,]}>{issueComment}</Text>
+                            <Text style={[styles.subSmallText,]}>{issueComment}</Text>
                         </View>
                         <View style={[styles.flexDirectionRowNotFlex, styles.centerH]}>
-                            <Text style={[styles.subSmallText, {flex: 1}]}
+                            <IconC name={this.props.state === 'open' ? "issue-opened" : "issue-closed"}
+                                   backgroundColor={Constant.transparentColor}
+                                   color={Constant.subLightTextColor} size={14}>
+                                <Text style={[styles.subLightSmallText]}>
+                                    {this.props.state + " "}
+                                </Text>
+                            </IconC>
+                            <Text style={[styles.subLightSmallText, {flex: 1}]}
                                   numberOfLines={Constant.normalNumberOfLine}>
                                 {this.props.issueTag}
                             </Text>

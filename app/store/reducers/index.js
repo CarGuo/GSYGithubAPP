@@ -7,6 +7,7 @@ import login from "./login"
 import user from "./user"
 import event from "./event"
 import repository from "./repository"
+import issue from "./issue"
 
 
 export default combineReducers({
@@ -14,4 +15,5 @@ export default combineReducers({
     user: user,
     event: event,
     repository: repository,
+    issue: issue,
 });
