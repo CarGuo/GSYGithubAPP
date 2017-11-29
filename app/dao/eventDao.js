@@ -24,6 +24,15 @@ const getEventFromNet = async (page = 0, userName) => {
     };
 };
 
+const getRepositoryEventDao = async (page = 0, userName, repository) => {
+    let url = Address.getReposEvent(userName, repository) + Address.getPageParams("?", page);
+    let res = await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+
+};
 
 const getEventReceivedFromDb = async (page = 0, userName) => {
 
@@ -32,5 +41,6 @@ const getEventReceivedFromDb = async (page = 0, userName) => {
 export default {
     getEventReceivedFromNet,
     getEventReceivedFromDb,
+    getRepositoryEventDao,
     getEventFromNet
 }

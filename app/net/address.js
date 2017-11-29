@@ -62,6 +62,13 @@ export default AddressLocal = {
         return `${host}repos/${reposOwner}/${reposName}`
     },
     /**
+     * 仓库活动 get
+     */
+    getReposEvent: (reposOwner, reposName)=> {
+        return `${host}networks/${reposOwner}/${reposName}/events`
+
+    },
+    /**
      * 自己的star get
      */
     myStar: (sort) => {

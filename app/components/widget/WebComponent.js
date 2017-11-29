@@ -3,7 +3,11 @@ import {
     View,
     Dimensions,
     WebView,
+    ActivityIndicator,
+    Text
 } from 'react-native';
+import I18n from '../../style/i18n'
+import * as Constant from '../../style/constant'
 
 const injectedScript = function () {
     function waitForBridge() {
@@ -29,11 +33,15 @@ export default class WebComponent extends Component {
 
     constructor(props: Object) {
         super(props);
+        this.state = {
+            loading: true,
+        }
     }
 
 
     render() {
         const _w = this.props.width || Dimensions.get('window').width;
+        const _h = this.props.width || Dimensions.get('window').height;
         return (
             <WebView
                 ref={(ref) => {
@@ -48,8 +56,14 @@ export default class WebComponent extends Component {
                 mixedContentMode={'always'}
                 allowUniversalAccessFromFileURLs={true}
                 mediaPlaybackRequiresUserAction={true}
+                startInLoadingState={true}
+                onLoadEnd={() => {
+                    this.setState({
+                        loading: false,
+                    })
+                }}
                 {...this.props}
-                style={[{width: _w}, {flex:1}]}
+                style={[{width: _w}, {flex: 1},]}
             />
         )
     }
