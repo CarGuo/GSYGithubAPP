@@ -2,6 +2,7 @@ import {Buffer} from 'buffer'
 import marked from 'marked'
 import {highlightAuto, configure} from 'highlight.js'
 import * as Constant from '../style/constant'
+import {Platform} from 'react-native'
 
 /**
  * markdown to html parser
@@ -39,9 +40,11 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master') 
         smartypants: false,
         highlight: function (code) {
             let newCode = highlightAuto(code).value;
-            /*if (newCode && newCode.indexOf("\n") !== -1) {
-                return newCode.replace(/[\n]/g, '<br>');
-            }*/
+            if (Platform.OS === 'android') {
+                if (newCode && newCode.indexOf("\n") !== -1) {
+                    return newCode.replace(/[\n]/g, '</p>');
+                }
+            }
             return newCode;
         }
     });
@@ -57,7 +60,7 @@ export const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white,
         "<meta charset=\"utf-8\" />\n" +
         "<title></title>\n" +
         "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
-        "<link href=\"https:\/\/cdn.bootcss.com/highlight.js/9.12.0/styles/androidstudio.min.css\" rel=\"stylesheet\">\n" +
+        "<link href=\"https:\/\/cdn.bootcss.com/highlight.js/9.12.0/styles/dracula.min.css\" rel=\"stylesheet\">\n" +
         "<script src=\"https:\/\/cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js\"></script>  " +
         "<script>hljs.initHighlightingOnLoad();</script>  " +
         "<style>" +
@@ -68,7 +71,7 @@ export const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white,
         " word-wrap: " + (wrap ? "break-word" : "normal") + "; " +
         " white-space: " + (wrap ? "pre-wrap" : "pre") + "; " +
         "}" +
-        "code{overflow: auto;}" +
+        "code{overflow: scroll;}" +
         "thead, tr {" +
         "background:" + Constant.miWhite + ";}" +
         "td, th {" +

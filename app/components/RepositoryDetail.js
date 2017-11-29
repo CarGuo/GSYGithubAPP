@@ -174,6 +174,7 @@ class RepositoryDetail extends Component {
                     style={{
                         flex: 1,
                     }}
+                    swipeEnabled={false}
                     navigationState={this.state}
                     renderScene={this._renderScene.bind(this)}
                     renderHeader={this._renderHeader}
