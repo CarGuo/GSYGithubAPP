@@ -77,6 +77,9 @@ I18n.translations = {
         reposFile: "files",
         reposIssue: "Issues",
         issueInfo: "Info",
+        issueComment: "Reply",
+        issueEdit: "Edit",
+        issueClose: "Close",
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -143,6 +146,9 @@ I18n.translations = {
         reposFile: "文件",
         reposIssue: "Issues",
         issueInfo: "说明",
+        issueComment: "恢复",
+        issueEdit: "编辑",
+        issueClose: "关闭",
     }
 };
 

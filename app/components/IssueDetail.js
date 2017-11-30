@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, TextInput, InteractionManager, Keyboard
+    View, Text, StatusBar, TextInput, InteractionManager, Keyboard, TouchableOpacity, StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
@@ -138,6 +138,20 @@ class IssueDetail extends Component {
                     loadMore={this._loadMore}
                     dataSource={this.state.dataSource}
                 />
+                <View style={[styles.flexDirectionRowNotFlex, {paddingVertical: Constant.normalMarginEdge}, styles.shadowCard]}>
+                    <TouchableOpacity style={[styles.flex, styles.centerH]}>
+                        <Text style={[styles.normalText]}>{I18n("issueComment")}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.flex, styles.centerH,
+                        {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor},
+                        {borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor},
+                    ]}>
+                        <Text style={styles.normalText}>{I18n("issueEdit")}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.flex, styles.centerH]}>
+                        <Text style={styles.normalText}>{I18n("issueClose")}</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
