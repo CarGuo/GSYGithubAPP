@@ -10,7 +10,7 @@ export const navBarHeight = (Platform.OS === 'ios') ? constant.iosnavHeaderHeigh
 export const statusHeight = (Platform.OS === 'android') ? StatusBar.currentHeight : 25;
 export const drawerWidth = screenWidth / 3 * 2;
 
-export default StyleSheet.create({
+const styles = StyleSheet.create({
     routerStyle: {
         //设置router的样式
         flex: 1,
@@ -164,4 +164,15 @@ export default StyleSheet.create({
         textShadowOffset: {width: 0, height: 0.4},
         textShadowRadius: 0.4
     },
+    inCode: {
+        backgroundColor: '#eeeeee',
+        borderColor: '#dddddd',
+        borderRadius: 3,
+        borderWidth: 1,
+        fontFamily: 'Courier',
+        padding: constant.normalMarginEdge,
+    }
 });
+
+export default styles;
+

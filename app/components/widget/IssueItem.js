@@ -60,7 +60,8 @@ class IssueItem extends Component {
 
         let body = (markdownBody) ? <MarkdownView
             styles={{
-                text: styles.subSmallText
+                text: styles.subSmallText,
+                inlineCode: styles.inCode
             }}
             style={{
                 backgroundColor: Constant.transparentColor

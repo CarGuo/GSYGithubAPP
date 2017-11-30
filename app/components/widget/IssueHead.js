@@ -99,7 +99,8 @@ class IssueItem extends Component {
                 <View style={[styles.centerV, {marginBottom: issueDes ? Constant.normalMarginEdge : 0}]}>
                     <MarkdownView
                         styles={{
-                            text: styles.miLightSmallText
+                            text: styles.miLightSmallText,
+                            inlineCode: styles.inCode
                         }}
                         style={{
                             backgroundColor: Constant.transparentColor
