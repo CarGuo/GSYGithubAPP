@@ -22,15 +22,12 @@ import {Actions} from "react-native-router-flux";
 /**
  * 登陆Modal
  */
-class CommonTextInputModal extends Component {
+class CommentConfirmModal extends Component {
 
     constructor(props) {
         super(props);
         this.onClose = this.onClose.bind(this);
-        this._searchTextChange = this._searchTextChange.bind(this);
-        this._searchTextTitleChange = this._searchTextTitleChange.bind(this);
         this.text = this.props.text;
-        this.title = this.props.titleValue;
     }
 
     componentDidMount() {
@@ -47,38 +44,8 @@ class CommonTextInputModal extends Component {
         return true;
     }
 
-    _searchTextTitleChange(text) {
-        this.title = text;
-    }
-
-    _searchTextChange(text) {
-        this.text = text;
-    }
-
     render() {
         let width = screenWidth - 100;
-        let editTitle = this.props.needEditTitle ? <View style={[{
-            borderBottomWidth: 1,
-            borderColor: Constant.subLightTextColor,
-            marginHorizontal: Constant.normalMarginEdge,
-            marginBottom: Constant.normalMarginEdge,
-        }]}>
-            <TextInput
-                onChangeText={(text) => {
-                    this._searchTextTitleChange(text)
-                }}
-                placeholder={I18n('issueInputTipTitle')}
-                underlineColorAndroid="transparent"
-                clearButtonMode="always"
-                multiline={true}
-                value={this.title}
-                style={[styles.smallText, {
-                    padding: Constant.normalMarginEdge,
-                    backgroundColor: Constant.white,
-                    height: 30,
-                    width: width,
-                    textAlignVertical: 'top'
-                }]}/></View> : <View/>;
         return (
             <Modal ref={"loginModal"}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
@@ -94,30 +61,13 @@ class CommonTextInputModal extends Component {
                             <Text
                                 style={[styles.normalText, {fontWeight: 'bold'}]}>{this.props.titleText}</Text>
                         </View>
-                        {editTitle}
                         <View style={[{
-                            borderRadius: 3,
-                            borderWidth: 1,
-                            borderColor: Constant.subLightTextColor,
                             marginHorizontal: Constant.normalMarginEdge,
                         }]}>
-                            <TextInput
-                                onChangeText={(text) => {
-                                    this._searchTextChange(text)
-                                }}
-                                placeholder={this.props.text ? this.props.text : I18n('issueInputTip')}
-                                underlineColorAndroid="transparent"
-                                clearButtonMode="always"
-                                multiline={true}
-                                value={this.text}
-                                style={[styles.smallText, {
+                            <Text
+                                style={[styles.normalText, {
                                     padding: Constant.normalMarginEdge,
-                                    backgroundColor: Constant.white,
-                                    height: screenWidth - 150,
-                                    borderRadius: 3,
-                                    width: width,
-                                    textAlignVertical: 'top'
-                                }]}/>
+                                }]}>{this.props.text}</Text>
                         </View>
                         <View
                             style={[styles.flexDirectionRowNotFlex, {
@@ -140,7 +90,7 @@ class CommonTextInputModal extends Component {
                                 onPress={() => {
                                     if (this.text && this.text.trim().length > 0) {
                                         Actions.pop();
-                                        this.props.textConfirm && this.props.textConfirm(this.text, this.title);
+                                        this.props.textConfirm && this.props.textConfirm(this.text);
                                     }
                                 }}>
                                 <Text style={[styles.normalText, {fontWeight: 'bold'}]}>{I18n("ok")}</Text>
@@ -153,18 +103,15 @@ class CommonTextInputModal extends Component {
     }
 }
 
-CommonTextInputModal.propTypes = {
+CommentConfirmModal.propTypes = {
     text: PropTypes.string,
-    titleValue: PropTypes.string,
     titleText: PropTypes.string,
     textConfirm: PropTypes.func,
-    needEditTitle: PropTypes.bool,
 };
-CommonTextInputModal.defaultProps = {
+CommentConfirmModal.defaultProps = {
     text: '',
     titleText: '',
-    needEditTitle: false,
 };
 
 
-export default CommonTextInputModal;
+export default CommentConfirmModal;

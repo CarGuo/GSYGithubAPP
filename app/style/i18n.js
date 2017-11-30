@@ -82,6 +82,12 @@ I18n.translations = {
         issueComment: "Reply",
         issueEdit: "Edit",
         issueClose: "Close",
+        issueInputTitleTip: "enjoy yourself",
+        issueInputTip: "enjoy yourself",
+        closeIssue: "Close？",
+        closeIssueTip: "Close？",
+        commentsIssue: "Comment",
+        editIssue: "Edit Issue",
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -153,6 +159,12 @@ I18n.translations = {
         issueComment: "回复",
         issueEdit: "编辑",
         issueClose: "关闭",
+        issueInputTip: "请输入答复哟",
+        issueInputTipTitle: "请输入标题",
+        closeIssue: "关闭？",
+        closeIssueTip: "你确定要关闭这个Issue吗？",
+        commentsIssue: "提交回复",
+        editIssue: "编辑",
     }
 };
 

@@ -20,6 +20,7 @@ import SearchPage from './components/SearchPage'
 import ListPage from './components/ListPage'
 import TabIcon from './components/widget/TabIcon'
 import TextInputModal from './components/widget/CommonTextInputModal'
+import CommentConfirmModal from './components/widget/CommentConfirmModal'
 import LoadingModal from './components/widget/LoadingModal'
 import DrawerFilter from './components/widget/DrawerFilter'
 import CustomBackButton from './components/widget/CustomBackButton'
@@ -117,6 +118,7 @@ const getRouter = () => {
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
                 <Scene key="TextInputModal" component={TextInputModal}/>
+                <Scene key="ConfirmModal" component={CommentConfirmModal}/>
             </Lightbox>
         </Router>
     )

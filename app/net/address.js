@@ -84,17 +84,23 @@ export default AddressLocal = {
         return `${host}repos/${reposOwner}/${reposName}/issues?state=${state}&sort=${sort}&direction=${direction}`
     },
     /**
-     * 仓库Issue评论
+     * 仓库Issue评论 get
      */
     getIssueComment: (reposOwner, reposName, issueNumber) => {
         return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}/comments`;
 
     },
     /**
-     * 仓库Issue
+     * 仓库Issue get
      */
     getIssueInfo: (reposOwner, reposName, issueNumber) => {
         return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}`;
+    },
+    /**
+     * 增加issue评论 post
+     */
+    addIssueComment: (reposOwner, reposName, issueNumber) => {
+        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}/comments`
     },
     /**
      * 自己的star get
@@ -188,13 +194,13 @@ export default AddressLocal = {
         return `${host}repos/${reposOwner}/${reposName}/readme`
     },
     /**
-     * 用户收到的事件信息
+     * 用户收到的事件信息 get
      */
     getEventReceived: (userName) => {
         return `${host}users/${userName}/received_events`
     },
     /**
-     * 用户相关的事件信息
+     * 用户相关的事件信息 get
      */
     getEvent: (userName) => {
         return `${host}users/${userName}/events`
@@ -209,7 +215,7 @@ export default AddressLocal = {
         return `${host}notifications?all=${all}`
     },
     /**
-     * 趋势
+     * 趋势 get
      * @param since daily，weekly， monthly
      */
     trending: (since, languageType) => {
@@ -219,7 +225,7 @@ export default AddressLocal = {
         return `https://github.com/trending?since=${since}`
     },
     /**
-     * README 文件地址
+     * README 文件地址 get
      */
     readmeFile: (reposNameFullName, curBranch) => {
         return host + "repos/" + reposNameFullName + "/" + "readme" + ((!curBranch) ? "" : "?ref=" + curBranch);

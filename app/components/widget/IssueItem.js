@@ -34,7 +34,7 @@ class IssueItem extends Component {
     }
 
     render() {
-        let {actionTime, actionUser, actionUserPic, issueComment, markdownBody} = this.props;
+        let {actionTime, actionUser, actionUserPic, issueComment, markdownBody, issueCommentHtml} = this.props;
         let bottom = (this.props.issueTag) ? <View style={[styles.flexDirectionRowNotFlex, styles.centerH]}>
             <IconC name={this.props.state === 'open' ? "issue-opened" : "issue-closed"}
                    backgroundColor={Constant.transparentColor}
@@ -68,6 +68,9 @@ class IssueItem extends Component {
             }}>
             {issueComment ? issueComment : ""}
         </MarkdownView> : <Text style={[styles.subSmallText,]}>{issueComment}</Text>;
+
+
+
         return (
             <TouchableOpacity
                 style={[{

@@ -54,11 +54,13 @@ class LoadingModal extends Component {
                    swipeToClose={this.props.backExit}
                    backdropOpacity={0.8}>
                 <View style={[styles.centered, {flex: 1}]}>
-                    <Spinner style={[styles.centered]}
-                             isVisible={true}
-                             size={50} type="9CubeGrid"
-                             color="#FFFFFF"/>
-                    <Text style={styles.normalTextWhite}>{this.props.text}</Text>
+                    <View>
+                        <Spinner style={[styles.centered]}
+                                 isVisible={true}
+                                 size={50} type="9CubeGrid"
+                                 color="#FFFFFF"/>
+                        <Text style={styles.normalTextWhite}>{this.props.text}</Text>
+                    </View>
                 </View>
             </Modal>
         )

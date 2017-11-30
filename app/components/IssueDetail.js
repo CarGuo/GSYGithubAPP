@@ -28,6 +28,9 @@ class IssueDetail extends Component {
         super(props);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
+        this.sendIssueComment = this.sendIssueComment.bind(this);
+        this.editIssue = this.editIssue.bind(this);
+        this.closeIssue = this.closeIssue.bind(this);
         this.page = 2;
         this.state = {
             dataSource: [],
@@ -54,8 +57,29 @@ class IssueDetail extends Component {
                 actionTime={rowData.created_at}
                 actionUser={rowData.user.login}
                 actionUserPic={rowData.user.avatar_url}
-                issueComment={rowData.body}/>
+                issueComment={rowData.body}
+                issueCommentHtml={rowData.body_html}/>
         )
+    }
+
+    sendIssueComment(text) {
+        let {repositoryName, userName, issue} = this.props;
+        Actions.LoadingModal({backExit: false});
+        issueActions.addIssueComment(userName, repositoryName, issue.number, text).then((res) => {
+            setTimeout(() => {
+                Actions.pop();
+                this._refresh();
+            }, 500);
+        });
+
+    }
+
+    editIssue(text, title) {
+
+    }
+
+    closeIssue() {
+
     }
 
     /**
@@ -63,7 +87,7 @@ class IssueDetail extends Component {
      * */
     _refresh() {
         let {issue} = this.props;
-        issueActions.getIssueComment(0, this.props.userName, this.props.repositoryName, issue.number).then((res) => {
+        issueActions.getIssueComment(1, this.props.userName, this.props.repositoryName, issue.number).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;
@@ -118,7 +142,7 @@ class IssueDetail extends Component {
                 issueComment={issue.title}
                 commentCount={issue.comments + ""}
                 state={issue.state}
-                issueDes={(this.state.detailInfo) ? ((I18n('issueInfo') + ": " + this.state.detailInfo.body)) : null}
+                issueDes={(this.state.detailInfo) ? ((I18n('issueInfo') + ": \n" + this.state.detailInfo.body)) : null}
                 issueTag={"#" + issue.number}/>;
         return (
             <View style={styles.mainBox}>
@@ -138,18 +162,41 @@ class IssueDetail extends Component {
                     loadMore={this._loadMore}
                     dataSource={this.state.dataSource}
                 />
-                <View style={[styles.flexDirectionRowNotFlex, {paddingVertical: Constant.normalMarginEdge}, styles.shadowCard]}>
+                <View
+                    style={[styles.flexDirectionRowNotFlex, {paddingVertical: Constant.normalMarginEdge}, styles.shadowCard]}>
                     <TouchableOpacity style={[styles.flex, styles.centerH]}
-                                      onPress={()=>{Actions.TextInputModal()}}>
+                                      onPress={() => {
+                                          Actions.TextInputModal({
+                                              textConfirm: this.sendIssueComment,
+                                              titleText: I18n('commentsIssue'),
+                                          })
+                                      }}>
                         <Text style={[styles.normalText]}>{I18n("issueComment")}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.flex, styles.centerH,
-                        {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor},
-                        {borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor},
-                    ]}>
+                    <TouchableOpacity
+                        style={[styles.flex, styles.centerH,
+                            {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor},
+                            {borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor},
+                        ]}
+
+                        onPress={() => {
+                            Actions.TextInputModal({
+                                textConfirm: this.editIssue,
+                                titleText: I18n('editIssue'),
+                                needEditTitle: true,
+                            })
+                        }}>
                         <Text style={styles.normalText}>{I18n("issueEdit")}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.flex, styles.centerH]}>
+                    <TouchableOpacity
+                        style={[styles.flex, styles.centerH]}
+                        onPress={() => {
+                            Actions.ConfirmModal({
+                                titleText: I18n('closeIssue'),
+                                text: I18n('closeIssueTip'),
+                                textConfirm: this.closeIssue
+                            })
+                        }}>
                         <Text style={styles.normalText}>{I18n("issueClose")}</Text>
                     </TouchableOpacity>
                 </View>
