@@ -59,6 +59,9 @@ class IssueItem extends Component {
         let bottomMargin = (this.props.issueTag) ? 0 : Constant.normalMarginEdge;
 
         let body = (markdownBody) ? <MarkdownView
+            styles={{
+                text: styles.subSmallText
+            }}
             style={{
                 backgroundColor: Constant.transparentColor
             }}>
