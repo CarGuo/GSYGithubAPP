@@ -8,14 +8,14 @@ import {Platform} from 'react-native'
  * markdown to html parser
  */
 export const generateMd2Html = (mdData, userName, reposName, branch = 'master') => {
-    let data = mdData.replace(new RegExp("<img src=\"https://github.com", "gm"), "<img src=\"https://raw.githubusercontent.com")
-        .replace(new RegExp("/blob/", "gm"), "/");
+    let data = mdData.replace(/src=*[^>]*>/gi, function (match, capture) {
+        let newStr = match.replace(new RegExp("/blob/", "gm"), "/raw/");
+        return newStr;
+    });
     let renderer = new marked.Renderer();
     renderer.image = function (href, title, text) {
         if (href.indexOf('https://github.com/') === 0) {
-            let subUrl = href.substring(href.lastIndexOf('/'), href.length);
-            let fixedUrl = "https://raw.githubusercontent.com/" + userName + "/" + reposName + "/" + branch + subUrl;
-            href = fixedUrl;
+            href = href.replace(new RegExp("/blob/", "gm"), "/raw/");
         }
         let out = '<img src="' + href + '" alt="' + text + '"';
         if (title) {
