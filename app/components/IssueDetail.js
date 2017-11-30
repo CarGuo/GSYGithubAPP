@@ -139,7 +139,8 @@ class IssueDetail extends Component {
                     dataSource={this.state.dataSource}
                 />
                 <View style={[styles.flexDirectionRowNotFlex, {paddingVertical: Constant.normalMarginEdge}, styles.shadowCard]}>
-                    <TouchableOpacity style={[styles.flex, styles.centerH]}>
+                    <TouchableOpacity style={[styles.flex, styles.centerH]}
+                                      onPress={()=>{Actions.TextInputModal()}}>
                         <Text style={[styles.normalText]}>{I18n("issueComment")}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.flex, styles.centerH,

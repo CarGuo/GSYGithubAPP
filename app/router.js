@@ -19,6 +19,7 @@ import TrendPage from './components/TrendPage'
 import SearchPage from './components/SearchPage'
 import ListPage from './components/ListPage'
 import TabIcon from './components/widget/TabIcon'
+import TextInputModal from './components/widget/CommonTextInputModal'
 import LoadingModal from './components/widget/LoadingModal'
 import DrawerFilter from './components/widget/DrawerFilter'
 import CustomBackButton from './components/widget/CustomBackButton'
@@ -115,6 +116,7 @@ const getRouter = () => {
                     />
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
+                <Scene key="TextInputModal" component={TextInputModal}/>
             </Lightbox>
         </Router>
     )

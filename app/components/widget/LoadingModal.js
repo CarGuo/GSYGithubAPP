@@ -46,23 +46,21 @@ class LoadingModal extends Component {
 
     render() {
         return (
-            <View style={[{height: screenHeight, width: screenWidth, backgroundColor: '#000000', opacity: 0.2}]}>
-                <Modal ref={"loginModal"}
-                       style={[{height: screenHeight, width: screenWidth, backgroundColor: '#000000', opacity: 0}]}
-                       position={"center"}
-                       backdrop={this.props.backExit}
-                       backButtonClose={this.props.backExit}
-                       swipeToClose={this.props.backExit}
-                       backdropOpacity={0.8}>
-                    <View style={[styles.centered, {flex: 1}]}>
-                        <Spinner style={[styles.centered]}
-                                 isVisible={true}
-                                 size={50} type="9CubeGrid"
-                                 color="#FFFFFF"/>
-                        <Text style={styles.normalTextWhite}>{this.props.text}</Text>
-                    </View>
-                </Modal>
-            </View>
+            <Modal ref={"loginModal"}
+                   style={[{height: screenHeight, width: screenWidth, backgroundColor:"#F0000000"}]}
+                   position={"center"}
+                   backdrop={this.props.backExit}
+                   backButtonClose={this.props.backExit}
+                   swipeToClose={this.props.backExit}
+                   backdropOpacity={0.8}>
+                <View style={[styles.centered, {flex: 1}]}>
+                    <Spinner style={[styles.centered]}
+                             isVisible={true}
+                             size={50} type="9CubeGrid"
+                             color="#FFFFFF"/>
+                    <Text style={styles.normalTextWhite}>{this.props.text}</Text>
+                </View>
+            </Modal>
         )
     }
 }
