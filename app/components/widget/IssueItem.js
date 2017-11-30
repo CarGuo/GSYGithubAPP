@@ -14,6 +14,9 @@ import TimeText from './TimeText'
 import UserImage from './UserImage'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Octicons'
+import HTMLView from 'react-native-htmlview';
+import {generateMd2Html} from '../../utils/htmlUtils';
+import MarkdownView from 'react-native-simple-markdown'
 
 /**
  * Issue列表Item
@@ -31,7 +34,7 @@ class IssueItem extends Component {
     }
 
     render() {
-        let {actionTime, actionUser, actionUserPic, issueComment} = this.props;
+        let {actionTime, actionUser, actionUserPic, issueComment, markdownBody} = this.props;
         let bottom = (this.props.issueTag) ? <View style={[styles.flexDirectionRowNotFlex, styles.centerH]}>
             <IconC name={this.props.state === 'open' ? "issue-opened" : "issue-closed"}
                    backgroundColor={Constant.transparentColor}
@@ -54,6 +57,13 @@ class IssueItem extends Component {
             </Icon.Button>
         </View> : <View/>;
         let bottomMargin = (this.props.issueTag) ? 0 : Constant.normalMarginEdge;
+
+        let body = (markdownBody) ? <MarkdownView
+            style={{
+                backgroundColor: Constant.transparentColor
+            }}>
+            {issueComment ? issueComment : ""}
+        </MarkdownView> : <Text style={[styles.subSmallText,]}>{issueComment}</Text>;
         return (
             <TouchableOpacity
                 style={[{
@@ -90,7 +100,7 @@ class IssueItem extends Component {
                         </View>
                         <View
                             style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2}]}>
-                            <Text style={[styles.subSmallText,]}>{issueComment}</Text>
+                            {body}
                         </View>
                         {bottom}
                     </View>
@@ -108,6 +118,7 @@ const propTypes = {
     issueTag: PropTypes.string,
     onPressItem: PropTypes.func,
     commentCount: PropTypes.string,
+    markdownBody: PropTypes.bool,
 };
 
 IssueItem.propTypes = propTypes;

@@ -19,9 +19,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/'
 import {getFullName} from '../utils/htmlUtils'
 
-
 /**
- * 搜索
+ * Issue详情
  */
 class IssueDetail extends Component {
 
@@ -51,6 +50,7 @@ class IssueDetail extends Component {
     _renderRow(rowData, sectionID, rowID, highlightRow) {
         return (
             <IssueItem
+                markdownBody={true}
                 actionTime={rowData.created_at}
                 actionUser={rowData.user.login}
                 actionUserPic={rowData.user.avatar_url}

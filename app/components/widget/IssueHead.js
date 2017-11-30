@@ -14,6 +14,8 @@ import TimeText from './TimeText'
 import UserImage from './UserImage'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Octicons'
+import MarkdownView from 'react-native-simple-markdown'
+
 
 /**
  * Issue详情Header
@@ -95,8 +97,14 @@ class IssueItem extends Component {
                     </View>
                 </View>
                 <View style={[styles.centerV, {marginBottom: issueDes ? Constant.normalMarginEdge : 0}]}>
-                    <Text style={[styles.miLightSmallText,]}>{issueDes}</Text>
+                    <MarkdownView
+                        style={{
+                            backgroundColor: Constant.transparentColor
+                        }}>
+                        {issueDes ? issueDes : ""}
+                    </MarkdownView>
                 </View>
+
             </View>
         )
     }

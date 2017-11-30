@@ -11,7 +11,8 @@ import {
     View,
     TouchableOpacity,
     ImageBackground,
-    StyleSheet
+    StyleSheet,
+    Platform
 } from 'react-native';
 
 import * as Constant from '../../style/constant'
@@ -79,7 +80,7 @@ class RepositoryHeader extends Component {
                     marginTop: Constant.normalMarginEdge,
                     marginHorizontal: Constant.normalMarginEdge,
                 }]}
-                blurRadius={14}
+                blurRadius={Platform.OS === 'ios' ? 14 : 5}
                 source={{uri: (ownerPic) ? ownerPic : ""}}
                 resizeMethod="scale">
                 <View style={{

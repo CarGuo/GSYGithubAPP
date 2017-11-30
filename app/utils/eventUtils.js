@@ -1,4 +1,5 @@
 import {Actions} from 'react-native-router-flux'
+import {getFullName} from './htmlUtils'
 
 export const getActionAndDes = (event) => {
     let actionStr;
@@ -134,6 +135,7 @@ export const ActionUtils = (event) => {
     }
     let owner = event.repo.name.split("/")[0];
     let repositoryName = event.repo.name.split("/")[1];
+    let fullName = owner + '/' + repositoryName;
     switch (event.type) {
         case 'ForkEvent':
             Actions.RepositoryDetail({
@@ -158,7 +160,13 @@ export const ActionUtils = (event) => {
             break;
         case 'IssueCommentEvent':
         case 'IssuesEvent':
-            //todo 去issue
+            // 去issue
+            Actions.IssueDetail({
+                issue: event.payload.issue,
+                title: fullName,
+                repositoryName: repositoryName,
+                userName: owner
+            });
             break;
         default:
             Actions.RepositoryDetail({
