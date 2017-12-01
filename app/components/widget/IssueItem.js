@@ -90,6 +90,9 @@ class IssueItem extends Component {
                 }, styles.shadowCard]}
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem();
+                }}
+                onLongPress={()=>{
+                    this.props.onLongPressItem && this.props.onLongPressItem();
                 }}>
                 <View style={[styles.flexDirectionRowNotFlex,]}>
                     <UserImage uri={actionUserPic}
@@ -131,6 +134,7 @@ const propTypes = {
     issueComment: PropTypes.string,
     issueTag: PropTypes.string,
     onPressItem: PropTypes.func,
+    onLongPressItem: PropTypes.func,
     commentCount: PropTypes.string,
     markdownBody: PropTypes.bool,
 };

@@ -22,6 +22,7 @@ import TabIcon from './components/widget/TabIcon'
 import TextInputModal from './components/widget/CommonTextInputModal'
 import CommentConfirmModal from './components/widget/CommentConfirmModal'
 import LoadingModal from './components/widget/LoadingModal'
+import CommonOptionModal from './components/widget/CommonOptionModal'
 import DrawerFilter from './components/widget/DrawerFilter'
 import CustomBackButton from './components/widget/CustomBackButton'
 import CustomDrawerButton from './components/widget/CustomDrawerButton'
@@ -119,6 +120,7 @@ const getRouter = () => {
                 <Scene key="LoadingModal" component={LoadingModal}/>
                 <Scene key="TextInputModal" component={TextInputModal}/>
                 <Scene key="ConfirmModal" component={CommentConfirmModal}/>
+                <Scene key="OptionModal" component={CommonOptionModal}/>
             </Lightbox>
         </Router>
     )

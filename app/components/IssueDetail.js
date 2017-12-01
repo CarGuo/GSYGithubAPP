@@ -28,6 +28,7 @@ class IssueDetail extends Component {
     constructor(props) {
         super(props);
         this._getBottomItem = this._getBottomItem.bind(this);
+        this._getOptionItem = this._getOptionItem.bind(this);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this.sendIssueComment = this.sendIssueComment.bind(this);
@@ -60,6 +61,9 @@ class IssueDetail extends Component {
                 actionUser={rowData.user.login}
                 actionUserPic={rowData.user.avatar_url}
                 issueComment={rowData.body}
+                onLongPressItem={()=>{
+                   Actions.OptionModal({dataList:this._getOptionItem()});
+                }}
                 issueCommentHtml={rowData.body_html}/>
         )
     }
@@ -190,6 +194,20 @@ class IssueDetail extends Component {
                     textConfirm: this.closeIssue
                 })
             }, itemStyle: {}
+        },]
+    }
+
+
+    _getOptionItem() {
+        let {issue} = this.state;
+        return [{
+            itemName: I18n("issueCommentEdit"),
+            itemClick: () => {}, itemStyle: {}
+        }, {
+            itemName: I18n("issueCommentDelete"),
+            itemClick: () => {}, itemStyle: {
+                borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
+            }
         },]
     }
 
