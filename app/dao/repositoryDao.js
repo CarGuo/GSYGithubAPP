@@ -90,7 +90,25 @@ const getRepositoryStatusDao = async (userName, reposName) => {
     let resw = await await Api.netFetch(urlw);
     return {
         data: {star: ress.result, watch: resw.result},
-        result: ress.code == 204 && resw.code == 204
+        result: true
+    };
+};
+
+const doRepositoryStarDao = async (userName, reposName, star) => {
+    let url = Address.resolveStarRepos(userName, reposName);
+    let res = await await Api.netFetch(url, star ? 'PUT' : 'DELETE');
+    return {
+        data: res.result,
+        result: res.result
+    };
+};
+
+const doRepositoryWatchDao = async (userName, reposName, watch) => {
+    let url = Address.resolveWatcherRepos(userName, reposName);
+    let res = await await Api.netFetch(url, watch ? 'PUT' : 'DELETE');
+    return {
+        data: res.result,
+        result: res.result
     };
 };
 
@@ -104,5 +122,7 @@ export default {
     getRepositoryForksDao,
     getRepositoryStarDao,
     getRepositoryWatcherDao,
-    getRepositoryStatusDao
+    getRepositoryStatusDao,
+    doRepositoryStarDao,
+    doRepositoryWatchDao,
 }

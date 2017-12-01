@@ -128,17 +128,32 @@ class RepositoryDetail extends Component {
 
     _getBottomItem() {
         let {stared, watched} = this.state;
+        let {ownerName, repositoryName} = this.props;
         return [{
             itemName: stared ? I18n("reposUnStar") : I18n("reposStar"),
             icon: "star",
             iconColor: stared ? Constant.primaryColor : Constant.miWhite,
             itemClick: () => {
+                Actions.LoadingModal({backExit: false});
+                repositoryActions.doRepositoryStar(ownerName, repositoryName, !stared).then((res) => {
+                    setTimeout(() => {
+                        Actions.pop();
+                        this._refresh();
+                    }, 500);
+                })
             }, itemStyle: {}
         }, {
             itemName: watched ? I18n("reposUnWatcher") : I18n("reposWatcher"),
             icon: "eye",
             iconColor: watched ? Constant.primaryColor : Constant.miWhite,
             itemClick: () => {
+                Actions.LoadingModal({backExit: false});
+                repositoryActions.doRepositoryWatch(ownerName, repositoryName, !watched).then((res) => {
+                    setTimeout(() => {
+                        Actions.pop();
+                        this._refresh();
+                    }, 500);
+                })
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
                 borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor

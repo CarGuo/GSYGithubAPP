@@ -130,6 +130,23 @@ const getRepositoryStatus = async (userName, reposName) => {
     };
 };
 
+const doRepositoryStar = async (userName, reposName, star) => {
+    let res = await RepositoryDao.doRepositoryStarDao(userName, reposName, star);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+
+const doRepositoryWatch = async (userName, reposName, watch) => {
+    let res = await RepositoryDao.doRepositoryWatchDao(userName, reposName, watch);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 export default {
     getTrend,
     searchRepository,
@@ -140,6 +157,8 @@ export default {
     getRepositoryForks,
     getRepositoryStar,
     getRepositoryWatcher,
-    getRepositoryStatus
+    getRepositoryStatus,
+    doRepositoryStar,
+    doRepositoryWatch,
 
 }
