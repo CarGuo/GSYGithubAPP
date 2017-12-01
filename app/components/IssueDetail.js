@@ -99,12 +99,27 @@ class IssueDetail extends Component {
         })
     }
 
-    editComment(text, title) {
-
+    editComment(commentId, text) {
+        let {repositoryName, userName} = this.props;
+        Actions.LoadingModal({backExit: false});
+        issueActions.editComment(userName, repositoryName, commentId,
+            {body: text}).then(() => {
+            setTimeout(() => {
+                Actions.pop();
+                this._refresh();
+            }, 500);
+        })
     }
 
-    deleteComment() {
-
+    deleteComment(commentId) {
+        let {repositoryName, userName} = this.props;
+        Actions.LoadingModal({backExit: false});
+        issueActions.editComment(userName, repositoryName, commentId, null, 'delete').then(() => {
+            setTimeout(() => {
+                Actions.pop();
+                this._refresh();
+            }, 500);
+        })
     }
 
     closeIssue() {
@@ -213,7 +228,9 @@ class IssueDetail extends Component {
             itemName: I18n("issueCommentEdit"),
             itemClick: () => {
                 Actions.TextInputModal({
-                    textConfirm: this.editComment,
+                    textConfirm: (text) => {
+                        this.editComment(data.id, text)
+                    },
                     titleText: I18n('editIssue'),
                     needEditTitle: false,
                     text: data.body,
@@ -222,7 +239,7 @@ class IssueDetail extends Component {
         }, {
             itemName: I18n("issueCommentDelete"),
             itemClick: () => {
-                this.deleteComment();
+                this.deleteComment(data.id);
             }, itemStyle: {
                 borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
             }

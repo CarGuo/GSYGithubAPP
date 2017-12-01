@@ -35,7 +35,6 @@ class IssueItem extends Component {
 
     render() {
         let {actionTime, actionUser, actionUserPic, issueComment, issueDes, issueDesHtml} = this.props;
-        console.log("$$$$$$", issueDesHtml)
         return (
             <View
                 style={[{

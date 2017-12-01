@@ -73,11 +73,31 @@ const editIssue = async (userName, repository, number, issue) => {
     }
 };
 
+const editComment = async (userName, repository, commentId, comment, type) => {
+    let res;
+    if (type === 'delete') {
+        res = await IssueDao.deleteCommentDao(userName, repository, commentId);
+    } else {
+        res = await IssueDao.editCommentDao(userName, repository, commentId, comment);
+    }
+    if (res && res.result) {
+        return {
+            data: res.data,
+            result: true
+        };
+    } else {
+        return {
+            result: false
+        };
+    }
+};
+
 
 export default {
     getRepositoryIssue,
     getIssueComment,
     getIssueInfo,
     addIssueComment,
-    editIssue
+    editIssue,
+    editComment
 }

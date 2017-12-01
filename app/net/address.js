@@ -109,16 +109,10 @@ export default AddressLocal = {
         return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}`
     },
     /**
-     * 编辑评论 put
+     * 编辑评论 patch, delete
      */
     editComment: (reposOwner, reposName, commentId) => {
         return `${host}repos/${reposOwner}/${reposName}/issues/comments/${commentId}`
-    },
-    /**
-     * 删除评论 delete
-     */
-    deleteComment: (reposOwner, reposName, issueNumber) => {
-        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}/comments`
     },
     /**
      * 自己的star get

@@ -52,10 +52,32 @@ const editIssueDao = async (userName, repository, number, issue) => {
     };
 };
 
+const editCommentDao = async (userName, repository, commentId, comment) => {
+    let url = Address.editComment(userName, repository, commentId);
+    let res = await Api.netFetch(url, 'PATCH',  comment, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+const deleteCommentDao = async (userName, repository, commentId) => {
+    let url = Address.editComment(userName, repository, commentId);
+    let res = await Api.netFetch(url, 'DELETE',  null, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+
+
 export default {
     getRepositoryIssueDao,
     getIssueCommentDao,
     getIssueInfoDao,
     addIssueCommentDao,
     editIssueDao,
+    editCommentDao,
+    deleteCommentDao,
 }
