@@ -162,6 +162,7 @@ class IssueDetail extends Component {
             itemName: I18n("issueComment"),
             itemClick: () => {
                 Actions.TextInputModal({
+                    needEditTitle: false,
                     textConfirm: this.sendIssueComment,
                     titleText: I18n('commentsIssue'),
                 })
