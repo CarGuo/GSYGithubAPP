@@ -2,6 +2,7 @@ import {Buffer} from 'buffer'
 import marked from 'marked'
 import {highlightAuto, configure} from 'highlight.js'
 import * as Constant from '../style/constant'
+import {screenHeight,screenWidth} from '../style'
 import {Platform} from 'react-native'
 
 /**
@@ -22,7 +23,10 @@ export const generateMdSampleHtml = (mdData) => {
         if (title) {
             out += ' title="' + title + '"';
         }
+        out += ' width="' + screenWidth - 50 + '"';
+        out += ' height="' + 200 + '"';
         out += '/>';
+        console.log("FFF", out)
         return out;
     };
     renderer.paragraph = function (text) {

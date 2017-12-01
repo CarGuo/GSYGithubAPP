@@ -93,6 +93,7 @@ class CommonTextInputModal extends Component {
         return (
             <Modal ref={"loginModal"}
                    onOpened={this._onOpened}
+                   onClosed={this.onClose}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
                    backdrop={this.props.backExit}

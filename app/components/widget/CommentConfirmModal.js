@@ -50,6 +50,7 @@ class CommentConfirmModal extends Component {
             <Modal ref={"loginModal"}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
+                   onClosed={this.onClose}
                    backdrop={this.props.backExit}
                    backButtonClose={this.props.backExit}
                    swipeToClose={this.props.backExit}
