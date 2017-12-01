@@ -15,6 +15,7 @@ import issueActions from '../store/actions/issue'
 import PullListView from './widget/PullLoadMoreListView'
 import IssueItem from './widget/IssueItem'
 import IssueHead from './widget/IssueHead'
+import CommonBottomBar from './widget/CommonBottomBar'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/'
 import {getFullName} from '../utils/htmlUtils'
@@ -26,6 +27,7 @@ class IssueDetail extends Component {
 
     constructor(props) {
         super(props);
+        this._getBottomItem = this._getBottomItem.bind(this);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this.sendIssueComment = this.sendIssueComment.bind(this);
@@ -132,6 +134,39 @@ class IssueDetail extends Component {
     }
 
 
+    _getBottomItem() {
+        return [{
+            itemName: I18n("issueComment"),
+            itemClick: () => {
+                Actions.TextInputModal({
+                    textConfirm: this.sendIssueComment,
+                    titleText: I18n('commentsIssue'),
+                })
+            }, itemStyle: {}
+        }, {
+            itemName: I18n("issueEdit"),
+            itemClick: () => {
+                Actions.TextInputModal({
+                    textConfirm: this.editIssue,
+                    titleText: I18n('editIssue'),
+                    needEditTitle: true,
+                })
+            }, itemStyle: {
+                borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
+                borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor
+            }
+        }, {
+            itemName: I18n("issueClose"),
+            itemClick: () => {
+                Actions.ConfirmModal({
+                    titleText: I18n('closeIssue'),
+                    text: I18n('closeIssueTip'),
+                    textConfirm: this.closeIssue
+                })
+            }, itemStyle: {}
+        },]
+    }
+
     render() {
         let {issue} = this.props;
         let header =
@@ -162,44 +197,7 @@ class IssueDetail extends Component {
                     loadMore={this._loadMore}
                     dataSource={this.state.dataSource}
                 />
-                <View
-                    style={[styles.flexDirectionRowNotFlex, {paddingVertical: Constant.normalMarginEdge}, styles.shadowCard]}>
-                    <TouchableOpacity style={[styles.flex, styles.centerH]}
-                                      onPress={() => {
-                                          Actions.TextInputModal({
-                                              textConfirm: this.sendIssueComment,
-                                              titleText: I18n('commentsIssue'),
-                                          })
-                                      }}>
-                        <Text style={[styles.normalText]}>{I18n("issueComment")}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.flex, styles.centerH,
-                            {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor},
-                            {borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor},
-                        ]}
-
-                        onPress={() => {
-                            Actions.TextInputModal({
-                                textConfirm: this.editIssue,
-                                titleText: I18n('editIssue'),
-                                needEditTitle: true,
-                            })
-                        }}>
-                        <Text style={styles.normalText}>{I18n("issueEdit")}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.flex, styles.centerH]}
-                        onPress={() => {
-                            Actions.ConfirmModal({
-                                titleText: I18n('closeIssue'),
-                                text: I18n('closeIssueTip'),
-                                textConfirm: this.closeIssue
-                            })
-                        }}>
-                        <Text style={styles.normalText}>{I18n("issueClose")}</Text>
-                    </TouchableOpacity>
-                </View>
+                <CommonBottomBar dataList={this._getBottomItem()}/>
             </View>
         )
     }

@@ -73,7 +73,7 @@ class CommonTextInputModal extends Component {
                 multiline={true}
                 value={this.title}
                 style={[styles.smallText, {
-                    padding: Constant.normalMarginEdge,
+                    padding: 0,
                     backgroundColor: Constant.white,
                     height: 30,
                     width: width,
