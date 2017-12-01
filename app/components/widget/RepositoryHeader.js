@@ -138,21 +138,32 @@ class RepositoryHeader extends Component {
                             )
                         }}
                     />
-                    <View style={[styles.flexDirectionRowNotFlex, {
-                        justifyContent: "flex-end",
-                        marginTop: Constant.normalMarginEdge,
-                        marginBottom: Constant.normalMarginEdge,
-                        backgroundColor: Constant.transparentColor,
-                    }]}>
+                    <TouchableOpacity
+                        style={[styles.flexDirectionRowNotFlex, {
+                            justifyContent: "flex-end",
+                            marginTop: Constant.normalMarginEdge,
+                            marginBottom: Constant.normalMarginEdge,
+                            backgroundColor: Constant.transparentColor,
+                        }]}
+                        onPress={() => {
+                            if (repositoryIsFork) {
+                                let data = repositoryParentName.split("/");
+                                Actions.RepositoryDetail({
+                                    repositoryName: data[1], ownerName: data[0]
+                                    , title: repositoryParentName
+                                });
+                            }
+                        }}>
                         <Text
                             style={[styles.shadowText, {
-                                color: Constant.white, fontSize: Constant.minTextSize,
+                                color: repositoryIsFork ? Constant.actionBlue : Constant.white,
+                                fontSize: Constant.minTextSize,
                                 backgroundColor: Constant.transparentColor,
                             }]}
                             numberOfLines={2}>
                             {infoText}
                         </Text>
-                    </View>
+                    </TouchableOpacity>
                     <View style={[styles.flexDirectionRowNotFlex, {
                         marginTop: Constant.normalMarginEdge / 2,
                         paddingVertical: Constant.normalMarginEdge / 2,
