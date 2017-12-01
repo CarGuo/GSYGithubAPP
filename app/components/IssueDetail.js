@@ -78,7 +78,19 @@ class IssueDetail extends Component {
     }
 
     editIssue(text, title) {
-
+        if (!title || title.length === 0) {
+            return
+        }
+        let {repositoryName, userName} = this.props;
+        let {issue} = this.state;
+        Actions.LoadingModal({backExit: false});
+        issueActions.editIssue(userName, repositoryName, issue.number,
+            {title: title, body: text}).then((res) => {
+            setTimeout(() => {
+                Actions.pop();
+                this._refresh();
+            }, 500);
+        })
     }
 
     closeIssue() {
@@ -173,7 +185,7 @@ class IssueDetail extends Component {
             itemClick: () => {
                 Actions.ConfirmModal({
                     titleText: (issue.state === "open") ? I18n('closeIssue') : I18n('openIssue'),
-                    text: (issue.state === "open") ? I18n('closeIssueTip'):  I18n('openIssueTip'),
+                    text: (issue.state === "open") ? I18n('closeIssueTip') : I18n('openIssueTip'),
                     textConfirm: this.closeIssue
                 })
             }, itemStyle: {}
