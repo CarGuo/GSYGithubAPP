@@ -135,6 +135,7 @@ class IssueDetail extends Component {
 
 
     _getBottomItem() {
+        let {issue} = this.props;
         return [{
             itemName: I18n("issueComment"),
             itemClick: () => {
@@ -150,6 +151,8 @@ class IssueDetail extends Component {
                     textConfirm: this.editIssue,
                     titleText: I18n('editIssue'),
                     needEditTitle: true,
+                    text: issue.title,
+                    titleValue: this.state.detailInfo.body
                 })
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
@@ -169,6 +172,9 @@ class IssueDetail extends Component {
 
     render() {
         let {issue} = this.props;
+        let bottomBar = (this.state.detailInfo) ?
+            <CommonBottomBar dataList={this._getBottomItem()}/> :
+            <View/>;
         let header =
             <IssueHead
                 actionTime={issue.created_at}
@@ -197,7 +203,7 @@ class IssueDetail extends Component {
                     loadMore={this._loadMore}
                     dataSource={this.state.dataSource}
                 />
-                <CommonBottomBar dataList={this._getBottomItem()}/>
+                {bottomBar}
             </View>
         )
     }

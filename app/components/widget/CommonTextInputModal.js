@@ -27,6 +27,7 @@ class CommonTextInputModal extends Component {
     constructor(props) {
         super(props);
         this.onClose = this.onClose.bind(this);
+        this._onOpened = this._onOpened.bind(this);
         this._searchTextChange = this._searchTextChange.bind(this);
         this._searchTextTitleChange = this._searchTextTitleChange.bind(this);
         this.text = this.props.text;
@@ -36,6 +37,7 @@ class CommonTextInputModal extends Component {
     componentDidMount() {
         this.refs.loginModal.open();
         BackHandler.addEventListener('hardwareBackPress', this.onClose)
+
     }
 
     componentWillUnmount() {
@@ -46,6 +48,15 @@ class CommonTextInputModal extends Component {
         Actions.pop();
         return true;
     }
+
+    _onOpened() {
+        if (this.refs.titleInput) {
+            this.refs.titleInput.setNativeProps({text: this.title});
+        }
+        if (this.refs.contentInput) {
+            this.refs.contentInput.setNativeProps({text: this.text});
+        }
+    };
 
     _searchTextTitleChange(text) {
         this.title = text;
@@ -64,14 +75,14 @@ class CommonTextInputModal extends Component {
             marginBottom: Constant.normalMarginEdge,
         }]}>
             <TextInput
+                ref={"titleInput"}
                 onChangeText={(text) => {
                     this._searchTextTitleChange(text)
                 }}
-                placeholder={I18n('issueInputTipTitle')}
+                placeholder={this.props.placeHolderTitle ? this.props.placeHolderTitle : I18n('issueInputTipTitle')}
                 underlineColorAndroid="transparent"
                 clearButtonMode="always"
                 multiline={true}
-                value={this.title}
                 style={[styles.smallText, {
                     padding: 0,
                     backgroundColor: Constant.white,
@@ -81,6 +92,7 @@ class CommonTextInputModal extends Component {
                 }]}/></View> : <View/>;
         return (
             <Modal ref={"loginModal"}
+                   onOpened={this._onOpened}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
                    backdrop={this.props.backExit}
@@ -102,14 +114,14 @@ class CommonTextInputModal extends Component {
                             marginHorizontal: Constant.normalMarginEdge,
                         }]}>
                             <TextInput
+                                ref={"contentInput"}
                                 onChangeText={(text) => {
                                     this._searchTextChange(text)
                                 }}
-                                placeholder={this.props.text ? this.props.text : I18n('issueInputTip')}
+                                placeholder={this.props.placeHolder ? this.props.placeHolder : I18n('issueInputTip')}
                                 underlineColorAndroid="transparent"
                                 clearButtonMode="always"
                                 multiline={true}
-                                value={this.text}
                                 style={[styles.smallText, {
                                     padding: Constant.normalMarginEdge,
                                     backgroundColor: Constant.white,
@@ -155,6 +167,8 @@ class CommonTextInputModal extends Component {
 
 CommonTextInputModal.propTypes = {
     text: PropTypes.string,
+    placeHolder: PropTypes.string,
+    placeHolderTitle: PropTypes.string,
     titleValue: PropTypes.string,
     titleText: PropTypes.string,
     textConfirm: PropTypes.func,

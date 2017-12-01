@@ -195,7 +195,7 @@ class HttpManager {
         return new Promise((resolve, reject) => {
             const timeoutId = setTimeout(() => {
                 reject({
-                    code: Code.NETWORK_TIMEOUT,
+                    status: Code.NETWORK_TIMEOUT,
                     message: I18n('netTimeout')
                 })
             }, ms);
