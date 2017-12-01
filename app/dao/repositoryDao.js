@@ -83,6 +83,17 @@ const getRepositoryWatcherDao = async (userName, reposName, page) => {
     };
 };
 
+const getRepositoryStatusDao = async (userName, reposName) => {
+    let urls = Address.resolveStarRepos(userName, reposName);
+    let urlw = Address.resolveWatcherRepos(userName, reposName);
+    let ress = await await Api.netFetch(urls);
+    let resw = await await Api.netFetch(urlw);
+    return {
+        data: {star: ress.result, watch: resw.result},
+        result: ress.code == 204 && resw.code == 204
+    };
+};
+
 export default {
     getTrendDao,
     searchRepositoryDao,
@@ -93,4 +104,5 @@ export default {
     getRepositoryForksDao,
     getRepositoryStarDao,
     getRepositoryWatcherDao,
+    getRepositoryStatusDao
 }

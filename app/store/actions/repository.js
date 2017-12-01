@@ -122,6 +122,14 @@ const getRepositoryWatcher = async (userName, reposName, page = 1) => {
     };
 };
 
+const getRepositoryStatus = async (userName, reposName) => {
+    let res = await RepositoryDao.getRepositoryStatusDao(userName, reposName);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 export default {
     getTrend,
     searchRepository,
@@ -132,5 +140,6 @@ export default {
     getRepositoryForks,
     getRepositoryStar,
     getRepositoryWatcher,
+    getRepositoryStatus
 
 }

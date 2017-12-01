@@ -26,10 +26,12 @@ class RepositoryDetail extends Component {
         super(props);
         this.page = 2;
         this._getBottomItem = this._getBottomItem.bind(this);
+        this._refresh = this._refresh.bind(this);
         this.state = {
             dataDetail: this.props.defaultProps,
             dataDetailReadme: '',
             index: 0,
+            showBottom: false,
             routes: [
                 {key: '1', title: I18n('reposReadme')},
                 {key: '2', title: I18n('reposActivity')},
@@ -58,6 +60,7 @@ class RepositoryDetail extends Component {
                         })
                     }
                 });
+            this._refresh();
         });
     }
 
@@ -66,6 +69,18 @@ class RepositoryDetail extends Component {
     }
 
     componentWillReceiveProps(newProps) {
+    }
+
+    _refresh() {
+        repositoryActions.getRepositoryStatus(this.props.ownerName, this.props.repositoryName).then((res) => {
+            if (res && res.result) {
+                this.setState({
+                    showBottom: true,
+                    stared: res.data.star,
+                    watched: res.data.watch,
+                });
+            }
+        })
     }
 
     _handleIndexChange = index => this.setState({index});
@@ -137,6 +152,7 @@ class RepositoryDetail extends Component {
     }
 
     render() {
+        let bottom = this.state.showBottom ? <CommonBottomBar dataList={this._getBottomItem()}/> : <View/>
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -155,7 +171,7 @@ class RepositoryDetail extends Component {
                         width: Dimensions.get('window').width,
                     }}
                 />
-                <CommonBottomBar dataList={this._getBottomItem()}/>
+                {bottom}
             </View>
         )
     }
