@@ -33,7 +33,9 @@ class IssueDetail extends Component {
         this._loadMore = this._loadMore.bind(this);
         this.sendIssueComment = this.sendIssueComment.bind(this);
         this.editIssue = this.editIssue.bind(this);
+        this.editComment = this.editComment.bind(this);
         this.closeIssue = this.closeIssue.bind(this);
+        this.deleteComment = this.deleteComment.bind(this);
         this.page = 2;
         this.state = {
             dataSource: [],
@@ -61,8 +63,8 @@ class IssueDetail extends Component {
                 actionUser={rowData.user.login}
                 actionUserPic={rowData.user.avatar_url}
                 issueComment={rowData.body}
-                onLongPressItem={()=>{
-                   Actions.OptionModal({dataList:this._getOptionItem()});
+                onLongPressItem={() => {
+                    Actions.OptionModal({dataList: this._getOptionItem(rowData)});
                 }}
                 issueCommentHtml={rowData.body_html}/>
         )
@@ -95,6 +97,14 @@ class IssueDetail extends Component {
                 this._refresh();
             }, 500);
         })
+    }
+
+    editComment(text, title) {
+
+    }
+
+    deleteComment() {
+
     }
 
     closeIssue() {
@@ -198,14 +208,22 @@ class IssueDetail extends Component {
     }
 
 
-    _getOptionItem() {
-        let {issue} = this.state;
+    _getOptionItem(data) {
         return [{
             itemName: I18n("issueCommentEdit"),
-            itemClick: () => {}, itemStyle: {}
+            itemClick: () => {
+                Actions.TextInputModal({
+                    textConfirm: this.editComment,
+                    titleText: I18n('editIssue'),
+                    needEditTitle: false,
+                    text: data.body,
+                })
+            }, itemStyle: {}
         }, {
             itemName: I18n("issueCommentDelete"),
-            itemClick: () => {}, itemStyle: {
+            itemClick: () => {
+                this.deleteComment();
+            }, itemStyle: {
                 borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
             }
         },]
