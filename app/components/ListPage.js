@@ -79,7 +79,7 @@ class ListPage extends Component {
                     des={rowData.bio}/>);
                 break;
             case 'issue':
-                let fullName = getFullName(rowData.repository_url);
+                let fullName = getFullName(rowData.repository_url) + "--";
                 return (
                     <IssueItem
                         actionTime={rowData.created_at}

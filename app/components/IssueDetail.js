@@ -206,8 +206,8 @@ class IssueDetail extends Component {
                     textConfirm: this.editIssue,
                     titleText: I18n('editIssue'),
                     needEditTitle: true,
-                    text: issue.title,
-                    titleValue: this.state.issue.body
+                    text: this.state.issue.body,
+                    titleValue: issue.title
                 })
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,

@@ -145,7 +145,7 @@ export const getFullName = (repository_url) => {
     if (repository_url) {
         let splicurl = repository_url.split("/");
         if (splicurl.length > 2) {
-            fullName = splicurl[splicurl.length - 2] + "/" + splicurl[splicurl.length - 1] + "--";
+            fullName = splicurl[splicurl.length - 2] + "/" + splicurl[splicurl.length - 1];
         }
     }
     return fullName;

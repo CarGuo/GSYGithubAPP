@@ -27,6 +27,7 @@ import DrawerFilter from './components/widget/DrawerFilter'
 import CustomBackButton from './components/widget/CustomBackButton'
 import CustomDrawerButton from './components/widget/CustomDrawerButton'
 import SearchButton from './components/widget/CustomSearchButton'
+import CommonIconButton from './components/widget/CommonIconButton'
 import styles from './style'
 import I18n, {changeLocale} from './style/i18n'
 import * as Constant from './style/constant'
@@ -114,6 +115,7 @@ const getRouter = () => {
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="IssueDetail" component={IssueDetail}
+                           renderRightButton={(params)=> <CommonIconButton data={params} />}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                 </Scene>

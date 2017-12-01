@@ -165,7 +165,15 @@ export const ActionUtils = (event) => {
                 issue: event.payload.issue,
                 title: fullName,
                 repositoryName: repositoryName,
-                userName: owner
+                userName: owner,
+                needRightBtn:true,
+                rightBtn:'home',
+                rightBtnPress:()=>{
+                    Actions.RepositoryDetail({
+                        repositoryName: repositoryName, ownerName: owner
+                        , title: repositoryName
+                    });
+                }
             });
             break;
         default:
