@@ -15,6 +15,7 @@ import I18n from '../style/i18n'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import UserItem from './widget/UserItem'
+import IssueItem from './widget/IssueItem'
 import CommonRowItem from './widget/CommonRowItem'
 import CustomSearchButton from './widget/CustomSearchButton'
 import PullListView from './widget/PullLoadMoreListView'
@@ -22,6 +23,7 @@ import RepositoryItem from './widget/RepositoryItem'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/index'
 import PropTypes from 'prop-types';
+import {getFullName} from '../utils/htmlUtils'
 
 
 /**
@@ -76,9 +78,28 @@ class ListPage extends Component {
                     actionUserPic={rowData.avatar_url}
                     des={rowData.bio}/>);
                 break;
+            case 'issue':
+                let fullName = getFullName(rowData.repository_url);
+                return (
+                    <IssueItem
+                        actionTime={rowData.created_at}
+                        actionUser={rowData.user.login}
+                        actionUserPic={rowData.user.avatar_url}
+                        issueComment={fullName + rowData.title}
+                        commentCount={rowData.comments + ""}
+                        state={rowData.state}
+                        issueTag={"#" + rowData.number}
+                        onPressItem={() => {
+                            Actions.IssueDetail({
+                                issue: rowData, title: fullName,
+                                repositoryName: this.props.repositoryName,
+                                userName: this.props.userName
+                            })
+                        }}/>
+                );
+                break;
         }
     }
-
 
 
     /**
@@ -103,6 +124,21 @@ class ListPage extends Component {
                 break;
             case 'user_star':
                 repositoryActions.getStarRepository(this.props.currentUser, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+            case 'repo_star':
+                repositoryActions.getRepositoryStar(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+            case 'repo_watcher':
+                repositoryActions.getRepositoryWatcher(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+            case 'repo_fork':
+                repositoryActions.getRepositoryForks(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
                     this._refreshRes(res)
                 });
                 break;
@@ -137,6 +173,20 @@ class ListPage extends Component {
                     this._loadMoreRes(res)
                 });
                 break;
+            case 'repo_star':
+                repositoryActions.getRepositoryStar(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
+            case 'repo_watcher':
+                repositoryActions.getRepositoryWatcher(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
+            case 'repo_fork':
+                repositoryActions.getRepositoryForks(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
         }
     }
 
@@ -204,7 +254,8 @@ class ListPage extends Component {
 ListPage.propTypes = {
     showType: PropTypes.string,
     dataType: PropTypes.string,
-    currentUser: PropTypes.string
+    currentUser: PropTypes.string,
+    currentRepository: PropTypes.string
 };
 
 export default ListPage

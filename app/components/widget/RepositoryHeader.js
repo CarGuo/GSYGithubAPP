@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 
 import * as Constant from '../../style/constant'
+import {Actions} from 'react-native-router-flux'
 import styles from '../../style'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Octicons'
@@ -160,24 +161,50 @@ class RepositoryHeader extends Component {
                     }]}>
                         <TouchableOpacity
                             style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
-                            <Icon name="star-o" {...bottomIconStyle}>
+                            <Icon name="star-o" {...bottomIconStyle}
+                                  onPress={() => {
+                                      Actions.ListPage({
+                                          dataType: 'repo_star', showType: 'user',
+                                          currentUser: this.props.ownerName,
+                                          currentRepository: this.props.repositoryName,
+                                          title: this.props.ownerName + "/" + this.props.repositoryName
+                                      })
+                                  }}>
                                 <Text
                                     style={[styles.miLightSmallText, styles.shadowText,]}>{" " + repositoryStar}</Text>
                             </Icon>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.flex, styles.centered,
-                            {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth}
-                            , {paddingVertical: Constant.normalMarginEdge}]}>
+                        <TouchableOpacity
+                            style={[styles.flex, styles.centered,
+                                {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth}
+                                , {paddingVertical: Constant.normalMarginEdge}]}
+                            onPress={() => {
+                                Actions.ListPage({
+                                    dataType: 'repo_fork', showType: 'repository',
+                                    currentUser: this.props.ownerName,
+                                    currentRepository: this.props.repositoryName,
+                                    title: this.props.ownerName + "/" + this.props.repositoryName
+                                })
+                            }}>
                             <Icon name="code-fork" {...bottomIconStyle} >
                                 <Text
                                     style={[styles.miLightSmallText, styles.shadowText,]}>{" " + repositoryFork}</Text>
                             </Icon>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.flex, styles.centered,
-                            {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth},
-                            {borderColor: Constant.lineColor, borderRightWidth: StyleSheet.hairlineWidth}
-                            , {paddingVertical: Constant.normalMarginEdge}]}>
+                        <TouchableOpacity
+                            style={[styles.flex, styles.centered,
+                                {borderColor: Constant.lineColor, borderLeftWidth: StyleSheet.hairlineWidth},
+                                {borderColor: Constant.lineColor, borderRightWidth: StyleSheet.hairlineWidth}
+                                , {paddingVertical: Constant.normalMarginEdge}]}
+                            onPress={() => {
+                                Actions.ListPage({
+                                    dataType: 'repo_watcher', showType: 'user',
+                                    currentUser: this.props.ownerName,
+                                    currentRepository: this.props.repositoryName,
+                                    title: this.props.ownerName + "/" + this.props.repositoryName
+                                })
+                            }}>
                             <IconC name="eye" {...bottomIconStyle}>
                                 <Text
                                     style={[styles.miLightSmallText, styles.shadowText,]}>{" " + repositoryWatch}</Text>

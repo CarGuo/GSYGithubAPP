@@ -69,6 +69,27 @@ export default AddressLocal = {
 
     },
     /**
+     * 仓库Fork get
+     */
+    getReposForks: (reposOwner, reposName) => {
+        return `${host}repos/${reposOwner}/${reposName}/forks`
+
+    },
+    /**
+     * 仓库Star get
+     */
+    getReposStar: (reposOwner, reposName) => {
+        return `${host}repos/${reposOwner}/${reposName}/stargazers`
+
+    },
+    /**
+     * 仓库Watch get
+     */
+    getReposWatcher: (reposOwner, reposName) => {
+        return `${host}repos/${reposOwner}/${reposName}/subscribers`
+
+    },
+    /**
      * 仓库Issue get
      */
     getReposIssue: (reposOwner, reposName, state, sort, direction) => {
@@ -141,6 +162,17 @@ export default AddressLocal = {
      */
     resolveStarRepos: (reposOwner, repos) => {
         return `${host}user/starred/${reposOwner}/${repos}`
+    },
+
+    /**
+     * 订阅仓库 put
+     *
+     * 取消订阅 delete
+     *
+     * 是否订阅 get
+     */
+    resolveWatcherRepos: (reposOwner, repos) => {
+        return `${host}user/subscriptions/${reposOwner}/${repos}`
     },
     /**
      * 仓库内容数据 get

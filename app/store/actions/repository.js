@@ -98,12 +98,39 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
     }
 };
 
+const getRepositoryForks = async (userName, reposName, page = 1) => {
+    let res = await RepositoryDao.getRepositoryForksDao(userName, reposName, page);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+const getRepositoryStar = async (userName, reposName, page = 1) => {
+    let res = await RepositoryDao.getRepositoryStarDao(userName, reposName, page);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+const getRepositoryWatcher = async (userName, reposName, page = 1) => {
+    let res = await RepositoryDao.getRepositoryWatcherDao(userName, reposName, page);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 export default {
     getTrend,
     searchRepository,
     getUserRepository,
     getStarRepository,
     getRepositoryDetail,
-    getRepositoryDetailReadme
+    getRepositoryDetailReadme,
+    getRepositoryForks,
+    getRepositoryStar,
+    getRepositoryWatcher,
 
 }

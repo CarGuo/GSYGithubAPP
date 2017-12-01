@@ -56,11 +56,41 @@ const getRepositoryDetailReadmeDao = async (userName, reposName, branch) => {
     };
 };
 
+const getRepositoryForksDao = async (userName, reposName, page) => {
+    let url = Address.getReposForks(userName, reposName) + Address.getPageParams("?", page);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+const getRepositoryStarDao = async (userName, reposName, page) => {
+    let url = Address.getReposStar(userName, reposName) + Address.getPageParams("?", page);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+const getRepositoryWatcherDao = async (userName, reposName, page) => {
+    let url = Address.getReposWatcher(userName, reposName) + Address.getPageParams("?", page);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 export default {
     getTrendDao,
     searchRepositoryDao,
     getUserRepositoryDao,
     getStarRepositoryDao,
     getRepositoryDetailDao,
-    getRepositoryDetailReadmeDao
+    getRepositoryDetailReadmeDao,
+    getRepositoryForksDao,
+    getRepositoryStarDao,
+    getRepositoryWatcherDao,
 }
