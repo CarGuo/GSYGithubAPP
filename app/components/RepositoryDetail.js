@@ -4,7 +4,7 @@
 
 import React, {Component, PureComponent} from 'react';
 import {
-    View, InteractionManager, StatusBar, Dimensions
+    View, InteractionManager, StatusBar, Dimensions, StyleSheet
 } from 'react-native';
 import {Actions, Tabs} from 'react-native-router-flux';
 import styles from "../style"
@@ -12,6 +12,7 @@ import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import repositoryActions from '../store/actions/repository'
 import WebComponent from './widget/WebComponent'
+import CommonBottomBar from './widget/CommonBottomBar'
 import IssueListPage from './IssueListPage'
 import RepositoryDetailActivity from './RepositoryDetailActivity'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
@@ -24,6 +25,7 @@ class RepositoryDetail extends Component {
     constructor(props) {
         super(props);
         this.page = 2;
+        this._getBottomItem = this._getBottomItem.bind(this);
         this.state = {
             dataDetail: this.props.defaultProps,
             dataDetailReadme: '',
@@ -108,6 +110,30 @@ class RepositoryDetail extends Component {
         }
     };
 
+
+    _getBottomItem() {
+        let {} = this.state;
+        return [{
+            itemName: I18n("reposStar"),
+            icon: "star",
+            itemClick: () => {
+            }, itemStyle: {}
+        }, {
+            itemName: I18n("reposWatcher"),
+            icon: "eye",
+            itemClick: () => {
+            }, itemStyle: {
+                borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
+                borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor
+            }
+        }, {
+            itemName: I18n("reposRelease"),
+            icon: 'tag',
+            itemClick: () => {
+            }, itemStyle: {}
+        },]
+    }
+
     render() {
         return (
             <View style={styles.mainBox}>
@@ -127,6 +153,7 @@ class RepositoryDetail extends Component {
                         width: Dimensions.get('window').width,
                     }}
                 />
+                <CommonBottomBar dataList={this._getBottomItem()}/>
             </View>
         )
     }

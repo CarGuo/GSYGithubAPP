@@ -93,6 +93,11 @@ I18n.translations = {
         openIssueTip: "Open？",
         commentsIssue: "Comment",
         editIssue: "Edit Issue",
+        reposStar: "Star",
+        reposUnStar: "UnStar",
+        reposWatcher: "Watcher",
+        reposUnWatcher: "UnWatcher",
+        reposRelease: "Release",
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -175,6 +180,11 @@ I18n.translations = {
         openIssueTip: "你确定要打开这个Issue吗？",
         commentsIssue: "提交回复",
         editIssue: "编辑",
+        reposStar: "Star",
+        reposUnStar: "UnStar",
+        reposWatcher: "Watcher",
+        reposUnWatcher: "UnWatcher",
+        reposRelease: "版本",
     }
 };
 
