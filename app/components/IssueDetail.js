@@ -36,7 +36,7 @@ class IssueDetail extends Component {
         this.page = 2;
         this.state = {
             dataSource: [],
-            detailInfo: null,
+            issue: this.props.issue
         }
     }
 
@@ -65,7 +65,8 @@ class IssueDetail extends Component {
     }
 
     sendIssueComment(text) {
-        let {repositoryName, userName, issue} = this.props;
+        let {repositoryName, userName} = this.props;
+        let {issue} = this.state;
         Actions.LoadingModal({backExit: false});
         issueActions.addIssueComment(userName, repositoryName, issue.number, text).then((res) => {
             setTimeout(() => {
@@ -81,14 +82,23 @@ class IssueDetail extends Component {
     }
 
     closeIssue() {
-
+        let {repositoryName, userName} = this.props;
+        let {issue} = this.state;
+        Actions.LoadingModal({backExit: false});
+        issueActions.editIssue(userName, repositoryName, issue.number,
+            {state: (issue.state === "closed") ? 'open' : 'closed'}).then((res) => {
+            setTimeout(() => {
+                Actions.pop();
+                this._refresh();
+            }, 500);
+        })
     }
 
     /**
      * 刷新
      * */
     _refresh() {
-        let {issue} = this.props;
+        let {issue} = this.state;
         issueActions.getIssueComment(1, this.props.userName, this.props.repositoryName, issue.number).then((res) => {
             let size = 0;
             if (res && res.result) {
@@ -106,7 +116,7 @@ class IssueDetail extends Component {
         issueActions.getIssueInfo(this.props.userName, this.props.repositoryName, issue.number).then((res) => {
             if (res && res.result) {
                 this.setState({
-                    detailInfo: res.data
+                    issue: res.data,
                 })
             }
         })
@@ -116,7 +126,7 @@ class IssueDetail extends Component {
      * 加载更多
      * */
     _loadMore() {
-        let {issue} = this.props;
+        let {issue} = this.state;
         issueActions.getIssueComment(this.page, this.props.userName, this.props.repositoryName, issue.number).then((res) => {
             let size = 0;
             if (res && res.result) {
@@ -135,7 +145,7 @@ class IssueDetail extends Component {
 
 
     _getBottomItem() {
-        let {issue} = this.props;
+        let {issue} = this.state;
         return [{
             itemName: I18n("issueComment"),
             itemClick: () => {
@@ -152,18 +162,18 @@ class IssueDetail extends Component {
                     titleText: I18n('editIssue'),
                     needEditTitle: true,
                     text: issue.title,
-                    titleValue: this.state.detailInfo.body
+                    titleValue: this.state.issue.body
                 })
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
                 borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor
             }
         }, {
-            itemName: I18n("issueClose"),
+            itemName: (issue.state === "open") ? I18n('issueClose') : I18n('issueOpen'),
             itemClick: () => {
                 Actions.ConfirmModal({
-                    titleText: I18n('closeIssue'),
-                    text: I18n('closeIssueTip'),
+                    titleText: (issue.state === "open") ? I18n('closeIssue') : I18n('openIssue'),
+                    text: (issue.state === "open") ? I18n('closeIssueTip'):  I18n('openIssueTip'),
                     textConfirm: this.closeIssue
                 })
             }, itemStyle: {}
@@ -171,8 +181,8 @@ class IssueDetail extends Component {
     }
 
     render() {
-        let {issue} = this.props;
-        let bottomBar = (this.state.detailInfo) ?
+        let {issue} = this.state;
+        let bottomBar = (issue.body) ?
             <CommonBottomBar dataList={this._getBottomItem()}/> :
             <View/>;
         let header =
@@ -183,7 +193,7 @@ class IssueDetail extends Component {
                 issueComment={issue.title}
                 commentCount={issue.comments + ""}
                 state={issue.state}
-                issueDes={(this.state.detailInfo) ? ((I18n('issueInfo') + ": \n" + this.state.detailInfo.body)) : null}
+                issueDes={(issue.body) ? ((I18n('issueInfo') + ": \n" + issue.body)) : null}
                 issueTag={"#" + issue.number}/>;
         return (
             <View style={styles.mainBox}>

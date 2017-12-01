@@ -36,7 +36,16 @@ const getIssueInfoDao = async (userName, repository, number) => {
 
 const addIssueCommentDao = async (userName, repository, number, comment) => {
     let url = Address.addIssueComment(userName, repository, number);
-    let res = await Api.netFetch(url, 'post', {body: comment}, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
+    let res = await Api.netFetch(url, 'POST', {body: comment}, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+const editIssueDao = async (userName, repository, number, issue) => {
+    let url = Address.editIssue(userName, repository, number);
+    let res = await Api.netFetch(url, 'PATCH',  issue, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
     return {
         data: res.data,
         result: res.result
@@ -47,5 +56,6 @@ export default {
     getRepositoryIssueDao,
     getIssueCommentDao,
     getIssueInfoDao,
-    addIssueCommentDao
+    addIssueCommentDao,
+    editIssueDao,
 }

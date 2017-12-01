@@ -88,6 +88,13 @@ class HttpManager {
             console.log('返回参数: ', response);
         }
 
+        if (response && response.status === Code.NETWORK_TIMEOUT) {
+            return {
+                result: false,
+                code: response.status,
+                data: handlerError(response.status),
+            }
+        }
         try {
             let responseJson = await response.json();
             if (response.status === 201 && responseJson.token) {
@@ -102,12 +109,6 @@ class HttpManager {
                     data: responseJson,
                     headers: response.headers
                 }
-            } else {
-                return {
-                    result: false,
-                    code: response.status,
-                    data: handlerError(response.status),
-                }
             }
         } catch (e) {
             console.log(e, url);
@@ -116,6 +117,12 @@ class HttpManager {
                 code: Code.NETWORK_JSON_EXCEPTION,
                 response
             }
+        }
+
+        return {
+            result: false,
+            code: response.status,
+            data: handlerError(response.status),
         }
     }
 
@@ -194,7 +201,7 @@ class HttpManager {
     requestWithTimeout(ms, promise) {
         return new Promise((resolve, reject) => {
             const timeoutId = setTimeout(() => {
-                reject({
+                resolve({
                     status: Code.NETWORK_TIMEOUT,
                     message: I18n('netTimeout')
                 })
@@ -206,7 +213,7 @@ class HttpManager {
                 },
                 (err) => {
                     clearTimeout(timeoutId);
-                    reject(err);
+                    resolve(err);
                 }
             );
         })
