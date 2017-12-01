@@ -49,7 +49,6 @@ class LoadingModal extends Component {
             <Modal ref={"loginModal"}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor:"#F0000000"}]}
                    position={"center"}
-                   backdrop={this.props.backExit}
                    backButtonClose={this.props.backExit}
                    swipeToClose={this.props.backExit}
                    backdropOpacity={0.8}>
