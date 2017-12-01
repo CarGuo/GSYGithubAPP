@@ -112,15 +112,17 @@ class RepositoryDetail extends Component {
 
 
     _getBottomItem() {
-        let {} = this.state;
+        let {stared, watched} = this.state;
         return [{
-            itemName: I18n("reposStar"),
+            itemName: stared ? I18n("reposUnStar") : I18n("reposStar"),
             icon: "star",
+            iconColor: stared ? Constant.primaryColor : Constant.miWhite,
             itemClick: () => {
             }, itemStyle: {}
         }, {
-            itemName: I18n("reposWatcher"),
+            itemName: watched ? I18n("reposUnWatcher") : I18n("reposWatcher"),
             icon: "eye",
+            iconColor: watched ? Constant.primaryColor : Constant.miWhite,
             itemClick: () => {
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
