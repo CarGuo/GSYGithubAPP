@@ -19,6 +19,7 @@ import CommonBottomBar from './widget/CommonBottomBar'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/'
 import {generateMdSampleHtml} from '../utils/htmlUtils'
+import {isCommentOwner} from '../utils/issueUtils'
 
 /**
  * Issue详情
@@ -64,7 +65,9 @@ class IssueDetail extends Component {
                 actionUserPic={rowData.user.avatar_url}
                 issueComment={rowData.body}
                 onLongPressItem={() => {
-                    Actions.OptionModal({dataList: this._getOptionItem(rowData)});
+                    if (isCommentOwner(this.props.userName, rowData.user.login)) {
+                        Actions.OptionModal({dataList: this._getOptionItem(rowData)});
+                    }
                 }}
                 issueCommentHtml={rowData.body_html}/>
         )
