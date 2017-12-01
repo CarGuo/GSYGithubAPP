@@ -147,6 +147,14 @@ const doRepositoryWatch = async (userName, reposName, watch) => {
     };
 };
 
+const getRepositoryRelease = async (userName, reposName) => {
+    let res = await RepositoryDao.getRepositoryReleaseDao(userName, reposName);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 export default {
     getTrend,
     searchRepository,
@@ -160,5 +168,6 @@ export default {
     getRepositoryStatus,
     doRepositoryStar,
     doRepositoryWatch,
+    getRepositoryRelease
 
 }

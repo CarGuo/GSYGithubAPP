@@ -23,6 +23,7 @@ class CommonBottomBar extends Component {
 
     renderItem(data) {
         let iconColor = data.iconColor ? data.iconColor : Constant.primaryColor;
+        let textColor = data.itemTextColor ? data.itemTextColor : Constant.primaryColor;
         return (
             <TouchableOpacity style={[styles.flex, styles.centerH, data.itemStyle]}
                               onPress={() => {
@@ -34,21 +35,22 @@ class CommonBottomBar extends Component {
                            backgroundColor={Constant.transparentColor}
                            color={(data.icon) ? iconColor : Constant.transparentColor}
                            size={(data.icon) ? 14 : 1}/>
-                    <Text style={[{marginLeft: 10}, styles.smallText]}>{data.itemName}</Text>
+                    <Text style={[{marginLeft: 10}, styles.smallText, {color: textColor}]}>{data.itemName}</Text>
                 </View>
             </TouchableOpacity>
         )
     }
 
     render() {
-        let {dataList} = this.props;
+        let {dataList, rootStyles} = this.props;
         let items = [];
         dataList.forEach((data) => {
             items.push(this.renderItem(data))
         });
         return (
             <View
-                style={[styles.flexDirectionRowNotFlex, {paddingVertical: Constant.normalMarginEdge}, styles.shadowCard]}>
+                style={[styles.flexDirectionRowNotFlex, {paddingVertical: Constant.normalMarginEdge},
+                    styles.shadowCard, rootStyles]}>
                 {items}
             </View>
         )
@@ -58,11 +60,13 @@ class CommonBottomBar extends Component {
 
 CommonBottomBar.propTypes = {
     dataList: PropTypes.array,
+    rootStyles: PropTypes.any,
 };
 
 
 CommonBottomBar.defaultProps = {
     dataList: [],
+    rootStyles: {}
 };
 
 export default CommonBottomBar

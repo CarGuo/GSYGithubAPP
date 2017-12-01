@@ -162,6 +162,8 @@ class RepositoryDetail extends Component {
             itemName: I18n("reposRelease"),
             icon: 'tag',
             itemClick: () => {
+                repositoryActions.getRepositoryRelease(ownerName, repositoryName).then((res) => {
+                })
             }, itemStyle: {}
         },]
     }

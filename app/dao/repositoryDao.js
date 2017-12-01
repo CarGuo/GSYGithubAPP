@@ -112,6 +112,15 @@ const doRepositoryWatchDao = async (userName, reposName, watch) => {
     };
 };
 
+const getRepositoryReleaseDao = async (userName, reposName) => {
+    let url = Address.getReposRelease(userName, reposName);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.result,
+        result: res.result
+    };
+};
+
 export default {
     getTrendDao,
     searchRepositoryDao,
@@ -125,4 +134,5 @@ export default {
     getRepositoryStatusDao,
     doRepositoryStarDao,
     doRepositoryWatchDao,
+    getRepositoryReleaseDao,
 }

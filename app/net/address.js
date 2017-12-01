@@ -105,10 +105,16 @@ export default AddressLocal = {
         return `${host}repos/${reposOwner}/${reposName}/issues?state=${state}&sort=${sort}&direction=${direction}`
     },
     /**
-     * 仓release
+     * 仓release get
      */
     getReposRelease: (reposOwner, reposName) => {
-        return `${host}repos/{reposOwner}/{reposName}/releases`
+        return `${host}repos/${reposOwner}/${reposName}/releases`
+    },
+    /**
+     * 仓Tag get
+     */
+    getReposRelease: (reposOwner, reposName) => {
+        return `${host}repos/${reposOwner}/${reposName}/tags`
     },
     /**
      * 仓库Issue评论 get

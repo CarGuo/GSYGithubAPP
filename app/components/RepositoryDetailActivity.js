@@ -4,7 +4,7 @@
 
 import React, {Component, PureComponent} from 'react';
 import {
-    View, Text, StatusBar, InteractionManager, ScrollView, Keyboard
+    View, Text, StatusBar, InteractionManager, StyleSheet, Keyboard
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions, Tabs} from 'react-native-router-flux';
@@ -14,6 +14,7 @@ import I18n from '../style/i18n'
 import eventActions from '../store/actions/event'
 import PullListView from './widget/PullLoadMoreListView'
 import RepositoryHeader from './widget/RepositoryHeader'
+import CommonBottomBar from './widget/CommonBottomBar'
 import EventItem from './widget/EventItem'
 import resolveTime from '../utils/timeUtil'
 import * as Config from '../config/'
@@ -29,8 +30,10 @@ class RepositoryDetailActivity extends Component {
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this._renderRow = this._renderRow.bind(this);
+        this._getBottomItem = this._getBottomItem.bind(this);
         this.page = 2;
         this.state = {
+            select: 0,
             dataSource: []
         };
     }
@@ -101,6 +104,32 @@ class RepositoryDetailActivity extends Component {
         })
     }
 
+    _getBottomItem() {
+        let {select} = this.state;
+        return [{
+            itemName: I18n("reposActivity"),
+            itemTextColor: select === 0 ? Constant.white : Constant.subTextColor,
+            icon: select === 0 ? "check" : null,
+            iconColor: Constant.white,
+            itemClick: () => {
+                this.setState({
+                    select: 0,
+                })
+            }, itemStyle: {}
+        }, {
+            itemName: I18n("reposPush"),
+            itemTextColor: select === 1 ? Constant.white : Constant.subTextColor,
+            icon: select === 1 ? "check" : null,
+            iconColor: Constant.white,
+            itemClick: () => {
+                this.setState({
+                    select: 1,
+                })
+            }, itemStyle: {
+                borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
+            }
+        },]
+    }
 
     render() {
         let {
@@ -108,22 +137,32 @@ class RepositoryDetailActivity extends Component {
             subscribers_count, description, language, created_at, pushed_at, parent,
         } = this.props.dataDetail;
         let header =
-            <RepositoryHeader
-                ownerName={this.props.ownerName}
-                ownerPic={owner ? owner.avatar_url : ""}
-                repositoryName={this.props.repositoryName}
-                repositoryStar={watchers_count + ""}
-                repositoryFork={forks_count + ""}
-                repositoryWatch={subscribers_count + ""}
-                repositoryIssue={open_issues_count + ""}
-                repositorySize={(size / 1024).toFixed(2) + "M"}
-                repositoryType={language}
-                repositoryDes={description}
-                repositoryIsFork={fork}
-                repositoryParentName={parent ? parent.full_name : null}
-                created_at={resolveTime(created_at)}
-                push_at={resolveTime(pushed_at)}
-            />;
+            <View>
+                <RepositoryHeader
+                    ownerName={this.props.ownerName}
+                    ownerPic={owner ? owner.avatar_url : ""}
+                    repositoryName={this.props.repositoryName}
+                    repositoryStar={watchers_count + ""}
+                    repositoryFork={forks_count + ""}
+                    repositoryWatch={subscribers_count + ""}
+                    repositoryIssue={open_issues_count + ""}
+                    repositorySize={(size / 1024).toFixed(2) + "M"}
+                    repositoryType={language}
+                    repositoryDes={description}
+                    repositoryIsFork={fork}
+                    repositoryParentName={parent ? parent.full_name : null}
+                    created_at={resolveTime(created_at)}
+                    push_at={resolveTime(pushed_at)}
+                />
+                <CommonBottomBar
+                    rootStyles={{
+                        marginHorizontal: Constant.normalMarginEdge,
+                        backgroundColor: Constant.primaryColor,
+                        marginTop: Constant.normalMarginEdge,
+                        borderRadius:4,
+                    }}
+                    dataList={this._getBottomItem()}/>
+            </View>;
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
