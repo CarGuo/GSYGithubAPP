@@ -9,7 +9,7 @@ import Address from '../net/address'
 
 const getRepositoryIssueDao = async (page = 0, userName, repository, state, sort, direction) => {
     let url = Address.getReposIssue(userName, repository, state, sort, direction) + Address.getPageParams("&", page);
-    let res = await Api.netFetch(url);
+    let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
     return {
         data: res.data,
         result: res.result
@@ -18,7 +18,7 @@ const getRepositoryIssueDao = async (page = 0, userName, repository, state, sort
 
 const getIssueCommentDao = async (page = 0, userName, repository, number) => {
     let url = Address.getIssueComment(userName, repository, number) + Address.getPageParams("?", page);
-    let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'Accept: application/vnd.github.html,application/vnd.github.VERSION.raw'});
+    let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
     return {
         data: res.data,
         result: res.result

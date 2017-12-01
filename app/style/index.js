@@ -169,7 +169,6 @@ const styles = StyleSheet.create({
         borderColor: '#dddddd',
         borderRadius: 3,
         borderWidth: 1,
-        fontFamily: 'Courier',
         padding: constant.normalMarginEdge,
     }
 });

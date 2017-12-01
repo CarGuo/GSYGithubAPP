@@ -58,17 +58,24 @@ class IssueItem extends Component {
         </View> : <View/>;
         let bottomMargin = (this.props.issueTag) ? 0 : Constant.normalMarginEdge;
 
-        let body = (markdownBody) ? <MarkdownView
-            styles={{
-                text: styles.subSmallText,
-                inlineCode: styles.inCode
-            }}
-            style={{
+        let body = (markdownBody) ? <HTMLView
+            style={[{
+                marginTop: Constant.normalMarginEdge / 2,
                 backgroundColor: Constant.transparentColor
-            }}>
-            {issueComment ? issueComment : ""}
-        </MarkdownView> : <Text style={[styles.subSmallText,]}>{issueComment}</Text>;
-
+            }]}
+            numberOfLines={100}
+            value={issueCommentHtml}
+            textComponentProps={{
+                style: styles.subSmallText,
+                numberOfLines: 100,
+            }}
+            stylesheet={{pre: styles.inCode}}
+            textComponent={() => {
+                return (
+                    <Text/>
+                )
+            }}
+        /> : <Text style={[styles.subSmallText,]}>{issueComment}</Text>;
 
 
         return (

@@ -15,6 +15,7 @@ import UserImage from './UserImage'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Octicons'
 import MarkdownView from 'react-native-simple-markdown'
+import HTMLView from 'react-native-htmlview';
 
 
 /**
@@ -33,7 +34,8 @@ class IssueItem extends Component {
     }
 
     render() {
-        let {actionTime, actionUser, actionUserPic, issueComment, issueDes} = this.props;
+        let {actionTime, actionUser, actionUserPic, issueComment, issueDes, issueDesHtml} = this.props;
+        console.log("$$$$$$", issueDesHtml)
         return (
             <View
                 style={[{
@@ -97,16 +99,27 @@ class IssueItem extends Component {
                     </View>
                 </View>
                 <View style={[styles.centerV, {marginBottom: issueDes ? Constant.normalMarginEdge : 0}]}>
-                    <MarkdownView
-                        styles={{
-                            text: styles.miLightSmallText,
-                            inlineCode: styles.inCode
-                        }}
-                        style={{
+                    <HTMLView
+                        style={[{
+                            marginTop: Constant.normalMarginEdge / 2,
                             backgroundColor: Constant.transparentColor
-                        }}>
-                        {issueDes ? issueDes : ""}
-                    </MarkdownView>
+                        }]}
+                        numberOfLines={100}
+                        value={issueDesHtml ? issueDesHtml : ""}
+                        stylesheet={{pre: styles.inCode}}
+                        textComponentProps={{
+                            style: styles.miLightSmallText,
+                            numberOfLines: 100,
+                        }}
+                        customRenderer={()=>{
+
+                        }}
+                        textComponent={() => {
+                            return (
+                                <Text/>
+                            )
+                        }}
+                    />
                 </View>
 
             </View>

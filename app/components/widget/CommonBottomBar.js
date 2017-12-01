@@ -25,7 +25,9 @@ class CommonBottomBar extends Component {
             <TouchableOpacity style={[styles.flex, styles.centerH, data.itemStyle]}
                               onPress={() => {
                                   data.itemClick && data.itemClick(data);
-                              }}>
+                              }}
+                              key={data.itemName}
+                              >
                 <Text style={[styles.normalText]}>{data.itemName}</Text>
             </TouchableOpacity>
         )

@@ -18,7 +18,7 @@ import IssueHead from './widget/IssueHead'
 import CommonBottomBar from './widget/CommonBottomBar'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/'
-import {getFullName} from '../utils/htmlUtils'
+import {generateMdSampleHtml} from '../utils/htmlUtils'
 
 /**
  * Issue详情
@@ -204,6 +204,7 @@ class IssueDetail extends Component {
                 actionUser={issue.user.login}
                 actionUserPic={issue.user.avatar_url}
                 issueComment={issue.title}
+                issueDesHtml={generateMdSampleHtml(issue.body)}
                 commentCount={issue.comments + ""}
                 state={issue.state}
                 issueDes={(issue.body) ? ((I18n('issueInfo') + ": \n" + issue.body)) : null}
