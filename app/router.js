@@ -11,6 +11,7 @@ import DynamicPage from './components/DynamicPage'
 import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
+import NotifyPage from './components/NotifyPage'
 import IssueDetail from './components/IssueDetail'
 import VersionPage from './components/VersionPage'
 import PersonPage from './components/PersonPage'
@@ -117,18 +118,22 @@ const getRouter = () => {
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="IssueDetail" component={IssueDetail}
-                           renderRightButton={(params)=> <CommonIconButton data={params} />}
+                           renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="PushDetailPage" component={PushDetailPage}
-                           renderRightButton={(params)=> <CommonIconButton data={params} />}
+                           renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="VersionPage" component={VersionPage}
-                           renderRightButton={(params)=> <CommonIconButton data={params} />}
+                           renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
-
+                    <Scene key="NotifyPage" component={NotifyPage}
+                           title={I18n('notify')}
+                           renderRightButton={(params) => <CommonIconButton data={params}/>}
+                           renderLeftButton={() => <CustomBackButton/>}
+                    />
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
                 <Scene key="TextInputModal" component={TextInputModal}/>

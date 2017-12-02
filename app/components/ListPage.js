@@ -16,6 +16,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import UserItem from './widget/UserItem'
 import IssueItem from './widget/IssueItem'
+import EventItem from './widget/EventItem'
 import ReleaseItem from './widget/ReleaseItem'
 import CustomSearchButton from './widget/CustomSearchButton'
 import PullListView from './widget/PullLoadMoreListView'
@@ -111,6 +112,42 @@ class ListPage extends Component {
                     />
                 );
                 break;
+            case 'notify':
+                return (
+                    <EventItem
+                        actionTime={rowData.updated_at}
+                        actionUser={rowData.repository.full_name}
+                        actionUserPic={rowData.repository.owner.avatar_url}
+                        des={I18n('notifyType', {
+                            option1: rowData.subject.type,
+                            option2: (rowData.unread) ? I18n('unread') : I18n('readed')
+                        })}
+                        actionTarget={rowData.subject.title}
+                        onPressItem={() => {
+                            if (rowData.subject.type === 'Issue') {
+                                let tmp = rowData.subject.url.split("/");
+                                Actions.IssueDetail({
+                                    issue: {
+                                        user: {},
+                                        number: tmp[tmp.length - 1]
+                                    },
+                                    title: rowData.repository.full_name,
+                                    repositoryName: rowData.repository.name,
+                                    userName: rowData.repository.owner.login,
+                                    needRightBtn: true,
+                                    rightBtn: 'home',
+                                    rightBtnPress: () => {
+                                        Actions.RepositoryDetail({
+                                            repositoryName: rowData.repository.name,
+                                            ownerName: rowData.repository.owner.login,
+                                            title: rowData.repository.full_name
+                                        });
+                                    }
+                                });
+                            }
+                        }}/>
+                );
+                break;
         }
     }
 
@@ -162,6 +199,11 @@ class ListPage extends Component {
                 break;
             case 'repo_tag':
                 repositoryActions.getRepositoryTag(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+            case 'notify':
+                userActions.getNotifation(this.props.all, this.props.participating, 0).then((res) => {
                     this._refreshRes(res)
                 });
                 break;
@@ -220,6 +262,12 @@ class ListPage extends Component {
                 repositoryActions.getRepositoryTag(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
                     this._loadMoreRes(res)
                 });
+                break;
+            case 'notify':
+                userActions.getNotifation(this.props.all, this.props.participating, 0).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
         }
     }
 
@@ -287,6 +335,8 @@ class ListPage extends Component {
 ListPage.propTypes = {
     showType: PropTypes.string,
     dataType: PropTypes.string,
+    all: PropTypes.bool,
+    participating: PropTypes.bool,
     currentUser: PropTypes.string,
     currentRepository: PropTypes.string
 };

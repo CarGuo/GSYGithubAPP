@@ -68,6 +68,14 @@ const getFollowedList = async (userName, page = 1) => {
     }
 };
 
+const getNotifation = async (all, participating, page) => {
+    let res = await UserDao.getNotifationDao(all, participating, page)
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
 
 export default {
     initUserInfo,
@@ -75,5 +83,6 @@ export default {
     getOtherUserInfo,
     clearUserInfo,
     getFollowerList,
-    getFollowedList
+    getFollowedList,
+    getNotifation
 }

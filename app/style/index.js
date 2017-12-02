@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
         textShadowRadius: 0.4
     },
     inCode: {
+        color: constant.subTextColor,
         backgroundColor: '#eeeeee',
         borderColor: '#dddddd',
         borderRadius: 3,

@@ -103,11 +103,21 @@ const getFollowedListDao = async (userName, page) => {
     }
 };
 
+const getNotifationDao = async (all, participating, page) => {
+    let url = Address.getNotifation(all, participating) + Address.getPageParams("&", page);
+    let res = await Api.netFetch(url)
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
 
 export default {
     getUserInfoLocal,
     getUserInfoNet,
     getUserStaredCountNet,
     getFollowerListDao,
-    getFollowedListDao
+    getFollowedListDao,
+    getNotifationDao,
 }

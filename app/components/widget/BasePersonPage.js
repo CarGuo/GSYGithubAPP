@@ -22,6 +22,7 @@ class BasePersonPage extends Component {
         super(props);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
+        this.getBackNotifyCall = this.getBackNotifyCall.bind(this);
         this.state = {
             dataSource: []
         };
@@ -47,7 +48,7 @@ class BasePersonPage extends Component {
                 actionUser={rowData.actor.display_login}
                 actionUserPic={rowData.actor.avatar_url}
                 des={res.des}
-                onPressItem={()=>{
+                onPressItem={() => {
                     ActionUtils(rowData)
                 }}
                 actionTarget={res.actionStr}/>
@@ -107,6 +108,10 @@ class BasePersonPage extends Component {
         return false;
     }
 
+    getBackNotifyCall() {
+
+    }
+
     render() {
         let userInfo = this.getUserInfo();
         return (
@@ -126,6 +131,8 @@ class BasePersonPage extends Component {
                                     location={userInfo.location}
                                     link={userInfo.blog}
                                     des={userInfo.bio}
+                                    backNotifyCall={this.getBackNotifyCall}
+                                    unRead={this.state.unRead}
                                     star={(userInfo.starred) ? userInfo.starred : "---"}
                                     repos={userInfo.public_repos + ""}
                                     follower={userInfo.followers + ""}

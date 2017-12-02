@@ -23,7 +23,7 @@ class UserHeadItem extends Component {
         let hint = I18n('userInfoNoting');
         let {
             link, userPic, userName, userDisPlayName, des, location, groupName,
-            follower, followed, repos, star, setting, notify
+            follower, followed, repos, star, setting, notify, unRead
         } = this.props;
         return (
             <View style={[{
@@ -79,10 +79,10 @@ class UserHeadItem extends Component {
                             <TouchableOpacity
                                 style={[styles.flexDirectionRowNotFlex, {marginLeft: Constant.normalMarginEdge / 2,}]}
                                 onPress={() => {
-                                    Actions.NotifyPage();
+                                    Actions.NotifyPage({backNotifyCall: this.props.backNotifyCall});
                                 }}>
                                 <IconF name={'bell'} size={setting ? 15 : 1}
-                                       color={notify ? Constant.actionBlue : Constant.miWhite}/>
+                                       color={unRead ? Constant.actionBlue : Constant.miWhite}/>
                             </TouchableOpacity>
                         </View>
                         <Text style={[styles.subLightSmallText,]}>{(userName) ? userName : hintNum}</Text>

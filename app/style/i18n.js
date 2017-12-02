@@ -100,6 +100,13 @@ I18n.translations = {
         reposUnWatcher: "UnWatcher",
         reposRelease: "Release",
         reposTag: "Tag",
+        notifyUnread: "UnRead",
+        notifyParticipating: "Part",
+        notifyAll: 'All',
+        notifyType: 'Type:%{option1}，State:%{option2}',
+        unread: 'unread',
+        readed: 'readed',
+        notify: 'notify',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -189,6 +196,13 @@ I18n.translations = {
         reposUnWatcher: "UnWatcher",
         reposRelease: "版本",
         reposTag: "标记",
+        notifyUnread: "未读",
+        notifyParticipating: "参与",
+        notifyAll: '所有',
+        notifyType: '类型：%{option1}，状态：%{option2}',
+        unread: '未读',
+        readed: '已读',
+        notify: '通知',
     }
 };
 

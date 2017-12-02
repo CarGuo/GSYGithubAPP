@@ -277,13 +277,22 @@ export default AddressLocal = {
         return `${host}users/${userName}/events`
     },
     /**
-     * 通知
+     * 通知 get
      */
-    getNotifation: (all) => {
+    getNotifation: (all, participating) => {
         if (!all) {
             all = false
         }
-        return `${host}notifications?all=${all}`
+        if (!participating) {
+            participating = false
+        }
+        return `${host}notifications?all=${all}&participating=${participating}`
+    },
+    /**
+     * patch
+     */
+    setNotificationAsRead: (threadId) => {
+        return `${host}notifications/threads/${threadId}`
     },
     /**
      * 趋势 get

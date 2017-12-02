@@ -13,6 +13,26 @@ class MyPage extends BasePersonPage {
 
     constructor(props) {
         super(props);
+        this.refreshUnRead = this.refreshUnRead.bind(this);
+    }
+
+    componentDidMount() {
+        super.componentDidMount();
+        this.refreshUnRead();
+    }
+
+    getBackNotifyCall() {
+        this.refreshUnRead();
+    }
+
+    refreshUnRead() {
+        userActions.getNotifation(false, false, 0).then((res) => {
+            if (res && res.result && res.data && res.data.length > 0) {
+                this.setState({
+                    unRead: true,
+                })
+            }
+        })
     }
 
     getUserInfo() {

@@ -260,10 +260,10 @@ class IssueDetail extends Component {
                 actionUser={issue.user.login}
                 actionUserPic={issue.user.avatar_url}
                 issueComment={issue.title}
-                issueDesHtml={generateMdSampleHtml(issue.body)}
+                issueDesHtml={issue.body ? generateMdSampleHtml(issue.body) : ""}
                 commentCount={issue.comments + ""}
                 state={issue.state}
-                issueDes={(issue.body) ? ((I18n('issueInfo') + ": \n" + issue.body)) : null}
+                issueDes={(issue.body) ? ((I18n('issueInfo') + ": \n" + issue.body)) : ''}
                 issueTag={"#" + issue.number}/>;
         return (
             <View style={styles.mainBox}>
