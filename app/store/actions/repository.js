@@ -155,6 +155,14 @@ const getRepositoryRelease = async (userName, reposName) => {
     };
 };
 
+const getReposCommits = async (page = 0, userName, reposName) => {
+    let res = await RepositoryDao.getReposCommitsDao(userName, reposName, page);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 export default {
     getTrend,
     searchRepository,
@@ -168,6 +176,7 @@ export default {
     getRepositoryStatus,
     doRepositoryStar,
     doRepositoryWatch,
-    getRepositoryRelease
+    getRepositoryRelease,
+    getReposCommits,
 
 }

@@ -12,6 +12,7 @@ import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import eventActions from '../store/actions/event'
+import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import RepositoryHeader from './widget/RepositoryHeader'
 import CommonBottomBar from './widget/CommonBottomBar'
@@ -34,14 +35,15 @@ class RepositoryDetailActivity extends Component {
         this.page = 2;
         this.state = {
             select: 0,
-            dataSource: []
+            dataSource: [],
+            dataSourceCommits: [],
         };
     }
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
             this.refs.pullList.showRefreshState();
-            this._refresh();
+            this._refresh(this.state.select);
         })
     }
 
@@ -53,55 +55,107 @@ class RepositoryDetailActivity extends Component {
     }
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
-        let res = getActionAndDes(rowData);
-        return (
-            <EventItem
-                actionTime={rowData.created_at}
-                actionUser={rowData.actor.display_login}
-                actionUserPic={rowData.actor.avatar_url}
-                des={res.des}
-                actionTarget={res.actionStr}/>
-        )
+        if (this.state.select === 0) {
+            let res = getActionAndDes(rowData);
+            return (
+                <EventItem
+                    actionTime={rowData.created_at}
+                    actionUser={rowData.actor.display_login}
+                    actionUserPic={rowData.actor.avatar_url}
+                    des={res.des}
+                    actionTarget={res.actionStr}/>
+
+            )
+        } else if (this.state.select === 1) {
+            return (
+                <EventItem
+                    actionTime={rowData.commit.committer.date}
+                    actionUser={rowData.committer.login}
+                    actionUserPic={rowData.committer.avatar_url}
+                    des={rowData.sha}
+                    actionTarget={rowData.commit.message}/>
+
+            )
+        }
     }
 
     /**
      * 刷新
      * */
-    _refresh() {
-        eventActions.getRepositoryEvent(0, this.props.ownerName, this.props.repositoryName).then((res) => {
-            let size = 0;
-            if (res && res.result) {
-                this.page = 2;
-                let dataList = res.data;
-                this.setState({
-                    dataSource: dataList
-                });
-                size = res.data.length;
-            }
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-            }
-        })
+    _refresh(select) {
+        if (!select) {
+            select = this.state.select;
+        }
+        if (select === 0) {
+            eventActions.getRepositoryEvent(0, this.props.ownerName, this.props.repositoryName).then((res) => {
+                let size = 0;
+                if (res && res.result) {
+                    this.page = 2;
+                    let dataList = res.data;
+                    this.setState({
+                        dataSource: dataList
+                    });
+                    size = res.data.length;
+                }
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                }
+            })
+        } else if (select === 1) {
+            reposActions.getReposCommits(0, this.props.ownerName, this.props.repositoryName).then((res) => {
+                let size = 0;
+                if (res && res.result) {
+                    this.page = 2;
+                    let dataList = res.data;
+                    this.setState({
+                        dataSourceCommits: dataList
+                    });
+                    size = res.data.length;
+                }
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                }
+            })
+
+        }
     }
 
     /**
      * 加载更多
      * */
     _loadMore() {
-        eventActions.getRepositoryEvent(this.page, this.props.ownerName, this.props.repositoryName).then((res) => {
-            let size = 0;
-            if (res && res.result) {
-                this.page++;
-                let dataList = this.state.dataSource.concat(res.data);
-                this.setState({
-                    dataSource: dataList
-                });
-                size = res.data.length;
-            }
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-            }
-        })
+        if (this.state.select === 0) {
+            eventActions.getRepositoryEvent(this.page, this.props.ownerName, this.props.repositoryName).then((res) => {
+                let size = 0;
+                if (res && res.result) {
+                    this.page++;
+                    let dataList = this.state.dataSource.concat(res.data);
+                    this.setState({
+                        dataSource: dataList
+                    });
+                    size = res.data.length;
+                }
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                }
+            })
+        } else if (this.state.select === 1) {
+            reposActions.getReposCommits(this.page, this.props.ownerName, this.props.repositoryName).then((res) => {
+                let size = 0;
+                if (res && res.result) {
+                    this.page++;
+                    let dataList = this.state.dataSource.concat(res.data);
+                    this.setState({
+                        dataSourceCommits: dataList
+                    });
+                    size = res.data.length;
+                }
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                }
+            })
+
+        }
     }
 
     _getBottomItem() {
@@ -114,7 +168,8 @@ class RepositoryDetailActivity extends Component {
             itemClick: () => {
                 this.setState({
                     select: 0,
-                })
+                });
+                this._refresh(0);
             }, itemStyle: {}
         }, {
             itemName: I18n("reposPush"),
@@ -124,7 +179,8 @@ class RepositoryDetailActivity extends Component {
             itemClick: () => {
                 this.setState({
                     select: 1,
-                })
+                });
+                this._refresh(1);
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
             }
@@ -136,6 +192,8 @@ class RepositoryDetailActivity extends Component {
             forks_count, fork, open_issues_count, size, watchers_count, owner,
             subscribers_count, description, language, created_at, pushed_at, parent,
         } = this.props.dataDetail;
+        let data = this.state.select === 0 ? this.state.dataSource : this.state.dataSourceCommits;
+        console.log("RRRRR", this.state)
         let header =
             <View>
                 <RepositoryHeader
@@ -159,7 +217,7 @@ class RepositoryDetailActivity extends Component {
                         marginHorizontal: Constant.normalMarginEdge,
                         backgroundColor: Constant.primaryColor,
                         marginTop: Constant.normalMarginEdge,
-                        borderRadius:4,
+                        borderRadius: 4,
                     }}
                     dataList={this._getBottomItem()}/>
             </View>;
@@ -177,7 +235,7 @@ class RepositoryDetailActivity extends Component {
                     }}
                     refresh={this._refresh}
                     loadMore={this._loadMore}
-                    dataSource={this.state.dataSource}
+                    dataSource={data}
                 />
             </View>
         )
