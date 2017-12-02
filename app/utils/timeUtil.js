@@ -13,6 +13,7 @@ const min = second * 60;
 const hour = min * 60;
 const day = hour * 24;
 const week = day * 7;
+const year = day * 30 * 11;
 
 /**
  * 时间转化
@@ -45,6 +46,9 @@ function calcTimer(delta, ori) {
 }
 
 const calculator = {
+    [year]:(a, b, ori) => {
+        return moment(ori).format('YYYY-MM-DD HH:mm')
+    },
     [week]: (a, b, ori) => {
         return moment(ori).format('MM-DD HH:mm')
     },

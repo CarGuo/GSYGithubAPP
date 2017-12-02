@@ -130,6 +130,15 @@ const getReposCommitsDao = async (userName, reposName, page) => {
     };
 };
 
+const getReposCommitsInfoDao = async (userName, reposName, sha) => {
+    let url = Address.getReposCommitsInfo(userName, reposName, sha);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 export default {
     getTrendDao,
     searchRepositoryDao,
@@ -145,4 +154,5 @@ export default {
     doRepositoryWatchDao,
     getRepositoryReleaseDao,
     getReposCommitsDao,
+    getReposCommitsInfoDao,
 }

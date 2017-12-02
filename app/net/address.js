@@ -97,6 +97,14 @@ export default AddressLocal = {
 
     },
     /**
+     * 仓库提交
+     */
+    getReposCommitsInfo: (reposOwner, reposName, sha) => {
+        return `${host}repos/${reposOwner}/${reposName}/commits/${sha}`
+
+    },
+
+    /**
      * 仓库Issue get
      */
     getReposIssue: (reposOwner, reposName, state, sort, direction) => {

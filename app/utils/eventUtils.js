@@ -91,6 +91,7 @@ export const getActionAndDes = (event) => {
                 " at " + event.repo.name;
 
             des = '';
+            let descSpan = '';
 
             let count = event.comments;
             let maxLines = 4;
@@ -166,9 +167,9 @@ export const ActionUtils = (event) => {
                 title: fullName,
                 repositoryName: repositoryName,
                 userName: owner,
-                needRightBtn:true,
-                rightBtn:'home',
-                rightBtnPress:()=>{
+                needRightBtn: true,
+                rightBtn: 'home',
+                rightBtnPress: () => {
                     Actions.RepositoryDetail({
                         repositoryName: repositoryName, ownerName: owner
                         , title: repositoryName

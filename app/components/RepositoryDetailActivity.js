@@ -73,6 +73,13 @@ class RepositoryDetailActivity extends Component {
                     actionUser={rowData.committer.login}
                     actionUserPic={rowData.committer.avatar_url}
                     des={rowData.sha}
+                    onPressItem={() => {
+                        Actions.PushDetailPage({
+                            repositoryName: this.props.repositoryName, userName: this.props.ownerName
+                            , title: this.props.ownerName + "/" + this.props.repositoryName,
+                            sha: rowData.sha,
+                        });
+                    }}
                     actionTarget={rowData.commit.message}/>
 
             )
@@ -193,7 +200,6 @@ class RepositoryDetailActivity extends Component {
             subscribers_count, description, language, created_at, pushed_at, parent,
         } = this.props.dataDetail;
         let data = this.state.select === 0 ? this.state.dataSource : this.state.dataSourceCommits;
-        console.log("RRRRR", this.state)
         let header =
             <View>
                 <RepositoryHeader
