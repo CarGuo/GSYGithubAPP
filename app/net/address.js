@@ -128,7 +128,7 @@ export default AddressLocal = {
     /**
      * 仓Tag get
      */
-    getReposRelease: (reposOwner, reposName) => {
+    getReposTag: (reposOwner, reposName) => {
         return `${host}repos/${reposOwner}/${reposName}/tags`
     },
     /**

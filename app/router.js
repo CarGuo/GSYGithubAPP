@@ -12,6 +12,7 @@ import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
 import IssueDetail from './components/IssueDetail'
+import VersionPage from './components/VersionPage'
 import PersonPage from './components/PersonPage'
 import SettingPage from './components/SettingPage'
 import RepositoryDetail from './components/RepositoryDetail'
@@ -120,6 +121,10 @@ const getRouter = () => {
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="PushDetailPage" component={PushDetailPage}
+                           renderRightButton={(params)=> <CommonIconButton data={params} />}
+                           renderLeftButton={() => <CustomBackButton/>}
+                    />
+                    <Scene key="VersionPage" component={VersionPage}
                            renderRightButton={(params)=> <CommonIconButton data={params} />}
                            renderLeftButton={() => <CustomBackButton/>}
                     />

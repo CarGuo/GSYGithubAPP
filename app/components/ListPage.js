@@ -16,7 +16,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import UserItem from './widget/UserItem'
 import IssueItem from './widget/IssueItem'
-import CommonRowItem from './widget/CommonRowItem'
+import ReleaseItem from './widget/ReleaseItem'
 import CustomSearchButton from './widget/CustomSearchButton'
 import PullListView from './widget/PullLoadMoreListView'
 import RepositoryItem from './widget/RepositoryItem'
@@ -98,6 +98,19 @@ class ListPage extends Component {
                         }}/>
                 );
                 break;
+            case 'release':
+                return (
+                    <ReleaseItem
+                        actionTime={rowData.published_at}
+                        actionTitle={rowData.name}
+                        actionTarget={rowData.body}
+                        actionTargetHtml={rowData.body_html}
+                        onPressItem={() => {
+
+                        }}
+                    />
+                );
+                break;
         }
     }
 
@@ -139,6 +152,16 @@ class ListPage extends Component {
                 break;
             case 'repo_fork':
                 repositoryActions.getRepositoryForks(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+            case 'repo_release':
+                repositoryActions.getRepositoryRelease(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
+            case 'repo_tag':
+                repositoryActions.getRepositoryTag(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
                     this._refreshRes(res)
                 });
                 break;
@@ -185,6 +208,16 @@ class ListPage extends Component {
                 break;
             case 'repo_fork':
                 repositoryActions.getRepositoryForks(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
+            case 'repo_release':
+                repositoryActions.getRepositoryRelease(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
+            case 'repo_tag':
+                repositoryActions.getRepositoryTag(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
                     this._loadMoreRes(res)
                 });
         }

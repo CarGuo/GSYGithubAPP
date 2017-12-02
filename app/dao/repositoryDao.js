@@ -114,12 +114,22 @@ const doRepositoryWatchDao = async (userName, reposName, watch) => {
 
 const getRepositoryReleaseDao = async (userName, reposName) => {
     let url = Address.getReposRelease(userName, reposName);
-    let res = await await Api.netFetch(url);
+    let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
     return {
-        data: res.result,
+        data: res.data,
         result: res.result
     };
 };
+
+const getRepositoryTagDao = async (userName, reposName) => {
+    let url = Address.getReposTag(userName, reposName);
+    let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 
 const getReposCommitsDao = async (userName, reposName, page) => {
     let url = Address.getReposCommits(userName, reposName) + Address.getPageParams("?", page);
@@ -155,4 +165,5 @@ export default {
     getRepositoryReleaseDao,
     getReposCommitsDao,
     getReposCommitsInfoDao,
+    getRepositoryTagDao
 }

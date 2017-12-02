@@ -99,6 +99,7 @@ I18n.translations = {
         reposWatcher: "Watcher",
         reposUnWatcher: "UnWatcher",
         reposRelease: "Release",
+        reposTag: "Tag",
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -187,6 +188,7 @@ I18n.translations = {
         reposWatcher: "Watcher",
         reposUnWatcher: "UnWatcher",
         reposRelease: "版本",
+        reposTag: "标记",
     }
 };
 

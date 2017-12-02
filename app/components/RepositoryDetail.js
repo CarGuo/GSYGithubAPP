@@ -162,8 +162,10 @@ class RepositoryDetail extends Component {
             itemName: I18n("reposRelease"),
             icon: 'tag',
             itemClick: () => {
-                repositoryActions.getRepositoryRelease(ownerName, repositoryName).then((res) => {
-                })
+                Actions.VersionPage({
+                    ownerName: this.props.ownerName,
+                    repositoryName: this.props.repositoryName,
+                    title: this.props.ownerName + "/" + this.props.repositoryName})
             }, itemStyle: {}
         },]
     }

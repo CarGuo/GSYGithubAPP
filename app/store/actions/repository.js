@@ -155,6 +155,16 @@ const getRepositoryRelease = async (userName, reposName) => {
     };
 };
 
+
+const getRepositoryTag = async (userName, reposName) => {
+    let res = await RepositoryDao.getRepositoryTagDao(userName, reposName);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+
 const getReposCommits = async (page = 0, userName, reposName) => {
     let res = await RepositoryDao.getReposCommitsDao(userName, reposName, page);
     return {
@@ -188,5 +198,6 @@ export default {
     getRepositoryRelease,
     getReposCommits,
     getReposCommitsInfo,
+    getRepositoryTag
 
 }
