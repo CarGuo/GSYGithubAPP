@@ -11,6 +11,7 @@ import {Actions} from 'react-native-router-flux';
 import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
+import CodeFileItem from './widget/CodeFileItem'
 import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import PushDetailHeader from './widget/PushDetailHeader'
@@ -44,21 +45,15 @@ class PushDetailPage extends Component {
 
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
+        let nameSplit = rowData.filename.split("/");
         return (
-            {
-                /* <IssueItem
-                                markdownBody={true}
-                                actionTime={rowData.created_at}
-                                actionUser={rowData.user.login}
-                                actionUserPic={rowData.user.avatar_url}
-                                issueComment={rowData.body}
-                                onLongPressItem={() => {
-                                    if (isCommentOwner(this.props.userName, rowData.user.login)) {
-                                        Actions.OptionModal({dataList: this._getOptionItem(rowData)});
-                                    }
-                                }}
-                                issueCommentHtml={rowData.body_html}/>*/
-            }
+            <CodeFileItem
+                itemIcon={"code"}
+                titleStyle={[styles.subSmallText]}
+                itemTextTitle={rowData.filename}
+                itemText={nameSplit[nameSplit.length - 1]}
+                onClickFun={() => {
+                }}/>
         )
     }
 
@@ -72,9 +67,9 @@ class PushDetailPage extends Component {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;
-                let dataList = res.data;
                 this.setState({
-                    pushDetail: dataList
+                    pushDetail: res.data,
+                    dataSource: res.data.files
                 });
                 size = res.data.length;
             }
