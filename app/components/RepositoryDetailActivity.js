@@ -70,9 +70,9 @@ class RepositoryDetailActivity extends Component {
             return (
                 <EventItem
                     actionTime={rowData.commit.committer.date}
-                    actionUser={rowData.committer.login}
-                    actionUserPic={rowData.committer.avatar_url}
-                    des={rowData.sha}
+                    actionUser={rowData.author.login}
+                    actionUserPic={rowData.author.avatar_url}
+                    des={"sha:" + rowData.sha}
                     onPressItem={() => {
                         Actions.PushDetailPage({
                             repositoryName: this.props.repositoryName, userName: this.props.ownerName
@@ -151,7 +151,7 @@ class RepositoryDetailActivity extends Component {
                 let size = 0;
                 if (res && res.result) {
                     this.page++;
-                    let dataList = this.state.dataSource.concat(res.data);
+                    let dataList = this.state.dataSourceCommits.concat(res.data);
                     this.setState({
                         dataSourceCommits: dataList
                     });

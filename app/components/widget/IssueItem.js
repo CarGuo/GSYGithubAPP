@@ -38,8 +38,8 @@ class IssueItem extends Component {
         let bottom = (this.props.issueTag) ? <View style={[styles.flexDirectionRowNotFlex, styles.centerH]}>
             <IconC name={this.props.state === 'open' ? "issue-opened" : "issue-closed"}
                    backgroundColor={Constant.transparentColor}
-                   color={Constant.subLightTextColor} size={14}>
-                <Text style={[styles.subLightSmallText]}>
+                   color={this.props.state === 'open' ? "green" : "red"} size={13}>
+                <Text style={[styles.subLightSmallText, {color: this.props.state === 'open' ? "green" : "red"}]}>
                     {this.props.state + " "}
                 </Text>
             </IconC>
@@ -91,7 +91,7 @@ class IssueItem extends Component {
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem();
                 }}
-                onLongPress={()=>{
+                onLongPress={() => {
                     this.props.onLongPressItem && this.props.onLongPressItem();
                 }}>
                 <View style={[styles.flexDirectionRowNotFlex,]}>

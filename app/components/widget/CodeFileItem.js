@@ -43,7 +43,7 @@ class CodeFileItem extends Component {
     render() {
         let {onClickFun, itemText, titleStyle, textStyle, itemIcon, itemTextTitle} = this.props;
         let leftIcon = (itemIcon) ?
-            <Icon name={itemIcon} size={14} color={Constant.miWhite}/>
+            <Icon name={itemIcon} size={14} color={Constant.subTextColor}/>
             : <View/>;
         return (
             <TouchableOpacity

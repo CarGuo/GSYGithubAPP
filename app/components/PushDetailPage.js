@@ -49,7 +49,7 @@ class PushDetailPage extends Component {
         return (
             <CodeFileItem
                 itemIcon={"code"}
-                titleStyle={[styles.subSmallText]}
+                titleStyle={[styles.subSmallText, {fontSize: Constant.minTextSize}]}
                 itemTextTitle={rowData.filename}
                 itemText={nameSplit[nameSplit.length - 1]}
                 onClickFun={() => {

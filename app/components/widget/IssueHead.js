@@ -73,10 +73,11 @@ class IssueItem extends Component {
                             </Text>
                             <IconC name={this.props.state === 'open' ? "issue-opened" : "issue-closed"}
                                    backgroundColor={Constant.transparentColor}
-                                   color={Constant.miWhite} size={14}
+                                   color={this.props.state === 'open' ? "green" : "red"} size={13}
                                    style={styles.centerH}>
-                                <Text style={[styles.miLightSmallText]}>
-                                    {"  " + this.props.state + "  "}
+                                <Text
+                                    style={[styles.miLightSmallText, {color: this.props.state === 'open' ? "green" : "red"}]}>
+                                    {" " + this.props.state + "  "}
                                 </Text>
                             </IconC>
                             <Icon name="comment"
@@ -110,7 +111,7 @@ class IssueItem extends Component {
                             style: styles.miLightSmallText,
                             numberOfLines: 100,
                         }}
-                        customRenderer={()=>{
+                        customRenderer={() => {
 
                         }}
                         textComponent={() => {
