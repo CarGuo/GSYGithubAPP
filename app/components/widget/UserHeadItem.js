@@ -8,6 +8,7 @@ import * as Constant from '../../style/constant'
 import IconTextItem from './IconTextItem'
 import IconTextAutoLinkItem from './IconTextAutoLinkItem'
 import Icon from 'react-native-vector-icons/Ionicons'
+import IconF from 'react-native-vector-icons/FontAwesome'
 import {Actions} from "react-native-router-flux";
 import I18n from '../../style/i18n'
 import NameValueItem from './NameValueItem'
@@ -22,7 +23,7 @@ class UserHeadItem extends Component {
         let hint = I18n('userInfoNoting');
         let {
             link, userPic, userName, userDisPlayName, des, location, groupName,
-            follower, followed, repos, star, setting
+            follower, followed, repos, star, setting, notify
         } = this.props;
         return (
             <View style={[{
@@ -71,9 +72,19 @@ class UserHeadItem extends Component {
                                }]}/>
                     </View>
                     <View style={{marginLeft: Constant.normalMarginEdge}}>
-                        <Text style={[styles.largeTextWhite, {fontWeight: "bold",}]}>
-                            {(userDisPlayName) ? userDisPlayName : hintNum}
-                        </Text>
+                        <View style={[styles.centerH, styles.flexDirectionRowNotFlex]}>
+                            <Text style={[styles.largeTextWhite, {fontWeight: "bold",}]}>
+                                {(userDisPlayName) ? userDisPlayName : hintNum}
+                            </Text>
+                            <TouchableOpacity
+                                style={[styles.flexDirectionRowNotFlex, {marginLeft: Constant.normalMarginEdge / 2,}]}
+                                onPress={() => {
+                                    Actions.NotifyPage();
+                                }}>
+                                <IconF name={'bell'} size={setting ? 15 : 1}
+                                       color={notify ? Constant.actionBlue : Constant.miWhite}/>
+                            </TouchableOpacity>
+                        </View>
                         <Text style={[styles.subLightSmallText,]}>{(userName) ? userName : hintNum}</Text>
                         <IconTextItem
                             text={(groupName) ? groupName : hint} icon={'group'}
