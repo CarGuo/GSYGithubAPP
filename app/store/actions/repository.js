@@ -46,6 +46,18 @@ const searchRepository = async (q, language, sort, order, type, page = 1, pageSi
 };
 
 /**
+ * 搜索仓库
+ */
+const searchRepositoryIssue = async (q, name, reposName, page = 1) => {
+    let qu = q + `%2Brepo%3A${name}%2F${reposName}`;
+    let res = await RepositoryDao.searchRepositoryIssueDao(qu, page);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
+/**
  * 用户自己的仓库
  */
 const getUserRepository = async (userName, page = 1) => {
@@ -207,5 +219,6 @@ export default {
     getReposCommitsInfo,
     getRepositoryTag,
     getReposFileDir,
+    searchRepositoryIssue,
 
 }

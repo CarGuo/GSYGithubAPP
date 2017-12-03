@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
 import * as Constant from "../style/constant"
+import repositoryActions from "../store/actions/repository"
 import I18n from '../style/i18n'
 import issueActions from '../store/actions/issue'
 import PullListView from './widget/PullLoadMoreListView'
@@ -42,6 +43,27 @@ class IssueListPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
+            this. _searchText();
+        });
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    _searchTextChange(text) {
+        this.searchText = text;
+    }
+
+    _searchText() {
+        Keyboard.dismiss();
+        if (this.refs.pullList) {
+            this.refs.pullList.showRefreshState();
+        }
+        if (this.searchText === null || this.searchText.trim().length === 0) {
+            if (this.refs.pullList) {
+                this.refs.pullList.refreshComplete(false);
+            }
             issueActions.getRepositoryIssue(0, this.props.userName, this.props.repositoryName).then((res) => {
                 let size = 0;
                 if (res && res.result) {
@@ -54,50 +76,12 @@ class IssueListPage extends Component {
                 }
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                    this.refs.pullList.scrollToTop();
                 }
-            })
-        });
-    }
-
-    componentWillUnmount() {
-
-    }
-
-    componentWillReceiveProps(newProps) {
-        let changed = false;
-        if (newProps.selectTypeData !== this.selectTypeData) {
-            this.selectTypeData = newProps.selectTypeData;
-            changed = true;
-        }
-        if (newProps.selectSortData !== this.selectSortData) {
-            this.selectSortData = newProps.selectSortData;
-            changed = true;
-        }
-        if (newProps.selectLanguageData !== this.selectLanguageData) {
-            this.selectLanguageData = newProps.selectLanguageData;
-            changed = true;
-        }
-        if (changed) {
-            this._searchText();
-        }
-    }
-
-    _searchTextChange(text) {
-        this.searchText = text;
-    }
-
-    _searchText() {
-        Keyboard.dismiss();
-        if (this.searchText === null || this.searchText.trim().length === 0) {
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete(false);
-            }
+            });
             return
         }
-        if (this.refs.pullList) {
-            this.refs.pullList.showRefreshState();
-        }
-        /*repositoryActions.searchRepository(this.searchText, this.selectLanguageData, this.selectTypeData, this.selectSortData, 1).then((res) => {
+        repositoryActions.searchRepositoryIssue(this.searchText, this.props.userName, this.props.repositoryName, 1).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;
@@ -109,9 +93,10 @@ class IssueListPage extends Component {
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                    this.refs.pullList.scrollToTop();
                 }
             }, 500);
-        });*/
+        });
     }
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
@@ -146,7 +131,24 @@ class IssueListPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        issueActions.getRepositoryIssue(this.page, this.props.userName, this.props.repositoryName).then((res) => {
+        if (this.searchText === null || this.searchText.trim().length === 0) {
+            issueActions.getRepositoryIssue(this.page, this.props.userName, this.props.repositoryName).then((res) => {
+                let size = 0;
+                if (res && res.result) {
+                    this.page++;
+                    let dataList = this.state.dataSource.concat(res.data);
+                    this.setState({
+                        dataSource: dataList
+                    });
+                    size = res.data.length;
+                }
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                }
+            });
+            return
+        }
+        repositoryActions.searchRepositoryIssue(this.searchText, this.props.userName, this.props.repositoryName, this.page).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page++;

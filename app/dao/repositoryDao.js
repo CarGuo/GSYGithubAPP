@@ -20,6 +20,15 @@ const searchRepositoryDao = async (q, sort, order, type, page, pageSize) => {
     };
 };
 
+const searchRepositoryIssueDao = async (q, page) => {
+    let url = Address.repositoryIssueSearch(q) + Address.getPageParams("&", page);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data ? res.data.items : res.data,
+        result: res.result
+    };
+};
+
 const getUserRepositoryDao = async (userName, page) => {
     let url = Address.userRepos(userName) + Address.getPageParams("&", page);
     let res = await await Api.netFetch(url);
@@ -176,4 +185,5 @@ export default {
     getReposCommitsInfoDao,
     getRepositoryTagDao,
     getReposFileDirDao,
+    searchRepositoryIssueDao,
 }
