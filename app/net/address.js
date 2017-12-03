@@ -280,6 +280,9 @@ export default AddressLocal = {
      * 通知 get
      */
     getNotifation: (all, participating) => {
+        if (!all && !participating) {
+            return `${host}notifications`
+        }
         if (!all) {
             all = false
         }

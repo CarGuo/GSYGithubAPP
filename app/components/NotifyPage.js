@@ -10,7 +10,7 @@ import {Actions, Tabs} from 'react-native-router-flux';
 import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
-import repositoryActions from '../store/actions/repository'
+import userActions from '../store/actions/user'
 import WebComponent from './widget/WebComponent'
 import CommonBottomBar from './widget/CommonBottomBar'
 import IssueListPage from './IssueListPage'
@@ -27,6 +27,7 @@ class NotifyPage extends Component {
         super(props);
         this.page = 2;
         this._refresh = this._refresh.bind(this);
+        this._asRead = this._asRead.bind(this);
         this.state = {
             index: 0,
             routes: [
@@ -38,9 +39,6 @@ class NotifyPage extends Component {
     }
 
     componentDidMount() {
-        InteractionManager.runAfterInteractions(() => {
-            this._refresh();
-        });
     }
 
     componentWillUnmount() {
@@ -48,10 +46,22 @@ class NotifyPage extends Component {
     }
 
     _refresh() {
-
+        if (this.refs.unReadList)
+            this.refs.unReadList._refresh();
+        if (this.refs.partList)
+            this.refs.partList._refresh();
+        if (this.refs.allList)
+            this.refs.allList._refresh();
     }
 
     _handleIndexChange = index => this.setState({index});
+
+
+    _asRead(id) {
+        userActions.setNotificationAsRead(id).then(() => {
+            this._refresh();
+        })
+    }
 
     _renderHeader = props =>
         <TabBar {...props}
@@ -65,8 +75,10 @@ class NotifyPage extends Component {
             case '1':
                 return (
                     <ListPage
+                        refs={"unReadList"}
                         dataType={'notify'}
                         showType={'notify'}
+                        onItemClickEx={this._asRead}
                         currentUser={this.props.ownerName}
                         currentRepository={this.props.repositoryName}
                     />
@@ -74,8 +86,10 @@ class NotifyPage extends Component {
             case '2':
                 return (
                     <ListPage
+                        refs={"partList"}
                         dataType={'notify'}
                         showType={'notify'}
+                        onItemClickEx={this._asRead}
                         participating={true}
                         currentUser={this.props.ownerName}
                         currentRepository={this.props.repositoryName}
@@ -84,9 +98,11 @@ class NotifyPage extends Component {
             case '3':
                 return (
                     <ListPage
+                        refs={"allList"}
                         dataType={'notify'}
-                        all={true}
                         showType={'notify'}
+                        onItemClickEx={this._asRead}
+                        all={true}
                         currentUser={this.props.ownerName}
                         currentRepository={this.props.repositoryName}
                     />

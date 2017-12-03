@@ -104,12 +104,23 @@ const getFollowedListDao = async (userName, page) => {
 };
 
 const getNotifationDao = async (all, participating, page) => {
-    let url = Address.getNotifation(all, participating) + Address.getPageParams("&", page);
+    let tag = (!all && !participating) ? '?' : "&";
+    let url = Address.getNotifation(all, participating) + Address.getPageParams(tag, page);
     let res = await Api.netFetch(url)
     return {
         result: res.result,
         data: res.data
     }
+};
+
+const setNotificationAsReadDao = async (id) => {
+    let url = Address.setNotificationAsRead(id)
+    let res = await Api.netFetch(url, "PATCH");
+    return {
+        result: res.result,
+        data: res.data
+    }
+
 };
 
 
@@ -120,4 +131,5 @@ export default {
     getFollowerListDao,
     getFollowedListDao,
     getNotifationDao,
+    setNotificationAsReadDao
 }

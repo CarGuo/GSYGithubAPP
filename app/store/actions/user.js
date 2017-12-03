@@ -76,6 +76,14 @@ const getNotifation = async (all, participating, page) => {
     }
 };
 
+const setNotificationAsRead = async (id) => {
+    let res = await UserDao.setNotificationAsReadDao(id);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
 
 export default {
     initUserInfo,
@@ -84,5 +92,6 @@ export default {
     clearUserInfo,
     getFollowerList,
     getFollowedList,
-    getNotifation
+    getNotifation,
+    setNotificationAsRead
 }

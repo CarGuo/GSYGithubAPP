@@ -118,12 +118,13 @@ class ListPage extends Component {
                         actionTime={rowData.updated_at}
                         actionUser={rowData.repository.full_name}
                         actionUserPic={rowData.repository.owner.avatar_url}
-                        des={I18n('notifyType', {
+                        des={rowData.reason + "  " + I18n('notifyType', {
                             option1: rowData.subject.type,
                             option2: (rowData.unread) ? I18n('unread') : I18n('readed')
                         })}
                         actionTarget={rowData.subject.title}
                         onPressItem={() => {
+                            this.props.onItemClickEx && this.props.onItemClickEx(rowData.id);
                             if (rowData.subject.type === 'Issue') {
                                 let tmp = rowData.subject.url.split("/");
                                 Actions.IssueDetail({
@@ -337,6 +338,7 @@ ListPage.propTypes = {
     dataType: PropTypes.string,
     all: PropTypes.bool,
     participating: PropTypes.bool,
+    onItemClickEx: PropTypes.func,
     currentUser: PropTypes.string,
     currentRepository: PropTypes.string
 };
