@@ -41,6 +41,15 @@ class EventItem extends Component {
                   numberOfLines={Constant.normalNumberOfLine}>
                 {this.props.des}
             </Text> : <View/>;
+        let pic = (actionUserPic) ? <UserImage uri={actionUserPic}
+                                               loginUser={actionUser}
+                                               resizeMethod="scale"
+                                               style={[{
+                                                   height: Constant.smallIconSize, width: Constant.smallIconSize,
+                                                   marginTop: 5,
+                                                   marginRight: Constant.normalMarginEdge / 2,
+                                                   borderRadius: Constant.smallIconSize / 2
+                                               }]}/> : <View/>;
         return (
             <TouchableOpacity
                 style={[{
@@ -55,18 +64,10 @@ class EventItem extends Component {
                 }}
             >
                 <View style={[styles.flexDirectionRowNotFlex,]}>
-                    <UserImage uri={actionUserPic}
-                               loginUser={actionUser}
-                               resizeMethod="scale"
-                               style={[{
-                                   height: Constant.smallIconSize, width: Constant.smallIconSize,
-                                   marginTop: 5,
-                                   borderRadius: Constant.smallIconSize / 2
-                               }]}/>
+                    {pic}
                     <View style={[styles.flex, styles.centerH, styles.flexDirectionRowNotFlex]}>
                         <Text style={[styles.flex, styles.smallText, {
                             fontWeight: "bold",
-                            marginLeft: Constant.normalMarginEdge / 2
                         }]}>
                             {actionUser}
                         </Text>

@@ -70,8 +70,7 @@ class RepositoryDetailActivity extends Component {
             return (
                 <EventItem
                     actionTime={rowData.commit.committer.date}
-                    actionUser={rowData.author.login}
-                    actionUserPic={rowData.author.avatar_url}
+                    actionUser={rowData.commit.committer.name}
                     des={"sha:" + rowData.sha}
                     onPressItem={() => {
                         Actions.PushDetailPage({
