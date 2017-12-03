@@ -51,12 +51,19 @@ export const generateMdSampleHtml = (mdData) => {
 
 export const generateMd2Html = (mdData, userName, reposName, branch = 'master', needMd = true) => {
     let dataPre = mdData.replace(/src=*[^>]*>/gi, function (match, capture) {
-        let newStr = match.replace(new RegExp("/blob/", "gm"), "/raw/");
+        let newStr = match;
+        if (match) {
+            newStr = match.replace(new RegExp("/blob/", "gm"), "/raw/");
+        }
         return newStr;
     });
     let data = dataPre.replace(/<pre[^>]*>([^]+)<\/pre>/gi, function (match, capture) {
-        let newStr = highlightAuto(capture).value;
-        return "<pre><code>" + newStr + "</code></pre>";
+        if (capture) {
+            let newStr = highlightAuto(capture).value;
+            return "<pre><code>" + newStr + "</code></pre>";
+        } else {
+            return match;
+        }
     });
     let renderer = new marked.Renderer();
     renderer.image = function (href, title, text) {

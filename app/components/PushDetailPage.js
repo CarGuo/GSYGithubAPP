@@ -59,6 +59,7 @@ class PushDetailPage extends Component {
                         ownerName: this.props.userName,
                         repositoryName: this.props.repositoryName,
                         branch: 'master',
+                        needRequest: false,
                         detail: generateMd2Html("<pre>" + rowData.patch + "</pre>", this.props.ownerName,
                             this.props.repositoryName, this.props.branch, false),
                     })
