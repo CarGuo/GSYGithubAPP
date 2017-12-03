@@ -132,6 +132,8 @@ class ListPage extends Component {
                                 Actions.IssueDetail({
                                     issue: {
                                         user: {},
+                                        comments: 0,
+                                        state: "",
                                         number: tmp[tmp.length - 1]
                                     },
                                     title: rowData.repository.full_name,
