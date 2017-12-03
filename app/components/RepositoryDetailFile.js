@@ -32,6 +32,7 @@ class RepositoryDetailActivity extends Component {
             headerList: ["."],
             path: this.props.props
         };
+        this.loading = false;
         this.dsHeader = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     }
 
@@ -52,6 +53,9 @@ class RepositoryDetailActivity extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
+                    if (this.loading) {
+                        return
+                    }
                     let {headerList} = this.state;
                     if (headerList[rowID] !== ".") {
                         let newHeaderList = headerList.slice(0, parseInt(rowID) + 1);
@@ -69,6 +73,7 @@ class RepositoryDetailActivity extends Component {
                         });
                         this._refresh("")
                     }
+                    this.loading = true;
                 }}
                 style={[{marginRight: Constant.normalMarginEdge,}]}>
                 <View
@@ -109,6 +114,9 @@ class RepositoryDetailActivity extends Component {
                     itemIcon={"file-directory"}
                     itemText={rowData.name}
                     onClickFun={() => {
+                        if (this.loading) {
+                            return
+                        }
                         let {headerList} = this.state;
                         headerList.push(rowData.name);
                         this.setState({
@@ -118,7 +126,8 @@ class RepositoryDetailActivity extends Component {
                         this.setState({
                             path: path,
                         });
-                        this._refresh(path)
+                        this._refresh(path);
+                        this.loading = true;
                     }}/>
             )
         }
@@ -151,7 +160,7 @@ class RepositoryDetailActivity extends Component {
                         this.refs.pullList.refreshComplete(false);
                     }
                 }, 500);
-
+                this.loading = false;
 
             }
         )
