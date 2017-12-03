@@ -90,6 +90,7 @@ class RepositoryDetailActivity extends Component {
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
         if (rowData.type === 'file') {
+            let {headerList} = this.state;
             return (
                 <CodeFileItem
                     itemIcon={"code"}
@@ -97,6 +98,13 @@ class RepositoryDetailActivity extends Component {
                     needTitle={false}
                     itemText={rowData.name}
                     onClickFun={() => {
+                        Actions.CodeDetailPage({
+                            path: headerList.slice(1, headerList.length).join("/") + "/" + rowData.name,
+                            title: rowData.name,
+                            ownerName: this.props.ownerName,
+                            repositoryName: this.props.repositoryName,
+                            branch: 'master',
+                        })
                     }}/>
 
             )

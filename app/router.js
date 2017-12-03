@@ -15,6 +15,7 @@ import NotifyPage from './components/NotifyPage'
 import IssueDetail from './components/IssueDetail'
 import VersionPage from './components/VersionPage'
 import PersonPage from './components/PersonPage'
+import CodeDetailPage from './components/CodeDetailPage'
 import SettingPage from './components/SettingPage'
 import RepositoryDetail from './components/RepositoryDetail'
 import PushDetailPage from './components/PushDetailPage'
@@ -130,6 +131,11 @@ const getRouter = () => {
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="NotifyPage" component={NotifyPage}
+                           title={I18n('notify')}
+                           renderRightButton={(params) => <CommonIconButton data={params}/>}
+                           renderLeftButton={() => <CustomBackButton/>}
+                    />
+                    <Scene key="CodeDetailPage" component={CodeDetailPage}
                            title={I18n('notify')}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}

@@ -2,7 +2,7 @@ import {Buffer} from 'buffer'
 import marked from 'marked'
 import {highlightAuto, configure} from 'highlight.js'
 import * as Constant from '../style/constant'
-import {screenHeight,screenWidth} from '../style'
+import {screenHeight, screenWidth} from '../style'
 import {Platform} from 'react-native'
 
 /**
@@ -50,10 +50,14 @@ export const generateMdSampleHtml = (mdData) => {
 };
 
 
-export const generateMd2Html = (mdData, userName, reposName, branch = 'master') => {
-    let data = mdData.replace(/src=*[^>]*>/gi, function (match, capture) {
+export const generateMd2Html = (mdData, userName, reposName, branch = 'master', needMd = true) => {
+    let dataPre = mdData.replace(/src=*[^>]*>/gi, function (match, capture) {
         let newStr = match.replace(new RegExp("/blob/", "gm"), "/raw/");
         return newStr;
+    });
+    let data = dataPre.replace(/<pre[^>]*>([^]+)<\/pre>/gi, function (match, capture) {
+        let newStr = highlightAuto(capture).value;
+        return "<pre><code>" + newStr + "</code></pre>";
     });
     let renderer = new marked.Renderer();
     renderer.image = function (href, title, text) {
@@ -91,7 +95,8 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master') 
             return newCode;
         }
     });
-    return generateCodeHtml(marked(data), false);
+    let source = (needMd) ? marked(data) : data;
+    return generateCodeHtml(source, false);
 };
 
 /**

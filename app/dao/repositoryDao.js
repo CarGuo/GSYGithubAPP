@@ -151,7 +151,7 @@ const getReposCommitsInfoDao = async (userName, reposName, sha) => {
 
 const getReposFileDirDao = async (userName, reposName, path = '', branch) => {
     let url = Address.reposDataDir(userName, reposName, path, branch);
-    let res = await await Api.netFetch(url);
+    let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html'});
     return {
         data: res.data,
         result: res.result

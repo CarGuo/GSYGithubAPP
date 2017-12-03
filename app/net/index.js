@@ -113,6 +113,7 @@ class HttpManager {
         } catch (e) {
             console.log(e, url);
             return {
+                data: response._bodyText,
                 result: response.ok,
                 code: response.status ? response.status : Code.NETWORK_JSON_EXCEPTION,
                 response
