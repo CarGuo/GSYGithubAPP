@@ -26,7 +26,6 @@ export const generateMdSampleHtml = (mdData) => {
         out += ' width="' + screenWidth - 50 + '"';
         out += ' height="' + 200 + '"';
         out += '/>';
-        console.log("FFF", out)
         return out;
     };
     renderer.paragraph = function (text) {

@@ -24,32 +24,34 @@ class CodeDetailPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            html: {}
+            detail: this.props.detail
         }
     }
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            reposActions.getReposFileDir(this.props.ownerName,
-                this.props.repositoryName, this.props.path).then((res) => {
-                    if (res && res.result) {
-                        this.setState({
-                            detail: generateMd2Html(res.data, this.props.ownerName,
-                                this.props.repositoryName, this.props.branch, false),
-                        })
-                    } else {
-                        this.setState({
-                            detail: "<h1>"+ I18n("fileNotSupport") +"</h1>",
-                        })
-                    }
-                    setTimeout(() => {
-                        if (this.refs.pullList) {
-                            this.refs.pullList.refreshComplete(false);
+            if (this.props.needRequest) {
+                reposActions.getReposFileDir(this.props.ownerName,
+                    this.props.repositoryName, this.props.path).then((res) => {
+                        if (res && res.result) {
+                            this.setState({
+                                detail: generateMd2Html(res.data, this.props.ownerName,
+                                    this.props.repositoryName, this.props.branch, false),
+                            })
+                        } else {
+                            this.setState({
+                                detail: "<h1>" + I18n("fileNotSupport") + "</h1>",
+                            })
                         }
-                    }, 500);
+                        setTimeout(() => {
+                            if (this.refs.pullList) {
+                                this.refs.pullList.refreshComplete(false);
+                            }
+                        }, 500);
 
-                }
-            )
+                    }
+                )
+            }
         })
     }
 
@@ -77,6 +79,8 @@ CodeDetailPage.propTypes = {
     repositoryName: PropTypes.string,
     title: PropTypes.string,
     branch: PropTypes.string,
+    detail: PropTypes.string,
+    needRequest: PropTypes.bool,
 };
 
 
@@ -86,6 +90,7 @@ CodeDetailPage.defaultProps = {
     ownerName: '',
     repositoryName: '',
     branch: 'master',
+    needRequest: true,
 };
 
 export default CodeDetailPage

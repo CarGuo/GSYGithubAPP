@@ -16,6 +16,7 @@ import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import PushDetailHeader from './widget/PushDetailHeader'
 import * as Config from '../config/'
+import {generateMd2Html} from "../utils/htmlUtils";
 
 /**
  * Issue详情
@@ -53,6 +54,14 @@ class PushDetailPage extends Component {
                 itemTextTitle={rowData.filename}
                 itemText={nameSplit[nameSplit.length - 1]}
                 onClickFun={() => {
+                    Actions.CodeDetailPage({
+                        title: nameSplit[nameSplit.length - 1],
+                        ownerName: this.props.userName,
+                        repositoryName: this.props.repositoryName,
+                        branch: 'master',
+                        detail: generateMd2Html("<pre>" + rowData.patch + "</pre>", this.props.ownerName,
+                            this.props.repositoryName, this.props.branch, false),
+                    })
                 }}/>
         )
     }
