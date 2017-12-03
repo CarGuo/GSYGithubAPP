@@ -17,7 +17,11 @@ export default AddressLocal = {
     /**
      * 搜索 get
      */
-    sreach: (q, sort, order, page, pageSize) => {
+    sreach: (q, sort, order, type, page, pageSize = Config.PAGE_SIZE) => {
+        if (type === 'user') {
+            return `${host}search/users?q=${q}&page=${page}&per_page=${pageSize}`
+
+        }
         if (!sort) {
             sort = "best%20match"
         }

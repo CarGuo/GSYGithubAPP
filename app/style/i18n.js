@@ -108,6 +108,8 @@ I18n.translations = {
         readed: 'readed',
         notify: 'notify',
         fileNotSupport: 'Not Support',
+        searchRepos: "Repository",
+        searchUser: "User",
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -205,6 +207,8 @@ I18n.translations = {
         readed: '已读',
         notify: '通知',
         fileNotSupport: '预览文件失败，可能文件类型不支持预览。',
+        searchRepos: "仓库",
+        searchUser: "用户",
     }
 };
 

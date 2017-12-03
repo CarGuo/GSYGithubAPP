@@ -130,6 +130,11 @@ class PullLoadMoreListView extends Component {
         });
     }
 
+    scrollToTop() {
+        if (this.refs.list)
+            this.refs.list.scrollTo({y: 0, animate: false});
+    }
+
     refreshComplete(showLoadMore = false) {
         this.setState({
             isRefreshing: false,

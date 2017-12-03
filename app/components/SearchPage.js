@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, TextInput, TouchableOpacity, Keyboard
+    View, StyleSheet, StatusBar, TextInput, TouchableOpacity, Keyboard
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
@@ -14,8 +14,8 @@ import repositoryActions from '../store/actions/repository'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import EventItem from './widget/EventItem'
-import CommonRowItem from './widget/CommonRowItem'
-import CustomSearchButton from './widget/CustomSearchButton'
+import CommonBottomBar from './widget/CommonBottomBar'
+import UserItem from './widget/UserItem'
 import PullListView from './widget/PullLoadMoreListView'
 import RepositoryItem from './widget/RepositoryItem'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -33,13 +33,15 @@ class SearchPage extends Component {
         this._searchText = this._searchText.bind(this);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
+        this._getBottomItem = this._getBottomItem.bind(this);
         this.searchText = "";
         this.page = 2;
         this.selectTypeData = null;
         this.selectSortData = null;
         this.selectLanguageData = null;
         this.state = {
-            dataSource: []
+            dataSource: [],
+            select: 0
         }
     }
 
@@ -65,7 +67,7 @@ class SearchPage extends Component {
             changed = true;
         }
         if (changed) {
-            this._searchText();
+            this._refresh();
         }
     }
 
@@ -73,8 +75,9 @@ class SearchPage extends Component {
         this.searchText = text;
     }
 
-    _searchText() {
+    _searchText(select) {
         Keyboard.dismiss();
+        let type = (select === 0) ? null : 'user';
         if (this.searchText === null || this.searchText.trim().length === 0) {
             if (this.refs.pullList) {
                 this.refs.pullList.refreshComplete(false);
@@ -82,9 +85,10 @@ class SearchPage extends Component {
             return
         }
         if (this.refs.pullList) {
+            this.refs.pullList.loadMoreComplete();
             this.refs.pullList.showRefreshState();
         }
-        repositoryActions.searchRepository(this.searchText, this.selectLanguageData, this.selectTypeData, this.selectSortData, 1).then((res) => {
+        repositoryActions.searchRepository(this.searchText, this.selectLanguageData, this.selectTypeData, this.selectSortData, type, 1).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;
@@ -96,38 +100,56 @@ class SearchPage extends Component {
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                    this.refs.pullList.scrollToTop()
                 }
             }, 500);
         });
     }
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
-        return (
-            <RepositoryItem
-                ownerName={rowData.owner.login}
-                ownerPic={rowData.owner.avatar_url}
-                repositoryName={rowData.name}
-                repositoryStar={rowData.watchers_count + ""}
-                repositoryFork={rowData.forks_count + ""}
-                repositoryWatch={rowData.open_issues + ""}
-                repositoryType={rowData.language}
-                repositoryDes={(rowData.description) ? rowData.description : '---'}
-            />
-        )
+        if (this.state.select === 0) {
+            return (
+                <RepositoryItem
+                    ownerName={rowData.owner.login}
+                    ownerPic={rowData.owner.avatar_url}
+                    repositoryName={rowData.name}
+                    repositoryStar={rowData.watchers_count + ""}
+                    repositoryFork={rowData.forks_count + ""}
+                    repositoryWatch={rowData.open_issues + ""}
+                    repositoryType={rowData.language}
+                    repositoryDes={(rowData.description) ? rowData.description : '---'}
+                />
+            )
+        } else {
+            return (
+                <UserItem
+                    location={rowData.location}
+                    actionUser={rowData.login}
+                    actionUserPic={rowData.avatar_url}
+                    des={rowData.bio}/>
+            );
+        }
     }
 
     /**
      * 刷新
      * */
-    _refresh() {
-        this._searchText();
+    _refresh(select) {
+        if (select === undefined) {
+            select = this.state.select;
+        }
+        this._searchText(select);
     }
 
     /**
      * 加载更多
      * */
-    _loadMore() {
-        repositoryActions.searchRepository(this.searchText, this.selectLanguageData, this.selectTypeData, this.selectSortData, this.page).then((res) => {
+    _loadMore(select) {
+        if (!select) {
+            select = this.state.select;
+        }
+        let type = (select === 0) ? null : 'user';
+        repositoryActions.searchRepository(this.searchText, this.selectLanguageData, this.selectTypeData, this.selectSortData, type, this.page).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page++;
@@ -145,6 +167,36 @@ class SearchPage extends Component {
         });
     }
 
+    _getBottomItem() {
+        let {select} = this.state;
+        return [{
+            itemName: I18n("searchRepos"),
+            itemTextColor: select === 0 ? Constant.white : Constant.subTextColor,
+            icon: select === 0 ? "check" : null,
+            iconColor: Constant.white,
+            itemClick: () => {
+                this.setState({
+                    select: 0,
+                    dataSource: []
+                });
+                this._refresh(0);
+            }, itemStyle: {}
+        }, {
+            itemName: I18n("searchUser"),
+            itemTextColor: select === 1 ? Constant.white : Constant.subTextColor,
+            icon: select === 1 ? "check" : null,
+            iconColor: Constant.white,
+            itemClick: () => {
+                this.setState({
+                    select: 1,
+                    dataSource: []
+                });
+                this._refresh(1);
+            }, itemStyle: {
+                borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
+            }
+        },]
+    }
 
     render() {
         return (
@@ -181,11 +233,19 @@ class SearchPage extends Component {
                     <TouchableOpacity
                         style={[styles.centered, {marginTop: 2, marginHorizontal: Constant.normalMarginEdge}]}
                         onPress={() => {
-                            this._searchText()
+                            this._refresh()
                         }}>
                         <Icon name={'md-search'} size={28} color={Constant.subLightTextColor}/>
                     </TouchableOpacity>
                 </View>
+                <CommonBottomBar
+                    rootStyles={{
+                        marginHorizontal: Constant.normalMarginEdge,
+                        backgroundColor: Constant.primaryColor,
+                        marginTop: Constant.normalMarginEdge,
+                        borderRadius: 4,
+                    }}
+                    dataList={this._getBottomItem()}/>
                 <View style={{height: 2, opacity: 0.3}}/>
                 <PullListView
                     style={{flex: 1}}
