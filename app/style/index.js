@@ -171,6 +171,14 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         borderWidth: 1,
         padding: constant.normalMarginEdge,
+    },
+    pCode: {
+        color: constant.subTextColor,
+        backgroundColor: '#eeeeee',
+        borderColor: '#cccccc',
+        borderRadius: 1,
+        borderWidth: 1,
+        padding: constant.normalMarginEdge,
     }
 });
 

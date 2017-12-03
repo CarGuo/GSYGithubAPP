@@ -124,7 +124,9 @@ class ListPage extends Component {
                         })}
                         actionTarget={rowData.subject.title}
                         onPressItem={() => {
-                            this.props.onItemClickEx && this.props.onItemClickEx(rowData.id);
+                            if (rowData.unread) {
+                                this.props.onItemClickEx && this.props.onItemClickEx(rowData.id);
+                            }
                             if (rowData.subject.type === 'Issue') {
                                 let tmp = rowData.subject.url.split("/");
                                 Actions.IssueDetail({
@@ -265,7 +267,7 @@ class ListPage extends Component {
                 });
                 break;
             case 'notify':
-                userActions.getNotifation(this.props.all, this.props.participating, 0).then((res) => {
+                userActions.getNotifation(this.props.all, this.props.participating, this.page).then((res) => {
                     this._loadMoreRes(res)
                 });
                 break;

@@ -106,7 +106,7 @@ class IssueItem extends Component {
                         }]}
                         numberOfLines={100}
                         value={issueDesHtml ? issueDesHtml : ""}
-                        stylesheet={{pre: styles.inCode}}
+                        stylesheet={{pre: styles.inCode, code: styles.pCode}}
                         textComponentProps={{
                             style: styles.miLightSmallText,
                             numberOfLines: 100,

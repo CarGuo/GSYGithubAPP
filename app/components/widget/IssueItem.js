@@ -69,7 +69,7 @@ class IssueItem extends Component {
                 style: styles.subSmallText,
                 numberOfLines: 100,
             }}
-            stylesheet={{pre: styles.inCode}}
+            stylesheet={{pre: styles.inCode, code: styles.pCode}}
             textComponent={() => {
                 return (
                     <Text/>

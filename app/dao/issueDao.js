@@ -27,7 +27,7 @@ const getIssueCommentDao = async (page = 0, userName, repository, number) => {
 
 const getIssueInfoDao = async (userName, repository, number) => {
     let url = Address.getIssueInfo(userName, repository, number);
-    let res = await Api.netFetch(url);
+    let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
     return {
         data: res.data,
         result: res.result
