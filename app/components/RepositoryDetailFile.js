@@ -90,7 +90,7 @@ class RepositoryDetailActivity extends Component {
                         marginTop: Constant.normalMarginEdge,
                         borderRadius: 3,
                     }]}
-                    textStyle={{marginLeft: Constant.normalMarginEdge}}
+                    textStyle={[{marginLeft: Constant.normalMarginEdge}]}
                     itemIcon={"file-directory"}
                     itemText={rowData.name}
                     onClickFun={() => {
@@ -105,8 +105,18 @@ class RepositoryDetailActivity extends Component {
     _refresh() {
         reposActions.getReposFileDir(this.props.ownerName, this.props.repositoryName, this.state.path).then((res) => {
                 if (res && res.result) {
+                    let dir = [];
+                    let file = [];
+                    res.data.forEach((item) => {
+                        if (item.type === 'file') {
+                            file.push(item)
+                        } else {
+                            dir.push(item)
+                        }
+                    });
+                    let data = dir.concat(file);
                     this.setState({
-                        dataSource: res.data
+                        dataSource: data
                     })
                 }
                 setTimeout(() => {
