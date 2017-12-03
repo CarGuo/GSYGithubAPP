@@ -15,6 +15,7 @@ import WebComponent from './widget/WebComponent'
 import CommonBottomBar from './widget/CommonBottomBar'
 import IssueListPage from './IssueListPage'
 import RepositoryDetailActivity from './RepositoryDetailActivity'
+import RepositoryDetailFile from './RepositoryDetailFile'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 
 /**
@@ -111,7 +112,10 @@ class RepositoryDetail extends Component {
                 );
             case '3':
                 return (
-                    <View style={[{flex: 1}, {backgroundColor: Constant.primaryColor}]}/>
+                    <RepositoryDetailFile
+                        ownerName={this.props.ownerName}
+                        repositoryName={this.props.repositoryName}
+                    />
                 );
             case '4':
                 return (
@@ -165,7 +169,8 @@ class RepositoryDetail extends Component {
                 Actions.VersionPage({
                     ownerName: this.props.ownerName,
                     repositoryName: this.props.repositoryName,
-                    title: this.props.ownerName + "/" + this.props.repositoryName})
+                    title: this.props.ownerName + "/" + this.props.repositoryName
+                })
             }, itemStyle: {}
         },]
     }

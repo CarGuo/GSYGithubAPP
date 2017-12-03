@@ -180,6 +180,13 @@ const getReposCommitsInfo = async (userName, reposName, sha) => {
         result: res.result
     };
 };
+const getReposFileDir = async (userName, reposName, path) => {
+    let res = await RepositoryDao.getReposFileDirDao(userName, reposName, path);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
 
 
 export default {
@@ -198,6 +205,7 @@ export default {
     getRepositoryRelease,
     getReposCommits,
     getReposCommitsInfo,
-    getRepositoryTag
+    getRepositoryTag,
+    getReposFileDir,
 
 }

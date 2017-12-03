@@ -41,10 +41,16 @@ class CodeFileItem extends Component {
     }
 
     render() {
-        let {onClickFun, itemText, titleStyle, textStyle, itemIcon, itemTextTitle} = this.props;
+        let {onClickFun, itemText, titleStyle, textStyle, itemIcon, itemTextTitle, needTitle} = this.props;
         let leftIcon = (itemIcon) ?
             <Icon name={itemIcon} size={14} color={Constant.subTextColor}/>
             : <View/>;
+        let title = (needTitle) ?
+            <View style={[styles.flexDirectionRow, styles.centerH, {
+                marginTop: Constant.normalMarginEdge
+            }]}>
+                <Text style={[{flex: 1}, ...titleStyle]}>{itemTextTitle}</Text>
+            </View> : <View/>;
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -53,11 +59,7 @@ class CodeFileItem extends Component {
                 style={[{
                     marginHorizontal: Constant.normalMarginEdge,
                 }, ...this.props.viewStyle]}>
-                <View style={[styles.flexDirectionRow, styles.centerH, {
-                    marginTop: Constant.normalMarginEdge
-                }]}>
-                    <Text style={[{flex: 1}, ...titleStyle]}>{itemTextTitle}</Text>
-                </View>
+                {title}
                 <View
                     style={[styles.flexDirectionRow, styles.centerH, styles.shadowCard, {
                         padding: Constant.normalMarginEdge,
@@ -74,6 +76,7 @@ class CodeFileItem extends Component {
 
 const propTypes = {
     itemText: PropTypes.string,
+    needTitle: PropTypes.bool,
     onClickFun: PropTypes.func,
     showIconNext: PropTypes.bool,
     topLine: PropTypes.bool,
@@ -89,6 +92,7 @@ CodeFileItem.defaultProps = {
     showIconNext: true,
     topLine: true,
     bottomLine: true,
+    needTitle: true,
     textStyle: styles.smallText,
     itemIconColor: Constant.primaryColor,
     itemIconSize: Constant.smallIconSize,

@@ -17,6 +17,7 @@ import {
 import * as Constant from '../../style/constant'
 import styles from '../../style'
 import Icon from 'react-native-vector-icons/EvilIcons'
+import IconC from 'react-native-vector-icons/Octicons'
 
 
 /**
@@ -48,7 +49,7 @@ class CommonRowItem extends Component {
         let tl = (topLine) ? StyleSheet.hairlineWidth : 0;
         let bl = (bottomLine) ? StyleSheet.hairlineWidth : 0;
         let leftIcon = (itemIcon) ?
-            <Icon name={itemIcon} size={Constant.smallIconSize} color={Constant.primaryColor}/>
+            <IconC name={itemIcon} size={13} color={Constant.primaryColor}/>
             : <View/>;
         return (
             <TouchableOpacity

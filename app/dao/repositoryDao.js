@@ -149,6 +149,15 @@ const getReposCommitsInfoDao = async (userName, reposName, sha) => {
     };
 };
 
+const getReposFileDirDao = async (userName, reposName, path = '', branch) => {
+    let url = Address.reposDataDir(userName, reposName, path, branch);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 export default {
     getTrendDao,
     searchRepositoryDao,
@@ -165,5 +174,6 @@ export default {
     getRepositoryReleaseDao,
     getReposCommitsDao,
     getReposCommitsInfoDao,
-    getRepositoryTagDao
+    getRepositoryTagDao,
+    getReposFileDirDao,
 }

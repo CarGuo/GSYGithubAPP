@@ -210,8 +210,8 @@ export default AddressLocal = {
     /**
      * 仓库路径下的内容 get
      */
-    reposDataDir: (reposOwner, repos, path) => {
-        return `${host}repos/${reposOwner}/${repos}/contents/${path}`
+    reposDataDir: (reposOwner, repos, path, branch = 'master') => {
+        return `${host}repos/${reposOwner}/${repos}/contents/${path}?branch=${branch}`
     },
     /**
      * 我的用户信息 GET
