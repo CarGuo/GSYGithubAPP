@@ -43,7 +43,7 @@ class ReleaseItem extends Component {
                 backgroundColor: Constant.transparentColor
             }]}
             numberOfLines={100}
-            value={actionTargetHtml}
+            value={actionTarget}
             textComponentProps={{
                 style: styles.subSmallText,
                 numberOfLines: 100,

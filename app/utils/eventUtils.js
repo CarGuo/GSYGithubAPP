@@ -1,5 +1,6 @@
 import {Actions} from 'react-native-router-flux'
-import {getFullName} from './htmlUtils'
+import {StyleSheet} from 'react-native'
+import * as Constant from '../style/constant'
 
 export const getActionAndDes = (event) => {
     let actionStr;
@@ -145,15 +146,15 @@ export const ActionUtils = (event) => {
             });
             break;
         case 'PushEvent':
-            if (!event.payload.comments) {
+            if (!event.payload.commits) {
                 Actions.RepositoryDetail({
                     repositoryName: repositoryName, ownerName: owner
                     , title: repositoryName
                 });
-            } else if (event.payload.comments.length === 1) {
-                //todo 去提交列表
+            } else if (event.payload.commits.length === 1) {
+                goToPush(repositoryName, owner, event.payload.commits[0].sha)
             } else {
-
+                Actions.OptionModal({dataList: getOptionItem(repositoryName, owner, event.payload.commits)});
             }
             break;
         case 'ReleaseEvent':
@@ -184,4 +185,40 @@ export const ActionUtils = (event) => {
             });
             break;
     }
+};
+
+const getOptionItem = (repositoryName, owner, commits) => {
+    let data = [];
+    console.log(commits);
+    let i = 0;
+    commits.forEach((dada) => {
+        let item = {
+            itemName: dada.message + " " + dada.sha.substring(0, 4),
+            itemClick: () => {
+                goToPush(repositoryName, owner, dada.sha)
+            }, itemStyle: {
+                borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
+            }
+        };
+        data.push(item)
+    });
+    return data;
+};
+
+const goToPush = (repositoryName, owner, sha) => {
+    Actions.PushDetailPage({
+        repositoryName: repositoryName,
+        userName: owner,
+        title: owner + "/" + repositoryName,
+        sha: sha,
+        needRightBtn: true,
+        rightBtn: 'home',
+        rightBtnPress: () => {
+            Actions.RepositoryDetail({
+                repositoryName: repositoryName,
+                ownerName: owner,
+                title: owner + "/" + repositoryName,
+            });
+        }
+    });
 };

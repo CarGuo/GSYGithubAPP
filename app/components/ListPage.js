@@ -25,6 +25,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/index'
 import PropTypes from 'prop-types';
 import {getFullName} from '../utils/htmlUtils'
+import {generateMd2Html} from "../utils/htmlUtils";
 
 
 /**
@@ -104,10 +105,17 @@ class ListPage extends Component {
                     <ReleaseItem
                         actionTime={rowData.published_at}
                         actionTitle={rowData.name}
-                        actionTarget={rowData.body}
+                        actionTarget={rowData.target_commitish}
                         actionTargetHtml={rowData.body_html}
                         onPressItem={() => {
-
+                            if (rowData.body_html) {
+                                Actions.CodeDetailPage({
+                                    title: rowData.name,
+                                    needRequest: false,
+                                    detail: generateMd2Html(rowData.body_html, this.props.ownerName,
+                                        this.props.repositoryName, this.props.branch, false),
+                                })
+                            }
                         }}
                     />
                 );
