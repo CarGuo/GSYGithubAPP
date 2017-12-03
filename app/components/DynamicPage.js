@@ -94,6 +94,7 @@ class DynamicPage extends Component {
     render() {
         let {eventState, userState} = this.props;
         let dataSource = (eventState.received_events_data_list);
+        console.log("SDFSDFSDFSDF", eventState.received_events_data_list);
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>

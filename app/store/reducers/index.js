@@ -17,3 +17,8 @@ export default combineReducers({
     repository: repository,
     issue: issue,
 });
+
+export function clear(state) {
+    state().event.received_events_data_list = [];
+    state().repository.trend_repos_data_list = [];
+}

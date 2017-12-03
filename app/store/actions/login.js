@@ -9,6 +9,7 @@ import {LOGIN} from '../type'
 import userAction from './user'
 import * as Constant from '../../style/constant'
 import {Buffer} from 'buffer'
+import {clear} from '../reducers'
 import {CLIENT_ID, CLIENT_SECRET} from '../../config/ignoreConfig'
 
 const toLogin = () => async (dispatch, getState) => {
@@ -38,14 +39,16 @@ const doLogin = (userName, password, callback) => async (dispatch, getState) => 
             res
         });
     }
-    callback && callback(res.result);
+    setTimeout(() => {
+        callback && callback(res.result);
+    }, 1000)
 };
 
 const loginOut = () => async (dispatch, getState) => {
     Api.clearAuthorization();
     AsyncStorage.removeItem(Constant.USER_BASIC_CODE);
     userAction.clearUserInfo();
-    //todo clear all state
+    clear(getState);
     dispatch({
         type: LOGIN.CLEAR,
     });
