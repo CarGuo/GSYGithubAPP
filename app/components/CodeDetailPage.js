@@ -37,6 +37,10 @@ class CodeDetailPage extends Component {
                             detail: generateMd2Html(res.data, this.props.ownerName,
                                 this.props.repositoryName, this.props.branch, false),
                         })
+                    } else {
+                        this.setState({
+                            detail: "<h1>"+ I18n("fileNotSupport") +"</h1>",
+                        })
                     }
                     setTimeout(() => {
                         if (this.refs.pullList) {

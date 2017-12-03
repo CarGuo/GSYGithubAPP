@@ -107,6 +107,7 @@ I18n.translations = {
         unread: 'unread',
         readed: 'readed',
         notify: 'notify',
+        fileNotSupport: 'Not Support',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -203,6 +204,7 @@ I18n.translations = {
         unread: '未读',
         readed: '已读',
         notify: '通知',
+        fileNotSupport: '预览文件失败，可能文件类型不支持预览。',
     }
 };
 
