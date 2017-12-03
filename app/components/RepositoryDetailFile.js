@@ -29,7 +29,7 @@ class RepositoryDetailActivity extends Component {
         this._renderRow = this._renderRow.bind(this);
         this.state = {
             dataSource: [],
-            headerList: [],
+            headerList: ["."],
             path: this.props.props
         };
         this.dsHeader = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -37,8 +37,7 @@ class RepositoryDetailActivity extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this.refs.pullList.showRefreshState();
-            this._refresh();
+            this._refresh(this.state.path);
         })
     }
 
@@ -49,20 +48,36 @@ class RepositoryDetailActivity extends Component {
     componentWillReceiveProps(newProps) {
     }
 
-    _renderHeaderRow(rowData) {
+    _renderHeaderRow(rowData, sectionID, rowID, highlightRow) {
         return (
             <TouchableOpacity
                 onPress={() => {
-
+                    let {headerList} = this.state;
+                    if (headerList[rowID] !== ".") {
+                        let newHeaderList = headerList.slice(0, parseInt(rowID) + 1);
+                        let path = newHeaderList.slice(1, newHeaderList.length).join("/");
+                        this.setState({
+                            path: path,
+                            headerList: newHeaderList,
+                        });
+                        this._refresh(path)
+                    } else {
+                        let newHeaderList = ["."];
+                        this.setState({
+                            path: "",
+                            headerList: newHeaderList,
+                        });
+                        this._refresh("")
+                    }
                 }}
-                style={[{marginRight: Constant.normalMarginEdge,}]}>{title}
+                style={[{marginRight: Constant.normalMarginEdge,}]}>
                 <View
-                    style={[styles.flexDirectionRow, styles.centerH, styles.shadowCard, {
-                        padding: Constant.normalMarginEdge,
+                    style={[styles.flexDirectionRow, styles.centerH, {
+                        paddingVertical: Constant.normalMarginEdge,
                         marginTop: Constant.normalMarginEdge,
                         borderRadius: 3,
                     }]}>
-                    <Text style={[{flex: 1, marginLeft: Constant.normalMarginEdge}, ...textStyle]}>{rowData}</Text>
+                    <Text style={[{flex: 1, marginRight: Constant.normalMarginEdge}]}>{rowData + " >"}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -94,6 +109,16 @@ class RepositoryDetailActivity extends Component {
                     itemIcon={"file-directory"}
                     itemText={rowData.name}
                     onClickFun={() => {
+                        let {headerList} = this.state;
+                        headerList.push(rowData.name);
+                        this.setState({
+                            headerList: headerList,
+                        });
+                        let path = headerList.slice(1, headerList.length).join("/");
+                        this.setState({
+                            path: path,
+                        });
+                        this._refresh(path)
                     }}/>
             )
         }
@@ -102,8 +127,10 @@ class RepositoryDetailActivity extends Component {
     /**
      * 刷新
      * */
-    _refresh() {
-        reposActions.getReposFileDir(this.props.ownerName, this.props.repositoryName, this.state.path).then((res) => {
+    _refresh(path) {
+        if (this.refs.pullList)
+            this.refs.pullList.showRefreshState();
+        reposActions.getReposFileDir(this.props.ownerName, this.props.repositoryName, path).then((res) => {
                 if (res && res.result) {
                     let dir = [];
                     let file = [];
@@ -140,19 +167,21 @@ class RepositoryDetailActivity extends Component {
     render() {
         let headerList = this.dsHeader.cloneWithRows(this.state.headerList);
         let header =
-            <ListView
-                renderRow={(rowData, sectionID, rowID, highlightRow) =>
-                    this._renderHeaderRow(rowData, sectionID, rowID, highlightRow)
-                }
-                horizontal={true}
-                style={{flex: 1}}
-                removeClippedSubviews={false}
-                ref="listHeader"
-                enableEmptySections
-                initialListSize={10}
-                pageSize={10}
-                dataSource={headerList}
-            />;
+            <View style={[{height: 40, flex: 1, marginHorizontal: Constant.normalMarginEdge}]}>
+                <ListView
+                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
+                        this._renderHeaderRow(rowData, sectionID, rowID, highlightRow)
+                    }
+                    horizontal={true}
+                    style={{height: 40, flex: 1}}
+                    removeClippedSubviews={false}
+                    ref="listHeader"
+                    enableEmptySections
+                    initialListSize={10}
+                    pageSize={10}
+                    dataSource={headerList}
+                />
+            </View>;
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
