@@ -17,6 +17,8 @@ import PullListView from './widget/PullLoadMoreListView'
 import * as Config from '../config/'
 import PickerItem from './widget/PickerItem';
 import {TrendTime, TrendType} from '../utils/filterUtils';
+import {filterItemHeight, pickerViewStyle, pickerTextStyle, dropDownStyle, adjustFrame} from '../utils/filterUtils';
+
 
 class TrendPage extends Component {
 
@@ -139,25 +141,6 @@ class TrendPage extends Component {
     }
 
 }
-
-let pickerViewStyle = [{flex: 1}, styles.centerV];
-let pickerTextStyle = [{
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    color: Constant.selectedColor,
-    fontSize: Constant.middleTextWhite,
-    paddingRight:45
-},];
-let dropDownStyle = [{
-    width: screenWidth,
-    backgroundColor: "#FFF"
-}, styles.shadowCard];
-let filterItemHeight = 40;
-let adjustFrame = (style) => {
-    style.left = 0;
-    style.top =  Platform.OS ==='android' ? navBarHeight + StatusBar.currentHeight :
-        navBarHeight + filterItemHeight + 25;
-};
 
 export default connect(state => ({
     userState: state.user,

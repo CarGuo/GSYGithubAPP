@@ -116,7 +116,7 @@ export default AddressLocal = {
             state = 'all'
         }
         if (!sort) {
-            sort = 'all'
+            sort = 'created'
         }
         if (!direction) {
             direction = 'desc'

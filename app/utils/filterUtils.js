@@ -1,4 +1,32 @@
 import I18n from '../style/i18n'
+import styles, {navBarHeight, screenWidth} from "../style"
+import * as Constant from '../style/constant'
+import {
+    Platform, StatusBar
+} from 'react-native';
+
+export const  filterItemHeight = 40;
+
+export const  pickerViewStyle = [{flex: 1}, styles.centerV];
+
+export const  pickerTextStyle = [{
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: Constant.selectedColor,
+    fontSize: Constant.middleTextWhite,
+    paddingRight: 45
+},];
+
+export const  dropDownStyle = [{
+    width: screenWidth,
+    backgroundColor: "#FFF"
+}, styles.shadowCard];
+
+export const  adjustFrame = (style) => {
+    style.left = 0;
+    style.top = Platform.OS === 'android' ? navBarHeight + StatusBar.currentHeight :
+        navBarHeight + filterItemHeight + 25;
+};
 
 export const TrendTime = [
     {

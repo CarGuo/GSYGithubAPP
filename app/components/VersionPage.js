@@ -10,11 +10,6 @@ import {Actions, Tabs} from 'react-native-router-flux';
 import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
-import repositoryActions from '../store/actions/repository'
-import WebComponent from './widget/WebComponent'
-import CommonBottomBar from './widget/CommonBottomBar'
-import IssueListPage from './IssueListPage'
-import RepositoryDetailActivity from './RepositoryDetailActivity'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 import ListPage from "./ListPage";
 

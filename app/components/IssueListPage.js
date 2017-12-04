@@ -4,11 +4,11 @@
 
 import React, {Component} from 'react';
 import {
-    View, InteractionManager, StatusBar, TextInput, TouchableOpacity, Keyboard
+    View, InteractionManager, StatusBar, TextInput, TouchableOpacity, Keyboard, StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
-import styles from "../style"
+import styles, {navBarHeight} from "../style"
 import * as Constant from "../style/constant"
 import repositoryActions from "../store/actions/repository"
 import I18n from '../style/i18n'
@@ -18,7 +18,7 @@ import IssueItem from './widget/IssueItem'
 import {getFullName} from '../utils/htmlUtils'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/'
-
+import CommonBottomBar from "./widget/CommonBottomBar";
 
 /**
  * 搜索
@@ -30,20 +30,23 @@ class IssueListPage extends Component {
         this._searchTextChange = this._searchTextChange.bind(this);
         this._searchText = this._searchText.bind(this);
         this._refresh = this._refresh.bind(this);
+        this._getBottomItem = this._getBottomItem.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this.searchText = "";
+        this.filter = null;
         this.page = 2;
         this.selectTypeData = null;
         this.selectSortData = null;
         this.selectLanguageData = null;
         this.state = {
+            select: 0,
             dataSource: []
         }
     }
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this. _searchText();
+            this._searchText();
         });
     }
 
@@ -58,13 +61,13 @@ class IssueListPage extends Component {
     _searchText() {
         Keyboard.dismiss();
         if (this.refs.pullList) {
+            this.refs.pullList.refreshComplete(false);
+        }
+        if (this.refs.pullList) {
             this.refs.pullList.showRefreshState();
         }
         if (this.searchText === null || this.searchText.trim().length === 0) {
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete(false);
-            }
-            issueActions.getRepositoryIssue(0, this.props.userName, this.props.repositoryName).then((res) => {
+            issueActions.getRepositoryIssue(0, this.props.userName, this.props.repositoryName, this.filter).then((res) => {
                 let size = 0;
                 if (res && res.result) {
                     this.page = 2;
@@ -132,7 +135,7 @@ class IssueListPage extends Component {
      * */
     _loadMore() {
         if (this.searchText === null || this.searchText.trim().length === 0) {
-            issueActions.getRepositoryIssue(this.page, this.props.userName, this.props.repositoryName).then((res) => {
+            issueActions.getRepositoryIssue(this.page, this.props.userName, this.props.repositoryName, this.filter).then((res) => {
                 let size = 0;
                 if (res && res.result) {
                     this.page++;
@@ -164,6 +167,53 @@ class IssueListPage extends Component {
         });
     }
 
+    _getBottomItem() {
+        let {select} = this.state;
+        return [{
+            itemName: I18n("issueAllText"),
+            itemTextColor: select === 0 ? Constant.white : Constant.subTextColor,
+            icon: select === 0 ? "check" : null,
+            iconColor: Constant.white,
+            itemClick: () => {
+                this.setState({
+                    select: 0,
+                    dataSource: [],
+                });
+                this.filter = null;
+                this._searchText()
+            }, itemStyle: {}
+        }, {
+            itemName: I18n("issueOpenText"),
+            itemTextColor: select === 1 ? Constant.white : Constant.subTextColor,
+            icon: select === 1 ? "check" : null,
+            iconColor: Constant.white,
+            itemClick: () => {
+                this.setState({
+                    select: 1,
+                    dataSource: [],
+                });
+                this.filter = 'open';
+                this._searchText()
+            }, itemStyle: {
+                borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
+            }
+        }, {
+            itemName: I18n("issueCloseText"),
+            itemTextColor: select === 2 ? Constant.white : Constant.subTextColor,
+            icon: select === 2 ? "check" : null,
+            iconColor: Constant.white,
+            itemClick: () => {
+                this.setState({
+                    select: 2,
+                    dataSource: [],
+                });
+                this.filter = 'closed';
+                this._searchText()
+            }, itemStyle: {
+                borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
+            }
+        }]
+    }
 
     render() {
         return (
@@ -205,7 +255,17 @@ class IssueListPage extends Component {
                         <Icon name={'md-search'} size={28} color={Constant.subLightTextColor}/>
                     </TouchableOpacity>
                 </View>
-                <View style={{height: 2, opacity: 0.3}}/>
+
+
+                <CommonBottomBar
+                    rootStyles={{
+                        marginHorizontal: Constant.normalMarginEdge,
+                        backgroundColor: Constant.primaryColor,
+                        marginTop: Constant.normalMarginEdge,
+                        borderRadius: 4,
+                    }}
+                    dataList={this._getBottomItem()}/>
+
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"

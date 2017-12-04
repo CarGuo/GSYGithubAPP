@@ -110,6 +110,10 @@ I18n.translations = {
         fileNotSupport: 'Not Support',
         searchRepos: "Repository",
         searchUser: "User",
+        issueAllText: "All",
+        issueOpenText: "Open",
+        issueCloseText: "Close",
+        issueYoursText: "Yours",
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -209,6 +213,10 @@ I18n.translations = {
         fileNotSupport: '预览文件失败，可能文件类型不支持预览。',
         searchRepos: "仓库",
         searchUser: "用户",
+        issueAllText: "全部",
+        issueOpenText: "打开",
+        issueCloseText: "关闭",
+        issueYoursText: "我的",
     }
 };
 
