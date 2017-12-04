@@ -10,11 +10,6 @@ import PropTypes from 'prop-types';
 import * as Constant from '../../style/constant'
 import styles from '../../style'
 import I18n from '../../style/i18n'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import IconC from 'react-native-vector-icons/Octicons'
-import UserImage from './UserImage'
-import IconTextItem from './IconTextItem'
-import HTMLView from 'react-native-htmlview';
 
 class SelectList extends Component {
     state: { dataSource: any };

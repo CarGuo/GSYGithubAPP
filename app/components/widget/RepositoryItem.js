@@ -21,7 +21,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Octicons'
 import UserImage from './UserImage'
 import IconTextItem from './IconTextItem'
-import HTMLView from 'react-native-htmlview';
+import HTMLView from './CommonHtmlView';
 
 /**
  * 仓库相关Item显示

@@ -5,7 +5,7 @@ import React, {
     Component,
 } from 'react'
 import {
-    View, Text, TouchableOpacity
+    View, Text
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from '../../style'
@@ -14,8 +14,7 @@ import TimeText from './TimeText'
 import UserImage from './UserImage'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Octicons'
-import MarkdownView from 'react-native-simple-markdown'
-import HTMLView from 'react-native-htmlview';
+import HTMLView from './CommonHtmlView';
 
 
 /**

@@ -14,9 +14,7 @@ import TimeText from './TimeText'
 import UserImage from './UserImage'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Octicons'
-import HTMLView from 'react-native-htmlview';
-import {generateMd2Html} from '../../utils/htmlUtils';
-import MarkdownView from 'react-native-simple-markdown'
+import HTMLView from './CommonHtmlView';
 
 /**
  * Issue列表Item
