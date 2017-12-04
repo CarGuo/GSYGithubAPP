@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
-import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'

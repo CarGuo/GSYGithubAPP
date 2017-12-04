@@ -114,6 +114,7 @@ I18n.translations = {
         issueOpenText: "Open",
         issueCloseText: "Close",
         issueYoursText: "Yours",
+        hadCopy: "Copy Link",
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -217,6 +218,7 @@ I18n.translations = {
         issueOpenText: "打开",
         issueCloseText: "关闭",
         issueYoursText: "我的",
+        hadCopy: "已经复制到粘贴板",
     }
 };
 

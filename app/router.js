@@ -20,6 +20,7 @@ import SettingPage from './components/SettingPage'
 import RepositoryDetail from './components/RepositoryDetail'
 import PushDetailPage from './components/PushDetailPage'
 import TrendPage from './components/TrendPage'
+import WebPage from './components/WebPage'
 import SearchPage from './components/SearchPage'
 import ListPage from './components/ListPage'
 import TabIcon from './components/widget/TabIcon'
@@ -139,6 +140,9 @@ const getRouter = () => {
                            title={I18n('notify')}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
+                    />
+                    <Scene key="WebPage" component={WebPage}
+                           hideNavBar
                     />
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
