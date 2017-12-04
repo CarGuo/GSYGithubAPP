@@ -28,6 +28,7 @@ class NotifyPage extends Component {
         this.page = 2;
         this._refresh = this._refresh.bind(this);
         this._asRead = this._asRead.bind(this);
+        this._renderScene = this._renderScene.bind(this);
         this.state = {
             index: 0,
             routes: [
@@ -46,18 +47,19 @@ class NotifyPage extends Component {
     }
 
     _refresh() {
-        if (this.refs.unReadList)
-            this.refs.unReadList._refresh();
-        if (this.refs.partList)
-            this.refs.partList._refresh();
-        if (this.refs.allList)
-            this.refs.allList._refresh();
+        if (this.unReadList)
+            this.unReadList._refresh();
+        if (this.partList)
+            this.partList._refresh();
+        if (this.allList)
+            this.allList._refresh();
     }
 
     _handleIndexChange = index => this.setState({index});
 
 
     _asRead(id) {
+        console.log("FFFFF", id);
         userActions.setNotificationAsRead(id).then(() => {
             this._refresh();
         })
@@ -75,7 +77,9 @@ class NotifyPage extends Component {
             case '1':
                 return (
                     <ListPage
-                        refs={"unReadList"}
+                        ref={(ref) => {
+                            this.unReadList = ref;
+                        }}
                         dataType={'notify'}
                         showType={'notify'}
                         onItemClickEx={this._asRead}
@@ -86,7 +90,9 @@ class NotifyPage extends Component {
             case '2':
                 return (
                     <ListPage
-                        refs={"partList"}
+                        ref={(ref) => {
+                            this.partList = ref;
+                        }}
                         dataType={'notify'}
                         showType={'notify'}
                         onItemClickEx={this._asRead}
@@ -98,7 +104,9 @@ class NotifyPage extends Component {
             case '3':
                 return (
                     <ListPage
-                        refs={"allList"}
+                        ref={(ref) => {
+                            this.allList = ref;
+                        }}
                         dataType={'notify'}
                         showType={'notify'}
                         onItemClickEx={this._asRead}

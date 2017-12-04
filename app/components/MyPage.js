@@ -21,6 +21,11 @@ class MyPage extends BasePersonPage {
         this.refreshUnRead();
     }
 
+    _refresh() {
+        super._refresh();
+        this.refreshUnRead();
+    }
+
     getBackNotifyCall() {
         this.refreshUnRead();
     }
@@ -30,6 +35,10 @@ class MyPage extends BasePersonPage {
             if (res && res.result && res.data && res.data.length > 0) {
                 this.setState({
                     unRead: true,
+                })
+            } else {
+                this.setState({
+                    unRead: false,
                 })
             }
         })
