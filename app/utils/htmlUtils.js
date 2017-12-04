@@ -60,6 +60,12 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
     let data = dataPre.replace(/<pre[^>]*>([^]+)<\/pre>/gi, function (match, capture) {
         if (capture) {
             let newStr = highlightAuto(capture).value;
+            console.log("DDDD", newStr)
+            if (Platform.OS === 'android') {
+                if (newStr && newStr.indexOf("\n") !== -1) {
+                    newStr = newStr.replace(/[\n]/g, '</p>');
+                }
+            }
             return "<pre><code>" + newStr + "</code></pre>";
         } else {
             return match;
