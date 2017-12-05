@@ -4,10 +4,12 @@ import {
     Dimensions,
     WebView,
     ActivityIndicator,
-    Text
+    Linking
 } from 'react-native';
+import {Actions} from 'react-native-router-flux'
 import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
+import {launchUrl} from '../../utils/htmlUtils'
 
 const injectedScript = function () {
     function waitForBridge() {
@@ -46,6 +48,16 @@ export default class WebComponent extends Component {
             <WebView
                 ref={(ref) => {
                     this.webview = ref;
+                }}
+                onShouldStartLoadWithRequest={(event) => {
+                    if (event.url && event.url.indexOf("https://github.com/") === 0) {
+                        launchUrl(event.url)
+                    } else if (event.url && (event.url.indexOf('http') === 0 || event.url.indexOf('www') === 0)) {
+                        Actions.WebPage({uri: event.url});
+                    } else if (event.url !== 'about:blank') {
+                        Linking.openURL(event.url)
+                    }
+                    return event.url === 'about:blank';
                 }}
                 injectedJavaScript={'(' + String(injectedScript) + ')();'}
                 scrollEnabled={this.props.scrollEnabled || true}

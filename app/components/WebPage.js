@@ -23,6 +23,7 @@ export default class WebPage extends Component {
             uri: this.resolveUrl(this.props.uri),
             showCurUri: this.resolveUrl(this.props.uri)
         };
+        this.inputText = this.resolveUrl(this.props.uri);
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
         this.handleTextInputChange = this.handleTextInputChange.bind(this);
         this.reload = this.reload.bind(this);
@@ -56,7 +57,6 @@ export default class WebPage extends Component {
 
     onNavigationStateChange = (navState) => {
         this.canGoBack = navState.canGoBack;
-        console.log("FFFF", navState);
         this.setState({
             backButtonEnabled: navState.canGoBack,
             status: navState.title,
@@ -94,7 +94,7 @@ export default class WebPage extends Component {
     };
 
     pressGoButton = () => {
-        var url = this.inputText.toLowerCase();
+        let url = this.inputText.toLowerCase();
         if (url === this.state.url) {
             this.reload();
         } else {
