@@ -3,6 +3,7 @@ import {highlightAuto, configure} from 'highlight.js'
 import * as Constant from '../style/constant'
 import {Platform} from 'react-native'
 import {Actions} from 'react-native-router-flux'
+import URL from 'url-parse';
 
 /**
  * markdown to html parser
@@ -256,81 +257,37 @@ export const getFullName = (repository_url) => {
 
 
 export function launchUrl(url) {
-    if (!url && url.length === 0) return;
-    let gitHubName = getFullName(url);
-    if (gitHubName === '') {
-        //openInBrowser(context, uri.toString());
-        return;
-    }
-    let userName = gitHubName.split("/")[0];
-    let repoName = gitHubName.split("/")[1];
     if (__DEV__) {
         console.log("launchUrl", url)
     }
-    if (isRepoUrl(url)) {
-        Actions.RepositoryDetail({
-            repositoryName: repoName,
-            ownerName: userName,
-            title: gitHubName,
-        });
-    } else if (isUserUrl(url)) {
-        Actions.PersonPage({currentUser: userName});
-    } else if (isIssueUrl(url)) {
-        console.log(url + "issue");
-        Actions.RepositoryDetail({
-            repositoryName: repoName,
-            ownerName: userName,
-            title: gitHubName,
-        });
-    } else if (isReleasesUrl(url)) {
-        console.log(url + "release");
-        //todo  release
-    } else if (isReleaseTagUrl(url)) {
-        console.log(url + "tag");
-        //todo  tag
-    } else if (isCommitUrl(url)) {
-        console.log(url + "commit");
-        //todo  commit
+    if (!url && url.length === 0) return;
+    let parseUrl = URL(url);
+    if (__DEV__) {
+        console.log("parseUrl", parseUrl);
+    }
+    if(parseUrl && parseUrl.hostname === "github.com" && parseUrl.pathname.length > 0) {
+        let pathnames = parseUrl.pathname.split("/");
+        if(pathnames.length === 2) {
+            //解析人
+            let userName = pathnames[1];
+            Actions.PersonPage({currentUser: userName});
+        } else if (pathnames.length >= 3) {
+            let userName = pathnames[1];
+            let repoName = pathnames[2];
+            let fullName = userName + "/" + repoName;
+            //解析仓库
+            if (pathnames.length === 3) {
+                Actions.RepositoryDetail({
+                    repositoryName: repoName,
+                    ownerName: userName,
+                    title: fullName,
+                });
+            } else  {
+                //TODO 其他
+                Actions.WebPage({uri: url});
+            }
+        }
     } else {
-        Actions.WebPage({uri: event.url});
+        Actions.WebPage({uri: url});
     }
 }
-
-const GITHUB_BASE_URL_PATTERN_STR = "(https://)?(http://)?(www.)?github.com";
-const REPO_FULL_NAME_PATTERN = /(https:\/\/)?(http:\/\/)?(www.)?github.com([a-z]|[A-Z]|\\d|-)*\/([a-z]|[A-Z]|\\d|-|\\.|_)*/;
-const USER_PATTERN = /(https:\/\/)?(http:\/\/)?(www.)?github.com\/([a-z]|[A-Z]|\\d|-)*(\/)?/;
-const REPO_PATTERN = /(https:\/\/)?(http:\/\/)?(www.)?github.com\/([a-z]|[A-Z]|\\d|-)*\/([a-z]|[A-Z]|\\d|-|\\.|_)\S(\/)?/;
-const ISSUE_PATTERN = /(https:\/\/)?(http:\/\/)?(www.)?github.com\/([a-z]|[A-Z]|\\d|-)*\/([a-z]|[A-Z]|\\d|-|\\.|_)*\/issues\/(\\d)*(\/)?/;
-const RELEASES_PATTERN = /(https:\/\/)?(http:\/\/)?(www.)?github.com\/([a-z]|[A-Z]|\\d|-)*\/([a-z]|[A-Z]|\\d|-|\\.|_)*\/releases(\/latest)?(\/)?/;
-const RELEASE_TAG_PATTERN = /(https:\/\/)?(http:\/\/)?(www.)?github.com\/([a-z]|[A-Z]|\\d|-)*\/([a-z]|[A-Z]|\\d|-|\\.|_)*\/releases\/tag\/([^\/])*(\/)?/;
-const COMMIT_PATTERN = /(https:\/\/)?(http:\/\/)?(www.)?github.com\/([a-z]|[A-Z]|\\d|-)*\/([a-z]|[A-Z]|\\d|-|\\.|_)*\/commit(s)?\/([a-z]|\\d)*(\/)?/;
-const GITHUB_URL_PATTERN = /(https:\/\/)?(http:\/\/)?(www.)?github.com(.)*/;
-
-
-const isUserUrl = (url) => {
-    return USER_PATTERN.exec(url) !== null;
-};
-
-const isRepoUrl = (url) => {
-    return REPO_PATTERN.exec(url) !== null;
-};
-
-const isIssueUrl = (url) => {
-    return ISSUE_PATTERN.exec(url) !== null;
-};
-
-const isGitHubUrl = (url) => {
-    return GITHUB_URL_PATTERN.exec(url) !== null;
-};
-
-const isReleasesUrl = (url) => {
-    return RELEASES_PATTERN.exec(url) !== null;
-};
-
-const isReleaseTagUrl = (url) => {
-    return RELEASE_TAG_PATTERN.exec(url) !== null;
-};
-
-const isCommitUrl = (url) => {
-    return COMMIT_PATTERN.exec(url) !== null;
-};
