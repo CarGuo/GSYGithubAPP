@@ -36,12 +36,10 @@ class CommonTextInputModal extends Component {
 
     componentDidMount() {
         this.refs.loginModal.open();
-        BackHandler.addEventListener('hardwareBackPress', this.onClose)
 
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.onClose)
     }
 
     onClose() {
