@@ -53,7 +53,7 @@ class RepositoryDetail extends Component {
                     }
                 });
 
-            repositoryActions.getRepositoryDetailReadme(this.props.ownerName, this.props.repositoryName)
+            repositoryActions.getRepositoryDetailReadmeHtml(this.props.ownerName, this.props.repositoryName)
                 .then((res) => {
                     if (res && res.result) {
                         this.setState({

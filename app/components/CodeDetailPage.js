@@ -4,18 +4,13 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, TextInput, InteractionManager, Keyboard, TouchableOpacity, StyleSheet
+    View, StatusBar, InteractionManager
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Actions} from 'react-native-router-flux';
 import styles from "../style"
-import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
-import CodeFileItem from './widget/CodeFileItem'
 import reposActions from '../store/actions/repository'
-import PullListView from './widget/PullLoadMoreListView'
 import WebComponent from './widget/WebComponent'
-import * as Config from '../config/'
 import {generateMd2Html} from '../utils/htmlUtils'
 
 

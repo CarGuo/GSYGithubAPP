@@ -64,6 +64,15 @@ const getRepositoryDetailReadmeDao = async (userName, reposName, branch) => {
         result: res.result
     };
 };
+const getRepositoryDetailReadmeHtmlDao = async (userName, reposName, branch) => {
+    let url = Address.readmeFile(userName + '/' + reposName, branch);
+    let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html'});
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 
 const getRepositoryForksDao = async (userName, reposName, page) => {
     let url = Address.getReposForks(userName, reposName) + Address.getPageParams("?", page);
@@ -174,6 +183,7 @@ export default {
     getStarRepositoryDao,
     getRepositoryDetailDao,
     getRepositoryDetailReadmeDao,
+    getRepositoryDetailReadmeHtmlDao,
     getRepositoryForksDao,
     getRepositoryStarDao,
     getRepositoryWatcherDao,

@@ -7,8 +7,6 @@ import {
     Linking
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
-import I18n from '../../style/i18n'
-import * as Constant from '../../style/constant'
 import {launchUrl} from '../../utils/htmlUtils'
 import CusWebView from './native/CustomWebView'
 
@@ -53,7 +51,6 @@ export default class WebComponent extends Component {
                     this.webview = ref;
                 }}
                 onShouldStartLoadWithRequest={(event) => {
-                    console.log("EEEE");
                     if (event.url && event.url.indexOf("https://github.com/") === 0) {
                         launchUrl(event.url)
                     } else if (event.url && (event.url.indexOf('http') === 0 || event.url.indexOf('www') === 0)) {

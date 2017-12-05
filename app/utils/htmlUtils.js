@@ -49,6 +49,27 @@ export const generateMdSampleHtml = (mdData) => {
     return marked(data);
 };
 
+export const generateHtml = (mdData) => {
+    if (!mdData) {
+        return "";
+    }
+    let data = mdData.replace(/<code(([\s\S])*?)<\/code>/gi, function (match, capture) {
+        console.log("FFF", match);
+        if (match) {
+            if (Platform.OS === 'android') {
+                if (match && match.indexOf("\n") !== -1) {
+                    match = match.replace(/[\n]/g, '</br>');
+                }
+            }
+            return match;
+        } else {
+            return match;
+        }
+    });
+
+    return generateCodeHtml(data, false);
+};
+
 
 export const generateMd2Html = (mdData, userName, reposName, branch = 'master', needMd = true) => {
     let dataPre = mdData.replace(/src=*[^>]*>/gi, function (match, capture) {
@@ -61,7 +82,6 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
     let data = dataPre.replace(/<pre[^>]*>([^]+)<\/pre>/gi, function (match, capture) {
         if (capture) {
             let newStr = highlightAuto(capture).value;
-            console.log("DDDD", newStr)
             if (Platform.OS === 'android') {
                 if (newStr && newStr.indexOf("\n") !== -1) {
                     newStr = newStr.replace(/[\n]/g, '</p>');
@@ -126,13 +146,11 @@ export const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white,
         "<script>hljs.initHighlightingOnLoad();</script>  " +
         "<style>" +
         "body{background: " + backgroundColor + ";}" +
-        "img{display: " + "block" + ";max-width:100%;}" +
         "a {color:" + actionColor + " !important;}" +
         ".highlight pre, pre {" +
         " word-wrap: " + (wrap ? "break-word" : "normal") + "; " +
         " white-space: " + (wrap ? "pre-wrap" : "pre") + "; " +
         "}" +
-        "code{overflow: scroll;}" +
         "thead, tr {" +
         "background:" + Constant.miWhite + ";}" +
         "td, th {" +

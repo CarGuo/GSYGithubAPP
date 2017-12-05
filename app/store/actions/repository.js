@@ -5,7 +5,7 @@
 import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
-import {generateMd2Html} from "../../utils/htmlUtils";
+import {generateMd2Html, generateHtml} from "../../utils/htmlUtils";
 
 /**
  * 趋势数据
@@ -101,6 +101,24 @@ const getRepositoryDetailReadme = async (userName, reposName, branch = 'master')
         return {
             result: true,
             data: generateMd2Html(data, userName, reposName, branch)
+        }
+    } else {
+        return {
+            result: false,
+            data: ""
+        }
+    }
+};
+
+/**
+ * 详情的remde数据
+ */
+const getRepositoryDetailReadmeHtml = async (userName, reposName, branch = 'master') => {
+    let res = await RepositoryDao.getRepositoryDetailReadmeHtmlDao(userName, reposName);
+    if (res.result) {
+        return {
+            result: true,
+            data: generateHtml(res.data),
         }
     } else {
         return {
@@ -208,6 +226,7 @@ export default {
     getStarRepository,
     getRepositoryDetail,
     getRepositoryDetailReadme,
+    getRepositoryDetailReadmeHtml,
     getRepositoryForks,
     getRepositoryStar,
     getRepositoryWatcher,
