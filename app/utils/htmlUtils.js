@@ -156,6 +156,86 @@ export const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white,
         "</html>";
 };
 
+const formatCode = (codeSource) => {
+    if (!codeSource && codeSource.length === 0) return codeSource;
+    return codeSource.replace(new RegExp("<", "gm"), "&lt;").replace(new RegExp(">", "gm"), "&gt;");
+};
+
+export const parseDiffSource = (diffSource, wrap) => {
+    //let diffSource = formatCode(currentSource);
+    let lines = diffSource.split("\n");
+    let source = "";
+    let addStartLine = -1;
+    let removeStartLine = -1;
+    let addLineNum = 0;
+    let removeLineNum = 0;
+    let normalLineNum = 0;
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        let lineNumberStr = "";
+        let classStr = "";
+        let curAddNumber = -1;
+        let curRemoveNumber = -1;
+
+        if (line.indexOf("+") === 0) {
+            classStr = "class=\"hljs-addition\";";
+            curAddNumber = addStartLine + normalLineNum + addLineNum;
+            addLineNum++;
+        } else if (line.indexOf("-") === 0) {
+            classStr = "class=\"hljs-deletion\";";
+            curRemoveNumber = removeStartLine + normalLineNum + removeLineNum;
+            removeLineNum++;
+        } else if (line.indexOf("@@") === 0) {
+            classStr = "class=\"hljs-literal\";";
+            removeStartLine = getRemoveStartLine(line);
+            addStartLine = getAddStartLine(line);
+            addLineNum = 0;
+            removeLineNum = 0;
+            normalLineNum = 0;
+        } else if (!(line.indexOf("\\") === 0)) {
+            curAddNumber = addStartLine + normalLineNum + addLineNum;
+            curRemoveNumber = removeStartLine + normalLineNum + removeLineNum;
+            normalLineNum++;
+        }
+        lineNumberStr = getDiffLineNumber(curRemoveNumber === -1 ? "" : (curRemoveNumber + ""),
+            curAddNumber === -1 ? "" : (curAddNumber + ""));
+        source = source + "\n" + "<div " + classStr + ">" + (wrap ? "" : lineNumberStr + getBlank(1)) + line + "</div>"
+    }
+    return source;
+};
+
+
+const getRemoveStartLine = (line) => {
+    try {
+        return parseInt(line.substring(line.indexOf("-") + 1, line.indexOf(",")));
+    } catch (e) {
+        return 1;
+    }
+};
+
+const getAddStartLine = (line) => {
+    try {
+        return parseInt(line.substring(line.indexOf("+") + 1,
+            line.indexOf(",", line.indexOf("+"))));
+    } catch (e) {
+        return 1;
+    }
+};
+
+const getDiffLineNumber = (removeNumber, addNumber) => {
+    let minLength = 4;
+    return getBlank(minLength - removeNumber.length) + removeNumber + getBlank(1) +
+        getBlank(minLength - addNumber.length) + addNumber
+};
+
+const getBlank = (num) => {
+    let builder = "";
+    for (let i = 0; i < num; i++) {
+        builder += " ";
+    }
+    return builder;
+};
+
 
 export const getFullName = (repository_url) => {
     if (repository_url.charAt(repository_url.length - 1) === "/") {

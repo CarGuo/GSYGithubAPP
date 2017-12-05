@@ -16,7 +16,7 @@ import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import PushDetailHeader from './widget/PushDetailHeader'
 import * as Config from '../config/'
-import {generateCode2HTml} from "../utils/htmlUtils";
+import {generateCode2HTml,parseDiffSource} from "../utils/htmlUtils";
 
 /**
  * Issue详情
@@ -60,7 +60,7 @@ class PushDetailPage extends Component {
                         repositoryName: this.props.repositoryName,
                         branch: 'master',
                         needRequest: false,
-                        detail: generateCode2HTml(rowData.patch),
+                        detail: generateCode2HTml(parseDiffSource(rowData.patch)),
 
 
                     })
