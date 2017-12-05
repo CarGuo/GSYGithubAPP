@@ -37,7 +37,9 @@ class ListPage extends Component {
         super(props);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
+        this._doRefresh = this._doRefresh.bind(this);
         this.page = 2;
+        this.filterSelect = this.props.filterSelect;
         this.state = {
             dataSource: []
         }
@@ -55,7 +57,15 @@ class ListPage extends Component {
     }
 
     componentWillReceiveProps(newProps) {
+        if (this.props.filterSelect !== newProps.filterSelect) {
+            this.filterSelect = newProps.filterSelect;
+            this._doRefresh();
+        }
+    }
 
+    _doRefresh() {
+        this.refs.pullList.showRefreshState();
+        this._refresh();
     }
 
 
@@ -181,12 +191,12 @@ class ListPage extends Component {
                 });
                 break;
             case 'user_repos':
-                repositoryActions.getUserRepository(this.props.currentUser, 0).then((res) => {
+                repositoryActions.getUserRepository(this.props.currentUser, 0, this.filterSelect).then((res) => {
                     this._refreshRes(res)
                 });
                 break;
             case 'user_star':
-                repositoryActions.getStarRepository(this.props.currentUser, 0).then((res) => {
+                repositoryActions.getStarRepository(this.props.currentUser, 0, this.filterSelect).then((res) => {
                     this._refreshRes(res)
                 });
                 break;
@@ -242,12 +252,12 @@ class ListPage extends Component {
                 });
                 break;
             case 'user_repos':
-                repositoryActions.getUserRepository(this.props.currentUser, this.page).then((res) => {
+                repositoryActions.getUserRepository(this.props.currentUser, this.page, this.filterSelect).then((res) => {
                     this._loadMoreRes(res)
                 });
                 break;
             case 'user_star':
-                repositoryActions.getStarRepository(this.props.currentUser, this.page).then((res) => {
+                repositoryActions.getStarRepository(this.props.currentUser, this.page, this.filterSelect).then((res) => {
                     this._loadMoreRes(res)
                 });
                 break;

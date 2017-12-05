@@ -12,6 +12,7 @@ import IconF from 'react-native-vector-icons/FontAwesome'
 import {Actions} from "react-native-router-flux";
 import I18n from '../../style/i18n'
 import NameValueItem from './NameValueItem'
+import {RepositoryFilter} from '../../utils/filterUtils'
 
 const hintNum = '---';
 
@@ -115,7 +116,13 @@ class UserHeadItem extends Component {
                         onItemPress={() => {
                             Actions.ListPage({
                                 dataType: 'user_repos', showType: 'repository',
-                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('repositoryText')
+                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('repositoryText'),
+                                needRightBtn: true,
+                                rightBtn: 'filter',
+                                filterSelect: RepositoryFilter()[0].itemValue,
+                                rightBtnPress: () => {
+                                    Actions.OptionModal({dataList: RepositoryFilter()});
+                                }
                             })
                         }}/>
                     <NameValueItem
@@ -149,7 +156,13 @@ class UserHeadItem extends Component {
                         onItemPress={() => {
                             Actions.ListPage({
                                 dataType: 'user_star', showType: 'repository',
-                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('repositoryText')
+                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('repositoryText'),
+                                needRightBtn: true,
+                                rightBtn: 'filter',
+                                filterSelect: RepositoryFilter()[0].itemValue,
+                                rightBtnPress: () => {
+                                    Actions.OptionModal({dataList: RepositoryFilter()});
+                                }
                             })
                         }}/>
                 </View>

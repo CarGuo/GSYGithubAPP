@@ -29,8 +29,8 @@ const searchRepositoryIssueDao = async (q, page) => {
     };
 };
 
-const getUserRepositoryDao = async (userName, page) => {
-    let url = Address.userRepos(userName) + Address.getPageParams("&", page);
+const getUserRepositoryDao = async (userName, page, sort) => {
+    let url = Address.userRepos(userName, sort) + Address.getPageParams("&", page);
     let res = await await Api.netFetch(url);
     return {
         data: res.data,
@@ -38,8 +38,8 @@ const getUserRepositoryDao = async (userName, page) => {
     };
 };
 
-const getStarRepositoryDao = async (userName, page) => {
-    let url = Address.userStar(userName) + Address.getPageParams("&", page);
+const getStarRepositoryDao = async (userName, page, sort) => {
+    let url = Address.userStar(userName, sort) + Address.getPageParams("&", page);
     let res = await await Api.netFetch(url);
     return {
         data: res.data,

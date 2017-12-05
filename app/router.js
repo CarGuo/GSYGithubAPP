@@ -105,6 +105,7 @@ const getRouter = () => {
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="ListPage" component={ListPage}
+                           renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Drawer key="SearchPageDrawer" title={I18n('search')}

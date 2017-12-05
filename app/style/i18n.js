@@ -115,6 +115,10 @@ I18n.translations = {
         issueCloseText: "Close",
         issueYoursText: "Yours",
         hadCopy: "Copy Link",
+        filterCreated: "created",
+        filterUpdated: "updated",
+        filterPushed: "pushed",
+        filterFullName: "name",
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -219,6 +223,10 @@ I18n.translations = {
         issueCloseText: "关闭",
         issueYoursText: "我的",
         hadCopy: "已经复制到粘贴板",
+        filterCreated: "创建",
+        filterUpdated: "更新",
+        filterPushed: "提交",
+        filterFullName: "名称",
     }
 };
 
