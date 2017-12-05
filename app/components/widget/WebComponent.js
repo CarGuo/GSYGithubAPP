@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View,
+    Platform,
     Dimensions,
     WebView,
     ActivityIndicator,
@@ -10,6 +10,9 @@ import {Actions} from 'react-native-router-flux'
 import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
 import {launchUrl} from '../../utils/htmlUtils'
+import CusWebView from './native/CustomWebView'
+
+let WebCurrent = (Platform.OS === 'ios') ? WebView : CusWebView;
 
 const injectedScript = function () {
     function waitForBridge() {
@@ -45,11 +48,12 @@ export default class WebComponent extends Component {
         const _w = this.props.width || Dimensions.get('window').width;
         const _h = this.props.width || Dimensions.get('window').height;
         return (
-            <WebView
+            <WebCurrent
                 ref={(ref) => {
                     this.webview = ref;
                 }}
                 onShouldStartLoadWithRequest={(event) => {
+                    console.log("EEEE");
                     if (event.url && event.url.indexOf("https://github.com/") === 0) {
                         launchUrl(event.url)
                     } else if (event.url && (event.url.indexOf('http') === 0 || event.url.indexOf('www') === 0)) {

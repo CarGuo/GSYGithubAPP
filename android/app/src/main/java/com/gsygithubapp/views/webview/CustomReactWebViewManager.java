@@ -9,6 +9,7 @@
 
 package com.gsygithubapp.views.webview;
 
+import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -50,6 +51,7 @@ import com.gsygithubapp.views.webview.events.TopLoadingErrorEvent;
 import com.gsygithubapp.views.webview.events.TopLoadingFinishEvent;
 import com.gsygithubapp.views.webview.events.TopLoadingStartEvent;
 import com.gsygithubapp.views.webview.events.TopMessageEvent;
+import com.gsygithubapp.views.webview.events.TopAndroidLoadWithRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -156,7 +158,12 @@ public class CustomReactWebViewManager extends SimpleViewManager<WebView> {
             if (!useDefaultIntent &&
                     (url.startsWith("http://") || url.startsWith("https://") ||
                             url.startsWith("file://") || url.equals("about:blank"))) {
-                return false;
+                dispatchEvent(
+                        view,
+                        new TopAndroidLoadWithRequest(
+                                view.getId(),
+                                createWebViewEvent(view, url)));
+                return true;
             } else {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -427,6 +434,7 @@ public class CustomReactWebViewManager extends SimpleViewManager<WebView> {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @ReactProp(name = "mediaPlaybackRequiresUserAction")
     public void setMediaPlaybackRequiresUserAction(WebView view, boolean requires) {
         view.getSettings().setMediaPlaybackRequiresUserGesture(requires);
@@ -614,7 +622,7 @@ public class CustomReactWebViewManager extends SimpleViewManager<WebView> {
     @Override
     public Map getExportedCustomDirectEventTypeConstants() {
         return MapBuilder.builder()
-                .put("topShouldStartLoadWithRequest", MapBuilder.of("registrationName", "onShouldStartLoadWithRequest"))
+                .put("topAndroidLoadWithRequest", MapBuilder.of("registrationName", "onAndroidLoadWithRequest"))
                 .build();
     }
 

@@ -3,6 +3,7 @@ package com.gsygithubapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.gsygithubapp.views.webview.CustomWebViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.react.rnspinkit.RNSpinkitPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
@@ -28,7 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new VectorIconsPackage(),
             new RNSpinkitPackage(),
-            new RNI18nPackage()
+            new RNI18nPackage(),
+            new CustomWebViewPackage()
       );
     }
 

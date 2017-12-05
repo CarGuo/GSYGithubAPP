@@ -7,12 +7,12 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 /**
  * Created by guoshuyu on 2017/12/5.
  */
-public class TopShouldStartLoadWithRequest extends Event<TopLoadingErrorEvent> {
+public class TopAndroidLoadWithRequest extends Event<TopAndroidLoadWithRequest> {
 
-    public static final String EVENT_NAME = "topShouldStartLoadWithRequest";
+    public static final String EVENT_NAME = "topAndroidLoadWithRequest";
     private WritableMap mEventData;
 
-    public TopShouldStartLoadWithRequest(int viewId, WritableMap eventData) {
+    public TopAndroidLoadWithRequest(int viewId, WritableMap eventData) {
         super(viewId);
         mEventData = eventData;
     }
