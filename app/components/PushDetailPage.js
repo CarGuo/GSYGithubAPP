@@ -16,7 +16,7 @@ import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import PushDetailHeader from './widget/PushDetailHeader'
 import * as Config from '../config/'
-import {generateMd2Html} from "../utils/htmlUtils";
+import {generateCode2HTml} from "../utils/htmlUtils";
 
 /**
  * Issue详情
@@ -60,8 +60,9 @@ class PushDetailPage extends Component {
                         repositoryName: this.props.repositoryName,
                         branch: 'master',
                         needRequest: false,
-                        detail: generateMd2Html("<pre>" + rowData.patch + "</pre>", this.props.ownerName,
-                            this.props.repositoryName, this.props.branch, false),
+                        detail: generateCode2HTml(rowData.patch),
+
+
                     })
                 }}/>
         )

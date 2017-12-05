@@ -25,7 +25,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/index'
 import PropTypes from 'prop-types';
 import {getFullName} from '../utils/htmlUtils'
-import {generateMd2Html} from "../utils/htmlUtils";
+import {generateHtml} from "../utils/htmlUtils";
 
 
 /**
@@ -112,8 +112,8 @@ class ListPage extends Component {
                                 Actions.CodeDetailPage({
                                     title: rowData.name,
                                     needRequest: false,
-                                    detail: generateMd2Html(rowData.body_html, this.props.ownerName,
-                                        this.props.repositoryName, this.props.branch, false),
+                                    detail: generateHtml(rowData.body_html),
+
                                 })
                             }
                         }}

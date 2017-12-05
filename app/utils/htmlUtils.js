@@ -1,8 +1,6 @@
-import {Buffer} from 'buffer'
 import marked from 'marked'
 import {highlightAuto, configure} from 'highlight.js'
 import * as Constant from '../style/constant'
-import {screenHeight, screenWidth} from '../style'
 import {Platform} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 
@@ -10,43 +8,23 @@ import {Actions} from 'react-native-router-flux'
  * markdown to html parser
  */
 
-export const generateMdSampleHtml = (mdData) => {
-    let data = mdData.replace(/src=*[^>]*>/gi, function (match, capture) {
-        let newStr = match.replace(new RegExp("/blob/", "gm"), "/raw/");
-        return newStr;
-    });
-    let renderer = new marked.Renderer();
-    renderer.image = function (href, title, text) {
-        if (href.indexOf('https://github.com/') === 0) {
-            href = href.replace(new RegExp("/blob/", "gm"), "/raw/");
-        }
-        let out = '<img src="' + href + '" alt="' + text + '"';
-        if (title) {
-            out += ' title="' + title + '"';
-        }
-        out += ' width="' + screenWidth - 50 + '"';
-        out += ' height="' + 200 + '"';
-        out += '/>';
-        return out;
-    };
-    renderer.paragraph = function (text) {
-        if (text.indexOf("<img src=") === -1) {
-            return '<p>' + text + '</p>\n'
-        }
-        return text;
 
-    };
-    marked.setOptions({
-        renderer: renderer,
-        gfm: true,
-        tables: true,
-        breaks: true,
-        pedantic: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false,
-    });
-    return marked(data);
+export const generateCode2HTml = (mdData) => {
+    let currentData = (mdData && mdData.indexOf("<code>") === -1) ?
+        "<body>\n" +
+        "<pre class=\"pre\">\n" +
+        "<code>\n" +
+        mdData +
+        "</code>\n" +
+        "</pre>\n" +
+        "</body>\n" :
+
+        "<body>\n" +
+        "<pre class=\"pre\">\n" +
+        mdData +
+        "</pre>\n" +
+        "</body>\n";
+    return generateHtml(currentData)
 };
 
 export const generateHtml = (mdData) => {
@@ -54,7 +32,6 @@ export const generateHtml = (mdData) => {
         return "";
     }
     let data = mdData.replace(/<code(([\s\S])*?)<\/code>/gi, function (match, capture) {
-        console.log("FFF", match);
         if (match) {
             if (Platform.OS === 'android') {
                 if (match && match.indexOf("\n") !== -1) {

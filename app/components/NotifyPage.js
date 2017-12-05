@@ -59,7 +59,6 @@ class NotifyPage extends Component {
 
 
     _asRead(id) {
-        console.log("FFFFF", id);
         userActions.setNotificationAsRead(id).then(() => {
             this._refresh();
         })

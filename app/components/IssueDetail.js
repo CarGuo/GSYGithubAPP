@@ -18,7 +18,6 @@ import IssueHead from './widget/IssueHead'
 import CommonBottomBar from './widget/CommonBottomBar'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/'
-import {generateMdSampleHtml} from '../utils/htmlUtils'
 import {isCommentOwner} from '../utils/issueUtils'
 
 /**

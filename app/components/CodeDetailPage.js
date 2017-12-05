@@ -11,7 +11,7 @@ import styles from "../style"
 import I18n from '../style/i18n'
 import reposActions from '../store/actions/repository'
 import WebComponent from './widget/WebComponent'
-import {generateMd2Html} from '../utils/htmlUtils'
+import {generateCode2HTml} from '../utils/htmlUtils'
 
 
 class CodeDetailPage extends Component {
@@ -30,8 +30,7 @@ class CodeDetailPage extends Component {
                     this.props.repositoryName, this.props.path).then((res) => {
                         if (res && res.result) {
                             this.setState({
-                                detail: generateMd2Html(res.data, this.props.ownerName,
-                                    this.props.repositoryName, this.props.branch, false),
+                                detail: generateCode2HTml(res.data),
                             })
                         } else {
                             this.setState({
