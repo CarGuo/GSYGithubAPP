@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {
-    View, Text
+    View, Linking,Clipboard
 } from 'react-native';
 import PropTypes from 'prop-types';
+import {Actions} from 'react-native-router-flux';
 import styles from "../../style"
+import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Autolink from 'react-native-autolink';
+import Toast from './ToastProxy'
 
 
 class IconTextAutoLinkItem extends Component {
@@ -30,6 +33,17 @@ class IconTextAutoLinkItem extends Component {
                 <Autolink
                     false={false}
                     text={this.props.text}
+                    onPress={(link) => {
+                        if (link && (link.indexOf("http") === 0 || link.indexOf("www") === 0)) {
+                            Actions.WebPage({uri: link})
+                        } else {
+                            Linking.openURL(link)
+                        }
+                    }}
+                    onLongPress={(link) => {
+                        Clipboard.setString(link);
+                        Toast(I18n("hadCopy"));
+                    }}
                     style={[{marginLeft: halfEdge},]}
                     linkStyle={[
                         ...this.props.textstyle]}>
