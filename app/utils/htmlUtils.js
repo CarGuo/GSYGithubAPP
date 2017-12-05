@@ -163,6 +163,9 @@ const formatCode = (codeSource) => {
 
 export const parseDiffSource = (diffSource, wrap) => {
     //let diffSource = formatCode(currentSource);
+    if (!diffSource) {
+        return ""
+    }
     let lines = diffSource.split("\n");
     let source = "";
     let addStartLine = -1;

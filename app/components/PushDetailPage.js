@@ -54,15 +54,17 @@ class PushDetailPage extends Component {
                 itemTextTitle={rowData.filename}
                 itemText={nameSplit[nameSplit.length - 1]}
                 onClickFun={() => {
+                    let patch = rowData.patch;
+                    if(!patch) {
+                        patch = I18n("fileNotSupport")
+                    }
                     Actions.CodeDetailPage({
                         title: nameSplit[nameSplit.length - 1],
                         ownerName: this.props.userName,
                         repositoryName: this.props.repositoryName,
                         branch: 'master',
                         needRequest: false,
-                        detail: generateCode2HTml(parseDiffSource(rowData.patch)),
-
-
+                        detail: generateCode2HTml(parseDiffSource(patch)),
                     })
                 }}/>
         )
@@ -94,21 +96,7 @@ class PushDetailPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        /*let {sha} = this.props;
-        reposActions.getReposCommitsInfo(this.props.userName, this.props.repositoryName, sha).then((res) => {
-            let size = 0;
-            if (res && res.result) {
-                this.page++;
-                let dataList = this.state.dataSource.concat(res.data);
-                this.setState({
-                    dataSource: dataList
-                });
-                size = res.data.length;
-            }
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-            }
-        });*/
+
     }
 
 
