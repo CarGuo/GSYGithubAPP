@@ -11,6 +11,7 @@ import DynamicPage from './components/DynamicPage'
 import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
+import PhotoPage from './components/PhotoPage'
 import NotifyPage from './components/NotifyPage'
 import IssueDetail from './components/IssueDetail'
 import VersionPage from './components/VersionPage'
@@ -145,11 +146,15 @@ const getRouter = () => {
                     <Scene key="WebPage" component={WebPage}
                            hideNavBar
                     />
+                    <Scene key="PhotoPage" component={PhotoPage}
+                           hideNavBar
+                    />
                 </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
                 <Scene key="TextInputModal" component={TextInputModal}/>
                 <Scene key="ConfirmModal" component={CommentConfirmModal}/>
                 <Scene key="OptionModal" component={CommonOptionModal}/>
+                <Scene key="PhotoPage" component={PhotoPage}/>
             </Lightbox>
         </Router>
     )

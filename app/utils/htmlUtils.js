@@ -265,9 +265,25 @@ export function launchUrl(url) {
     if (__DEV__) {
         console.log("parseUrl", parseUrl);
     }
-    if(parseUrl && parseUrl.hostname === "github.com" && parseUrl.pathname.length > 0) {
+
+    let image = false;
+    IMAGE_END.forEach((item) => {
+        if (url.indexOf(item) + item.length === url.length) {
+            image = true;
+            if (url.indexOf('https://github.com/') === 0) {
+                url = url.replace(new RegExp("/blob/", "gm"), "/raw/");
+            }
+            Actions.PhotoPage({uri: url});
+        }
+    });
+
+    if (image) {
+        return
+    }
+
+    if (parseUrl && parseUrl.hostname === "github.com" && parseUrl.pathname.length > 0) {
         let pathnames = parseUrl.pathname.split("/");
-        if(pathnames.length === 2) {
+        if (pathnames.length === 2) {
             //解析人
             let userName = pathnames[1];
             Actions.PersonPage({currentUser: userName});
@@ -282,7 +298,7 @@ export function launchUrl(url) {
                     ownerName: userName,
                     title: fullName,
                 });
-            } else  {
+            } else {
                 //TODO 其他
                 Actions.WebPage({uri: url});
             }
@@ -291,3 +307,5 @@ export function launchUrl(url) {
         Actions.WebPage({uri: url});
     }
 }
+
+const IMAGE_END = [".png", ".jpg", ".jpeg", ".gif", ".svg"];
