@@ -52,6 +52,7 @@ class PopmenuItem extends Component {
                     }, this.props.styles]}
                     textStyle={{
                         fontSize: 13,
+                        width: 50,
                         color: Constant.mainTextColor,
                         textAlign: 'center',
                         textAlignVertical: 'center',

@@ -121,7 +121,8 @@ const getRouter = () => {
                     </Drawer>
                     <Scene key="RepositoryDetail" component={RepositoryDetail}
                            needRightBtn={true}
-                           rightBtn={'list'}
+                           rightBtn={'ios-more'}
+                           iconType={2}
                            rightBtnPress={(params)=>{return RepositoryDetailRightBtnPress(params)}}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}

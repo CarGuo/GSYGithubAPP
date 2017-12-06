@@ -78,9 +78,14 @@ class UserHeadItem extends Component {
                                 {(userDisPlayName) ? userDisPlayName : hintNum}
                             </Text>
                             <TouchableOpacity
-                                style={[styles.flexDirectionRowNotFlex, {marginLeft: Constant.normalMarginEdge / 2,}]}
+                                style={[styles.flexDirectionRowNotFlex, {
+                                    marginLeft: Constant.normalMarginEdge / 2,
+                                    padding: Constant.normalMarginEdge
+                                }]}
                                 onPress={() => {
-                                    Actions.NotifyPage({backNotifyCall: this.props.backNotifyCall});
+                                    Actions.NotifyPage({
+                                        backNotifyCall: this.props.backNotifyCall,
+                                    });
                                 }}>
                                 <IconF name={'bell'} size={setting ? 15 : 1}
                                        color={unRead ? Constant.actionBlue : Constant.miWhite}/>

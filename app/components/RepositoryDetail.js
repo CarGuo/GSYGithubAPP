@@ -252,7 +252,7 @@ class RepositoryDetail extends Component {
                                      shadowRadius: 0,
                                      elevation: 0,
                                      borderRightColor: Constant.primaryColor,
-                                     borderRightWidth: 2
+                                     borderRightWidth: 1
                                  }}/>
                 <PopmenuItem
                     defaultIndex={0}

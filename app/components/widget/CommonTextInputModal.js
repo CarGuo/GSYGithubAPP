@@ -15,7 +15,9 @@ import I18n from '../../style/i18n'
 import Modal from 'react-native-modalbox';
 import Spinner from 'react-native-spinkit';
 import {Actions} from "react-native-router-flux";
+import CommonInputBar from "./CommonInputBar";
 
+const iconSize = 16;
 
 /**
  * 登陆Modal
@@ -28,6 +30,7 @@ class CommonTextInputModal extends Component {
         this._onOpened = this._onOpened.bind(this);
         this._searchTextChange = this._searchTextChange.bind(this);
         this._searchTextTitleChange = this._searchTextTitleChange.bind(this);
+        this.getDataList = this.getDataList.bind(this);
         this.text = this.props.text;
         this.title = this.props.titleValue;
     }
@@ -60,6 +63,101 @@ class CommonTextInputModal extends Component {
 
     _searchTextChange(text) {
         this.text = text;
+    }
+
+
+    getDataList() {
+        return [{
+            icon: "format-header-1",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                let curText = this.text + "\n# ";
+                if (this.refs.contentInput) {
+                    this.refs.contentInput.setNativeProps({text: curText});
+                }
+            }
+        }, {
+            icon: "format-header-2",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                let curText = this.text + "\n## ";
+                if (this.refs.contentInput) {
+                    this.refs.contentInput.setNativeProps({text: curText});
+                }
+            }
+        }, {
+            icon: "format-header-3",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                let curText = this.text + "\n### ";
+                if (this.refs.contentInput) {
+                    this.refs.contentInput.setNativeProps({text: curText});
+                }
+            }
+        }, {
+            icon: "format-bold",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                let curText = this.text + "****";
+                if (this.refs.contentInput) {
+                    this.refs.contentInput.setNativeProps({text: curText});
+                }
+            }
+        }, {
+            icon: "format-italic",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                let curText = this.text + "__";
+                if (this.refs.contentInput) {
+                    this.refs.contentInput.setNativeProps({text: curText});
+                }
+            }
+        }, {
+            icon: "format-quote-close",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                let curText = this.text + "``";
+                if (this.refs.contentInput) {
+                    this.refs.contentInput.setNativeProps({text: curText});
+                }
+            }
+        }, {
+            icon: "code-tags",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                let curText = this.text + " \n``` \n\n``` \n";
+                if (this.refs.contentInput) {
+                    this.refs.contentInput.setNativeProps({text: curText});
+                }
+            }
+        }, {
+            icon: "link",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                let curText = this.text + "[](url)";
+                if (this.refs.contentInput) {
+                    this.refs.contentInput.setNativeProps({text: curText});
+                }
+            }
+        }, {
+            icon: "format-list-bulleted",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                let curText = this.text + "\n- ";
+                if (this.refs.contentInput) {
+                    this.refs.contentInput.setNativeProps({text: curText});
+                }
+            }
+        },]
     }
 
     render() {
@@ -115,6 +213,11 @@ class CommonTextInputModal extends Component {
                                 onChangeText={(text) => {
                                     this._searchTextChange(text)
                                 }}
+                                onSelectionChange={(event) => {
+                                    if (event && event.nativeEvent) {
+                                        this.selection = event.nativeEvent.selection.end;
+                                    }
+                                }}
                                 placeholder={this.props.placeHolder ? this.props.placeHolder : I18n('issueInputTip')}
                                 underlineColorAndroid="transparent"
                                 clearButtonMode="always"
@@ -127,6 +230,9 @@ class CommonTextInputModal extends Component {
                                     width: width,
                                     textAlignVertical: 'top'
                                 }]}/>
+                            <CommonInputBar
+                                rootStyles={{width: width}}
+                                dataList={this.getDataList()}/>
                         </View>
                         <View
                             style={[styles.flexDirectionRowNotFlex, {
