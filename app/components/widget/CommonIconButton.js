@@ -26,6 +26,15 @@ class CommonIconButton extends Component {
         rightBtnPress: PropTypes.func
     };
 
+    constructor(props) {
+        super(props);
+        this.local = this.props;
+        if (this.props.data) {
+            this.local = this.props.data;
+        }
+    }
+
+
     componentDidMount() {
     }
 
@@ -34,16 +43,17 @@ class CommonIconButton extends Component {
     }
 
     render() {
-        if (!this.props.data || !this.props.data.needRightBtn) {
+        if (!this.local || !this.local.needRightBtn) {
             return <View/>
         }
         let icon = <View/>;
-        switch (this.props.data.iconType) {
-            case 1:
-                icon = <Icon name={this.props.data.rightBtn} size={20} color={Constant.miWhite}/>
-                break;
+        switch (this.local.iconType) {
             case 2:
-                icon = <Icon2 name={this.props.data.rightBtn} size={20} color={Constant.miWhite}/>
+                icon = <Icon2 name={this.local.rightBtn} size={20} color={Constant.miWhite}/>
+                break;
+            case 1:
+            default:
+                icon = <Icon name={this.local.rightBtn} size={20} color={Constant.miWhite}/>
                 break;
         }
         return (
@@ -53,7 +63,7 @@ class CommonIconButton extends Component {
                     paddingLeft: 20
                 }]}
                 onPress={() => {
-                    this.props.data.rightBtnPress && this.props.data.rightBtnPress(this.props.data);
+                    this.local.rightBtnPress && this.local.rightBtnPress(this.local);
                 }}>
                 {icon}
             </TouchableOpacity>

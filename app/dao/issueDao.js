@@ -52,6 +52,15 @@ const editIssueDao = async (userName, repository, number, issue) => {
     };
 };
 
+const createIssueDao = async (userName, repository, issue) => {
+    let url = Address.createIssue(userName, repository);
+    let res = await Api.netFetch(url, 'POST',  issue, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 const editCommentDao = async (userName, repository, commentId, comment) => {
     let url = Address.editComment(userName, repository, commentId);
     let res = await Api.netFetch(url, 'PATCH',  comment, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
@@ -80,4 +89,5 @@ export default {
     editIssueDao,
     editCommentDao,
     deleteCommentDao,
+    createIssueDao
 }

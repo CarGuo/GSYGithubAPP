@@ -259,6 +259,7 @@ class IssueDetail extends Component {
                 actionTime={issue.created_at}
                 actionUser={issue.user.login}
                 actionUserPic={issue.user.avatar_url}
+                closed_by={issue.closed_by}
                 issueComment={issue.title}
                 issueDesHtml={issue.body_html ? issue.body_html : ""}
                 commentCount={issue.comments + ""}

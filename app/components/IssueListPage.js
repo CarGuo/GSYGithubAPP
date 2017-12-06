@@ -17,7 +17,7 @@ import PullListView from './widget/PullLoadMoreListView'
 import IssueItem from './widget/IssueItem'
 import {getFullName} from '../utils/htmlUtils'
 import Icon from 'react-native-vector-icons/Ionicons'
-import * as Config from '../config/'
+import * as Config from '../config'
 import CommonBottomBar from "./widget/CommonBottomBar";
 
 /**
@@ -28,6 +28,7 @@ class IssueListPage extends Component {
     constructor(props) {
         super(props);
         this._searchTextChange = this._searchTextChange.bind(this);
+        this._createIssue = this._createIssue.bind(this);
         this._searchText = this._searchText.bind(this);
         this._refresh = this._refresh.bind(this);
         this._getBottomItem = this._getBottomItem.bind(this);
@@ -215,6 +216,18 @@ class IssueListPage extends Component {
         }]
     }
 
+    _createIssue(title, text){
+        let {repositoryName, userName} = this.props;
+        Actions.LoadingModal({backExit: false});
+        issueActions.createIssue(userName, repositoryName,
+            {title : title, body: text}).then(() => {
+            setTimeout(() => {
+                Actions.pop();
+                this._refresh();
+            }, 500);
+        })
+    }
+
     render() {
         return (
             <View style={styles.mainBox}>
@@ -255,17 +268,33 @@ class IssueListPage extends Component {
                         <Icon name={'md-search'} size={28} color={Constant.subLightTextColor}/>
                     </TouchableOpacity>
                 </View>
-
-
-                <CommonBottomBar
-                    rootStyles={{
-                        marginHorizontal: Constant.normalMarginEdge,
-                        backgroundColor: Constant.primaryColor,
-                        marginTop: Constant.normalMarginEdge,
-                        borderRadius: 4,
-                    }}
-                    dataList={this._getBottomItem()}/>
-
+                <View style={[styles.centerH, styles.flexDirectionRowNotFlex]}>
+                    <CommonBottomBar
+                        rootStyles={{
+                            flex: 1,
+                            marginHorizontal: Constant.normalMarginEdge,
+                            backgroundColor: Constant.primaryColor,
+                            marginTop: Constant.normalMarginEdge,
+                            borderRadius: 4,
+                        }}
+                        dataList={this._getBottomItem()}/>
+                    <TouchableOpacity
+                        style={[styles.centerH, {
+                            marginRight: Constant.normalMarginEdge,
+                            marginTop: Constant.normalMarginEdge + 2,
+                        }]}
+                        onPress={()=>{
+                            Actions.TextInputModal({
+                                textConfirm: this._createIssue,
+                                titleText: I18n('createIssue'),
+                                needEditTitle: true,
+                                text: "",
+                                titleValue: ""
+                            })
+                        }}>
+                        <Icon name={'md-add-circle'} size={35} color={Constant.primaryColor}/>
+                    </TouchableOpacity>
+                </View>
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"

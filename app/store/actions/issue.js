@@ -72,6 +72,20 @@ const editIssue = async (userName, repository, number, issue) => {
         };
     }
 };
+const createIssue = async (userName, repository, issue) => {
+    let res = await IssueDao.createIssueDao(userName, repository, issue);
+    if (res && res.result) {
+        return {
+            data: res.data,
+            result: true
+        };
+    } else {
+        return {
+            result: false
+        };
+    }
+};
+
 
 const editComment = async (userName, repository, commentId, comment, type) => {
     let res;
@@ -99,5 +113,6 @@ export default {
     getIssueInfo,
     addIssueComment,
     editIssue,
-    editComment
+    editComment,
+    createIssue
 }

@@ -161,6 +161,12 @@ export default AddressLocal = {
         return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}`
     },
     /**
+     * 创建issue post
+     */
+    createIssue: (reposOwner, reposName) => {
+        return `${host}repos/${reposOwner}/${reposName}/issues`
+    },
+    /**
      * 搜索issue
      */
     repositoryIssueSearch: (q) => {

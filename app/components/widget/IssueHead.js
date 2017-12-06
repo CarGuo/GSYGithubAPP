@@ -33,7 +33,11 @@ class IssueItem extends Component {
     }
 
     render() {
-        let {actionTime, actionUser, actionUserPic, issueComment, issueDes, issueDesHtml} = this.props;
+        let {actionTime, actionUser, actionUserPic, issueComment, issueDes, issueDesHtml, closed_by} = this.props;
+        let stateText = (closed_by) ?
+            <View>
+                <Text style={[styles.subSmallText, {marginTop: 5}]}>{"Closed by " + closed_by.login}</Text>
+            </View> : <View/>;
         return (
             <View
                 style={[{
@@ -119,6 +123,7 @@ class IssueItem extends Component {
                             )
                         }}
                     />
+                    {stateText}
                 </View>
 
             </View>
