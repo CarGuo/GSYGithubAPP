@@ -28,11 +28,11 @@ class LoadingModal extends Component {
 
     componentDidMount() {
         this.refs.loginModal.open();
-        BackHandler.addEventListener('hardwareBackPress', this.onClose)
+        this.handle = BackHandler.addEventListener('hardwareBackPress', this.onClose)
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.onClose)
+        BackHandler.removeEventListener('hardwareBackPress', this.handle)
     }
 
     onClose() {

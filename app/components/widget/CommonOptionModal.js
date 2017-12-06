@@ -5,17 +5,13 @@ import React, {Component} from 'react';
 import {
     Text,
     View,
-    BackHandler,
-    TextInput,
     TouchableOpacity,
-    StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles, {screenWidth, screenHeight} from "../../style"
 import * as Constant from "../../style/constant"
 import I18n from '../../style/i18n'
 import Modal from 'react-native-modalbox';
-import Spinner from 'react-native-spinkit';
 import {Actions} from "react-native-router-flux";
 
 

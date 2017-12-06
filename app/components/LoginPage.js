@@ -52,7 +52,7 @@ class LoginPage extends Component {
 
     componentDidMount() {
         this.onOpen();
-        BackHandler.addEventListener('hardwareBackPress', this.onClose)
+        this.handle = BackHandler.addEventListener('hardwareBackPress', this.onClose)
         Animated.timing(this.state.opacity, {
             duration: animaTime,
             toValue: 1,
@@ -60,7 +60,7 @@ class LoginPage extends Component {
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.onClose)
+        BackHandler.removeEventListener('hardwareBackPress', this.handle)
     }
 
 

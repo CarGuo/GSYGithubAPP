@@ -5,10 +5,8 @@ import React, {Component} from 'react';
 import {
     Text,
     View,
-    BackHandler,
     TextInput,
     TouchableOpacity,
-    StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles, {screenWidth, screenHeight} from "../../style"

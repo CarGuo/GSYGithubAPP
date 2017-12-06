@@ -35,12 +35,12 @@ export default class WebPage extends Component {
     }
 
     componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.back)
+        this.handle = BackHandler.addEventListener('hardwareBackPress', this.back)
 
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.back)
+        BackHandler.removeEventListener('hardwareBackPress', this.handle)
     }
 
     handleTextInputChange = (event) => {
