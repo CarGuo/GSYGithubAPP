@@ -136,6 +136,16 @@ const getRepositoryForks = async (userName, reposName, page = 1) => {
     };
 };
 
+const createRepositoryForks = async (userName, reposName) => {
+    let res = await RepositoryDao.createForkDao(userName, reposName);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+
+
 const getRepositoryStar = async (userName, reposName, page = 1) => {
     let res = await RepositoryDao.getRepositoryStarDao(userName, reposName, page);
     return {
@@ -239,5 +249,6 @@ export default {
     getRepositoryTag,
     getReposFileDir,
     searchRepositoryIssue,
+    createRepositoryForks
 
 }

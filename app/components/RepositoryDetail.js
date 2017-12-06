@@ -17,6 +17,7 @@ import IssueListPage from './IssueListPage'
 import RepositoryDetailActivity from './RepositoryDetailActivity'
 import RepositoryDetailFile from './RepositoryDetailFile'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
+import Toast from './widget/ToastProxy'
 
 /**
  * 详情
@@ -28,6 +29,7 @@ class RepositoryDetail extends Component {
         this.page = 2;
         this._getBottomItem = this._getBottomItem.bind(this);
         this._refresh = this._refresh.bind(this);
+        this._forked = this._forked.bind(this);
         this.state = {
             dataDetail: this.props.defaultProps,
             dataDetailReadme: '',
@@ -130,8 +132,21 @@ class RepositoryDetail extends Component {
     };
 
 
+    _forked() {
+        let {ownerName, repositoryName} = this.props;
+        Actions.LoadingModal({backExit: false});
+        repositoryActions.createRepositoryForks(ownerName, repositoryName).then((res) => {
+            console.log(":SSSS", res);
+            setTimeout(() => {
+                Actions.pop();
+                this._refresh();
+            }, 500);
+        })
+    }
+
+
     _getBottomItem() {
-        let {stared, watched} = this.state;
+        let {stared, watched, dataDetail} = this.state;
         let {ownerName, repositoryName} = this.props;
         return [{
             itemName: stared ? I18n("reposUnStar") : I18n("reposStar"),
@@ -163,13 +178,17 @@ class RepositoryDetail extends Component {
                 borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor
             }
         }, {
-            itemName: I18n("reposRelease"),
-            icon: 'tag',
+            itemName: I18n("reposFork"),
+            icon: 'repo-forked',
             itemClick: () => {
-                Actions.VersionPage({
-                    ownerName: this.props.ownerName,
-                    repositoryName: this.props.repositoryName,
-                    title: this.props.ownerName + "/" + this.props.repositoryName
+                if (dataDetail.fork) {
+                    Toast(I18n("reposForked"));
+                    return
+                }
+                Actions.ConfirmModal({
+                    titleText: I18n('reposFork'),
+                    text: I18n('reposForkedTip'),
+                    textConfirm: this._forked
                 })
             }, itemStyle: {}
         },]

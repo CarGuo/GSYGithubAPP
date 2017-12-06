@@ -260,6 +260,12 @@ export default AddressLocal = {
         return `${host}users/${userName}/followers`;
     },
     /**
+     * create fork post
+     */
+    createFork: (reposOwner, reposName) => {
+        return `${host}repos/${reposOwner}/${reposName}/forks`
+    },
+    /**
      * fork get
      */
     getForker: (reposOwner, reposName, sort) => {

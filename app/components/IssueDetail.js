@@ -251,7 +251,7 @@ class IssueDetail extends Component {
 
     render() {
         let {issue} = this.state;
-        let bottomBar = (issue.body) ?
+        let bottomBar = (issue) ?
             <CommonBottomBar dataList={this._getBottomItem()}/> :
             <View/>;
         let header =

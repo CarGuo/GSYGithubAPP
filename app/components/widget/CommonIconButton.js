@@ -42,7 +42,7 @@ class CommonIconButton extends Component {
                     paddingLeft: 20
                 }]}
                 onPress={() => {
-                    this.props.data.rightBtnPress && this.props.data.rightBtnPress();
+                    this.props.data.rightBtnPress && this.props.data.rightBtnPress(this.props.data);
                 }}>
                 <Icon name={this.props.data.rightBtn} size={20} color={Constant.miWhite}/>
             </TouchableOpacity>

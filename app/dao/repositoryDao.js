@@ -73,6 +73,14 @@ const getRepositoryDetailReadmeHtmlDao = async (userName, reposName, branch) => 
     };
 };
 
+const createForkDao = async (userName, reposName) => {
+    let url = Address.createFork(userName, reposName);
+    let res = await await Api.netFetch(url, 'POST');
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
 
 const getRepositoryForksDao = async (userName, reposName, page) => {
     let url = Address.getReposForks(userName, reposName) + Address.getPageParams("?", page);
@@ -196,4 +204,5 @@ export default {
     getRepositoryTagDao,
     getReposFileDirDao,
     searchRepositoryIssueDao,
+    createForkDao
 }

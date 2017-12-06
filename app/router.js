@@ -38,6 +38,7 @@ import styles from './style'
 import I18n, {changeLocale} from './style/i18n'
 import * as Constant from './style/constant'
 import BackUtils from './utils/backUtils'
+import {RepositoryDetailRightBtnPress} from './utils/reposUtils'
 
 import WelcomePage from "./components/WelcomePage"
 import {screenWidth, drawerWidth} from "./style/index";
@@ -119,6 +120,10 @@ const getRouter = () => {
                         <Scene key="SearchPage" component={SearchPage}/>
                     </Drawer>
                     <Scene key="RepositoryDetail" component={RepositoryDetail}
+                           needRightBtn={true}
+                           rightBtn={'list'}
+                           rightBtnPress={(params)=>{return RepositoryDetailRightBtnPress(params)}}
+                           renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="IssueDetail" component={IssueDetail}
