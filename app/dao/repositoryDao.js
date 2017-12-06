@@ -56,26 +56,18 @@ const getRepositoryDetailDao = async (userName, reposName) => {
     };
 };
 
-const getRepositoryDetailReadmeDao = async (userName, reposName, branch) => {
-    let url = Address.readmeFile(userName + '/' + reposName, branch);
-    let res = await await Api.netFetch(url);
-    return {
-        data: res.data,
-        result: res.result
-    };
-};
-const getRepositoryDetailReadmeHtmlDao = async (userName, reposName, branch) => {
-    let url = Address.readmeFile(userName + '/' + reposName, branch);
-    let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html'});
+const createForkDao = async (userName, reposName) => {
+    let url = Address.createFork(userName, reposName);
+    let res = await await Api.netFetch(url, 'POST');
     return {
         data: res.data,
         result: res.result
     };
 };
 
-const createForkDao = async (userName, reposName) => {
-    let url = Address.createFork(userName, reposName);
-    let res = await await Api.netFetch(url, 'POST');
+const getBranchesDao = async (userName, reposName) => {
+    let url = Address.getbranches(userName, reposName);
+    let res = await await Api.netFetch(url);
     return {
         data: res.data,
         result: res.result
@@ -184,6 +176,24 @@ const getReposFileDirDao = async (userName, reposName, path = '', branch) => {
     };
 };
 
+const getRepositoryDetailReadmeDao = async (userName, reposName, branch) => {
+    let url = Address.readmeFile(userName + '/' + reposName, branch);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
+const getRepositoryDetailReadmeHtmlDao = async (userName, reposName, branch) => {
+    let url = Address.readmeFile(userName + '/' + reposName, branch);
+    let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html'});
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
+
 export default {
     getTrendDao,
     searchRepositoryDao,
@@ -204,5 +214,6 @@ export default {
     getRepositoryTagDao,
     getReposFileDirDao,
     searchRepositoryIssueDao,
-    createForkDao
+    createForkDao,
+    getBranchesDao
 }

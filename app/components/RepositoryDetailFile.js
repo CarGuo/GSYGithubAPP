@@ -33,6 +33,7 @@ class RepositoryDetailActivity extends Component {
             path: this.props.props
         };
         this.loading = false;
+        this.curBranch = this.props.curBranch;
         this.dsHeader = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     }
 
@@ -132,7 +133,7 @@ class RepositoryDetailActivity extends Component {
                         });
                         let path = headerList.slice(1, headerList.length).join("/");
                         this.setState({
-                            path: path,
+                            path: path + (this.curBranch) ? `?ref=${this.curBranch}` : "",
                         });
                         this._refresh(path);
                         this.loading = true;
@@ -147,7 +148,7 @@ class RepositoryDetailActivity extends Component {
     _refresh(path) {
         if (this.refs.pullList)
             this.refs.pullList.showRefreshState();
-        reposActions.getReposFileDir(this.props.ownerName, this.props.repositoryName, path).then((res) => {
+        reposActions.getReposFileDir(this.props.ownerName, this.props.repositoryName, path, this.curBranch).then((res) => {
                 if (res && res.result) {
                     let dir = [];
                     let file = [];
@@ -174,11 +175,22 @@ class RepositoryDetailActivity extends Component {
         )
     }
 
+
     /**
      * 加载更多
      * */
     _loadMore() {
 
+    }
+
+    changeBranch(branch) {
+        this.curBranch = branch;
+        let newHeaderList = ["."];
+        this.setState({
+            path: "",
+            headerList: newHeaderList,
+        });
+        this._refresh("")
     }
 
     render() {

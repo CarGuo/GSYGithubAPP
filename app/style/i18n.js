@@ -122,6 +122,8 @@ I18n.translations = {
         filterUpdated: "updated",
         filterPushed: "pushed",
         filterFullName: "name",
+        forkSuccess: "Fxxx Success",
+        forkFail: "Fxxx Fail",
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -233,6 +235,8 @@ I18n.translations = {
         filterUpdated: "更新",
         filterPushed: "提交",
         filterFullName: "名称",
+        forkSuccess: "Fxxx 成功了喔",
+        forkFail: "Fxxx 没能成功呢",
     }
 };
 

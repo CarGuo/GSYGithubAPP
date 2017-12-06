@@ -90,43 +90,6 @@ const getRepositoryDetail = async (userName, reposName) => {
     }
 };
 
-/**
- * 详情的remde数据
- */
-const getRepositoryDetailReadme = async (userName, reposName, branch = 'master') => {
-    let res = await RepositoryDao.getRepositoryDetailReadmeDao(userName, reposName);
-    if (res.result) {
-        let b = Buffer(res.data.content, 'base64');
-        let data = b.toString('utf8');
-        return {
-            result: true,
-            data: generateMd2Html(data, userName, reposName, branch)
-        }
-    } else {
-        return {
-            result: false,
-            data: ""
-        }
-    }
-};
-
-/**
- * 详情的remde数据
- */
-const getRepositoryDetailReadmeHtml = async (userName, reposName, branch = 'master') => {
-    let res = await RepositoryDao.getRepositoryDetailReadmeHtmlDao(userName, reposName);
-    if (res.result) {
-        return {
-            result: true,
-            data: generateHtml(res.data),
-        }
-    } else {
-        return {
-            result: false,
-            data: ""
-        }
-    }
-};
 
 const getRepositoryForks = async (userName, reposName, page = 1) => {
     let res = await RepositoryDao.getRepositoryForksDao(userName, reposName, page);
@@ -144,6 +107,13 @@ const createRepositoryForks = async (userName, reposName) => {
     };
 };
 
+const getBranches = async (userName, reposName) => {
+    let res = await RepositoryDao.getBranchesDao(userName, reposName);
+    return {
+        data: res.data,
+        result: res.result
+    };
+};
 
 
 const getRepositoryStar = async (userName, reposName, page = 1) => {
@@ -220,8 +190,48 @@ const getReposCommitsInfo = async (userName, reposName, sha) => {
         result: res.result
     };
 };
-const getReposFileDir = async (userName, reposName, path) => {
-    let res = await RepositoryDao.getReposFileDirDao(userName, reposName, path);
+
+
+/**
+ * 详情的remde数据
+ */
+const getRepositoryDetailReadme = async (userName, reposName, branch) => {
+    let res = await RepositoryDao.getRepositoryDetailReadmeDao(userName, reposName, branch);
+    if (res.result) {
+        let b = Buffer(res.data.content, 'base64');
+        let data = b.toString('utf8');
+        return {
+            result: true,
+            data: generateMd2Html(data, userName, reposName, branch)
+        }
+    } else {
+        return {
+            result: false,
+            data: ""
+        }
+    }
+};
+
+/**
+ * 详情的remde数据
+ */
+const getRepositoryDetailReadmeHtml = async (userName, reposName, branch) => {
+    let res = await RepositoryDao.getRepositoryDetailReadmeHtmlDao(userName, reposName, branch);
+    if (res.result) {
+        return {
+            result: true,
+            data: generateHtml(res.data),
+        }
+    } else {
+        return {
+            result: false,
+            data: ""
+        }
+    }
+};
+
+const getReposFileDir = async (userName, reposName, path, branch) => {
+    let res = await RepositoryDao.getReposFileDirDao(userName, reposName, path, branch);
     return {
         data: res.data,
         result: res.result
@@ -249,6 +259,7 @@ export default {
     getRepositoryTag,
     getReposFileDir,
     searchRepositoryIssue,
-    createRepositoryForks
+    createRepositoryForks,
+    getBranches
 
 }

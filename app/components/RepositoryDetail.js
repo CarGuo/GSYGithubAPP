@@ -7,7 +7,7 @@ import {
     View, InteractionManager, StatusBar, Dimensions, StyleSheet
 } from 'react-native';
 import {Actions, Tabs} from 'react-native-router-flux';
-import styles from "../style"
+import styles, {screenHeight} from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import repositoryActions from '../store/actions/repository'
@@ -18,6 +18,7 @@ import RepositoryDetailActivity from './RepositoryDetailActivity'
 import RepositoryDetailFile from './RepositoryDetailFile'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 import Toast from './widget/ToastProxy'
+import PopmenuItem from './widget/PopmenuItem'
 
 /**
  * 详情
@@ -29,7 +30,10 @@ class RepositoryDetail extends Component {
         this.page = 2;
         this._getBottomItem = this._getBottomItem.bind(this);
         this._refresh = this._refresh.bind(this);
+        this._refreshChangeBranch = this._refreshChangeBranch.bind(this);
         this._forked = this._forked.bind(this);
+        this._renderScene = this._renderScene.bind(this);
+        this.curBranch = null;
         this.state = {
             dataDetail: this.props.defaultProps,
             dataDetailReadme: '',
@@ -54,16 +58,15 @@ class RepositoryDetail extends Component {
                         })
                     }
                 });
-
-            repositoryActions.getRepositoryDetailReadmeHtml(this.props.ownerName, this.props.repositoryName)
+            this._refresh();
+            repositoryActions.getBranches(this.props.ownerName, this.props.repositoryName)
                 .then((res) => {
                     if (res && res.result) {
                         this.setState({
-                            dataDetailReadme: res.data,
+                            dataDetailBranches: this.resolveBranchesData(res.data),
                         })
                     }
                 });
-            this._refresh();
         });
     }
 
@@ -74,7 +77,32 @@ class RepositoryDetail extends Component {
     componentWillReceiveProps(newProps) {
     }
 
+    resolveBranchesData(data) {
+        let branches = [];
+        if (data && data.length > 0) {
+            data.forEach((item) => {
+                let addData = {
+                    name: item.name,
+                    value: item.name,
+                    toString() {
+                        return item.name
+                    }
+                };
+                branches.push(addData);
+            })
+        }
+        return branches;
+    }
+
     _refresh() {
+        repositoryActions.getRepositoryDetailReadmeHtml(this.props.ownerName, this.props.repositoryName, this.curBranch)
+            .then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        dataDetailReadme: res.data,
+                    })
+                }
+            });
         repositoryActions.getRepositoryStatus(this.props.ownerName, this.props.repositoryName).then((res) => {
             if (res && res.result) {
                 this.setState({
@@ -115,6 +143,10 @@ class RepositoryDetail extends Component {
             case '3':
                 return (
                     <RepositoryDetailFile
+                        ref={(ref) => {
+                            this.detailFile = ref;
+                        }}
+                        curBranch={this.curBranch}
                         ownerName={this.props.ownerName}
                         repositoryName={this.props.repositoryName}
                     />
@@ -136,12 +168,22 @@ class RepositoryDetail extends Component {
         let {ownerName, repositoryName} = this.props;
         Actions.LoadingModal({backExit: false});
         repositoryActions.createRepositoryForks(ownerName, repositoryName).then((res) => {
-            console.log(":SSSS", res);
+            Toast((res && res.result) ? I18n('forkSuccess') : I18n('forkFail'));
             setTimeout(() => {
                 Actions.pop();
                 this._refresh();
             }, 500);
         })
+    }
+
+    _refreshChangeBranch(branch) {
+        this.setState({
+            dataDetailReadme: "</p>"
+        });
+        this._refresh();
+        if (this.detailFile) {
+            this.detailFile.changeBranch(branch);
+        }
     }
 
 
@@ -195,7 +237,34 @@ class RepositoryDetail extends Component {
     }
 
     render() {
-        let bottom = this.state.showBottom ? <CommonBottomBar dataList={this._getBottomItem()}/> : <View/>
+        let itemHeight = 30;
+        let popHeight = (this.state.dataDetailBranches) ? (itemHeight * this.state.dataDetailBranches.length + 20) : 100;
+        let bottom = this.state.showBottom ?
+            <View style={[styles.flexDirectionRowNotFlex, styles.centerH, styles.shadowCard]}>
+                <CommonBottomBar dataList={this._getBottomItem()}
+                                 rootStyles={styles.flex}/>
+                <PopmenuItem
+                    defaultIndex={0}
+                    adjustFrame={(styless) => {
+                        if (this.state.dataDetailBranches) {
+                            let top = screenHeight - popHeight - 60;
+                            if (top < 0) {
+                                top = 10;
+                            }
+                            styless.top = top
+                        }
+                    }}
+                    onSelect={(id, rowData) => {
+                        this.curBranch = rowData.value;
+                        this._refreshChangeBranch(this.curBranch);
+                    }}
+                    itemHeight={itemHeight}
+                    options={this.state.dataDetailBranches}
+                    dropdownStyle={{height: popHeight}}
+                    defaultValue={"master"}
+                />
+            </View> :
+            <View/>;
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>

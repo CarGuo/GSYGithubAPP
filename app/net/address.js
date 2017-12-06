@@ -221,7 +221,13 @@ export default AddressLocal = {
      * 仓库路径下的内容 get
      */
     reposDataDir: (reposOwner, repos, path, branch = 'master') => {
-        return `${host}repos/${reposOwner}/${repos}/contents/${path}?branch=${branch}`
+        return `${host}repos/${reposOwner}/${repos}/contents/${path}`  + ((!branch) ? "" : ("?ref=" + branch));
+    },
+    /**
+     * README 文件地址 get
+     */
+    readmeFile: (reposNameFullName, curBranch) => {
+        return host + "repos/" + reposNameFullName + "/" + "readme" + ((!curBranch) ? "" : ("?ref=" + curBranch));
     },
     /**
      * 我的用户信息 GET
@@ -264,6 +270,12 @@ export default AddressLocal = {
      */
     createFork: (reposOwner, reposName) => {
         return `${host}repos/${reposOwner}/${reposName}/forks`
+    },
+    /**
+     * branch get
+     */
+    getbranches:(reposOwner, reposName)=>{
+        return `${host}repos/${reposOwner}/${reposName}/branches`
     },
     /**
      * fork get
@@ -323,20 +335,6 @@ export default AddressLocal = {
         }
         return `https://github.com/trending?since=${since}`
     },
-    /**
-     * README 文件地址 get
-     */
-    readmeFile: (reposNameFullName, curBranch) => {
-        return host + "repos/" + reposNameFullName + "/" + "readme" + ((!curBranch) ? "" : "?ref=" + curBranch);
-    },
-    /**
-     * README web url地址
-     */
-    readmeWebUrl: (reposNameFullName, curBranch, defaultBranch) => {
-        let branch = (!curBranch) ? defaultBranch : curBranch;
-        return hostWeb + reposNameFullName + "/blob/" + branch + "/" + "README.md";
-    },
-
     /**
      * 处理分页参数
      * @param tab 表示是 ? 或者 &

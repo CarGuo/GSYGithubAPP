@@ -41,6 +41,12 @@ export default class WebComponent extends Component {
         }
     }
 
+    reload() {
+        if(this.webview) {
+            this.webview.reload();
+        }
+    }
+
 
     render() {
         const _w = this.props.width || Dimensions.get('window').width;
