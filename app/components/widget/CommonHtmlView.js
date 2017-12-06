@@ -4,6 +4,7 @@ import HTMLView from 'react-native-htmlview';
 import Toast from './ToastProxy'
 import {Actions} from "react-native-router-flux";
 import I18n from '../../style/i18n'
+import {launchUrl} from '../../utils/htmlUtils'
 
 class CommonHtmlView extends Component {
 
@@ -23,7 +24,7 @@ class CommonHtmlView extends Component {
             <HTMLView
                 onLinkPress={(link) => {
                     if (link && (link.indexOf("http") === 0 || link.indexOf("www") === 0)) {
-                        Actions.WebPage({uri: link})
+                        launchUrl(link);
                     } else {
                         Linking.openURL(link)
                     }

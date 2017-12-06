@@ -104,7 +104,7 @@ class RepositoryDetailActivity extends Component {
                             title: rowData.name,
                             ownerName: this.props.ownerName,
                             repositoryName: this.props.repositoryName,
-                            branch: 'master',
+                            branch: this.curBranch ? this.curBranch : 'master',
                         })
                     }}/>
 
@@ -133,7 +133,7 @@ class RepositoryDetailActivity extends Component {
                         });
                         let path = headerList.slice(1, headerList.length).join("/");
                         this.setState({
-                            path: path + (this.curBranch) ? `?ref=${this.curBranch}` : "",
+                            path: path,
                         });
                         this._refresh(path);
                         this.loading = true;

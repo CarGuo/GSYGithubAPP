@@ -10,7 +10,7 @@ import URL from 'url-parse';
  */
 
 
-export const generateCode2HTml = (mdData) => {
+export const generateCode2HTml = (mdData, backgroundColor = Constant.white) => {
     let currentData = (mdData && mdData.indexOf("<code>") === -1) ?
         "<body>\n" +
         "<pre class=\"pre\">\n" +
@@ -25,10 +25,10 @@ export const generateCode2HTml = (mdData) => {
         mdData +
         "</pre>\n" +
         "</body>\n";
-    return generateHtml(currentData)
+    return generateHtml(currentData, backgroundColor)
 };
 
-export const generateHtml = (mdData) => {
+export const generateHtml = (mdData, backgroundColor = Constant.white) => {
     if (!mdData) {
         return "";
     }
@@ -45,7 +45,7 @@ export const generateHtml = (mdData) => {
         }
     });
 
-    return generateCodeHtml(data, false);
+    return generateCodeHtml(data, false, backgroundColor);
 };
 
 

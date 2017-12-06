@@ -10,6 +10,7 @@ import * as Constant from '../../style/constant'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Autolink from 'react-native-autolink';
 import Toast from './ToastProxy'
+import {launchUrl} from '../../utils/htmlUtils'
 
 
 class IconTextAutoLinkItem extends Component {
@@ -35,7 +36,7 @@ class IconTextAutoLinkItem extends Component {
                     text={this.props.text}
                     onPress={(link) => {
                         if (link && (link.indexOf("http") === 0 || link.indexOf("www") === 0)) {
-                            Actions.WebPage({uri: link})
+                            launchUrl(link);
                         } else {
                             Linking.openURL(link)
                         }

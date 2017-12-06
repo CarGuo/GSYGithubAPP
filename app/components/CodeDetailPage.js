@@ -13,6 +13,7 @@ import reposActions from '../store/actions/repository'
 import WebComponent from './widget/WebComponent'
 import {generateCode2HTml} from '../utils/htmlUtils'
 
+import * as Constant from '../style/constant'
 
 class CodeDetailPage extends Component {
 
@@ -27,10 +28,10 @@ class CodeDetailPage extends Component {
         InteractionManager.runAfterInteractions(() => {
             if (this.props.needRequest) {
                 reposActions.getReposFileDir(this.props.ownerName,
-                    this.props.repositoryName, this.props.path).then((res) => {
+                    this.props.repositoryName, this.props.path, this.props.branch).then((res) => {
                         if (res && res.result) {
                             this.setState({
-                                detail: generateCode2HTml(res.data),
+                                detail: generateCode2HTml(res.data,  Constant.primaryColor),
                             })
                         } else {
                             this.setState({
@@ -57,7 +58,7 @@ class CodeDetailPage extends Component {
     render() {
         let {detail} = this.state;
         return (
-            <View style={styles.mainBox}>
+            <View style={[styles.mainBox]}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
                 <WebComponent
                     source={{html: detail}}/>

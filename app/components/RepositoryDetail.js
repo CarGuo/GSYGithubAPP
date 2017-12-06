@@ -242,7 +242,18 @@ class RepositoryDetail extends Component {
         let bottom = this.state.showBottom ?
             <View style={[styles.flexDirectionRowNotFlex, styles.centerH, styles.shadowCard]}>
                 <CommonBottomBar dataList={this._getBottomItem()}
-                                 rootStyles={styles.flex}/>
+                                 rootStyles={{
+                                     flex: 1,
+                                     shadowOffset: {
+                                         width: 0,
+                                         height: 0
+                                     },
+                                     shadowOpacity: 0,
+                                     shadowRadius: 0,
+                                     elevation: 0,
+                                     borderRightColor: Constant.primaryColor,
+                                     borderRightWidth: 2
+                                 }}/>
                 <PopmenuItem
                     defaultIndex={0}
                     adjustFrame={(styless) => {

@@ -64,7 +64,7 @@ class PushDetailPage extends Component {
                         repositoryName: this.props.repositoryName,
                         branch: 'master',
                         needRequest: false,
-                        detail: generateCode2HTml(parseDiffSource(patch)),
+                        detail: generateCode2HTml(parseDiffSource(patch), Constant.primaryColor),
                     })
                 }}/>
         )

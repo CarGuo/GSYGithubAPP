@@ -122,7 +122,7 @@ class ListPage extends Component {
                                 Actions.CodeDetailPage({
                                     title: rowData.name,
                                     needRequest: false,
-                                    detail: generateHtml(rowData.body_html),
+                                    detail: generateHtml(rowData.body_html, Constant.primaryColor),
 
                                 })
                             }
