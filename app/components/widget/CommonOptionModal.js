@@ -27,7 +27,7 @@ class CommonOptionModal extends Component {
     }
 
     componentDidMount() {
-        this.refs.loginModal.open();
+        this.refs.modal.open();
     }
 
     componentWillUnmount() {
@@ -59,12 +59,12 @@ class CommonOptionModal extends Component {
             items.push(this._renderItem(data))
         });
         return (
-            <Modal ref={"loginModal"}
+            <Modal ref={"modal"}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
                    onClosed={this.onClose}
                    backdrop={true}
-                   backButtonClose={true}
+                   backButtonClose={false}
                    swipeToClose={true}
                    backdropOpacity={0.8}>
                 <View style={[styles.centered, {height: screenHeight, width: screenWidth}]}>

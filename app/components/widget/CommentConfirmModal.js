@@ -46,7 +46,7 @@ class CommentConfirmModal extends Component {
                    position={"center"}
                    onClosed={this.onClose}
                    backdrop={this.props.backExit}
-                   backButtonClose={this.props.backExit}
+                   backButtonClose={false}
                    swipeToClose={this.props.backExit}
                    backdropOpacity={0.8}>
                 <View style={[styles.centered, {flex: 1,}]}>
