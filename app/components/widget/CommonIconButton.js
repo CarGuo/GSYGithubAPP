@@ -28,10 +28,6 @@ class CommonIconButton extends Component {
 
     constructor(props) {
         super(props);
-        this.local = this.props;
-        if (this.props.data) {
-            this.local = this.props.data;
-        }
     }
 
 
@@ -42,7 +38,15 @@ class CommonIconButton extends Component {
 
     }
 
+    componentWillReceiveProps(newProps) {
+
+    }
+
     render() {
+        this.local = this.props;
+        if (this.props.data) {
+            this.local = this.props.data;
+        }
         if (!this.local || !this.local.needRightBtn) {
             return <View/>
         }

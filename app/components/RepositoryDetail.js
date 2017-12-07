@@ -55,7 +55,8 @@ class RepositoryDetail extends Component {
                     if (res && res.result) {
                         this.setState({
                             dataDetail: res.data
-                        })
+                        });
+                        Actions.refresh({titleData: res.data});
                     }
                 });
             this._refresh();
@@ -92,6 +93,10 @@ class RepositoryDetail extends Component {
             })
         }
         return branches;
+    }
+
+    getDetailData() {
+        return this.state.dataDetail
     }
 
     _refresh() {

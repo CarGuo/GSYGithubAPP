@@ -189,8 +189,6 @@ export const ActionUtils = (event) => {
 
 const getOptionItem = (repositoryName, owner, commits) => {
     let data = [];
-    console.log(commits);
-    let i = 0;
     commits.forEach((dada) => {
         let item = {
             itemName: dada.message + " " + dada.sha.substring(0, 4),

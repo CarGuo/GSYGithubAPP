@@ -125,7 +125,10 @@ I18n.translations = {
         filterFullName: "name",
         forkSuccess: "Fxxx Success",
         forkFail: "Fxxx Fail",
-        listEmpty:'Empty(oﾟ▽ﾟ)o  '
+        listEmpty:'Empty(oﾟ▽ﾟ)o ',
+        browserOpen:'Browser Open',
+        copy:'Copy Link',
+        download:'DownLoad',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -240,7 +243,10 @@ I18n.translations = {
         filterFullName: "名称",
         forkSuccess: "Fxxx 成功了喔",
         forkFail: "Fxxx 没能成功呢",
-        listEmpty:'暂时还没找到什么(oﾟ▽ﾟ)o  '
+        listEmpty:'暂时还没找到什么(oﾟ▽ﾟ)o ',
+        browserOpen:'浏览器打开',
+        copy:'复制链接',
+        download:'下载',
     }
 };
 
