@@ -41,6 +41,7 @@ class SearchPage extends Component {
         this.selectLanguageData = null;
         this.select = 0;
         this.state = {
+            showSelect: 0,
             dataSource: [],
         }
     }
@@ -168,7 +169,7 @@ class SearchPage extends Component {
     }
 
     _getBottomItem() {
-        let {select} = this.select;
+        let {select} = this.state.showSelect;
         return [{
             itemName: I18n("searchRepos"),
             itemTextColor: select === 0 ? Constant.white : Constant.subTextColor,
@@ -176,6 +177,7 @@ class SearchPage extends Component {
             iconColor: Constant.white,
             itemClick: () => {
                 this.setState({
+                    showSelect: 0,
                     dataSource: []
                 });
                 this.select = 0;
@@ -188,6 +190,7 @@ class SearchPage extends Component {
             iconColor: Constant.white,
             itemClick: () => {
                 this.setState({
+                    showSelect: 1,
                     dataSource: []
                 });
                 this.select = 1;
