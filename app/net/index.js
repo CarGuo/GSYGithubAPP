@@ -8,6 +8,7 @@ import I18n from '../style/i18n'
 import * as Constant from '../style/constant'
 import * as Code from './netwrokCode'
 import handlerError from './netwrokCode'
+import {NativeModules, DeviceEventEmitter} from 'react-native';
 
 
 export const CONTENT_TYPE_JSON = "application/json";
@@ -223,3 +224,17 @@ class HttpManager {
 }
 
 export default new HttpManager();
+
+
+export const FSModule = {
+    download: (opt, callback) => NativeModules.DownloadFileModule.download(opt, callback),
+    onProgress: (callback) => DeviceEventEmitter.addListener('DownloadStatus', callback),
+    installAPK: (filePath) => NativeModules.DownloadFileModule.installAPK(filePath),
+    openFile: (filePath) => NativeModules.DownloadFileModule.openFile(filePath),
+    STATUS_PAUSED: NativeModules.DownloadFileModule.STATUS_PAUSED,
+    STATUS_PENDING: NativeModules.DownloadFileModule.STATUS_PENDING,
+    STATUS_RUNNING: NativeModules.DownloadFileModule.STATUS_RUNNING,
+    STATUS_SUCCESSFUL: NativeModules.DownloadFileModule.STATUS_SUCCESSFUL,
+    STATUS_FAILED: NativeModules.DownloadFileModule.STATUS_FAILED,
+    STATUS_BUSY: NativeModules.DownloadFileModule.STATUS_BUSY,
+};

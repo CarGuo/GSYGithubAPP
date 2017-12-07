@@ -1,8 +1,10 @@
 import * as Constant from "../style/constant"
-import {StyleSheet, Linking, Clipboard} from "react-native";
+import {StyleSheet, Linking, Clipboard, Platform} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import I18n from '../style/i18n'
 import Toast from '../components/widget/ToastProxy'
+import {FSModule} from '../net'
+
 
 export const RepositoryDetailRightBtnPress = (props) => {
     Actions.OptionModal({dataList: RepositoryMore(props)});
@@ -40,7 +42,15 @@ export const RepositoryMore = (props) => {
         itemName: I18n("download"),
         itemValue: 'download',
         itemClick: () => {
-
+            if (Platform.OS === "ios") {
+                Toast(I18n("iosNotSupportDown"));
+            } else if (props.titleData && props.titleData.downloads_url) {
+                console.log("FFF", props.titleData.downloads_url)
+                FSModule.download({
+                    url: props.titleData.downloads_url,
+                    description: (I18n("downloadDescription") + props.ownerName + "/" + props.repositoryName)
+                })
+            }
         }, itemStyle: {}
     },]
 };
