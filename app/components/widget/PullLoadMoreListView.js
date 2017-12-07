@@ -10,6 +10,7 @@ import styles from "../../style"
 import * as Constant from "../../style/constant"
 import I18n from '../../style/i18n'
 import * as Config from '../../config/'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 class PullLoadMoreListView extends Component {
 
@@ -99,6 +100,27 @@ class PullLoadMoreListView extends Component {
 
     render() {
         let dataList = this.ds.cloneWithRows(this.props.dataSource);
+        let refreshProps = {
+            style: [styles.centered, styles.flex],
+            enable: (this.state.showRefresh && this.props.enableRefresh),
+            refreshing: this.state.isRefresh,
+            onRefresh: this._refresh,
+            tintColor: Constant.primaryColor,
+            title: I18n('refreshing'),
+            colors: [Constant.primaryColor, Constant.primaryLightColor],
+        };
+        if (!this.props.dataSource || this.props.dataSource.length === 0) {
+            return (
+                <RefreshControl
+                    {...refreshProps}>
+                    <View style={[styles.centered, styles.absoluteFull]}>
+                        <Icon name={'logo-octocat'} size={50} color={Constant.primaryColor}/>
+                        <Text style={[styles.normalText]}>
+                            {I18n("listEmpty")}
+                        </Text>
+                    </View>
+                </RefreshControl>);
+        }
         return (
             <ListView
                 {...this.props}
@@ -111,12 +133,7 @@ class PullLoadMoreListView extends Component {
                 onEndReachedThreshold={50}
                 refreshControl={
                     <RefreshControl
-                        enable={(this.state.showRefresh && this.props.enableRefresh)}
-                        refreshing={this.state.isRefresh}
-                        onRefresh={this._refresh}
-                        tintColor={Constant.primaryColor}
-                        title={I18n('refreshing')}
-                        colors={[Constant.primaryColor, Constant.primaryLightColor]}/>}
+                        {...refreshProps}/>}
                 onEndReached={this._loadMore}
                 renderFooter={this._renderFooter}
                 dataSource={dataList}
@@ -141,6 +158,7 @@ class PullLoadMoreListView extends Component {
             isRefresh: false,
             showLoadMore: showLoadMore,
         });
+        this.scrollToTop();
     }
 
     loadMoreComplete(showLoadMore = false) {

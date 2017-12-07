@@ -1,4 +1,6 @@
 import {Actions} from "react-native-router-flux";
+import I18n from '../style/i18n'
+import Toast from '../components/widget/ToastProxy'
 
 //网络错误
 export const NETWORK_ERROR = 1;
@@ -26,6 +28,10 @@ export default function (code) {
             return "404错误";
         case 500:
             return "500错误";
+        case NETWORK_TIMEOUT:
+            //超时
+            Toast(I18n('netTimeout'));
+            return I18n('netTimeout');
         default:
             return "其他异常"
     }

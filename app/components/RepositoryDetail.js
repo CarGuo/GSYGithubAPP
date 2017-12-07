@@ -252,6 +252,7 @@ class RepositoryDetail extends Component {
                                      shadowRadius: 0,
                                      elevation: 0,
                                  }}/>
+                <View style={{backgroundColor: Constant.primaryLightColor, width: 1, height: 20}}/>
                 <PopmenuItem
                     defaultIndex={0}
                     adjustFrame={(styless) => {

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
-import styles, {navBarHeight} from "../style"
+import styles, {screenWidth, screenHeight} from "../style"
 import * as Constant from "../style/constant"
 import repositoryActions from "../store/actions/repository"
 import I18n from '../style/i18n'
@@ -216,11 +216,11 @@ class IssueListPage extends Component {
         }]
     }
 
-    _createIssue(title, text){
+    _createIssue(title, text) {
         let {repositoryName, userName} = this.props;
         Actions.LoadingModal({backExit: false});
         issueActions.createIssue(userName, repositoryName,
-            {title : title, body: text}).then(() => {
+            {title: title, body: text}).then(() => {
             setTimeout(() => {
                 Actions.pop();
                 this._refresh();
@@ -259,14 +259,6 @@ class IssueListPage extends Component {
                             borderRadius: 3,
                             backgroundColor: Constant.subLightTextColor,
                         }, styles.flex]}/>
-
-                    <TouchableOpacity
-                        style={[styles.centered, {marginTop: 2, marginHorizontal: Constant.normalMarginEdge}]}
-                        onPress={() => {
-                            this._searchText()
-                        }}>
-                        <Icon name={'md-search'} size={28} color={Constant.subLightTextColor}/>
-                    </TouchableOpacity>
                 </View>
                 <View style={[styles.centerH, styles.flexDirectionRowNotFlex]}>
                     <CommonBottomBar
@@ -278,22 +270,6 @@ class IssueListPage extends Component {
                             borderRadius: 4,
                         }}
                         dataList={this._getBottomItem()}/>
-                    <TouchableOpacity
-                        style={[styles.centerH, {
-                            marginRight: Constant.normalMarginEdge,
-                            marginTop: Constant.normalMarginEdge + 2,
-                        }]}
-                        onPress={()=>{
-                            Actions.TextInputModal({
-                                textConfirm: this._createIssue,
-                                titleText: I18n('createIssue'),
-                                needEditTitle: true,
-                                text: "",
-                                titleValue: ""
-                            })
-                        }}>
-                        <Icon name={'md-add-circle'} size={35} color={Constant.primaryColor}/>
-                    </TouchableOpacity>
                 </View>
                 <PullListView
                     style={{flex: 1}}
@@ -306,6 +282,38 @@ class IssueListPage extends Component {
                     loadMore={this._loadMore}
                     dataSource={this.state.dataSource}
                 />
+                <TouchableOpacity
+                    style={[{
+                        position: "absolute",
+                        left: screenWidth - 60,
+                        top: screenHeight - 230,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: 222,
+                    }]}
+                    onPress={() => {
+                        Actions.TextInputModal({
+                            textConfirm: this._createIssue,
+                            titleText: I18n('createIssue'),
+                            needEditTitle: true,
+                            text: "",
+                            titleValue: ""
+                        })
+                    }}>
+                    <View
+                        style={[styles.centered, styles.shadowCard, {
+                            width: 48,
+                            height: 48,
+                            borderRadius: 25,
+                            shadowOffset: {
+                                width: 2,
+                                height: 2
+                            },
+                        }]}>
+                        <Icon name={'md-add-circle'}
+                              size={50} color={Constant.primaryColor}/>
+                    </View>
+                </TouchableOpacity>
             </View>
         )
     }
