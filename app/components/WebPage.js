@@ -117,10 +117,10 @@ export default class WebPage extends Component {
                     <TouchableOpacity
                         style={[styles.centered, {
                             marginRight: Constant.normalMarginEdge,
-                            paddingLeft: Constant.normalMarginEdge
+                            marginLeft: Constant.normalMarginEdge - 3
                         }]}
                         onPress={this.goBack}>
-                        <Icon name={'arrow-left'} size={18} color={Constant.miWhite}/>
+                        <Icon name={'arrow-left'} size={17} color={Constant.miWhite}/>
                     </TouchableOpacity>
                     <TextInput
                         ref='textInput'

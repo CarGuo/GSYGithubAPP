@@ -3,13 +3,13 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import {
-    View, Text, ListView, RefreshControl, ActivityIndicator
+    View, Text, ListView, RefreshControl, ActivityIndicator, Platform, TouchableOpacity, ScrollView
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import styles from "../../style"
+import styles, {screenHeight, screenWidth} from "../../style"
 import * as Constant from "../../style/constant"
 import I18n from '../../style/i18n'
-import * as Config from '../../config/'
+import * as Config from '../../config'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 class PullLoadMoreListView extends Component {
@@ -101,7 +101,7 @@ class PullLoadMoreListView extends Component {
     render() {
         let dataList = this.ds.cloneWithRows(this.props.dataSource);
         let refreshProps = {
-            style: [styles.centered, styles.flex],
+            style: [styles.centered],
             enable: (this.state.showRefresh && this.props.enableRefresh),
             refreshing: this.state.isRefresh,
             onRefresh: this._refresh,
@@ -109,17 +109,51 @@ class PullLoadMoreListView extends Component {
             title: I18n('refreshing'),
             colors: [Constant.primaryColor, Constant.primaryLightColor],
         };
-        if (!this.props.dataSource || this.props.dataSource.length === 0) {
-            return (
-                <RefreshControl
-                    {...refreshProps}>
-                    <View style={[styles.centered, styles.absoluteFull]}>
-                        <Icon name={'logo-octocat'} size={50} color={Constant.primaryColor}/>
-                        <Text style={[styles.normalText]}>
-                            {I18n("listEmpty")}
-                        </Text>
-                    </View>
-                </RefreshControl>);
+        if ((!this.props.dataSource || this.props.dataSource.length === 0)) {
+            if (!this.props.hasOwnProperty("renderHeader")) {
+                if (Platform.OS === 'android') {
+                    return (
+                        <RefreshControl
+                            {...refreshProps}
+                            style={[styles.centered, styles.flex]}>
+                            <TouchableOpacity style={[styles.centered, styles.absoluteFull]}
+                                              onPress={() => {
+                                                  this._refresh();
+                                                  this.showRefreshState();
+                                              }}>
+                                <Icon name={'logo-octocat'} size={50} color={Constant.primaryColor}/>
+                                <Text style={[styles.normalText]}>
+                                    {I18n("listEmpty")}
+                                </Text>
+                            </TouchableOpacity>
+                        </RefreshControl>);
+                } else {
+                    return (
+                        <View style={[styles.centered, styles.flex]}>
+                            <TouchableOpacity style={[styles.centered, styles.absoluteFull, {zIndex: -999}]}
+                                              onPress={() => {
+                                                  this._refresh();
+                                                  this.showRefreshState();
+                                              }}>
+                                <Icon name={'logo-octocat'} size={50} color={Constant.primaryColor}/>
+                                <Text style={[styles.normalText]}>
+                                    {I18n("listEmpty")}
+                                </Text>
+                            </TouchableOpacity>
+                            <ScrollView
+                                style={{width: screenWidth, height: 10}}
+                                refreshControl={
+                                    <RefreshControl
+                                        style={[styles.centered]}
+                                        {...refreshProps}
+                                    />
+                                }>
+                            </ScrollView>
+                        </View>
+
+                    );
+                }
+            }
         }
         return (
             <ListView
@@ -133,6 +167,7 @@ class PullLoadMoreListView extends Component {
                 onEndReachedThreshold={50}
                 refreshControl={
                     <RefreshControl
+                        style={[styles.centered]}
                         {...refreshProps}/>}
                 onEndReached={this._loadMore}
                 renderFooter={this._renderFooter}

@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, InteractionManager, StatusBar, TextInput, TouchableOpacity, Keyboard, StyleSheet
+    View, InteractionManager, StatusBar, TextInput, TouchableOpacity, Keyboard, StyleSheet, Platform
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
@@ -229,6 +229,15 @@ class IssueListPage extends Component {
     }
 
     render() {
+        let btnStyle = (Platform.OS === "android") ? [styles.shadowCard, {
+            width: 48,
+            height: 48,
+            borderRadius: 25,
+            shadowOffset: {
+                width: 2,
+                height: 2
+            },
+        }] : [{backgroundColor: Constant.transparentColor}];
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -301,16 +310,10 @@ class IssueListPage extends Component {
                         })
                     }}>
                     <View
-                        style={[styles.centered, styles.shadowCard, {
-                            width: 48,
-                            height: 48,
-                            borderRadius: 25,
-                            shadowOffset: {
-                                width: 2,
-                                height: 2
-                            },
-                        }]}>
+                        style={[styles.centered, ...btnStyle]}>
                         <Icon name={'md-add-circle'}
+                              style={{backgroundColor:Constant.transparentColor}}
+                              backgroundColor={Constant.transparentColor}
                               size={50} color={Constant.primaryColor}/>
                     </View>
                 </TouchableOpacity>
