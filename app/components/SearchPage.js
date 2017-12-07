@@ -39,9 +39,9 @@ class SearchPage extends Component {
         this.selectTypeData = null;
         this.selectSortData = null;
         this.selectLanguageData = null;
+        this.select = 0;
         this.state = {
             dataSource: [],
-            select: 0
         }
     }
 
@@ -107,7 +107,7 @@ class SearchPage extends Component {
     }
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
-        if (this.state.select === 0) {
+        if (this.select === 0) {
             return (
                 <RepositoryItem
                     ownerName={rowData.owner.login}
@@ -135,8 +135,8 @@ class SearchPage extends Component {
      * 刷新
      * */
     _refresh(select) {
-        if (select === undefined) {
-            select = this.state.select;
+        if (!select) {
+            select = this.select;
         }
         this._searchText(select);
     }
@@ -146,7 +146,7 @@ class SearchPage extends Component {
      * */
     _loadMore(select) {
         if (!select) {
-            select = this.state.select;
+            select = this.select;
         }
         let type = (select === 0) ? null : 'user';
         repositoryActions.searchRepository(this.searchText, this.selectLanguageData, this.selectTypeData, this.selectSortData, type, this.page).then((res) => {
@@ -168,7 +168,7 @@ class SearchPage extends Component {
     }
 
     _getBottomItem() {
-        let {select} = this.state;
+        let {select} = this.select;
         return [{
             itemName: I18n("searchRepos"),
             itemTextColor: select === 0 ? Constant.white : Constant.subTextColor,
@@ -176,9 +176,9 @@ class SearchPage extends Component {
             iconColor: Constant.white,
             itemClick: () => {
                 this.setState({
-                    select: 0,
                     dataSource: []
                 });
+                this.select = 0;
                 this._refresh(0);
             }, itemStyle: {}
         }, {
@@ -188,9 +188,9 @@ class SearchPage extends Component {
             iconColor: Constant.white,
             itemClick: () => {
                 this.setState({
-                    select: 1,
                     dataSource: []
                 });
+                this.select = 1;
                 this._refresh(1);
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,

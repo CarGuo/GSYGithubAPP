@@ -28,26 +28,22 @@ class LoadingModal extends Component {
 
     componentDidMount() {
         this.refs.loginModal.open();
-        this.handle = BackHandler.addEventListener('hardwareBackPress', this.onClose)
+        this.handle = BackHandler.addEventListener('loaddingBack', this.onClose)
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.handle)
+        this.handle.remove();
     }
 
     onClose() {
-        if (this.props.backExit) {
-            Actions.pop();
-            return true;
-        }
+        Actions.pop();
         return true;
-
     }
 
     render() {
         return (
             <Modal ref={"loginModal"}
-                   style={[{height: screenHeight, width: screenWidth, backgroundColor:"#F0000000"}]}
+                   style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
                    backButtonClose={false}
                    swipeToClose={this.props.backExit}
