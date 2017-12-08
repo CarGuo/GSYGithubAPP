@@ -1,52 +1,37 @@
 import Realm from 'realm';
 
-const SearchHistory = {
+const SearchHistory = {};
 
-};
+const ReadHistory = {};
 
-const ReadHistory = {
+const RepositoryUser = {};
 
-};
+const RepositoryStar = {};
 
-const RepositoryUser = {
+const RepositoryDetail = {};
 
-};
-
-const RepositoryStar = {
-
-};
-
-const RepositoryDetail= {
-
-};
-
-const RepositoryDetailReadme = {
-
-};
+const RepositoryDetailReadme = {};
 
 const RepositoryEvent = {
     name: 'RepositoryEvent',
 };
 
-const RepostoryIssue = {
-
-};
+const RepostoryIssue = {};
 
 const TrendRepository = {
-
+    name: 'TrendRepository',
+    properties: {
+        since: 'string?',
+        languageType: 'string?',
+        data: 'string',
+    }
 };
 
-const UserInfo = {
+const UserInfo = {};
 
-};
+const UserFollower = {};
 
-const UserFollower = {
-
-};
-
-const UserFollowed = {
-
-};
+const UserFollowed = {};
 
 const ReceivedEvent = {
     name: 'ReceivedEvent',
@@ -55,18 +40,11 @@ const ReceivedEvent = {
     }
 };
 
-const UserEvent = {
+const UserEvent = {};
 
-};
+const PushEvent = {};
 
-const PushEvent = {
-
-};
-
-const PushCodeDetail = {
-
-};
-
+const PushCodeDetail = {};
 
 
 const testSchema = {
@@ -78,6 +56,6 @@ const testSchema = {
     }
 };
 
-let realm = new Realm({schema: [testSchema, ReceivedEvent]});
+let realm = new Realm({schema: [TrendRepository, ReceivedEvent]});
 
 export default realm;

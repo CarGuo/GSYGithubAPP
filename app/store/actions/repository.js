@@ -11,6 +11,17 @@ import {generateMd2Html, generateHtml} from "../../utils/htmlUtils";
  * 趋势数据
  */
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
+
+    if (page <= 1) {
+        let resLocal = await RepositoryDao.getTrendDao(page, since, languageType, true);
+        if (resLocal && resLocal.result && resLocal.data.length > 0) {
+            dispatch({
+                type: REPOSITORY.TREND_REPOSITORY,
+                res: resLocal.data
+            });
+        }
+    }
+
     let res = await RepositoryDao.getTrendDao(page, since, languageType);
     if (res && res.result) {
         if (page === 0) {
