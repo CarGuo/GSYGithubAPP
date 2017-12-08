@@ -4,9 +4,37 @@ const SearchHistory = {};
 
 const ReadHistory = {};
 
-const RepositoryUser = {};
+const RepositoryBranch = {
+    name: 'RepositoryBranch',
+    properties: {
+        fullName: 'string',
+        data: 'string',
+    }
+};
 
-const RepositoryStar = {};
+const RepositoryWatcher = {
+    name: 'RepositoryWatcher',
+    properties: {
+        fullName: 'string',
+        data: 'string',
+    }
+};
+
+const RepositoryStar = {
+    name: 'RepositoryStar',
+    properties: {
+        fullName: 'string',
+        data: 'string',
+    }
+};
+
+const RepositoryFork = {
+    name: 'RepositoryFork',
+    properties: {
+        fullName: 'string',
+        data: 'string',
+    }
+};
 
 const RepositoryDetail = {
     name: 'RepositoryDetail',
@@ -85,8 +113,9 @@ const PushCodeDetail = {};
 
 
 let realm = new Realm({
-    schema: [TrendRepository, ReceivedEvent, UserInfo,
-        UserEvent, RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue]
+    schema: [TrendRepository, ReceivedEvent, UserInfo, UserEvent,
+        RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
+        RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork,]
 });
 
 export default realm;
