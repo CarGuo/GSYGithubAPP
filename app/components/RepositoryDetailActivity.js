@@ -93,20 +93,30 @@ class RepositoryDetailActivity extends Component {
             select = this.state.select;
         }
         if (select === 0) {
-            eventActions.getRepositoryEvent(0, this.props.ownerName, this.props.repositoryName).then((res) => {
-                let size = 0;
-                if (res && res.result) {
-                    this.page = 2;
-                    let dataList = res.data;
-                    this.setState({
-                        dataSource: dataList
-                    });
-                    size = res.data.length;
-                }
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-                }
-            })
+            eventActions.getRepositoryEvent(0, this.props.ownerName, this.props.repositoryName)
+                .then((res) => {
+                    if (res && res.result) {
+                        let dataList = res.data;
+                        this.setState({
+                            dataSource: dataList
+                        });
+                    }
+                    return res.next();
+                })
+                .then((res) => {
+                    let size = 0;
+                    if (res && res.result) {
+                        this.page = 2;
+                        let dataList = res.data;
+                        this.setState({
+                            dataSource: dataList
+                        });
+                        size = res.data.length;
+                    }
+                    if (this.refs.pullList) {
+                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                    }
+                })
         } else if (select === 1) {
             reposActions.getReposCommits(0, this.props.ownerName, this.props.repositoryName).then((res) => {
                 let size = 0;

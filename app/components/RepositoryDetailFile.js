@@ -19,7 +19,7 @@ import CodeFileItem from './widget/CodeFileItem'
 /**
  * 详情
  */
-class RepositoryDetailActivity extends Component {
+class RepositoryDetailFile extends Component {
 
     constructor(props) {
         super(props);
@@ -232,14 +232,14 @@ class RepositoryDetailActivity extends Component {
     }
 }
 
-RepositoryDetailActivity.propTypes = {
+RepositoryDetailFile.propTypes = {
     path: PropTypes.string,
     ownerName: PropTypes.string,
     repositoryName: PropTypes.string,
 };
 
 
-RepositoryDetailActivity.defaultProps = {
+RepositoryDetailFile.defaultProps = {
     dataDetail: {},
     ownerName: '',
     repositoryName: '',
@@ -247,4 +247,4 @@ RepositoryDetailActivity.defaultProps = {
 };
 
 
-export default RepositoryDetailActivity
+export default RepositoryDetailFile

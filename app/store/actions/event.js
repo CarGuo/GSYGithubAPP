@@ -53,18 +53,10 @@ const getEvent = async (page = 0, userName) => {
 
 
 const getRepositoryEvent = async (page = 0, userName, repository) => {
-    let res = await EventDao.getRepositoryEventDao(page, userName, repository);
-    if (res && res.result) {
-        return {
-            data: res.data,
-            result: true
-        };
-    } else {
-        return {
-            result: false
-        };
+    if (page <= 1) {
+        return EventDao.getRepositoryEventDao(page, userName, repository, true);
     }
-
+    return await EventDao.getRepositoryEventDao(page, userName, repository);
 };
 
 export default {
