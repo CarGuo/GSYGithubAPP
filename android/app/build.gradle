@@ -117,6 +117,12 @@ android {
     }
 
     signingConfigs {
+        debug {
+                storeFile file("../gsygithubapp-debug.jks")
+                storePassword "123456"
+                keyAlias "debug"
+                keyPassword "123456"
+            }
         release {
             storeFile file("../gsygithubapp-debug.jks")
             storePassword "123456"
@@ -126,6 +132,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

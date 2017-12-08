@@ -45,7 +45,6 @@ export const RepositoryMore = (props) => {
             if (Platform.OS === "ios") {
                 Toast(I18n("iosNotSupportDown"));
             } else if (props.titleData && props.titleData.downloads_url) {
-                console.log("FFF", props.titleData.downloads_url)
                 FSModule.download({
                     url: props.titleData.downloads_url,
                     description: (I18n("downloadDescription") + props.ownerName + "/" + props.repositoryName)
