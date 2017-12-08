@@ -1,6 +1,7 @@
 import Api from '../net'
 import Address from '../net/address'
 import GitHubTrending from '../utils/trending/GitHubTrending'
+import realm from './db'
 
 const getTrendDao = async (page = 0, since, languageType) => {
     let url = Address.trending(since, languageType);
