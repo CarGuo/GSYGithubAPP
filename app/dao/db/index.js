@@ -8,15 +8,39 @@ const RepositoryUser = {};
 
 const RepositoryStar = {};
 
-const RepositoryDetail = {};
+const RepositoryDetail = {
+    name: 'RepositoryDetail',
+    properties: {
+        branch: 'string',
+        fullName: 'string',
+        data: 'string',
+    }
+};
 
-const RepositoryDetailReadme = {};
+const RepositoryDetailReadme = {
+    name: 'RepositoryDetailReadme',
+    properties: {
+        branch: 'string',
+        fullName: 'string',
+        data: 'string',
+    }
+};
 
 const RepositoryEvent = {
     name: 'RepositoryEvent',
+    properties: {
+        fullName: 'string',
+        data: 'string',
+    }
 };
 
-const RepostoryIssue = {};
+const RepositoryIssue = {
+    name: 'RepositoryIssue',
+    properties: {
+        fullName: 'string',
+        data: 'string',
+    }
+};
 
 const TrendRepository = {
     name: 'TrendRepository',
@@ -59,15 +83,9 @@ const PushEvent = {};
 const PushCodeDetail = {};
 
 
-const testSchema = {
-    name: 'testSchema',
-    properties: {
-        realName: 'string', // required property
-        displayName: 'string?', // optional property
-        birthday: {type: 'date', optional: true}, // optional property
-    }
-};
-
-let realm = new Realm({schema: [TrendRepository, ReceivedEvent, UserInfo, UserEvent]});
+let realm = new Realm({
+    schema: [TrendRepository, ReceivedEvent, UserInfo,
+        UserEvent, RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue]
+});
 
 export default realm;

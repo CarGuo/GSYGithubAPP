@@ -82,11 +82,7 @@ const getStarRepository = async (userName, page = 1, sort) => {
  * 详情
  */
 const getRepositoryDetail = async (userName, reposName) => {
-    let res = await RepositoryDao.getRepositoryDetailDao(userName, reposName);
-    return {
-        result: res.result,
-        data: res.data
-    }
+    return RepositoryDao.getRepositoryDetailDao(userName, reposName);
 };
 
 
@@ -215,16 +211,18 @@ const getRepositoryDetailReadme = async (userName, reposName, branch) => {
  * 详情的remde数据
  */
 const getRepositoryDetailReadmeHtml = async (userName, reposName, branch) => {
-    let res = await RepositoryDao.getRepositoryDetailReadmeHtmlDao(userName, reposName, branch);
+    let res = RepositoryDao.getRepositoryDetailReadmeHtmlDao(userName, reposName, branch);
     if (res.result) {
         return {
             result: true,
-            data: generateHtml(res.data),
+            data: res.data,
+            next: res.next
         }
     } else {
         return {
             result: false,
-            data: ""
+            data: "",
+            next: res.next
         }
     }
 };

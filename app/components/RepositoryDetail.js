@@ -58,6 +58,15 @@ class RepositoryDetail extends Component {
                         });
                         Actions.refresh({titleData: res.data});
                     }
+                    return res.next();
+                })
+                .then((res) => {
+                    if (res && res.result) {
+                        this.setState({
+                            dataDetail: res.data
+                        });
+                        Actions.refresh({titleData: res.data});
+                    }
                 });
             this._refresh();
             repositoryActions.getBranches(this.props.ownerName, this.props.repositoryName)
@@ -101,6 +110,14 @@ class RepositoryDetail extends Component {
 
     _refresh() {
         repositoryActions.getRepositoryDetailReadmeHtml(this.props.ownerName, this.props.repositoryName, this.curBranch)
+            .then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        dataDetailReadme: res.data,
+                    })
+                }
+                return res.next();
+            })
             .then((res) => {
                 if (res && res.result) {
                     this.setState({
