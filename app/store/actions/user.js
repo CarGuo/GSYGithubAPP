@@ -30,7 +30,7 @@ const initUserInfo = async () => {
 };
 
 const getUserInfo = () => {
-    UserDao.getUserInfoNet().then((res) => {
+    UserDao.getUserInfoDao().then((res) => {
         if (res && res.result) {
             dispatch({
                 type: USER.USER_INFO,
@@ -40,8 +40,8 @@ const getUserInfo = () => {
     });
 };
 
-const getOtherUserInfo = async (userName) => {
-    return UserDao.getUserInfoNet(userName);
+const getPersonUserInfo = async (userName) => {
+    return UserDao.getUserInfoDao(userName);
 };
 
 const clearUserInfo = () => {
@@ -88,7 +88,7 @@ const setNotificationAsRead = async (id) => {
 export default {
     initUserInfo,
     getUserInfo,
-    getOtherUserInfo,
+    getPersonUserInfo,
     clearUserInfo,
     getFollowerList,
     getFollowedList,

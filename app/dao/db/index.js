@@ -27,7 +27,13 @@ const TrendRepository = {
     }
 };
 
-const UserInfo = {};
+const UserInfo = {
+    name: 'UserInfo',
+    properties: {
+        userName: 'string',
+        data: 'string',
+    }
+};
 
 const UserFollower = {};
 
@@ -56,6 +62,6 @@ const testSchema = {
     }
 };
 
-let realm = new Realm({schema: [TrendRepository, ReceivedEvent]});
+let realm = new Realm({schema: [TrendRepository, ReceivedEvent, UserInfo]});
 
 export default realm;

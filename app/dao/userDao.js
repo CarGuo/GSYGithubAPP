@@ -3,6 +3,8 @@ import Api from '../net'
 import Address from '../net/address'
 import {USER} from '../store/type'
 import * as Constant from '../style/constant'
+import realm from './db'
+
 
 /**
  *
@@ -22,33 +24,65 @@ const getUserInfoLocal = async () => {
     }
 };
 
-const getUserInfoNet = async (userName) => {
-    let res;
-    if (!userName) {
-        res = await Api.netFetch(Address.getMyUserInfo());
-    } else {
-        res = await Api.netFetch(Address.getUserInfo(userName));
-    }
-    if (res && res.result) {
-        let countRes = await getUserStaredCountNet(res.data.login);
-        let starred = "---";
-        if (countRes.result) {
-            starred = countRes.data;
-        }
-        let totalInfo = Object.assign({}, res.data, {starred: starred});
+const getUserInfoDao = async (userName) => {
+    let nextStep = async () => {
+        let res;
         if (!userName) {
-            AsyncStorage.setItem(Constant.USER_INFO, JSON.stringify(totalInfo));
+            res = await Api.netFetch(Address.getMyUserInfo());
+        } else {
+            res = await Api.netFetch(Address.getUserInfo(userName));
         }
+        if (res && res.result) {
+            let countRes = await getUserStaredCountNet(res.data.login);
+            let starred = "---";
+            if (countRes.result) {
+                starred = countRes.data;
+            }
+            let totalInfo = Object.assign({}, res.data, {starred: starred});
+
+            realm.write(() => {
+                let allData = realm.objects('UserInfo').filtered(`userName="${userName}"`);
+                if (allData && allData.length > 0) {
+                    allData[0].data = JSON.stringify(totalInfo);
+                } else {
+                    realm.create('UserInfo', {
+                        userName: userName,
+                        data: JSON.stringify(totalInfo)
+                    });
+                }
+            });
+
+            if (!userName) {
+                AsyncStorage.setItem(Constant.USER_INFO, JSON.stringify(totalInfo));
+            }
+            return {
+                result: true,
+                data: totalInfo,
+            }
+        } else {
+            return {
+                result: false,
+                data: res.data
+            }
+        }
+    };
+
+    let allData = realm.objects('UserInfo').filtered(`userName="${userName}"`);
+    if (allData && allData.length > 0) {
         return {
+            data: JSON.parse(allData[0].data),
+            next: nextStep,
             result: true,
-            data: totalInfo
-        }
+        };
     } else {
         return {
-            result: false,
-            data: res.data
-        }
+            data: [],
+            next: nextStep,
+            result: false
+        };
     }
+
+
 };
 
 /**
@@ -126,7 +160,7 @@ const setNotificationAsReadDao = async (id) => {
 
 export default {
     getUserInfoLocal,
-    getUserInfoNet,
+    getUserInfoDao,
     getUserStaredCountNet,
     getFollowerListDao,
     getFollowedListDao,

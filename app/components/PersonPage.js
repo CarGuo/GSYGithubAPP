@@ -18,7 +18,14 @@ class PersonPage extends BasePersonPage {
     }
 
     componentDidMount() {
-        userAction.getOtherUserInfo(this.props.currentUser).then((res) => {
+        userAction.getPersonUserInfo(this.props.currentUser).then((res) => {
+            if (res && res.result) {
+                this.setState({
+                    userInfo: res.data
+                })
+            }
+            return res.next();
+        }).then((res) => {
             if (res && res.result) {
                 this.setState({
                     userInfo: res.data
