@@ -23,7 +23,7 @@ import CommonBottomBar from "./widget/CommonBottomBar";
 /**
  * 搜索
  */
-class IssueListPage extends Component {
+class RepositoryIssueListPage extends Component {
 
     constructor(props) {
         super(props);
@@ -68,7 +68,16 @@ class IssueListPage extends Component {
             this.refs.pullList.showRefreshState();
         }
         if (this.searchText === null || this.searchText.trim().length === 0) {
-            issueActions.getRepositoryIssue(0, this.props.userName, this.props.repositoryName, this.filter).then((res) => {
+            issueActions.getRepositoryIssue(0, this.props.userName, this.props.repositoryName, this.filter)
+                .then((res) => {
+                    if (res && res.result) {
+                        let dataList = res.data;
+                        this.setState({
+                            dataSource: dataList
+                        });
+                    }
+                    return res.next();
+                }).then((res) => {
                 let size = 0;
                 if (res && res.result) {
                     this.page = 2;
@@ -80,7 +89,6 @@ class IssueListPage extends Component {
                 }
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-                    this.refs.pullList.scrollToTop();
                 }
             });
             return
@@ -97,7 +105,6 @@ class IssueListPage extends Component {
             setTimeout(() => {
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-                    this.refs.pullList.scrollToTop();
                 }
             }, 500);
         });
@@ -312,7 +319,7 @@ class IssueListPage extends Component {
                     <View
                         style={[styles.centered, ...btnStyle]}>
                         <Icon name={'md-add-circle'}
-                              style={{backgroundColor:Constant.transparentColor}}
+                              style={{backgroundColor: Constant.transparentColor}}
                               backgroundColor={Constant.transparentColor}
                               size={50} color={Constant.primaryColor}/>
                     </View>
@@ -323,15 +330,15 @@ class IssueListPage extends Component {
 }
 
 
-IssueListPage.propTypes = {
+RepositoryIssueListPage.propTypes = {
     userName: PropTypes.string,
     repositoryName: PropTypes.string,
 };
 
 
-IssueListPage.defaultProps = {
+RepositoryIssueListPage.defaultProps = {
     userName: '',
     repositoryName: '',
 };
 
-export default IssueListPage
+export default RepositoryIssueListPage

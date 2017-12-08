@@ -13,7 +13,7 @@ import I18n from '../style/i18n'
 import repositoryActions from '../store/actions/repository'
 import WebComponent from './widget/WebComponent'
 import CommonBottomBar from './widget/CommonBottomBar'
-import IssueListPage from './IssueListPage'
+import IssueListPage from './RepositoryIssueListPage'
 import RepositoryDetailActivity from './RepositoryDetailActivity'
 import RepositoryDetailFile from './RepositoryDetailFile'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';

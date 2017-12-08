@@ -13,7 +13,7 @@ import I18n from '../style/i18n'
 import userActions from '../store/actions/user'
 import WebComponent from './widget/WebComponent'
 import CommonBottomBar from './widget/CommonBottomBar'
-import IssueListPage from './IssueListPage'
+import IssueListPage from './RepositoryIssueListPage'
 import RepositoryDetailActivity from './RepositoryDetailActivity'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 import ListPage from "./ListPage";

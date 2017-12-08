@@ -38,6 +38,7 @@ const RepositoryIssue = {
     name: 'RepositoryIssue',
     properties: {
         fullName: 'string',
+        state: "string",
         data: 'string',
     }
 };
