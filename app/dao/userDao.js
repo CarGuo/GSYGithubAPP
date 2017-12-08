@@ -1,7 +1,6 @@
 import {AsyncStorage} from 'react-native'
 import Api from '../net'
 import Address from '../net/address'
-import {USER} from '../store/type'
 import * as Constant from '../style/constant'
 import realm from './db'
 
@@ -161,7 +160,6 @@ const setNotificationAsReadDao = async (id) => {
 export default {
     getUserInfoLocal,
     getUserInfoDao,
-    getUserStaredCountNet,
     getFollowerListDao,
     getFollowedListDao,
     getNotifationDao,

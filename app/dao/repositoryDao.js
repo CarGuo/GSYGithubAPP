@@ -3,47 +3,50 @@ import Address from '../net/address'
 import GitHubTrending from '../utils/trending/GitHubTrending'
 import realm from './db'
 
-const getTrendDao = async (page = 0, since, languageType, local) => {
+const getTrendDao = async (page = 0, since, languageType) => {
     let localLanguage = (languageType) ? languageType : "*";
-    if (local) {
-        let allData = realm.objects('TrendRepository').filtered(`since="${since}" AND languageType="${localLanguage}"`);
-        if (allData) {
-            let data = [];
-            allData.forEach((item) => {
-                data.push(JSON.parse(item.data));
+    let nextStep = async () => {
+        let url = Address.trending(since, languageType);
+        let res = await new GitHubTrending().fetchTrending(url);
+
+        if (res && res.result && res.data.length > 0 && page <= 1) {
+            realm.write(() => {
+                let allData = realm.objects('TrendRepository').filtered(`since="${since}" AND languageType="${localLanguage}"`);
+                realm.delete(allData);
+                res.data.forEach((item) => {
+                    realm.create('TrendRepository', {
+                        since: since,
+                        languageType: localLanguage,
+                        data: JSON.stringify(item)
+                    });
+                })
             });
-            return {
-                data: data,
-                result: true
-            };
-        } else {
-            return {
-                data: [],
-                result: false
-            };
         }
-    }
-    let url = Address.trending(since, languageType);
-    let res = await new GitHubTrending().fetchTrending(url);
 
-    if (res && res.result && res.data.length > 0 && page <= 1) {
-        realm.write(() => {
-            let allData = realm.objects('TrendRepository').filtered(`since="${since}" AND languageType="${localLanguage}"`);
-            realm.delete(allData);
-            res.data.forEach((item) => {
-                realm.create('TrendRepository', {
-                    since: since,
-                    languageType: localLanguage,
-                    data: JSON.stringify(item)
-                });
-            })
-        });
-    }
-
-    return {
-        data: res.data,
-        result: res.result
+        return {
+            data: res.data,
+            result: res.result
+        };
     };
+    let allData = realm.objects('TrendRepository').filtered(`since="${since}" AND languageType="${localLanguage}"`);
+    if (allData) {
+        let data = [];
+        allData.forEach((item) => {
+            data.push(JSON.parse(item.data));
+        });
+        return {
+            data: data,
+            next: nextStep,
+            result: true
+        };
+    } else {
+        return {
+            data: [],
+            next: nextStep,
+            result: false
+        };
+    }
+
 };
 
 const searchRepositoryDao = async (q, sort, order, type, page, pageSize) => {

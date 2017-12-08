@@ -11,31 +11,21 @@ import {generateMd2Html, generateHtml} from "../../utils/htmlUtils";
  * 趋势数据
  */
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
-
-    if (page <= 1) {
-        let resLocal = await RepositoryDao.getTrendDao(page, since, languageType, true);
-        if (resLocal && resLocal.result && resLocal.data.length > 0) {
-            dispatch({
-                type: REPOSITORY.TREND_REPOSITORY,
-                res: resLocal.data
-            });
-        }
+    let resLocal = await RepositoryDao.getTrendDao(page, since, languageType, true);
+    if (resLocal && resLocal.result && resLocal.data.length > 0) {
+        console.log("FFF", resLocal.data.length)
+        dispatch({
+            type: REPOSITORY.TREND_REPOSITORY,
+            res: resLocal.data
+        });
     }
-
-    let res = await RepositoryDao.getTrendDao(page, since, languageType);
+    let res = await resLocal.next();
+    console.log("TTT", resLocal.data.length)
     if (res && res.result) {
-        if (page === 0) {
-            dispatch({
-                type: REPOSITORY.TREND_REPOSITORY,
-                res: res.data
-            });
-        } else {
-            let trend = getState()['repository'].trend_repos_data_list;
-            dispatch({
-                type: REPOSITORY.TREND_REPOSITORY,
-                res: trend.concat(res.data)
-            });
-        }
+        dispatch({
+            type: REPOSITORY.TREND_REPOSITORY,
+            res: res.data
+        });
         callback && callback(res.data);
     } else {
         callback && callback(null);
