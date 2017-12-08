@@ -13,14 +13,12 @@ import {generateMd2Html, generateHtml} from "../../utils/htmlUtils";
 const getTrend = (page = 0, since = 'daily', languageType, callback) => async (dispatch, getState) => {
     let resLocal = await RepositoryDao.getTrendDao(page, since, languageType, true);
     if (resLocal && resLocal.result && resLocal.data.length > 0) {
-        console.log("FFF", resLocal.data.length)
         dispatch({
             type: REPOSITORY.TREND_REPOSITORY,
             res: resLocal.data
         });
     }
     let res = await resLocal.next();
-    console.log("TTT", resLocal.data.length)
     if (res && res.result) {
         dispatch({
             type: REPOSITORY.TREND_REPOSITORY,

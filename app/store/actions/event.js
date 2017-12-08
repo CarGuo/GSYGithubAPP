@@ -2,13 +2,7 @@
  * Created by guoshuyu on 2017/11/16.
  */
 
-
-import {AsyncStorage} from 'react-native'
-import Api from '../../net'
-import Address from '../../net/address'
 import {EVENT} from '../type'
-import * as Constant from '../../style/constant'
-import {Buffer} from 'buffer'
 import EventDao from '../../dao/eventDao'
 
 const getEventReceived = (page = 0, callback) => async (dispatch, getState) => {
@@ -17,7 +11,6 @@ const getEventReceived = (page = 0, callback) => async (dispatch, getState) => {
         callback && callback(null);
         return;
     }
-
     if (page <= 1) {
         let resLocal = await EventDao.getEventReceivedDao(page, user.userInfo.login, true);
         if (resLocal && resLocal.result) {
@@ -27,7 +20,6 @@ const getEventReceived = (page = 0, callback) => async (dispatch, getState) => {
             });
         }
     }
-
     let res = await EventDao.getEventReceivedDao(page, user.userInfo.login);
     if (res && res.result) {
         if (page === 0) {

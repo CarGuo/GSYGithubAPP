@@ -10,9 +10,27 @@ import realm from './db'
 /**
  *
  */
-const getEventReceivedDao = async (page = 0, userName, local) => {
-
-    if (local) {
+const getEventReceivedDao = (page = 0, userName, localNeed) => {
+    let nextStep = async () => {
+        let url = Address.getEventReceived(userName) + Address.getPageParams("?", page);
+        let res = await Api.netFetch(url);
+        if (res && res.result && res.data.length > 0 && page <= 1) {
+            realm.write(() => {
+                let allEvent = realm.objects('ReceivedEvent');
+                realm.delete(allEvent);
+                res.data.forEach((item) => {
+                    realm.create('ReceivedEvent', {
+                        data: JSON.stringify(item)
+                    });
+                })
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
+    };
+    let local = async () => {
         let allData = realm.objects('ReceivedEvent');
         if (allData && allData.length > 0) {
             let data = [];
@@ -21,33 +39,18 @@ const getEventReceivedDao = async (page = 0, userName, local) => {
             });
             return {
                 data: data,
+                next: nextStep,
                 result: true
             };
         } else {
             return {
                 data: [],
+                next: nextStep,
                 result: false
             };
         }
-    }
-
-    let url = Address.getEventReceived(userName) + Address.getPageParams("?", page);
-    let res = await Api.netFetch(url);
-    if (res && res.result && res.data.length > 0 && page <= 1) {
-        realm.write(() => {
-            let allEvent = realm.objects('ReceivedEvent');
-            realm.delete(allEvent);
-            res.data.forEach((item) => {
-                realm.create('ReceivedEvent', {
-                    data: JSON.stringify(item)
-                });
-            })
-        });
-    }
-    return {
-        data: res.data,
-        result: res.result
     };
+    return localNeed ? local() : nextStep();
 };
 
 const getEventFromNet = async (page = 0, userName) => {
