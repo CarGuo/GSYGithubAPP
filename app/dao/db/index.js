@@ -24,6 +24,18 @@ const RepositoryDetailReadme = {
 
 };
 
+const RepositoryEvent = {
+    name: 'RepositoryEvent',
+};
+
+const RepostoryIssue = {
+
+};
+
+const TrendRepository = {
+
+};
+
 const UserInfo = {
 
 };
@@ -36,15 +48,14 @@ const UserFollowed = {
 
 };
 
+const ReceivedEvent = {
+    name: 'ReceivedEvent',
+    properties: {
+        data: 'string?',
+    }
+};
+
 const UserEvent = {
-
-};
-
-const RepostoryIssue = {
-
-};
-
-const TrendRepository = {
 
 };
 
@@ -67,6 +78,6 @@ const testSchema = {
     }
 };
 
-let realm = new Realm({schema: [testSchema]});
+let realm = new Realm({schema: [testSchema, ReceivedEvent]});
 
 export default realm;

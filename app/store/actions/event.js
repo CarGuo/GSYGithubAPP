@@ -14,11 +14,21 @@ import EventDao from '../../dao/eventDao'
 const getEventReceived = (page = 0, callback) => async (dispatch, getState) => {
     let user = getState()['user'];
     if (!user || !user.userInfo || !user.userInfo.login) {
-        //todo 提示用户信息异常
         callback && callback(null);
         return;
     }
-    let res = await EventDao.getEventReceivedFromNet(page, user.userInfo.login);
+
+    if (page <= 1) {
+        let resLocal = await EventDao.getEventReceivedDao(page, user.userInfo.login, true);
+        if (resLocal && resLocal.result) {
+            dispatch({
+                type: EVENT.RECEIVED_EVENTS,
+                res: resLocal.data
+            });
+        }
+    }
+
+    let res = await EventDao.getEventReceivedDao(page, user.userInfo.login);
     if (res && res.result) {
         if (page === 0) {
             dispatch({
