@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, Platform
+    View, Text, StatusBar, Platform, InteractionManager
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles, {screenWidth, navBarHeight} from "../style"
@@ -34,7 +34,9 @@ class TrendPage extends Component {
     }
 
     componentDidMount() {
-        this._refreshData();
+        InteractionManager.runAfterInteractions(() => {
+            this._refreshData();
+        })
     }
 
     componentWillUnmount() {

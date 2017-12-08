@@ -61,6 +61,13 @@ class BasePersonPage extends Component {
     _refresh() {
         let userInfo = this.getUserInfo();
         eventActions.getEvent(1, userInfo.login).then((res) => {
+            if (res && res.result) {
+                this.setState({
+                    dataSource: res.data
+                });
+            }
+            return res.next();
+        }).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;

@@ -46,7 +46,13 @@ const ReceivedEvent = {
     }
 };
 
-const UserEvent = {};
+const UserEvent = {
+    name: 'UserEvent',
+    properties: {
+        userName: 'string',
+        data: 'string',
+    }
+};
 
 const PushEvent = {};
 
@@ -62,6 +68,6 @@ const testSchema = {
     }
 };
 
-let realm = new Realm({schema: [TrendRepository, ReceivedEvent, UserInfo]});
+let realm = new Realm({schema: [TrendRepository, ReceivedEvent, UserInfo, UserEvent]});
 
 export default realm;

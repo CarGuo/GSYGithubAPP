@@ -31,6 +31,8 @@ const initUserInfo = async () => {
 
 const getUserInfo = () => {
     UserDao.getUserInfoDao().then((res) => {
+        return res.next();
+    }).then((res) => {
         if (res && res.result) {
             dispatch({
                 type: USER.USER_INFO,

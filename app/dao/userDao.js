@@ -38,14 +38,13 @@ const getUserInfoDao = async (userName) => {
                 starred = countRes.data;
             }
             let totalInfo = Object.assign({}, res.data, {starred: starred});
-
             realm.write(() => {
-                let allData = realm.objects('UserInfo').filtered(`userName="${userName}"`);
+                let allData = realm.objects('UserInfo').filtered(`userName="${res.data.login}"`);
                 if (allData && allData.length > 0) {
                     allData[0].data = JSON.stringify(totalInfo);
                 } else {
                     realm.create('UserInfo', {
-                        userName: userName,
+                        userName: res.data.login,
                         data: JSON.stringify(totalInfo)
                     });
                 }
