@@ -97,7 +97,7 @@ class PushDetailPage extends Component {
                     size = res.data.length;
                 }
                 if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), false);
                 }
             });
     }

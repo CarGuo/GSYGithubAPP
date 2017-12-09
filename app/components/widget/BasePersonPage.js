@@ -79,7 +79,7 @@ class BasePersonPage extends Component {
             }
             setTimeout(() => {
                 if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), false);
                 }
             }, 500);
         })

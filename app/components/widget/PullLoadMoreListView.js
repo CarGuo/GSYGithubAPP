@@ -187,13 +187,14 @@ class PullLoadMoreListView extends Component {
             this.refs.list.scrollTo({y: 0, animate: false});
     }
 
-    refreshComplete(showLoadMore = false) {
+    refreshComplete(showLoadMore = false, scrollToTop = true) {
         this.setState({
             isRefreshing: false,
             isRefresh: false,
             showLoadMore: showLoadMore,
         });
-        this.scrollToTop();
+        if (scrollToTop)
+            this.scrollToTop();
     }
 
     loadMoreComplete(showLoadMore = false) {
