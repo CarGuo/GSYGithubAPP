@@ -38,7 +38,7 @@ class AboutPage extends Component {
                         showIconNext={true}
                         topLine={false}
                         bottomLine={false}
-                        itemIcon={"octoface"}
+                        itemIcon={"git-commit"}
                         textStyle={[styles.centered, styles.normalText, {
                             textAlignVertical: 'center',
                             marginHorizontal: Constant.normalMarginEdge
@@ -48,15 +48,15 @@ class AboutPage extends Component {
                             borderRadius: 4, marginTop: Constant.normalMarginEdge,
                             paddingLeft: Constant.normalMarginEdge
                         }, styles.shadowCard]}
-                        itemText={I18n('about')}
+                        itemText={I18n('version')}
                         onClickFun={() => {
-                            Actions.AboutPage();
+
                         }}/>
                     <CommonRowItem
                         showIconNext={true}
                         topLine={false}
                         bottomLine={false}
-                        itemIcon={"octoface"}
+                        itemIcon={"organization"}
                         textStyle={[styles.centered, styles.normalText, {
                             textAlignVertical: 'center',
                             marginHorizontal: Constant.normalMarginEdge
@@ -66,15 +66,15 @@ class AboutPage extends Component {
                             borderRadius: 4, marginTop: Constant.normalMarginEdge,
                             paddingLeft: Constant.normalMarginEdge
                         }, styles.shadowCard]}
-                        itemText={I18n('about')}
+                        itemText={I18n('author')}
                         onClickFun={() => {
-                            Actions.AboutPage();
+                            Actions.PersonPage({currentUser: "CarGuo"})
                         }}/>
                     <CommonRowItem
                         showIconNext={true}
                         topLine={false}
                         bottomLine={false}
-                        itemIcon={"octoface"}
+                        itemIcon={"link"}
                         textStyle={[styles.centered, styles.normalText, {
                             textAlignVertical: 'center',
                             marginHorizontal: Constant.normalMarginEdge
@@ -84,45 +84,12 @@ class AboutPage extends Component {
                             borderRadius: 4, marginTop: Constant.normalMarginEdge,
                             paddingLeft: Constant.normalMarginEdge
                         }, styles.shadowCard]}
-                        itemText={I18n('about')}
+                        itemText={I18n('projectUrl')}
                         onClickFun={() => {
-                            Actions.AboutPage();
-                        }}/>
-                    <CommonRowItem
-                        showIconNext={true}
-                        topLine={false}
-                        bottomLine={false}
-                        itemIcon={"octoface"}
-                        textStyle={[styles.centered, styles.normalText, {
-                            textAlignVertical: 'center',
-                            marginHorizontal: Constant.normalMarginEdge
-                        }]}
-                        iconSize={20}
-                        viewStyle={[{
-                            borderRadius: 4, marginTop: Constant.normalMarginEdge,
-                            paddingLeft: Constant.normalMarginEdge
-                        }, styles.shadowCard]}
-                        itemText={I18n('about')}
-                        onClickFun={() => {
-                            Actions.AboutPage();
-                        }}/>
-                    <CommonRowItem
-                        showIconNext={true}
-                        topLine={false}
-                        bottomLine={false}
-                        itemIcon={"octoface"}
-                        textStyle={[styles.centered, styles.normalText, {
-                            textAlignVertical: 'center',
-                            marginHorizontal: Constant.normalMarginEdge
-                        }]}
-                        iconSize={20}
-                        viewStyle={[{
-                            borderRadius: 4, marginTop: Constant.normalMarginEdge,
-                            paddingLeft: Constant.normalMarginEdge
-                        }, styles.shadowCard]}
-                        itemText={I18n('about')}
-                        onClickFun={() => {
-                            Actions.AboutPage();
+                            Actions.RepositoryDetail({
+                                repositoryName: "GSYGithubApp", ownerName: "CarGuo"
+                                , title: "CarGuo/GSYGithubApp"
+                            });
                         }}/>
 
                 </ScrollView>

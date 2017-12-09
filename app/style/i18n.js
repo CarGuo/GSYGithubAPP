@@ -135,6 +135,9 @@ I18n.translations = {
         userCreate: 'Created At：',
         history: 'history',
         about: 'about',
+        version: 'Version',
+        author: 'Author',
+        projectUrl: 'Project',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -259,6 +262,9 @@ I18n.translations = {
         userCreate: '创建于：',
         history: '历史',
         about: '关于',
+        version: '版本',
+        author: '作者',
+        projectUrl: '项目地址',
     }
 };
 
