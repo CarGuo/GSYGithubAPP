@@ -11,6 +11,9 @@ import styles from "../style"
 import I18n from '../style/i18n'
 import CommonRowItem from "./widget/CommonRowItem";
 import * as Constant from "../style/constant";
+import VersionNumber from 'react-native-version-number';
+import issueActions from "../store/actions/issue";
+import Toast from './widget/ToastProxy'
 
 
 /**
@@ -20,6 +23,8 @@ class AboutPage extends Component {
 
     constructor(props) {
         super(props);
+        this._createIssue = this._createIssue.bind(this)
+        this.showFeedback = this.showFeedback.bind(this)
     }
 
     componentDidMount() {
@@ -27,6 +32,32 @@ class AboutPage extends Component {
 
     componentWillUnmount() {
 
+    }
+
+    _createIssue(text) {
+        let {repositoryName, userName} = this.props;
+        Actions.LoadingModal({backExit: false});
+        issueActions.createIssue("CarGuo", "GSYGithubApp",
+            {title: "APP " + I18n("feedback"), body: text}).then((res) => {
+            setTimeout(() => {
+                if (res && res.result) {
+                    Actions.pop();
+                    Toast("Thanks For Feedback");
+                } else {
+                    this.showFeedback(text);
+                }
+            }, 500);
+        })
+    }
+
+    showFeedback(text) {
+        Actions.TextInputModal({
+            textConfirm: this._createIssue,
+            titleText: I18n('feedback'),
+            needEditTitle: false,
+            text: text,
+            titleValue: ""
+        })
     }
 
     render() {
@@ -48,7 +79,7 @@ class AboutPage extends Component {
                             borderRadius: 4, marginTop: Constant.normalMarginEdge,
                             paddingLeft: Constant.normalMarginEdge
                         }, styles.shadowCard]}
-                        itemText={I18n('version')}
+                        itemText={I18n('version') + ": " + VersionNumber.appVersion}
                         onClickFun={() => {
 
                         }}/>
@@ -91,7 +122,24 @@ class AboutPage extends Component {
                                 , title: "CarGuo/GSYGithubApp"
                             });
                         }}/>
-
+                    <CommonRowItem
+                        showIconNext={true}
+                        topLine={false}
+                        bottomLine={false}
+                        itemIcon={"link"}
+                        textStyle={[styles.centered, styles.normalText, {
+                            textAlignVertical: 'center',
+                            marginHorizontal: Constant.normalMarginEdge
+                        }]}
+                        iconSize={20}
+                        viewStyle={[{
+                            borderRadius: 4, marginTop: Constant.normalMarginEdge,
+                            paddingLeft: Constant.normalMarginEdge
+                        }, styles.shadowCard]}
+                        itemText={I18n('feedback')}
+                        onClickFun={() => {
+                            this.showFeedback("")
+                        }}/>
                 </ScrollView>
             </View>
         )

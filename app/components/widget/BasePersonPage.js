@@ -138,7 +138,7 @@ class BasePersonPage extends Component {
                                     groupName={userInfo.company}
                                     location={userInfo.location}
                                     link={userInfo.blog}
-                                    des={userInfo.bio + "\n" + I18n("userCreate") + resolveTime(userInfo.created_at)}
+                                    des={(userInfo.bio ? (userInfo.bio + "\n") : "") + I18n("userCreate") + resolveTime(userInfo.created_at)}
                                     backNotifyCall={this.getBackNotifyCall}
                                     unRead={this.state.unRead}
                                     star={(userInfo.starred) ? userInfo.starred : "---"}

@@ -112,7 +112,7 @@ class UserHeadItem extends Component {
                             textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
                         <IconTextItem
                             text={(location) ? location : hint} icon={'map-marker'}
-                            viewstyle={[{marginTop: halfEdge}]}
+                            viewstyle={[{marginTop: halfEdge, marginLeft: 3, marginRight: 3}]}
                             textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
                     </View>
                 </View>

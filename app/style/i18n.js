@@ -138,6 +138,7 @@ I18n.translations = {
         version: 'Version',
         author: 'Author',
         projectUrl: 'Project',
+        feedback: 'Feedback',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -265,6 +266,7 @@ I18n.translations = {
         version: '版本',
         author: '作者',
         projectUrl: '项目地址',
+        feedback: '反馈',
     }
 };
 
