@@ -62,7 +62,8 @@ class IssueItem extends Component {
                                }]}/>
                     <View style={{flex: 1, marginLeft: Constant.normalMarginEdge}}>
                         <View style={[styles.flexDirectionRowNotFlex, styles.centerH]}>
-                            <Text style={[styles.flex, styles.normalTextWhite, {fontWeight: "bold",}]}>
+                            <Text style={[styles.flex, styles.normalTextWhite, {fontWeight: "bold",}]}
+                                  selectable={true}>
                                 {actionUser}
                             </Text>
                             <TimeText style={[styles.miLightSmallText, {marginTop: -3}]}
@@ -94,6 +95,7 @@ class IssueItem extends Component {
                             </Icon>
                         </View>
                         <View
+                            selectable={true}
                             style={[styles.flexDirectionRowNotFlex, {
                                 marginBottom: Constant.normalMarginEdge
                             }]}>

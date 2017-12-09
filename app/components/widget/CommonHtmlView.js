@@ -30,6 +30,7 @@ class CommonHtmlView extends Component {
                         Linking.openURL(link)
                     }
                 }}
+                selectable={true}
                 onLinkLongPress={(link) => {
                     Clipboard.setString(link);
                     Toast(I18n("hadCopy"));

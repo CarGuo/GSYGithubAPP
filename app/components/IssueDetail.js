@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, TextInput, InteractionManager, Keyboard, TouchableOpacity, StyleSheet
+    View, Text, StatusBar, TextInput, InteractionManager, Keyboard, TouchableOpacity, StyleSheet, Clipboard
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
@@ -19,6 +19,7 @@ import CommonBottomBar from './widget/CommonBottomBar'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config'
 import {isCommentOwner} from '../utils/issueUtils'
+import Toast from "./widget/ToastProxy";
 
 /**
  * Issue详情
@@ -262,6 +263,14 @@ class IssueDetail extends Component {
             itemName: I18n("issueCommentDelete"),
             itemClick: () => {
                 this.deleteComment(data.id);
+            }, itemStyle: {
+                borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
+            }
+        }, {
+            itemName: I18n("copyComment"),
+            itemClick: () => {
+                Clipboard.setString(data.body);
+                Toast(I18n("hadCopy"));
             }, itemStyle: {
                 borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
             }
