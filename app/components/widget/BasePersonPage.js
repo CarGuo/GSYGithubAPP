@@ -27,6 +27,7 @@ class BasePersonPage extends Component {
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this.getBackNotifyCall = this.getBackNotifyCall.bind(this);
+        this.doFollowLogic = this.doFollowLogic.bind(this);
         this.state = {
             dataSource: []
         };
@@ -127,6 +128,18 @@ class BasePersonPage extends Component {
         return false
     }
 
+    getNeedFollow() {
+        return false
+    }
+
+    getHanFollow() {
+        return false
+    }
+
+    doFollowLogic() {
+
+    }
+
     render() {
         let userInfo = this.getUserInfo();
         return (
@@ -139,6 +152,9 @@ class BasePersonPage extends Component {
                         return (
                             <View>
                                 <UserHeadItem
+                                    needFollow={this.getNeedFollow()}
+                                    doFollowLogic={this.doFollowLogic}
+                                    hadFollowed={this.getHanFollow()}
                                     userDisPlayName={userInfo.login}
                                     userName={userInfo.name}
                                     userPic={userInfo.avatar_url}

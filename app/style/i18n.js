@@ -146,6 +146,8 @@ I18n.translations = {
         infoCompany: 'Company',
         infoLocation: 'Location',
         infoBio: 'Bio',
+        unFollowed: 'unFollow',
+        doFollowed: 'Follow',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -281,6 +283,8 @@ I18n.translations = {
         infoCompany: '公司',
         infoLocation: '位置',
         infoBio: '简介',
+        unFollowed: '取消关注',
+        doFollowed: '关注',
     }
 };
 

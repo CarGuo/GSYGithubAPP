@@ -227,7 +227,7 @@ export default AddressLocal = {
      * 仓库路径下的内容 get
      */
     reposDataDir: (reposOwner, repos, path, branch = 'master') => {
-        return `${host}repos/${reposOwner}/${repos}/contents/${path}`  + ((!branch) ? "" : ("?ref=" + branch));
+        return `${host}repos/${reposOwner}/${repos}/contents/${path}` + ((!branch) ? "" : ("?ref=" + branch));
     },
     /**
      * README 文件地址 get
@@ -248,10 +248,12 @@ export default AddressLocal = {
         return `${host}users/${userName}`;
     },
     /**
-     * 我的关注 get
+     *  get 是否关注
+     *  put 关注
+     *  delete 取消关注
      */
-    getMyFollow: () => {
-        return `${host}user/following`;
+    doFollow: (name) => {
+        return `${host}user/following/${name}`;
     },
     /**
      * 用户关注 get
@@ -280,7 +282,7 @@ export default AddressLocal = {
     /**
      * branch get
      */
-    getbranches:(reposOwner, reposName)=>{
+    getbranches: (reposOwner, reposName) => {
         return `${host}repos/${reposOwner}/${reposName}/branches`
     },
     /**

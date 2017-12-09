@@ -8,6 +8,8 @@ import * as Constant from '../../style/constant'
 import store from '../'
 import {AsyncStorage} from 'react-native'
 import RepositoryDao from "../../dao/repositoryDao";
+import Api from "../../net";
+import Address from "../../net/address";
 
 const {dispatch, getState} = store;
 
@@ -109,6 +111,21 @@ const updateUser = async (params) => {
     }
 };
 
+const doFollow = async (name, followed) => {
+    let res = await UserDao.doFollowDao(name, followed);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
+const checkFollow = async (name, followed) => {
+    let res = await UserDao.checkFollowDao(name);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
 
 export default {
     initUserInfo,
@@ -120,5 +137,7 @@ export default {
     getNotifation,
     setNotificationAsRead,
     setAllNotificationAsRead,
-    updateUser
+    updateUser,
+    doFollow,
+    checkFollow
 }

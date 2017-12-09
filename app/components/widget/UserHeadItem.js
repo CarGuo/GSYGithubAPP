@@ -20,14 +20,33 @@ const hintNum = '---';
 
 class UserHeadItem extends Component {
 
+    constructor(props) {
+        super(props);
+    }
 
     render() {
         let halfEdge = Constant.normalMarginEdge / 2;
         let hint = I18n('userInfoNoting');
         let {
             link, userPic, userName, userDisPlayName, des, location, groupName,
-            follower, followed, repos, star, setting, notify, unRead, settingNeed
+            follower, followed, repos, star, setting, unRead, settingNeed, needFollow, hadFollowed,
+            doFollowLogic
         } = this.props;
+        let followView = needFollow ? <TouchableOpacity
+            style={[styles.flexDirectionRowNotFlex, {
+                marginTop: Constant.normalMarginEdge,
+                borderColor: Constant.miWhite,
+                borderWidth: 1,
+                borderRadius: 4,
+                paddingHorizontal: Constant.normalMarginEdge,
+                paddingVertical: Constant.normalMarginEdge / 2,
+            }]}
+            onPress={() => {
+                doFollowLogic && doFollowLogic()
+            }}>
+            <Text
+                style={styles.smallTextWhite}>{hadFollowed ? I18n("unFollowed") : I18n("doFollowed")}</Text>
+        </TouchableOpacity> : <View/>;
         return (
             <View style={[{
                 paddingHorizontal: Constant.normalMarginEdge,
@@ -44,6 +63,16 @@ class UserHeadItem extends Component {
                 borderBottomLeftRadius: 2,
                 elevation: 2,
             }]}>
+                <View style={[{
+                    position: "absolute",
+                    left: screenWidth - 100,
+                    right: Constant.normalMarginEdge,
+                    top: Constant.normalMarginEdge,
+                    bottom: 80,
+                    zIndex: 12,
+                }, styles.alignItemsEnd]}>
+                    {followView}
+                </View>
                 <View style={[styles.flexDirectionRowNotFlex]}>
                     <View style={[{
                         height: Constant.largeIconSize, width: Constant.largeIconSize,

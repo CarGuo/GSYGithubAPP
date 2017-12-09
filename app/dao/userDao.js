@@ -250,6 +250,25 @@ const updateUserDao = async (params) => {
     }
 };
 
+const doFollowDao = async (name, followed) => {
+    let url = Address.doFollow(name);
+    let res = await Api.netFetch(url, followed ? "PUT" : "DELETE");
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
+const checkFollowDao = async (name) => {
+    let url = Address.doFollow(name);
+    let res = await Api.netFetch(url);
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
+
 export default {
     getUserInfoLocal,
     getUserInfoDao,
@@ -259,4 +278,6 @@ export default {
     setNotificationAsReadDao,
     setAllNotificationAsReadDao,
     updateUserDao,
+    doFollowDao,
+    checkFollowDao
 }
