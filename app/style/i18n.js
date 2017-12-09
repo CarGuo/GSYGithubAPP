@@ -133,6 +133,7 @@ I18n.translations = {
         iosNotSupportDown: 'IOS Not Support Down',
         downloadDescription: 'Downloading：',
         userCreate: 'Created At：',
+        history: 'history',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -255,6 +256,7 @@ I18n.translations = {
         iosNotSupportDown: 'IOS不支持下载',
         downloadDescription: '正在下载：',
         userCreate: '创建于：',
+        history: '历史',
     }
 };
 

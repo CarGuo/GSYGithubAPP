@@ -58,6 +58,7 @@ class RepositoryDetail extends Component {
                         });
                         Actions.refresh({titleData: res.data});
                     }
+                    repositoryActions.addRepositoryLocalRead(this.props.ownerName, this.props.repositoryName, res.data);
                     return res.next();
                 })
                 .then((res) => {
@@ -70,7 +71,7 @@ class RepositoryDetail extends Component {
                 });
             this._refresh();
             repositoryActions.getBranches(this.props.ownerName, this.props.repositoryName)
-                .then((res)=>{
+                .then((res) => {
                     if (res && res.result) {
                         this.setState({
                             dataDetailBranches: this.resolveBranchesData(res.data),

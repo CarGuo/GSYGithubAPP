@@ -10,6 +10,9 @@ export const navBarHeight = (Platform.OS === 'ios') ? constant.iosnavHeaderHeigh
 export const statusHeight = (Platform.OS === 'android') ? StatusBar.currentHeight : 25;
 export const drawerWidth = screenWidth / 3 * 2;
 
+export const shadowRadius = (Platform.OS === 'android') ? 5 : 2;
+export const elevation = (Platform.OS === 'android') ? 2 : 1;
+
 const styles = StyleSheet.create({
     routerStyle: {
         //设置router的样式
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
             height: 2
         },
         shadowOpacity: 0.7,
-        shadowRadius: 5,
+        shadowRadius: shadowRadius,
         elevation: 2,
         backgroundColor: constant.cardBackgroundColor
     },

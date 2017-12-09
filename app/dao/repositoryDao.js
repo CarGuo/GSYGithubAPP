@@ -3,6 +3,7 @@ import Address from '../net/address'
 import GitHubTrending from '../utils/trending/GitHubTrending'
 import realm from './db'
 import {generateHtml} from "../utils/htmlUtils";
+import * as Config from '../config'
 
 const getTrendDao = async (page = 0, since, languageType) => {
     let localLanguage = (languageType) ? languageType : "*";
@@ -240,6 +241,37 @@ const getRepositoryDetailReadmeHtmlDao = (userName, reposName, branch) => {
             next: nextStep
         };
     }
+};
+
+const addRepositoryLocalReadDao = (userName, reposName, data) => {
+    let fullName = userName + "/" + reposName;
+    let allEvent = realm.objects('ReadHistory').filtered(`fullName="${fullName}"`);
+    realm.write(() => {
+        realm.delete(allEvent);
+        realm.create('ReadHistory', {
+            fullName: fullName,
+            readDate: new Date(),
+            data: JSON.stringify(data)
+        });
+    })
+};
+
+
+const getRepositoryLocalReadDao = (page = 0) => {
+    let size = page * Config.PAGE_SIZE;
+    let allEvent = realm.objects('ReadHistory').sorted("readDate").slice(size, size + Config.PAGE_SIZE);
+    let data = [];
+    allEvent.forEach((item) => {
+        let showItem = {
+            data: JSON.parse(item.data)
+        };
+        data.push(showItem);
+    });
+    return {
+        data: data,
+        result: true
+    }
+
 };
 
 
@@ -602,5 +634,7 @@ export default {
     getReposFileDirDao,
     searchRepositoryIssueDao,
     createForkDao,
-    getBranchesDao
+    getBranchesDao,
+    getRepositoryLocalReadDao,
+    addRepositoryLocalReadDao,
 }

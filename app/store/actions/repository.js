@@ -6,6 +6,8 @@ import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
 import {generateMd2Html, generateHtml} from "../../utils/htmlUtils";
+import realm from "../../dao/db";
+import * as Config from "../../config";
 
 /**
  * 趋势数据
@@ -227,6 +229,18 @@ const getReposFileDir = async (userName, reposName, path, branch) => {
     };
 };
 
+const addRepositoryLocalRead = async (userName, reposName, data) => {
+    RepositoryDao.addRepositoryLocalReadDao(userName, reposName, data);
+};
+
+
+const getRepositoryLocalRead = async (page = 0) => {
+    let res = RepositoryDao.getRepositoryLocalReadDao(page);
+    return {
+        result: true,
+        data: res.data,
+    }
+};
 
 export default {
     getTrend,
@@ -249,6 +263,8 @@ export default {
     getReposFileDir,
     searchRepositoryIssue,
     createRepositoryForks,
-    getBranches
+    getBranches,
+    getRepositoryLocalRead,
+    addRepositoryLocalRead,
 
 }

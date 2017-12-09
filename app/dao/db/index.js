@@ -2,7 +2,14 @@ import Realm from 'realm';
 
 const SearchHistory = {};
 
-const ReadHistory = {};
+const ReadHistory = {
+    name: 'ReadHistory',
+    properties: {
+        fullName: 'string',
+        readDate: 'date',
+        data: 'string',
+    }
+};
 
 const RepositoryBranch = {
     name: 'RepositoryBranch',
@@ -180,7 +187,7 @@ let realm = new Realm({
         RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
         RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits,
         UserFollower, UserFollowed, UserStared, UserRepos, RepositoryCommitInfoDetail,
-        IssueDetail, IssueComment,
+        IssueDetail, IssueComment, ReadHistory
     ]
 });
 

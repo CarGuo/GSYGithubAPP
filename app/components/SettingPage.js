@@ -33,6 +33,22 @@ class SettingPage extends Component {
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
                 <CommonRowItem
+                    showIconNext={true}
+                    topLine={false}
+                    bottomLine={false}
+                    textStyle={[styles.centered, styles.normalText, {
+                        textAlignVertical: 'center',
+                        marginHorizontal: Constant.normalMarginEdge
+                    }]}
+                    viewStyle={[{borderRadius: 4, marginTop: Constant.normalMarginEdge}, styles.shadowCard]}
+                    itemText={I18n('history')}
+                    onClickFun={() => {
+                        Actions.ListPage({
+                            dataType: 'history', showType: 'repository',
+                            title: I18n('history')
+                        })
+                    }}/>
+                <CommonRowItem
                     showIconNext={false}
                     topLine={false}
                     bottomLine={false}
@@ -49,7 +65,7 @@ class SettingPage extends Component {
 }
 
 
-export default connect(state => ( {state}), dispatch => ({
+export default connect(state => ({state}), dispatch => ({
         loginActions: bindActionCreators(loginActions, dispatch)
     })
 )(SettingPage)

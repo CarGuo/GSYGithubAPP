@@ -72,6 +72,9 @@ class ListPage extends Component {
     _renderRow(rowData, sectionID, rowID, highlightRow) {
         switch (this.props.showType) {
             case 'repository':
+                if (this.props.dataType === 'history') {
+                    rowData = rowData.data
+                }
                 return (<RepositoryItem
                     ownerName={rowData.owner.login}
                     ownerPic={rowData.owner.avatar_url}
@@ -279,6 +282,11 @@ class ListPage extends Component {
                     this._refreshRes(res)
                 });
                 break;
+            case 'history':
+                repositoryActions.getRepositoryLocalRead(0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
 
         }
 
@@ -338,6 +346,11 @@ class ListPage extends Component {
             case 'notify':
                 userActions.getNotifation(this.props.all, this.props.participating, this.page).then((res) => {
                     this._loadMoreRes(res)
+                });
+                break;
+            case 'history':
+                repositoryActions.getRepositoryLocalRead(this.page).then((res) => {
+                    this._refreshRes(res)
                 });
                 break;
         }
