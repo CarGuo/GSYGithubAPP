@@ -15,6 +15,7 @@ import EventItem from './EventItem'
 import {getActionAndDes, ActionUtils} from '../../utils/eventUtils'
 import * as Config from '../../config'
 import I18n from '../../style/i18n'
+import resolveTime from '../../utils/timeUtil'
 
 class BasePersonPage extends Component {
 
@@ -137,7 +138,7 @@ class BasePersonPage extends Component {
                                     groupName={userInfo.company}
                                     location={userInfo.location}
                                     link={userInfo.blog}
-                                    des={userInfo.bio}
+                                    des={userInfo.bio + "\n" + I18n("userCreate") + resolveTime(userInfo.created_at)}
                                     backNotifyCall={this.getBackNotifyCall}
                                     unRead={this.state.unRead}
                                     star={(userInfo.starred) ? userInfo.starred : "---"}
