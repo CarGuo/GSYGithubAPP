@@ -24,6 +24,7 @@ class PersonPage extends BasePersonPage {
                     userInfo: res.data
                 })
             }
+            Actions.refresh({titleData: res.data});
             return res.next();
         }).then((res) => {
             if (res && res.result) {

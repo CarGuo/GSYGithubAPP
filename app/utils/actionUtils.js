@@ -53,3 +53,28 @@ export const RepositoryMore = (props) => {
         }, itemStyle: {}
     },]
 };
+
+export const CommonMoreRightBtnPress = (props) => {
+    Actions.OptionModal({dataList: CommonMore(props)});
+};
+
+
+export const CommonMore = (props) => {
+    return [, {
+        itemName: I18n("browserOpen"),
+        itemValue: 'browserOpen',
+        itemClick: () => {
+            if (props.titleData && props.titleData.html_url)
+                Linking.openURL(props.titleData.html_url)
+        }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
+    }, {
+        itemName: I18n("copy"),
+        itemValue: 'copy',
+        itemClick: () => {
+            if (props.titleData && props.titleData.html_url) {
+                Clipboard.setString(props.titleData.html_url);
+                Toast(I18n("hadCopy"));
+            }
+        }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
+    },]
+};

@@ -38,7 +38,7 @@ import styles from './style'
 import I18n, {changeLocale} from './style/i18n'
 import * as Constant from './style/constant'
 import BackUtils from './utils/backUtils'
-import {RepositoryDetailRightBtnPress} from './utils/reposUtils'
+import {CommonMoreRightBtnPress, RepositoryDetailRightBtnPress} from './utils/actionUtils'
 
 import WelcomePage from "./components/WelcomePage"
 import {screenWidth, drawerWidth} from "./style/index";
@@ -102,6 +102,13 @@ const getRouter = () => {
                            showLabel={false}
                            hideNavBar/>
                     <Scene key="PersonPage" component={PersonPage}
+                           needRightBtn={true}
+                           rightBtn={'ios-more'}
+                           iconType={2}
+                           rightBtnPress={(params) => {
+                               return CommonMoreRightBtnPress(params)
+                           }}
+                           renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}/>
                     <Scene key="SettingPage" component={SettingPage} title={I18n('setting')}
                            renderLeftButton={() => <CustomBackButton/>}
@@ -123,7 +130,9 @@ const getRouter = () => {
                            needRightBtn={true}
                            rightBtn={'ios-more'}
                            iconType={2}
-                           rightBtnPress={(params)=>{return RepositoryDetailRightBtnPress(params)}}
+                           rightBtnPress={(params) => {
+                               return RepositoryDetailRightBtnPress(params)
+                           }}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
