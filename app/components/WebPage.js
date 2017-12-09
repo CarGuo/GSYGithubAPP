@@ -8,7 +8,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import I18n from '../style/i18n'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/Ionicons'
 import * as Constant from '../style/constant'
 import {screenWidth} from '../style'
 import {Actions} from "react-native-router-flux";
@@ -120,7 +120,7 @@ export default class WebPage extends Component {
                             marginLeft: Constant.normalMarginEdge - 3
                         }]}
                         onPress={this.goBack}>
-                        <Icon name={'arrow-left'} size={17} color={Constant.miWhite}/>
+                        <Icon name={'md-arrow-round-back'} size={18} color={Constant.miWhite}/>
                     </TouchableOpacity>
                     <TextInput
                         ref='textInput'
@@ -143,7 +143,7 @@ export default class WebPage extends Component {
                             paddingLeft: 20
                         }]}
                         onPress={this.pressGoButton}>
-                        <Icon name={'search'} size={18} color={Constant.miWhite}/>
+                        <Icon name={'md-search'} size={19} color={Constant.miWhite}/>
                     </TouchableOpacity>
                 </View>
                 <WebView
