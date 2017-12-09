@@ -209,6 +209,7 @@ const goToPush = (repositoryName, owner, sha) => {
         userName: owner,
         title: owner + "/" + repositoryName,
         sha: sha,
+        iconType: 1,
         needRightBtn: true,
         rightBtn: 'home',
         rightBtnPress: () => {

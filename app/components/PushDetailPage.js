@@ -65,6 +65,7 @@ class PushDetailPage extends Component {
                         branch: 'master',
                         needRequest: false,
                         detail: generateCode2HTml(parseDiffSource(patch), Constant.primaryColor),
+                        html_url: rowData.blob_url
                     })
                 }}/>
         )
@@ -84,6 +85,7 @@ class PushDetailPage extends Component {
                         dataSource: res.data.files
                     });
                 }
+                Actions.refresh({titleData: res.data});
                 return res.next();
             })
             .then((res) => {

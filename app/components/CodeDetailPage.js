@@ -12,7 +12,7 @@ import I18n from '../style/i18n'
 import reposActions from '../store/actions/repository'
 import WebComponent from './widget/WebComponent'
 import {generateCode2HTml} from '../utils/htmlUtils'
-
+import {Actions, Tabs} from 'react-native-router-flux';
 import * as Constant from '../style/constant'
 
 class CodeDetailPage extends Component {
@@ -31,7 +31,7 @@ class CodeDetailPage extends Component {
                     this.props.repositoryName, this.props.path, this.props.branch).then((res) => {
                         if (res && res.result) {
                             this.setState({
-                                detail: generateCode2HTml(res.data,  Constant.primaryColor),
+                                detail: generateCode2HTml(res.data, Constant.primaryColor),
                             })
                         } else {
                             this.setState({
@@ -47,6 +47,7 @@ class CodeDetailPage extends Component {
                     }
                 )
             }
+            Actions.refresh({titleData: {html_url: this.props.html_url}})
         })
     }
 

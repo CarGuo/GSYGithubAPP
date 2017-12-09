@@ -141,6 +141,12 @@ const getRouter = () => {
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="PushDetailPage" component={PushDetailPage}
+                           needRightBtn={true}
+                           rightBtn={'ios-more'}
+                           iconType={2}
+                           rightBtnPress={(params) => {
+                               return CommonMoreRightBtnPress(params)
+                           }}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
@@ -155,6 +161,12 @@ const getRouter = () => {
                     />
                     <Scene key="CodeDetailPage" component={CodeDetailPage}
                            title={I18n('notify')}
+                           needRightBtn={true}
+                           rightBtn={'ios-more'}
+                           iconType={2}
+                           rightBtnPress={(params) => {
+                               return CommonMoreRightBtnPress(params)
+                           }}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
