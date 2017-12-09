@@ -55,7 +55,7 @@ export default AddressLocal = {
      */
     userRepos: (userName, sort) => {
         if (!sort) {
-            sort = 'updated'
+            sort = 'pushed'
         }
         return `${host}users/${userName}/repos?sort=${sort}`;
     },

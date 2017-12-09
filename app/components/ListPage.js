@@ -181,24 +181,52 @@ class ListPage extends Component {
     _refresh() {
         switch (this.props.dataType) {
             case 'follower':
-                userActions.getFollowerList(this.props.currentUser, 0).then((res) => {
-                    this._refreshRes(res)
-                });
+                userActions.getFollowerList(this.props.currentUser, 0)
+                    .then((res) => {
+                        this.setState({
+                            dataSource: res.data
+                        });
+                        return res.next();
+                    })
+                    .then((res) => {
+                        this._refreshRes(res)
+                    });
                 break;
             case 'followed':
-                userActions.getFollowedList(this.props.currentUser, 0).then((res) => {
-                    this._refreshRes(res)
-                });
+                userActions.getFollowedList(this.props.currentUser, 0)
+                    .then((res) => {
+                        this.setState({
+                            dataSource: res.data
+                        });
+                        return res.next();
+                    })
+                    .then((res) => {
+                        this._refreshRes(res)
+                    });
                 break;
             case 'user_repos':
-                repositoryActions.getUserRepository(this.props.currentUser, 0, this.filterSelect).then((res) => {
-                    this._refreshRes(res)
-                });
+                repositoryActions.getUserRepository(this.props.currentUser, 0, this.filterSelect)
+                    .then((res) => {
+                        this.setState({
+                            dataSource: res.data
+                        });
+                        return res.next();
+                    })
+                    .then((res) => {
+                        this._refreshRes(res)
+                    });
                 break;
             case 'user_star':
-                repositoryActions.getStarRepository(this.props.currentUser, 0, this.filterSelect).then((res) => {
-                    this._refreshRes(res)
-                });
+                repositoryActions.getStarRepository(this.props.currentUser, 0, this.filterSelect)
+                    .then((res) => {
+                        this.setState({
+                            dataSource: res.data
+                        });
+                        return res.next();
+                    })
+                    .then((res) => {
+                        this._refreshRes(res)
+                    });
                 break;
             case 'repo_star':
                 repositoryActions.getRepositoryStar(this.props.currentUser, this.props.currentRepository, 0)

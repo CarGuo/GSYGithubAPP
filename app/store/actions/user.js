@@ -7,6 +7,7 @@ import UserDao from '../../dao/userDao'
 import * as Constant from '../../style/constant'
 import store from '../'
 import {AsyncStorage} from 'react-native'
+import RepositoryDao from "../../dao/repositoryDao";
 
 const {dispatch, getState} = store;
 
@@ -55,18 +56,18 @@ const clearUserInfo = () => {
 };
 
 const getFollowerList = async (userName, page = 1) => {
-    let res = await UserDao.getFollowerListDao(userName, page);
-    return {
-        result: res.result,
-        data: res.data
+    if (page <= 1) {
+        return UserDao.getFollowerListDao(userName, page, true);
+    } else {
+        return UserDao.getFollowerListDao(userName, page)
     }
 };
 
 const getFollowedList = async (userName, page = 1) => {
-    let res = await UserDao.getFollowedListDao(userName, page);
-    return {
-        result: res.result,
-        data: res.data
+    if (page <= 1) {
+        return UserDao.getFollowedListDao(userName, page, true);
+    } else {
+        return UserDao.getFollowedListDao(userName, page)
     }
 };
 

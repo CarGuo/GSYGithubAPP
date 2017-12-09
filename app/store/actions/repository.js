@@ -60,10 +60,10 @@ const searchRepositoryIssue = async (q, name, reposName, page = 1) => {
  * 用户自己的仓库
  */
 const getUserRepository = async (userName, page = 1, sort) => {
-    let res = await RepositoryDao.getUserRepositoryDao(userName, page, sort);
-    return {
-        result: res.result,
-        data: res.data
+    if (page <= 1) {
+        return RepositoryDao.getUserRepositoryDao(userName, page, sort, true);
+    } else {
+        return RepositoryDao.getUserRepositoryDao(userName, page, sort)
     }
 };
 
@@ -71,10 +71,10 @@ const getUserRepository = async (userName, page = 1, sort) => {
  * 用户收藏的
  */
 const getStarRepository = async (userName, page = 1, sort) => {
-    let res = await RepositoryDao.getStarRepositoryDao(userName, page, sort);
-    return {
-        result: res.result,
-        data: res.data
+    if (page <= 1) {
+        return RepositoryDao.getStarRepositoryDao(userName, page, sort, true);
+    } else {
+        return RepositoryDao.getStarRepositoryDao(userName, page, sort)
     }
 };
 

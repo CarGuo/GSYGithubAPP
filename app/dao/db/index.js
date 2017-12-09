@@ -97,9 +97,39 @@ const UserInfo = {
     }
 };
 
-const UserFollower = {};
+const UserFollower = {
+    name: 'UserFollower',
+    properties: {
+        userName: 'string',
+        data: 'string',
+    }
+};
 
-const UserFollowed = {};
+const UserFollowed = {
+    name: 'UserFollowed',
+    properties: {
+        userName: 'string',
+        data: 'string',
+    }
+};
+
+const UserStared = {
+    name: 'UserStared',
+    properties: {
+        userName: 'string',
+        sort: 'string',
+        data: 'string',
+    }
+};
+
+const UserRepos = {
+    name: 'UserRepos',
+    properties: {
+        userName: 'string',
+        sort: 'string',
+        data: 'string',
+    }
+};
 
 const ReceivedEvent = {
     name: 'ReceivedEvent',
@@ -124,7 +154,8 @@ const PushCodeDetail = {};
 let realm = new Realm({
     schema: [TrendRepository, ReceivedEvent, UserInfo, UserEvent,
         RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
-        RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits]
+        RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits,
+        UserFollower, UserFollowed, UserStared, UserRepos]
 });
 
 export default realm;

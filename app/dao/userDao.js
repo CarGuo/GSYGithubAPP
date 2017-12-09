@@ -119,20 +119,92 @@ const getUserStaredCountNet = async (userName) => {
 };
 
 
-const getFollowerListDao = async (userName, page) => {
-    let res = await Api.netFetch(Address.getUserFollower(userName) + Address.getPageParams("?", page));
-    return {
-        result: res.result,
-        data: res.data
-    }
+const getFollowerListDao = async (userName, page, localNeed) => {
+    let nextStep = async () => {
+        let url = Address.getUserFollower(userName) + Address.getPageParams("?", page);
+        let res = await await Api.netFetch(url);
+        if (res && res.result && res.data.length > 0 && page <= 1) {
+            realm.write(() => {
+                let allEvent = realm.objects('UserFollower').filtered(`userName="${userName}"`);
+                realm.delete(allEvent);
+                res.data.forEach((item) => {
+                    realm.create('UserFollower', {
+                        userName: userName,
+                        data: JSON.stringify(item)
+                    });
+                })
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
+    };
+    let local = async () => {
+        let allData = realm.objects('UserFollower').filtered(`userName="${userName}"`);
+        if (allData && allData.length > 0) {
+            let data = [];
+            allData.forEach((item) => {
+                data.push(JSON.parse(item.data));
+            });
+            return {
+                data: data,
+                next: nextStep,
+                result: true
+            };
+        } else {
+            return {
+                data: [],
+                next: nextStep,
+                result: false
+            };
+        }
+    };
+    return localNeed ? local() : nextStep();
 };
 
-const getFollowedListDao = async (userName, page) => {
-    let res = await Api.netFetch(Address.getUserFollow(userName) + Address.getPageParams("?", page));
-    return {
-        result: res.result,
-        data: res.data
-    }
+const getFollowedListDao = async (userName, page, localNeed) => {
+    let nextStep = async () => {
+        let url = Address.getUserFollow(userName) + Address.getPageParams("?", page);
+        let res = await await Api.netFetch(url);
+        if (res && res.result && res.data.length > 0 && page <= 1) {
+            realm.write(() => {
+                let allEvent = realm.objects('UserFollowed').filtered(`userName="${userName}"`);
+                realm.delete(allEvent);
+                res.data.forEach((item) => {
+                    realm.create('UserFollowed', {
+                        userName: userName,
+                        data: JSON.stringify(item)
+                    });
+                })
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
+    };
+    let local = async () => {
+        let allData = realm.objects('UserFollowed').filtered(`userName="${userName}"`);
+        if (allData && allData.length > 0) {
+            let data = [];
+            allData.forEach((item) => {
+                data.push(JSON.parse(item.data));
+            });
+            return {
+                data: data,
+                next: nextStep,
+                result: true
+            };
+        } else {
+            return {
+                data: [],
+                next: nextStep,
+                result: false
+            };
+        }
+    };
+    return localNeed ? local() : nextStep();
 };
 
 const getNotifationDao = async (all, participating, page) => {
