@@ -5,4 +5,10 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- Base application theme. -->
+    <style name="ActivityTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/welcome</item>
+    </style>
+
+
 </resources>
