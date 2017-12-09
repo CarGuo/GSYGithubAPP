@@ -9,32 +9,15 @@ const getRepositoryIssue = async (page = 0, userName, repository, state, sort, d
 };
 
 const getIssueComment = async (page = 0, userName, repository, number) => {
-    let res = await IssueDao.getIssueCommentDao(page, userName, repository, number);
-    if (res && res.result) {
-        return {
-            data: res.data,
-            result: true
-        };
-    } else {
-        return {
-            result: false
-        };
+    if (page <= 1) {
+        return IssueDao.getIssueCommentDao(page, userName, repository, number, true);
     }
+    return IssueDao.getIssueCommentDao(page, userName, repository, number)
 
 };
 
 const getIssueInfo = async (userName, repository, number) => {
-    let res = await IssueDao.getIssueInfoDao(userName, repository, number);
-    if (res && res.result) {
-        return {
-            data: res.data,
-            result: true
-        };
-    } else {
-        return {
-            result: false
-        };
-    }
+    return IssueDao.getIssueInfoDao(userName, repository, number);
 };
 
 const addIssueComment = async (userName, repository, number, comment) => {

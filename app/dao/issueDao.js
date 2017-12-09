@@ -55,22 +55,87 @@ const getRepositoryIssueDao = (page = 0, userName, repository, state, sort, dire
     return localNeed ? local() : nextStep();
 };
 
-const getIssueCommentDao = async (page = 0, userName, repository, number) => {
-    let url = Address.getIssueComment(userName, repository, number) + Address.getPageParams("?", page);
-    let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
-    return {
-        data: res.data,
-        result: res.result
+const getIssueCommentDao = async (page = 0, userName, repository, number, localNeed) => {
+    let fullName = userName + "/" + repository;
+    let nextStep = async () => {
+        let url = Address.getIssueComment(userName, repository, number) + Address.getPageParams("?", page);
+        let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
+        if (res && res.result && res.data.length > 0 && page <= 1) {
+            realm.write(() => {
+                let allEvent = realm.objects('IssueComment').filtered(`fullName="${fullName}" AND number ="${number}"`);
+                realm.delete(allEvent);
+                res.data.forEach((item) => {
+                    realm.create('IssueComment', {
+                        number: number + "",
+                        fullName: fullName,
+                        data: JSON.stringify(item)
+                    });
+                })
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
     };
+    let local = async () => {
+        let allData = realm.objects('IssueComment').filtered(`fullName="${fullName}" AND number ="${number}"`);
+        if (allData && allData.length > 0) {
+            let data = [];
+            allData.forEach((item) => {
+                data.push(JSON.parse(item.data));
+            });
+            return {
+                data: data,
+                next: nextStep,
+                result: true
+            };
+        } else {
+            return {
+                data: [],
+                next: nextStep,
+                result: false
+            };
+        }
+    };
+    return localNeed ? local() : nextStep();
 };
 
 const getIssueInfoDao = async (userName, repository, number) => {
-    let url = Address.getIssueInfo(userName, repository, number);
-    let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
-    return {
-        data: res.data,
-        result: res.result
+    let fullName = userName + "/" + repository;
+    let nextStep = async () => {
+        let url = Address.getIssueInfo(userName, repository, number);
+        let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
+        if (res && res.result && res.data) {
+            realm.write(() => {
+                let data = realm.objects('IssueDetail').filtered(`fullName="${fullName}" AND number ="${number}"`);
+                realm.delete(data);
+                realm.create('IssueDetail', {
+                    number: number + "",
+                    fullName: fullName,
+                    data: JSON.stringify(res.data)
+                });
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
     };
+    let AllData = realm.objects('IssueDetail').filtered(`fullName="${fullName}" AND number ="${number}"`);
+    if (AllData && AllData.length > 0) {
+        return {
+            data: JSON.parse(AllData[0].data),
+            result: true,
+            next: nextStep
+        };
+    } else {
+        return {
+            data: {},
+            result: false,
+            next: nextStep
+        };
+    }
 };
 
 const addIssueCommentDao = async (userName, repository, number, comment) => {

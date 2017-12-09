@@ -142,27 +142,46 @@ class IssueDetail extends Component {
      * */
     _refresh() {
         let {issue} = this.state;
-        issueActions.getIssueComment(1, this.props.userName, this.props.repositoryName, issue.number).then((res) => {
-            let size = 0;
-            if (res && res.result) {
-                this.page = 2;
-                let dataList = res.data;
-                this.setState({
-                    dataSource: dataList
-                });
-                size = res.data.length;
-            }
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-            }
-        });
-        issueActions.getIssueInfo(this.props.userName, this.props.repositoryName, issue.number).then((res) => {
-            if (res && res.result) {
-                this.setState({
-                    issue: res.data,
-                })
-            }
-        })
+        issueActions.getIssueComment(1, this.props.userName, this.props.repositoryName, issue.number)
+            .then((res) => {
+                if (res && res.result) {
+                    let dataList = res.data;
+                    this.setState({
+                        dataSource: dataList
+                    });
+                }
+                return res.next();
+            })
+            .then((res) => {
+                let size = 0;
+                if (res && res.result) {
+                    this.page = 2;
+                    let dataList = res.data;
+                    this.setState({
+                        dataSource: dataList
+                    });
+                    size = res.data.length;
+                }
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                }
+            });
+        issueActions.getIssueInfo(this.props.userName, this.props.repositoryName, issue.number)
+            .then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        issue: res.data,
+                    })
+                }
+                return res.next();
+            })
+            .then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        issue: res.data,
+                    })
+                }
+            })
     }
 
     /**
@@ -195,7 +214,7 @@ class IssueDetail extends Component {
                 Actions.TextInputModal({
                     needEditTitle: false,
                     textConfirm: this.sendIssueComment,
-                    text:"",
+                    text: "",
                     titleText: I18n('commentsIssue'),
                 })
             }, itemStyle: {}

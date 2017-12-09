@@ -156,17 +156,32 @@ const UserEvent = {
     }
 };
 
+const IssueDetail = {
+    name: 'IssueDetail',
+    properties: {
+        fullName: 'string',
+        number: 'string',
+        data: 'string',
+    }
+};
 
-const PushEvent = {};
-
-const PushCodeDetail = {};
+const IssueComment = {
+    name: 'IssueComment',
+    properties: {
+        fullName: 'string',
+        number: 'string',
+        data: 'string',
+    }
+};
 
 
 let realm = new Realm({
     schema: [TrendRepository, ReceivedEvent, UserInfo, UserEvent,
         RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
         RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits,
-        UserFollower, UserFollowed, UserStared, UserRepos, RepositoryCommitInfoDetail]
+        UserFollower, UserFollowed, UserStared, UserRepos, RepositoryCommitInfoDetail,
+        IssueDetail, IssueComment,
+    ]
 });
 
 export default realm;
