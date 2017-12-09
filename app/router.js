@@ -12,6 +12,7 @@ import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
 import PhotoPage from './components/PhotoPage'
+import AboutPage from './components/AboutPage'
 import NotifyPage from './components/NotifyPage'
 import IssueDetail from './components/IssueDetail'
 import VersionPage from './components/VersionPage'
@@ -168,6 +169,10 @@ const getRouter = () => {
                                return CommonMoreRightBtnPress(params)
                            }}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
+                           renderLeftButton={() => <CustomBackButton/>}
+                    />
+                    <Scene key="AboutPage" component={AboutPage}
+                           title={I18n('about')}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="WebPage" component={WebPage}

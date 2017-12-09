@@ -40,7 +40,12 @@ class SettingPage extends Component {
                         textAlignVertical: 'center',
                         marginHorizontal: Constant.normalMarginEdge
                     }]}
-                    viewStyle={[{borderRadius: 4, marginTop: Constant.normalMarginEdge}, styles.shadowCard]}
+                    itemIcon={"clock"}
+                    viewStyle={[{
+                        borderRadius: 4, marginTop: Constant.normalMarginEdge,
+                        paddingLeft: Constant.normalMarginEdge
+                    }, styles.shadowCard]}
+                    iconSize={20}
                     itemText={I18n('history')}
                     onClickFun={() => {
                         Actions.ListPage({
@@ -49,11 +54,33 @@ class SettingPage extends Component {
                         })
                     }}/>
                 <CommonRowItem
+                    showIconNext={true}
+                    topLine={false}
+                    bottomLine={false}
+                    itemIcon={"octoface"}
+                    textStyle={[styles.centered, styles.normalText, {
+                        textAlignVertical: 'center',
+                        marginHorizontal: Constant.normalMarginEdge
+                    }]}
+                    iconSize={20}
+                    viewStyle={[{
+                        borderRadius: 4, marginTop: Constant.normalMarginEdge,
+                        paddingLeft: Constant.normalMarginEdge
+                    }, styles.shadowCard]}
+                    itemText={I18n('about')}
+                    onClickFun={() => {
+                        Actions.AboutPage();
+                    }}/>
+                <CommonRowItem
                     showIconNext={false}
                     topLine={false}
                     bottomLine={false}
                     textStyle={[styles.centered, styles.normalTextWhite, {textAlign: 'center'}]}
-                    viewStyle={[{backgroundColor: "#cd2130", borderRadius: 4, marginTop: Constant.normalMarginEdge}]}
+                    viewStyle={[styles.shadowCard, {
+                        backgroundColor: "#cd2130",
+                        borderRadius: 4,
+                        marginTop: 2 * Constant.normalMarginEdge
+                    }]}
                     itemText={I18n('LoginOut')}
                     onClickFun={() => {
                         Actions.reset("LoginPage");

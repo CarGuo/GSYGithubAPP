@@ -42,14 +42,14 @@ class CommonRowItem extends Component {
     }
 
     render() {
-        let {onClickFun, itemText, showIconNext, textStyle, topLine, bottomLine, itemIcon} = this.props;
+        let {onClickFun, itemText, showIconNext, textStyle, topLine, bottomLine, itemIcon, iconSize} = this.props;
         let IconComponent = (showIconNext) ?
             <Icon name={Constant.nextIcon} size={Constant.smallIconSize} color={Constant.primaryColor}/>
             : <View/>;
         let tl = (topLine) ? StyleSheet.hairlineWidth : 0;
         let bl = (bottomLine) ? StyleSheet.hairlineWidth : 0;
         let leftIcon = (itemIcon) ?
-            <IconC name={itemIcon} size={13} color={Constant.primaryColor}/>
+            <IconC name={itemIcon} size={iconSize ? iconSize : 13} color={Constant.primaryColor}/>
             : <View/>;
         return (
             <TouchableOpacity
@@ -60,8 +60,8 @@ class CommonRowItem extends Component {
                     height: 50, marginLeft: Constant.normalMarginEdge, marginRight: Constant.normalMarginEdge,
                 }, ...this.props.viewStyle]}>
                 <View style={[styles.flexDirectionRow, styles.centerH,
-                        {borderTopWidth: tl, borderTopColor: Constant.lineColor},
-                        {borderBottomWidth: bl, borderBottomColor: Constant.lineColor},]}>
+                    {borderTopWidth: tl, borderTopColor: Constant.lineColor},
+                    {borderBottomWidth: bl, borderBottomColor: Constant.lineColor},]}>
                     {leftIcon}
                     <Text style={[{flex: 1}, ...textStyle]}>{itemText}</Text>
                     {IconComponent}

@@ -134,6 +134,7 @@ I18n.translations = {
         downloadDescription: 'Downloading：',
         userCreate: 'Created At：',
         history: 'history',
+        about: 'about',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -257,6 +258,7 @@ I18n.translations = {
         downloadDescription: '正在下载：',
         userCreate: '创建于：',
         history: '历史',
+        about: '关于',
     }
 };
 
