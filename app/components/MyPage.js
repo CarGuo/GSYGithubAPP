@@ -52,6 +52,10 @@ class MyPage extends BasePersonPage {
     getSetting() {
         return true
     }
+
+    getSettingNeed() {
+        return true
+    }
 }
 
 export default connect(state => ({

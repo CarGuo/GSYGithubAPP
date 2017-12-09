@@ -123,6 +123,10 @@ class BasePersonPage extends Component {
 
     }
 
+    getSettingNeed() {
+        return false
+    }
+
     render() {
         let userInfo = this.getUserInfo();
         return (
@@ -141,6 +145,7 @@ class BasePersonPage extends Component {
                                     groupName={userInfo.company}
                                     location={userInfo.location}
                                     link={userInfo.blog}
+                                    settingNeed={this.getSettingNeed()}
                                     des={(userInfo.bio ? (userInfo.bio + "\n") : "") + I18n("userCreate") + resolveTime(userInfo.created_at)}
                                     backNotifyCall={this.getBackNotifyCall}
                                     unRead={this.state.unRead}

@@ -26,7 +26,7 @@ class UserHeadItem extends Component {
         let hint = I18n('userInfoNoting');
         let {
             link, userPic, userName, userDisPlayName, des, location, groupName,
-            follower, followed, repos, star, setting, notify, unRead
+            follower, followed, repos, star, setting, notify, unRead, settingNeed
         } = this.props;
         return (
             <View style={[{
@@ -44,35 +44,26 @@ class UserHeadItem extends Component {
                 borderBottomLeftRadius: 2,
                 elevation: 2,
             }]}>
-                <View style={[
-                    {
-                        position: "absolute",
-                        left: screenWidth - 100,
-                        right: Constant.normalMarginEdge,
-                        top: Constant.normalMarginEdge,
-                        bottom: 80,
-                        zIndex: 12,
-                    }, styles.alignItemsEnd]}>
-                    <TouchableOpacity
-                        style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2,}]}
-                        onPress={() => {
-                            Actions.SettingPage();
-                        }}>
-                        <Icon name={'ios-settings'} size={setting ? 25 : 1}
-                              color={Constant.miWhite}/>
-                    </TouchableOpacity>
-                </View>
                 <View style={[styles.flexDirectionRowNotFlex]}>
                     <View style={[{
                         height: Constant.largeIconSize, width: Constant.largeIconSize,
                     }]}>
-                        <Image source={{uri: userPic}}
-                               resizeMethod="scale"
-                               style={[styles.centerH, {
-                                   height: Constant.largeIconSize, width: Constant.largeIconSize,
-                                   borderRadius: Constant.largeIconSize / 2,
-                                   marginTop: 5
-                               }]}/>
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (settingNeed) {
+                                    Actions.SettingPage();
+                                } else {
+                                    Actions.PhotoPage({uri: userPic});
+                                }
+                            }}>
+                            <Image source={{uri: userPic}}
+                                   resizeMethod="scale"
+                                   style={[styles.centerH, {
+                                       height: Constant.largeIconSize, width: Constant.largeIconSize,
+                                       borderRadius: Constant.largeIconSize / 2,
+                                       marginTop: 5
+                                   }]}/>
+                        </TouchableOpacity>
                     </View>
                     <View style={{marginLeft: Constant.normalMarginEdge}}>
                         <View style={[styles.centerH, styles.flexDirectionRowNotFlex]}>

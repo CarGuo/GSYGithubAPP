@@ -126,7 +126,7 @@ class AboutPage extends Component {
                         showIconNext={true}
                         topLine={false}
                         bottomLine={false}
-                        itemIcon={"link"}
+                        itemIcon={"question"}
                         textStyle={[styles.centered, styles.normalText, {
                             textAlignVertical: 'center',
                             marginHorizontal: Constant.normalMarginEdge
