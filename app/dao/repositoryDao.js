@@ -525,13 +525,42 @@ const getReposCommitsDao = (userName, reposName, page, localNeed) => {
 
 };
 
-const getReposCommitsInfoDao = async (userName, reposName, sha) => {
-    let url = Address.getReposCommitsInfo(userName, reposName, sha);
-    let res = await await Api.netFetch(url);
-    return {
-        data: res.data,
-        result: res.result
+const getReposCommitsInfoDao = (userName, reposName, sha) => {
+    let fullName = userName + "/" + reposName;
+    let nextStep = async () => {
+        let url = Address.getReposCommitsInfo(userName, reposName, sha);
+        let res = await await Api.netFetch(url);
+        if (res && res.result && res.data) {
+            realm.write(() => {
+                let data = realm.objects('RepositoryCommitInfoDetail').filtered(`fullName="${fullName}" AND sha ="${sha}"`);
+                realm.delete(data);
+                realm.create('RepositoryCommitInfoDetail', {
+                    sha: sha,
+                    fullName: fullName,
+                    data: JSON.stringify(res.data)
+                });
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
     };
+    let AllData = realm.objects('RepositoryCommitInfoDetail').filtered(`fullName="${fullName}" AND sha ="${sha}"`);
+    if (AllData && AllData.length > 0) {
+        return {
+            data: JSON.parse(AllData[0].data),
+            result: true,
+            next: nextStep
+        };
+    } else {
+        return {
+            data: {},
+            result: false,
+            next: nextStep
+        };
+    }
+
 };
 
 const getReposFileDirDao = async (userName, reposName, path = '', branch) => {

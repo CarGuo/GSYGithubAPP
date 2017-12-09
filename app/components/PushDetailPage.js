@@ -16,7 +16,7 @@ import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import PushDetailHeader from './widget/PushDetailHeader'
 import * as Config from '../config'
-import {generateCode2HTml,parseDiffSource} from "../utils/htmlUtils";
+import {generateCode2HTml, parseDiffSource} from "../utils/htmlUtils";
 
 /**
  * Issue详情
@@ -55,7 +55,7 @@ class PushDetailPage extends Component {
                 itemText={nameSplit[nameSplit.length - 1]}
                 onClickFun={() => {
                     let patch = rowData.patch;
-                    if(!patch) {
+                    if (!patch) {
                         patch = I18n("fileNotSupport")
                     }
                     Actions.CodeDetailPage({
@@ -76,20 +76,30 @@ class PushDetailPage extends Component {
      * */
     _refresh() {
         let {sha} = this.props;
-        reposActions.getReposCommitsInfo(this.props.userName, this.props.repositoryName, sha).then((res) => {
-            let size = 0;
-            if (res && res.result) {
-                this.page = 2;
-                this.setState({
-                    pushDetail: res.data,
-                    dataSource: res.data.files
-                });
-                size = res.data.length;
-            }
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-            }
-        });
+        reposActions.getReposCommitsInfo(this.props.userName, this.props.repositoryName, sha)
+            .then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        pushDetail: res.data,
+                        dataSource: res.data.files
+                    });
+                }
+                return res.next();
+            })
+            .then((res) => {
+                let size = 0;
+                if (res && res.result) {
+                    this.page = 2;
+                    this.setState({
+                        pushDetail: res.data,
+                        dataSource: res.data.files
+                    });
+                    size = res.data.length;
+                }
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                }
+            });
     }
 
     /**

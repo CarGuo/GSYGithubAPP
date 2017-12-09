@@ -175,11 +175,7 @@ const getReposCommits = async (page = 0, userName, reposName) => {
 };
 
 const getReposCommitsInfo = async (userName, reposName, sha) => {
-    let res = await RepositoryDao.getReposCommitsInfoDao(userName, reposName, sha);
-    return {
-        data: res.data,
-        result: res.result
-    };
+    return RepositoryDao.getReposCommitsInfoDao(userName, reposName, sha);
 };
 
 
