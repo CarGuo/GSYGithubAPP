@@ -12,6 +12,15 @@ const RepositoryBranch = {
     }
 };
 
+const RepositoryCommits = {
+    name: 'RepositoryCommits',
+    properties: {
+        fullName: 'string',
+        data: 'string',
+    }
+};
+
+
 const RepositoryWatcher = {
     name: 'RepositoryWatcher',
     properties: {
@@ -115,7 +124,7 @@ const PushCodeDetail = {};
 let realm = new Realm({
     schema: [TrendRepository, ReceivedEvent, UserInfo, UserEvent,
         RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
-        RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork,]
+        RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits]
 });
 
 export default realm;

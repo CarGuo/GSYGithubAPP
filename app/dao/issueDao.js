@@ -20,7 +20,7 @@ const getRepositoryIssueDao = (page = 0, userName, repository, state, sort, dire
                 realm.delete(allEvent);
                 res.data.forEach((item) => {
                     realm.create('RepositoryIssue', {
-                        fullName: userName,
+                        fullName: fullName,
                         state: stateName,
                         data: JSON.stringify(item)
                     });
@@ -34,6 +34,7 @@ const getRepositoryIssueDao = (page = 0, userName, repository, state, sort, dire
     };
     let local = async () => {
         let allData = realm.objects('RepositoryIssue').filtered(`fullName="${fullName}" AND state="${stateName}"`);
+        console.log("TTT", allData.length)
         if (allData && allData.length > 0) {
             let data = [];
             allData.forEach((item) => {

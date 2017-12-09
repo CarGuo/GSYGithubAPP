@@ -2,7 +2,7 @@
  * Created by guoshuyu on 2017/11/8.
  */
 
-import * as Config from '../config/'
+import * as Config from '../config'
 
 let host = "https://api.github.com/";
 let hostWeb = "https://github.com/";

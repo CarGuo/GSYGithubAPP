@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import styles, {screenWidth} from "../../style"
 import * as Constant from "../../style/constant"
-import * as Config from '../../config/'
+import * as Config from '../../config'
 import I18n from '../../style/i18n'
 import ModalDropdown from 'react-native-modal-dropdown';
 import PropTypes from 'prop-types';

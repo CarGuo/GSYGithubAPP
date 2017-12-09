@@ -15,7 +15,7 @@ import CodeFileItem from './widget/CodeFileItem'
 import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import PushDetailHeader from './widget/PushDetailHeader'
-import * as Config from '../config/'
+import * as Config from '../config'
 import {generateCode2HTml,parseDiffSource} from "../utils/htmlUtils";
 
 /**

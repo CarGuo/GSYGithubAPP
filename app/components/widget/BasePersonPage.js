@@ -13,7 +13,7 @@ import UserHeadItem from './UserHeadItem'
 import PullListView from './PullLoadMoreListView'
 import EventItem from './EventItem'
 import {getActionAndDes, ActionUtils} from '../../utils/eventUtils'
-import * as Config from '../../config/'
+import * as Config from '../../config'
 import I18n from '../../style/i18n'
 
 class BasePersonPage extends Component {

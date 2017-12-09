@@ -19,7 +19,7 @@ import UserItem from './widget/UserItem'
 import PullListView from './widget/PullLoadMoreListView'
 import RepositoryItem from './widget/RepositoryItem'
 import Icon from 'react-native-vector-icons/Ionicons'
-import * as Config from '../config/'
+import * as Config from '../config'
 
 
 /**

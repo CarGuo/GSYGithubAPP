@@ -17,7 +17,7 @@ import {bindActionCreators} from 'redux'
 import {getActionAndDes, ActionUtils} from '../utils/eventUtils'
 import EventItem from './widget/EventItem'
 import PullListView from './widget/PullLoadMoreListView'
-import * as Config from '../config/'
+import * as Config from '../config'
 
 
 /**

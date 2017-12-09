@@ -167,11 +167,11 @@ const getRepositoryTag = async (userName, reposName) => {
 
 
 const getReposCommits = async (page = 0, userName, reposName) => {
-    let res = await RepositoryDao.getReposCommitsDao(userName, reposName, page);
-    return {
-        data: res.data,
-        result: res.result
-    };
+    if (page <= 1) {
+        return RepositoryDao.getReposCommitsDao(userName, reposName, page, true);
+    } else {
+        return RepositoryDao.getReposCommitsDao(userName, reposName, page);
+    }
 };
 
 const getReposCommitsInfo = async (userName, reposName, sha) => {

@@ -17,7 +17,7 @@ import IssueItem from './widget/IssueItem'
 import IssueHead from './widget/IssueHead'
 import CommonBottomBar from './widget/CommonBottomBar'
 import Icon from 'react-native-vector-icons/Ionicons'
-import * as Config from '../config/'
+import * as Config from '../config'
 import {isCommentOwner} from '../utils/issueUtils'
 
 /**

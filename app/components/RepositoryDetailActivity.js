@@ -18,7 +18,7 @@ import RepositoryHeader from './widget/RepositoryHeader'
 import CommonBottomBar from './widget/CommonBottomBar'
 import EventItem from './widget/EventItem'
 import resolveTime from '../utils/timeUtil'
-import * as Config from '../config/'
+import * as Config from '../config'
 import {getActionAndDes} from '../utils/eventUtils'
 
 /**
@@ -118,20 +118,30 @@ class RepositoryDetailActivity extends Component {
                     }
                 })
         } else if (select === 1) {
-            reposActions.getReposCommits(0, this.props.ownerName, this.props.repositoryName).then((res) => {
-                let size = 0;
-                if (res && res.result) {
-                    this.page = 2;
-                    let dataList = res.data;
-                    this.setState({
-                        dataSourceCommits: dataList
-                    });
-                    size = res.data.length;
-                }
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
-                }
-            })
+            reposActions.getReposCommits(0, this.props.ownerName, this.props.repositoryName)
+                .then((res) => {
+                    if (res && res.result) {
+                        let dataList = res.data;
+                        this.setState({
+                            dataSourceCommits: dataList
+                        });
+                    }
+                    return res.next();
+                })
+                .then((res) => {
+                    let size = 0;
+                    if (res && res.result) {
+                        this.page = 2;
+                        let dataList = res.data;
+                        this.setState({
+                            dataSourceCommits: dataList
+                        });
+                        size = res.data.length;
+                    }
+                    if (this.refs.pullList) {
+                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                    }
+                })
 
         }
     }
