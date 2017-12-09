@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
-import userActions from '../../store/actions/user'
 
 
 export default class UserImage extends Component {

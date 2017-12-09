@@ -9,7 +9,7 @@ import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Autolink from 'react-native-autolink';
-import Toast from './ToastProxy'
+import Toast from '../common/ToastProxy'
 import {launchUrl} from '../../utils/htmlUtils'
 
 

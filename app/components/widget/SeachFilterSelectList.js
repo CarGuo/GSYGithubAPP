@@ -11,7 +11,7 @@ import * as Constant from '../../style/constant'
 import styles from '../../style'
 import I18n from '../../style/i18n'
 
-class SelectList extends Component {
+class SeachFilterSelectList extends Component {
     state: { dataSource: any };
 
     constructor(props: any) {
@@ -99,12 +99,12 @@ const propTypes = {
     onSelect: PropTypes.func,
 };
 
-SelectList.propTypes = propTypes;
+SeachFilterSelectList.propTypes = propTypes;
 
-SelectList.defaultProps = {
+SeachFilterSelectList.defaultProps = {
     selectMap: {},
     selectIndex: {},
     listStyle: {},
 };
 
-export default SelectList;
+export default SeachFilterSelectList;

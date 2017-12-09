@@ -5,8 +5,11 @@ import Toast from './ToastProxy'
 import {Actions} from "react-native-router-flux";
 import I18n from '../../style/i18n'
 import {launchUrl} from '../../utils/htmlUtils'
-import styles, {screenWidth} from "../../style"
+import styles, {screenWidth} from "../../style/index"
 
+/**
+ * 通用横Html解析显示item控件
+ */
 class CommonHtmlView extends Component {
 
     constructor(props) {

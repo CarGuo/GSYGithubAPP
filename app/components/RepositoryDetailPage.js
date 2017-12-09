@@ -11,19 +11,19 @@ import styles, {screenHeight} from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import repositoryActions from '../store/actions/repository'
-import WebComponent from './widget/WebComponent'
-import CommonBottomBar from './widget/CommonBottomBar'
+import WebComponent from './widget/CustomWebComponent'
+import CommonBottomBar from './common/CommonBottomBar'
 import IssueListPage from './RepositoryIssueListPage'
-import RepositoryDetailActivity from './RepositoryDetailActivity'
-import RepositoryDetailFile from './RepositoryDetailFile'
+import RepositoryDetailActivity from './RepositoryDetailActivityPage'
+import RepositoryDetailFile from './RepositoryDetailFilePage'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
-import Toast from './widget/ToastProxy'
-import PopmenuItem from './widget/PopmenuItem'
+import Toast from './common/ToastProxy'
+import PopmenuItem from './widget/BottomPopmenuItem'
 
 /**
  * 详情
  */
-class RepositoryDetail extends Component {
+class RepositoryDetailPage extends Component {
 
     constructor(props) {
         super(props);
@@ -331,7 +331,7 @@ class RepositoryDetail extends Component {
     }
 }
 
-RepositoryDetail.defaultProps = {
+RepositoryDetailPage.defaultProps = {
     dataDetail: {
         forks_count: "---",
         fork: false,
@@ -345,4 +345,4 @@ RepositoryDetail.defaultProps = {
 };
 
 
-export default RepositoryDetail
+export default RepositoryDetailPage

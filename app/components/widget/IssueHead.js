@@ -14,7 +14,7 @@ import TimeText from './TimeText'
 import UserImage from './UserImage'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Octicons'
-import HTMLView from './CommonHtmlView';
+import HTMLView from '../common/CommonHtmlView';
 
 
 /**

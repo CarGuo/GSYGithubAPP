@@ -15,7 +15,7 @@ import eventActions from '../store/actions/event'
 import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import RepositoryHeader from './widget/RepositoryHeader'
-import CommonBottomBar from './widget/CommonBottomBar'
+import CommonBottomBar from './common/CommonBottomBar'
 import EventItem from './widget/EventItem'
 import resolveTime from '../utils/timeUtil'
 import * as Config from '../config'
@@ -24,7 +24,7 @@ import {getActionAndDes} from '../utils/eventUtils'
 /**
  * 详情
  */
-class RepositoryDetailActivity extends Component {
+class RepositoryDetailActivityPage extends Component {
 
     constructor(props) {
         super(props);
@@ -267,18 +267,18 @@ class RepositoryDetailActivity extends Component {
     }
 }
 
-RepositoryDetailActivity.propTypes = {
+RepositoryDetailActivityPage.propTypes = {
     dataDetail: PropTypes.object,
     ownerName: PropTypes.string,
     repositoryName: PropTypes.string,
 };
 
 
-RepositoryDetailActivity.defaultProps = {
+RepositoryDetailActivityPage.defaultProps = {
     dataDetail: {},
     ownerName: '',
     repositoryName: '',
 };
 
 
-export default RepositoryDetailActivity
+export default RepositoryDetailActivityPage

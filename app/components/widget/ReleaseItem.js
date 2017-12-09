@@ -17,7 +17,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import TimeText from './TimeText'
 import UserImage from './UserImage'
-import HTMLView from './CommonHtmlView';
+import HTMLView from '../common/CommonHtmlView';
 
 /**
  * 事件列表Item

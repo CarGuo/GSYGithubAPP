@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import styles from "../style"
 import I18n from '../style/i18n'
 import reposActions from '../store/actions/repository'
-import WebComponent from './widget/WebComponent'
+import WebComponent from './widget/CustomWebComponent'
 import {generateCode2HTml} from '../utils/htmlUtils'
 import {Actions, Tabs} from 'react-native-router-flux';
 import * as Constant from '../style/constant'

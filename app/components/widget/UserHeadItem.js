@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import IconF from 'react-native-vector-icons/FontAwesome'
 import {Actions} from "react-native-router-flux";
 import I18n from '../../style/i18n'
-import NameValueItem from './NameValueItem'
+import NameValueItem from '../common/CommonNameValueItem'
 import {RepositoryFilter} from '../../utils/filterUtils'
 import repositoryActions from "../../store/actions/repository";
 import userActions from "../../store/actions/user";

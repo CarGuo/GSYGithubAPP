@@ -20,7 +20,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 
 /**
- * 通用行Item
+ * 代码通用Item
  */
 class CodeFileItem extends Component {
     constructor(props) {

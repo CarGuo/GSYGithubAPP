@@ -15,16 +15,16 @@ import issueActions from '../store/actions/issue'
 import PullListView from './widget/PullLoadMoreListView'
 import IssueItem from './widget/IssueItem'
 import IssueHead from './widget/IssueHead'
-import CommonBottomBar from './widget/CommonBottomBar'
+import CommonBottomBar from './common/CommonBottomBar'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config'
 import {isCommentOwner} from '../utils/issueUtils'
-import Toast from "./widget/ToastProxy";
+import Toast from "./common/ToastProxy";
 
 /**
  * Issue详情
  */
-class IssueDetail extends Component {
+class IssueDetailPage extends Component {
 
     constructor(props) {
         super(props);
@@ -319,17 +319,17 @@ class IssueDetail extends Component {
 }
 
 
-IssueDetail.propTypes = {
+IssueDetailPage.propTypes = {
     issue: PropTypes.object,
     repositoryName: PropTypes.string,
     userName: PropTypes.string,
 };
 
 
-IssueDetail.defaultProps = {
+IssueDetailPage.defaultProps = {
     userName: '',
     repositoryName: '',
     issue: {}
 };
 
-export default IssueDetail
+export default IssueDetailPage

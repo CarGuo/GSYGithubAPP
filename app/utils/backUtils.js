@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 import I18n from '../style/i18n'
-import Toast from '../components/widget/ToastProxy'
+import Toast from '../components/common/ToastProxy'
 
 import {Router, Actions, Scene} from 'react-native-router-flux';
 

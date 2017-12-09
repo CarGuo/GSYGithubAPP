@@ -3,10 +3,13 @@ import {
     View, Text, TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
-import styles from "../../style"
+import styles from "../../style/index"
 import * as Constant from "../../style/constant"
 import IconC from 'react-native-vector-icons/Octicons'
 
+/**
+ * 通用横向按键控件
+ */
 class CommonBottomBar extends Component {
 
     constructor(props) {

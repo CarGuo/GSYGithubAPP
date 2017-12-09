@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 import {
     View, Text, TouchableOpacity
 } from 'react-native';
-import styles from "../../style"
+import styles from "../../style/index"
 import PropTypes from 'prop-types';
 import * as Constant from '../../style/constant'
 
-class NameValueItem extends Component {
+/**
+ * 垂直两行文本按键item
+ */
+class CommonNameValueItem extends Component {
 
     constructor(props) {
         super(props)
@@ -29,11 +32,11 @@ class NameValueItem extends Component {
     }
 }
 
-NameValueItem.propTypes = {
+CommonNameValueItem.propTypes = {
     itemStyle: PropTypes.any,
     itemName: PropTypes.string,
     itemValue: PropTypes.string,
     onItemPress: PropTypes.func,
 };
 
-export default NameValueItem;
+export default CommonNameValueItem;

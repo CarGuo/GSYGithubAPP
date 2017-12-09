@@ -3,11 +3,14 @@ import {
     View, Text, TouchableOpacity, ScrollView
 } from 'react-native';
 import PropTypes from 'prop-types';
-import styles from "../../style"
+import styles from "../../style/index"
 import * as Constant from "../../style/constant"
 import IconC from 'react-native-vector-icons/Octicons'
 import IconC2 from 'react-native-vector-icons/MaterialCommunityIcons'
 
+/**
+ * 通用输入框的快捷按键
+ */
 class CommonInputBar extends Component {
 
     constructor(props) {

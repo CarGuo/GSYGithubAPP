@@ -17,6 +17,9 @@ import * as Config from '../../config'
 import I18n from '../../style/i18n'
 import resolveTime from '../../utils/timeUtil'
 
+/**
+ * 用户显示基础控件
+ */
 class BasePersonPage extends Component {
 
     constructor(props) {

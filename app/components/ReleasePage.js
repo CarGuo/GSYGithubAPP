@@ -16,7 +16,7 @@ import ListPage from "./ListPage";
 /**
  * 详情
  */
-class VersionPage extends Component {
+class ReleasePage extends Component {
 
     constructor(props) {
         super(props);
@@ -104,7 +104,7 @@ class VersionPage extends Component {
     }
 }
 
-VersionPage.defaultProps = {};
+ReleasePage.defaultProps = {};
 
 
-export default VersionPage
+export default ReleasePage

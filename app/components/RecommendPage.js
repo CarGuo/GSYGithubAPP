@@ -12,7 +12,7 @@ import loginActions from '../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import EventItem from './widget/EventItem'
-import CommonRowItem from './widget/CommonRowItem'
+import CommonRowItem from './common/CommonRowItem'
 import RepositoryItem from './widget/RepositoryItem'
 import IssueItem from './widget/IssueHead'
 

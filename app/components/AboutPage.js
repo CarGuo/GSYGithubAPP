@@ -9,11 +9,11 @@ import {
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
 import I18n from '../style/i18n'
-import CommonRowItem from "./widget/CommonRowItem";
+import CommonRowItem from "./common/CommonRowItem";
 import * as Constant from "../style/constant";
 import VersionNumber from 'react-native-version-number';
 import issueActions from "../store/actions/issue";
-import Toast from './widget/ToastProxy'
+import Toast from './common/ToastProxy'
 
 
 /**

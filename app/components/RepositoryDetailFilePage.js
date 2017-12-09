@@ -13,13 +13,13 @@ import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
-import CommonRowItem from './widget/CommonRowItem'
+import CommonRowItem from './common/CommonRowItem'
 import CodeFileItem from './widget/CodeFileItem'
 
 /**
  * 详情
  */
-class RepositoryDetailFile extends Component {
+class RepositoryDetailFilePage extends Component {
 
     constructor(props) {
         super(props);
@@ -233,14 +233,14 @@ class RepositoryDetailFile extends Component {
     }
 }
 
-RepositoryDetailFile.propTypes = {
+RepositoryDetailFilePage.propTypes = {
     path: PropTypes.string,
     ownerName: PropTypes.string,
     repositoryName: PropTypes.string,
 };
 
 
-RepositoryDetailFile.defaultProps = {
+RepositoryDetailFilePage.defaultProps = {
     dataDetail: {},
     ownerName: '',
     repositoryName: '',
@@ -248,4 +248,4 @@ RepositoryDetailFile.defaultProps = {
 };
 
 
-export default RepositoryDetailFile
+export default RepositoryDetailFilePage

@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import styles, {screenWidth, screenHeight} from "../../style"
+import styles, {screenWidth, screenHeight} from "../../style/index"
 import * as Constant from "../../style/constant"
 import I18n from '../../style/i18n'
 import Modal from 'react-native-modalbox';
@@ -16,7 +16,7 @@ import {Actions} from "react-native-router-flux";
 
 
 /**
- * 登陆Modal
+ * 通用配置item选择modal
  */
 class CommonOptionModal extends Component {
 

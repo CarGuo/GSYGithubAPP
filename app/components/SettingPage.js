@@ -13,7 +13,7 @@ import * as Constant from '../style/constant'
 import loginActions from '../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import CommonRowItem from './widget/CommonRowItem'
+import CommonRowItem from './common/CommonRowItem'
 
 /**
  * 设置

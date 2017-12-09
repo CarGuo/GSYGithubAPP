@@ -15,7 +15,7 @@ import {getActionAndDes} from '../utils/eventUtils'
 import RepositoryItem from './widget/RepositoryItem'
 import PullListView from './widget/PullLoadMoreListView'
 import * as Config from '../config'
-import PickerItem from './widget/PickerItem';
+import PickerItem from './widget/TrendPickerItem';
 import {TrendTime, TrendType} from '../utils/filterUtils';
 import {filterItemHeight, pickerViewStyle, pickerTextStyle, dropDownStyle, adjustFrame} from '../utils/filterUtils';
 

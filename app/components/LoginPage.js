@@ -23,7 +23,7 @@ import Modal from 'react-native-modalbox';
 import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Fumi} from 'react-native-textinput-effects';
-import Toast from './widget/ToastProxy'
+import Toast from './common/ToastProxy'
 
 const animaTime = 600;
 

@@ -4,14 +4,15 @@ import {
 } from 'react-native';
 import styles, {screenWidth} from "../../style"
 import * as Constant from "../../style/constant"
-import * as Config from '../../config'
 import I18n from '../../style/i18n'
 import ModalDropdown from 'react-native-modal-dropdown';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons'
 
-
-class PickerItem extends Component {
+/**
+ * 趋势数据过滤Item
+ */
+class TrendPickerItem extends Component {
 
     constructor(props) {
         super(props);
@@ -101,7 +102,7 @@ class PickerItem extends Component {
     }
 }
 
-PickerItem.propTypes = {
+TrendPickerItem.propTypes = {
     itemHeight: PropTypes.number,
     defaultIndex: PropTypes.number,
     defaultValue: PropTypes.string,
@@ -113,4 +114,4 @@ PickerItem.propTypes = {
 };
 
 
-export default PickerItem
+export default TrendPickerItem

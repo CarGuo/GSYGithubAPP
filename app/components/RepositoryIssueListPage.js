@@ -18,7 +18,7 @@ import IssueItem from './widget/IssueItem'
 import {getFullName} from '../utils/htmlUtils'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config'
-import CommonBottomBar from "./widget/CommonBottomBar";
+import CommonBottomBar from "./common/CommonBottomBar";
 
 /**
  * 搜索

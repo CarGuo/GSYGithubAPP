@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import styles, {screenWidth, screenHeight} from "../../style"
+import styles, {screenWidth, screenHeight} from "../../style/index"
 import * as Constant from "../../style/constant"
 import I18n from '../../style/i18n'
 import Modal from 'react-native-modalbox';
@@ -20,7 +20,7 @@ import CommonInputBar from "./CommonInputBar";
 const iconSize = 16;
 
 /**
- * 登陆Modal
+ * 通用输入框modal
  */
 class CommonTextInputModal extends Component {
 

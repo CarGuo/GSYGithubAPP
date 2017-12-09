@@ -8,8 +8,10 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Octicons'
 
-
-class PopmenuItem extends Component {
+/**
+ * 底部弹出框Item
+ */
+class BottomPopmenuItem extends Component {
 
     constructor(props) {
         super(props);
@@ -99,7 +101,7 @@ class PopmenuItem extends Component {
     }
 }
 
-PopmenuItem.propTypes = {
+BottomPopmenuItem.propTypes = {
     itemHeight: PropTypes.number,
     defaultIndex: PropTypes.number,
     defaultValue: PropTypes.string,
@@ -111,4 +113,4 @@ PopmenuItem.propTypes = {
 };
 
 
-export default PopmenuItem
+export default BottomPopmenuItem

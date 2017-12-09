@@ -11,10 +11,10 @@ import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import userActions from '../store/actions/user'
-import WebComponent from './widget/WebComponent'
-import CommonBottomBar from './widget/CommonBottomBar'
+import WebComponent from './widget/CustomWebComponent'
+import CommonBottomBar from './common/CommonBottomBar'
 import IssueListPage from './RepositoryIssueListPage'
-import RepositoryDetailActivity from './RepositoryDetailActivity'
+import RepositoryDetailActivity from './RepositoryDetailActivityPage'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 import ListPage from "./ListPage";
 

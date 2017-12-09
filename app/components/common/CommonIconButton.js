@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Router, Actions, Scene} from 'react-native-router-flux';
-import styles from "../../style"
+import styles from "../../style/index"
 import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -17,7 +17,7 @@ import Icon3 from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
 /**
- *
+ * 通用icon按键
  */
 class CommonIconButton extends Component {
 
