@@ -57,8 +57,9 @@ class RepositoryDetail extends Component {
                             dataDetail: res.data
                         });
                         Actions.refresh({titleData: res.data});
+                        repositoryActions.addRepositoryLocalRead(this.props.ownerName, this.props.repositoryName, res.data);
+
                     }
-                    repositoryActions.addRepositoryLocalRead(this.props.ownerName, this.props.repositoryName, res.data);
                     return res.next();
                 })
                 .then((res) => {

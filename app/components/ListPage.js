@@ -85,14 +85,12 @@ class ListPage extends Component {
                     repositoryType={rowData.language}
                     repositoryDes={(rowData.description) ? rowData.description : '---'}
                 />);
-                break;
             case 'user':
                 return (<UserItem
                     location={rowData.location}
                     actionUser={rowData.login}
                     actionUserPic={rowData.avatar_url}
                     des={rowData.bio}/>);
-                break;
             case 'issue':
                 let fullName = getFullName(rowData.repository_url) + "--";
                 return (
@@ -112,7 +110,6 @@ class ListPage extends Component {
                             })
                         }}/>
                 );
-                break;
             case 'release':
                 return (
                     <ReleaseItem
@@ -132,7 +129,6 @@ class ListPage extends Component {
                         }}
                     />
                 );
-                break;
             case 'notify':
                 return (
                     <EventItem
@@ -173,7 +169,6 @@ class ListPage extends Component {
                             }
                         }}/>
                 );
-                break;
         }
     }
 
@@ -350,7 +345,7 @@ class ListPage extends Component {
                 break;
             case 'history':
                 repositoryActions.getRepositoryLocalRead(this.page).then((res) => {
-                    this._refreshRes(res)
+                    this._loadMoreRes(res)
                 });
                 break;
         }
@@ -392,7 +387,7 @@ class ListPage extends Component {
         }
         setTimeout(() => {
             if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
             }
         }, 500);
     }

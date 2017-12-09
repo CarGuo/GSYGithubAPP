@@ -162,7 +162,7 @@ class SearchPage extends Component {
             }
             setTimeout(() => {
                 if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                    this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
                 }
             }, 500);
         });
