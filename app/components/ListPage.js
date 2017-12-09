@@ -21,7 +21,6 @@ import ReleaseItem from './widget/ReleaseItem'
 import CustomSearchButton from './widget/CustomSearchButton'
 import PullListView from './widget/PullLoadMoreListView'
 import RepositoryItem from './widget/RepositoryItem'
-import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config/index'
 import PropTypes from 'prop-types';
 import {getFullName} from '../utils/htmlUtils'
