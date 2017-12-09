@@ -313,7 +313,8 @@ class RepositoryIssueListPage extends Component {
                             titleText: I18n('createIssue'),
                             needEditTitle: true,
                             text: "",
-                            titleValue: ""
+                            titleValue: "",
+                            bottomBar: true,
                         })
                     }}>
                     <View

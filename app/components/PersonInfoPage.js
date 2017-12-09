@@ -42,6 +42,7 @@ class PersonInfoPage extends Component {
                 postInfo(text);
             },
             titleText: title,
+            bottomBar: false,
             needEditTitle: false,
             text: text,
             titleValue: ""

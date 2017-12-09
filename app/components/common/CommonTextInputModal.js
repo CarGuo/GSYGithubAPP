@@ -162,6 +162,7 @@ class CommonTextInputModal extends Component {
 
     render() {
         let width = screenWidth - 100;
+        let {bottomBar} = this.props;
         let editTitle = this.props.needEditTitle ? <View style={[{
             borderBottomWidth: 1,
             borderColor: Constant.subLightTextColor,
@@ -231,7 +232,7 @@ class CommonTextInputModal extends Component {
                                     textAlignVertical: 'top'
                                 }]}/>
                             <CommonInputBar
-                                rootStyles={{width: width}}
+                                rootStyles={{width: (bottomBar ? width : 0)}}
                                 dataList={this.getDataList()}/>
                         </View>
                         <View
@@ -276,11 +277,13 @@ CommonTextInputModal.propTypes = {
     titleText: PropTypes.string,
     textConfirm: PropTypes.func,
     needEditTitle: PropTypes.bool,
+    bottomBar: PropTypes.bool,
 };
 CommonTextInputModal.defaultProps = {
     text: '',
     titleText: '',
     needEditTitle: false,
+    bottomBar: true,
 };
 
 

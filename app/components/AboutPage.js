@@ -56,7 +56,8 @@ class AboutPage extends Component {
             titleText: I18n('feedback'),
             needEditTitle: false,
             text: text,
-            titleValue: ""
+            titleValue: "",
+            bottomBar: true
         })
     }
 

@@ -217,6 +217,7 @@ class IssueDetailPage extends Component {
                     textConfirm: this.sendIssueComment,
                     text: "",
                     titleText: I18n('commentsIssue'),
+                    bottomBar: true
                 })
             }, itemStyle: {}
         }, {
@@ -227,7 +228,8 @@ class IssueDetailPage extends Component {
                     titleText: I18n('editIssue'),
                     needEditTitle: true,
                     text: this.state.issue.body,
-                    titleValue: issue.title
+                    titleValue: issue.title,
+                    bottomBar: true
                 })
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
@@ -257,6 +259,7 @@ class IssueDetailPage extends Component {
                     titleText: I18n('editIssue'),
                     needEditTitle: false,
                     text: data.body,
+                    bottomBar: true
                 })
             }, itemStyle: {}
         }, {
