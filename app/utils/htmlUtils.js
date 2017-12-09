@@ -136,6 +136,7 @@ export const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white,
         "font-size: 12px;" +
         "direction:hor" +
         "}" +
+        ".highlight {overflow: scroll; background: " + Constant.subLightTextColor + "}" +
         "tr:nth-child(even) {" +
         "background:" + Constant.primaryLightColor + ";" +
         "color:" + Constant.miWhite + ";" +
