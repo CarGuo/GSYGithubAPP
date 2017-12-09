@@ -45,7 +45,7 @@ class CommonHtmlView extends Component {
                                         <Image source={{uri: node.attribs.src}}
                                                resizeMethod="scale"
                                                style={[styles.centerH, {
-                                                   width: screenWidth,
+                                                   width: screenWidth - 55,
                                                    height: 300,
                                                    marginTop: 5
                                                }]}/>
