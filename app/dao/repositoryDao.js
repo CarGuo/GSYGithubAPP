@@ -178,13 +178,47 @@ const createForkDao = async (userName, reposName) => {
     };
 };
 
-const getBranchesDao = async (userName, reposName) => {
-    let url = Address.getbranches(userName, reposName);
-    let res = await await Api.netFetch(url);
-    return {
-        data: res.data,
-        result: res.result
+const getBranchesDao = (userName, reposName) => {
+    let fullName = userName + "/" + reposName;
+    let nextStep = async () => {
+        let url = Address.getbranches(userName, reposName);
+        let res = await await Api.netFetch(url);
+        if (res && res.result && res.data.length > 0) {
+            realm.write(() => {
+                let allEvent = realm.objects('RepositoryBranch').filtered(`fullName="${fullName}"`);
+                realm.delete(allEvent);
+                res.data.forEach((item) => {
+                    realm.create('RepositoryBranch', {
+                        fullName: fullName,
+                        data: JSON.stringify(item)
+                    });
+                })
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
     };
+    let allData = realm.objects('RepositoryBranch').filtered(`fullName="${fullName}"`);
+    if (allData && allData.length > 0) {
+        let data = [];
+        allData.forEach((item) => {
+            data.push(JSON.parse(item.data));
+        });
+        return {
+            data: data,
+            next: nextStep,
+            result: true
+        };
+    } else {
+        return {
+            data: [],
+            next: nextStep,
+            result: false
+        };
+    }
+
 };
 
 const getRepositoryForksDao = (userName, reposName, page, localNeed) => {

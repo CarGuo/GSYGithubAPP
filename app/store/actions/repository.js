@@ -103,11 +103,7 @@ const createRepositoryForks = async (userName, reposName) => {
 };
 
 const getBranches = async (userName, reposName) => {
-    let res = await RepositoryDao.getBranchesDao(userName, reposName);
-    return {
-        data: res.data,
-        result: res.result
-    };
+    return RepositoryDao.getBranchesDao(userName, reposName);
 };
 
 

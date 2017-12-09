@@ -70,6 +70,14 @@ class RepositoryDetail extends Component {
                 });
             this._refresh();
             repositoryActions.getBranches(this.props.ownerName, this.props.repositoryName)
+                .then((res)=>{
+                    if (res && res.result) {
+                        this.setState({
+                            dataDetailBranches: this.resolveBranchesData(res.data),
+                        })
+                    }
+                    return res.next();
+                })
                 .then((res) => {
                     if (res && res.result) {
                         this.setState({
