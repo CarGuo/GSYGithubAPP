@@ -187,31 +187,139 @@ const getBranchesDao = async (userName, reposName) => {
     };
 };
 
-const getRepositoryForksDao = async (userName, reposName, page) => {
-    let url = Address.getReposForks(userName, reposName) + Address.getPageParams("?", page);
-    let res = await await Api.netFetch(url);
-    return {
-        data: res.data,
-        result: res.result
+const getRepositoryForksDao = (userName, reposName, page, localNeed) => {
+    let fullName = userName + "/" + reposName;
+    let nextStep = async () => {
+        let url = Address.getReposForks(userName, reposName) + Address.getPageParams("?", page);
+        let res = await await Api.netFetch(url);
+        if (res && res.result && res.data.length > 0 && page <= 1) {
+            realm.write(() => {
+                let allEvent = realm.objects('RepositoryFork').filtered(`fullName="${fullName}"`);
+                realm.delete(allEvent);
+                res.data.forEach((item) => {
+                    realm.create('RepositoryFork', {
+                        fullName: fullName,
+                        data: JSON.stringify(item)
+                    });
+                })
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
     };
+    let local = async () => {
+        let allData = realm.objects('RepositoryFork').filtered(`fullName="${fullName}"`);
+        if (allData && allData.length > 0) {
+            let data = [];
+            allData.forEach((item) => {
+                data.push(JSON.parse(item.data));
+            });
+            return {
+                data: data,
+                next: nextStep,
+                result: true
+            };
+        } else {
+            return {
+                data: [],
+                next: nextStep,
+                result: false
+            };
+        }
+    };
+    return localNeed ? local() : nextStep();
 };
 
-const getRepositoryStarDao = async (userName, reposName, page) => {
-    let url = Address.getReposStar(userName, reposName) + Address.getPageParams("?", page);
-    let res = await await Api.netFetch(url);
-    return {
-        data: res.data,
-        result: res.result
+const getRepositoryStarDao = (userName, reposName, page, localNeed) => {
+    let fullName = userName + "/" + reposName;
+    let nextStep = async () => {
+        let url = Address.getReposStar(userName, reposName) + Address.getPageParams("?", page);
+        let res = await await Api.netFetch(url);
+        if (res && res.result && res.data.length > 0 && page <= 1) {
+            realm.write(() => {
+                let allEvent = realm.objects('RepositoryStar').filtered(`fullName="${fullName}"`);
+                realm.delete(allEvent);
+                res.data.forEach((item) => {
+                    realm.create('RepositoryStar', {
+                        fullName: fullName,
+                        data: JSON.stringify(item)
+                    });
+                })
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
     };
+    let local = async () => {
+        let allData = realm.objects('RepositoryStar').filtered(`fullName="${fullName}"`);
+        if (allData && allData.length > 0) {
+            let data = [];
+            allData.forEach((item) => {
+                data.push(JSON.parse(item.data));
+            });
+            return {
+                data: data,
+                next: nextStep,
+                result: true
+            };
+        } else {
+            return {
+                data: [],
+                next: nextStep,
+                result: false
+            };
+        }
+    };
+    return localNeed ? local() : nextStep();
 };
 
-const getRepositoryWatcherDao = async (userName, reposName, page) => {
-    let url = Address.getReposWatcher(userName, reposName) + Address.getPageParams("?", page);
-    let res = await await Api.netFetch(url);
-    return {
-        data: res.data,
-        result: res.result
+const getRepositoryWatcherDao = (userName, reposName, page, localNeed) => {
+    let fullName = userName + "/" + reposName;
+    let nextStep = async () => {
+        let url = Address.getReposWatcher(userName, reposName) + Address.getPageParams("?", page);
+        let res = await await Api.netFetch(url);
+        if (res && res.result && res.data.length > 0 && page <= 1) {
+            realm.write(() => {
+                let allEvent = realm.objects('RepositoryWatcher').filtered(`fullName="${fullName}"`);
+                realm.delete(allEvent);
+                res.data.forEach((item) => {
+                    realm.create('RepositoryWatcher', {
+                        fullName: fullName,
+                        data: JSON.stringify(item)
+                    });
+                })
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
     };
+    let local = async () => {
+        let allData = realm.objects('RepositoryWatcher').filtered(`fullName="${fullName}"`);
+        if (allData && allData.length > 0) {
+            let data = [];
+            allData.forEach((item) => {
+                data.push(JSON.parse(item.data));
+            });
+            return {
+                data: data,
+                next: nextStep,
+                result: true
+            };
+        } else {
+            return {
+                data: [],
+                next: nextStep,
+                result: false
+            };
+        }
+    };
+    return localNeed ? local() : nextStep();
 };
 
 const getRepositoryStatusDao = async (userName, reposName) => {

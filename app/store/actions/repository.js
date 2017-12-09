@@ -87,11 +87,11 @@ const getRepositoryDetail = async (userName, reposName) => {
 
 
 const getRepositoryForks = async (userName, reposName, page = 1) => {
-    let res = await RepositoryDao.getRepositoryForksDao(userName, reposName, page);
-    return {
-        data: res.data,
-        result: res.result
-    };
+    if (page <= 1) {
+        return RepositoryDao.getRepositoryForksDao(userName, reposName, page, true);
+    } else {
+        return RepositoryDao.getRepositoryForksDao(userName, reposName, page);
+    }
 };
 
 const createRepositoryForks = async (userName, reposName) => {
@@ -112,19 +112,19 @@ const getBranches = async (userName, reposName) => {
 
 
 const getRepositoryStar = async (userName, reposName, page = 1) => {
-    let res = await RepositoryDao.getRepositoryStarDao(userName, reposName, page);
-    return {
-        data: res.data,
-        result: res.result
-    };
+    if (page <= 1) {
+        return RepositoryDao.getRepositoryStarDao(userName, reposName, page, true);
+    } else {
+        return RepositoryDao.getRepositoryStarDao(userName, reposName, page);
+    }
 };
 
 const getRepositoryWatcher = async (userName, reposName, page = 1) => {
-    let res = await RepositoryDao.getRepositoryWatcherDao(userName, reposName, page);
-    return {
-        data: res.data,
-        result: res.result
-    };
+    if (page <= 1) {
+        return RepositoryDao.getRepositoryWatcherDao(userName, reposName, page, true);
+    } else {
+        return RepositoryDao.getRepositoryWatcherDao(userName, reposName, page);
+    }
 };
 
 const getRepositoryStatus = async (userName, reposName) => {

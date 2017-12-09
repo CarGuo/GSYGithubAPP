@@ -72,7 +72,7 @@ class ListPage extends Component {
     _renderRow(rowData, sectionID, rowID, highlightRow) {
         switch (this.props.showType) {
             case 'repository':
-                return ( <RepositoryItem
+                return (<RepositoryItem
                     ownerName={rowData.owner.login}
                     ownerPic={rowData.owner.avatar_url}
                     repositoryName={rowData.name}
@@ -201,19 +201,40 @@ class ListPage extends Component {
                 });
                 break;
             case 'repo_star':
-                repositoryActions.getRepositoryStar(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
-                    this._refreshRes(res)
-                });
+                repositoryActions.getRepositoryStar(this.props.currentUser, this.props.currentRepository, 0)
+                    .then((res) => {
+                        this.setState({
+                            dataSource: res.data
+                        });
+                        return res.next();
+                    })
+                    .then((res) => {
+                        this._refreshRes(res)
+                    });
                 break;
             case 'repo_watcher':
-                repositoryActions.getRepositoryWatcher(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
-                    this._refreshRes(res)
-                });
+                repositoryActions.getRepositoryWatcher(this.props.currentUser, this.props.currentRepository, 0)
+                    .then((res) => {
+                        this.setState({
+                            dataSource: res.data
+                        });
+                        return res.next();
+                    })
+                    .then((res) => {
+                        this._refreshRes(res)
+                    });
                 break;
             case 'repo_fork':
-                repositoryActions.getRepositoryForks(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
-                    this._refreshRes(res)
-                });
+                repositoryActions.getRepositoryForks(this.props.currentUser, this.props.currentRepository, 0)
+                    .then((res) => {
+                        this.setState({
+                            dataSource: res.data
+                        });
+                        return res.next();
+                    })
+                    .then((res) => {
+                        this._refreshRes(res)
+                    });
                 break;
             case 'repo_release':
                 repositoryActions.getRepositoryRelease(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
