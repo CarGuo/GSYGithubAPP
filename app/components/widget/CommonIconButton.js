@@ -13,6 +13,7 @@ import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon2 from 'react-native-vector-icons/Ionicons'
+import Icon3 from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
 /**
@@ -52,6 +53,9 @@ class CommonIconButton extends Component {
         }
         let icon = <View/>;
         switch (this.local.iconType) {
+            case 3:
+                icon = <Icon3 name={this.local.rightBtn} size={20} color={Constant.miWhite}/>
+                break;
             case 2:
                 icon = <Icon2 name={this.local.rightBtn} size={20} color={Constant.miWhite}/>
                 break;

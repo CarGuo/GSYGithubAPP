@@ -87,6 +87,14 @@ const setNotificationAsRead = async (id) => {
     }
 };
 
+const setAllNotificationAsRead = async () => {
+    let res = await UserDao.setAllNotificationAsReadDao();
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
 
 export default {
     initUserInfo,
@@ -96,5 +104,6 @@ export default {
     getFollowerList,
     getFollowedList,
     getNotifation,
-    setNotificationAsRead
+    setNotificationAsRead,
+    setAllNotificationAsRead
 }

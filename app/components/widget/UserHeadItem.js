@@ -13,6 +13,8 @@ import {Actions} from "react-native-router-flux";
 import I18n from '../../style/i18n'
 import NameValueItem from './NameValueItem'
 import {RepositoryFilter} from '../../utils/filterUtils'
+import repositoryActions from "../../store/actions/repository";
+import userActions from "../../store/actions/user";
 
 const hintNum = '---';
 
@@ -85,6 +87,18 @@ class UserHeadItem extends Component {
                                 onPress={() => {
                                     Actions.NotifyPage({
                                         backNotifyCall: this.props.backNotifyCall,
+                                        needRightBtn: true,
+                                        rightBtn: 'read',
+                                        iconType: 3,
+                                        rightBtnPress: () => {
+                                            Actions.LoadingModal({backExit: false});
+                                            userActions.setAllNotificationAsRead().then(() => {
+                                                setTimeout(() => {
+                                                    Actions.pop();
+                                                }, 500);
+                                                Actions.refresh({type: "allRead"});
+                                            })
+                                        }
                                     });
                                 }}>
                                 <IconF name={'bell'} size={setting ? 15 : 1}

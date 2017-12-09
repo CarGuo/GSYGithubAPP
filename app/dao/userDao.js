@@ -228,11 +228,22 @@ const setNotificationAsReadDao = async (id) => {
 };
 
 
+const setAllNotificationAsReadDao = async () => {
+    let url = Address.setAllNotificationAsRead()
+    let res = await Api.netFetch(url, "PUT", {}, true);
+    return {
+        result: res.result,
+        data: res.data
+    }
+
+};
+
 export default {
     getUserInfoLocal,
     getUserInfoDao,
     getFollowerListDao,
     getFollowedListDao,
     getNotifationDao,
-    setNotificationAsReadDao
+    setNotificationAsReadDao,
+    setAllNotificationAsReadDao
 }

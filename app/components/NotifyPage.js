@@ -46,6 +46,13 @@ class NotifyPage extends Component {
         this.props.backNotifyCall && this.props.backNotifyCall()
     }
 
+    componentWillReceiveProps(newProps) {
+        if (newProps && newProps.type === "allRead") {
+            newProps.type = "";
+            this._refresh();
+        }
+    }
+
     _refresh() {
         if (this.unReadList)
             this.unReadList._refresh();

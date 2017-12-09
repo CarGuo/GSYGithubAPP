@@ -332,6 +332,12 @@ export default AddressLocal = {
         return `${host}notifications/threads/${threadId}`
     },
     /**
+     * put
+     */
+    setAllNotificationAsRead: () => {
+        return `${host}notifications`
+    },
+    /**
      * 趋势 get
      * @param since daily，weekly， monthly
      */
