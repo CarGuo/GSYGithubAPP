@@ -139,6 +139,13 @@ I18n.translations = {
         author: 'Author',
         projectUrl: 'Project',
         feedback: 'Feedback',
+        person: 'User Info',
+        infoName: 'Name',
+        infoEmail: 'Email',
+        infoBlog: 'Blog',
+        infoCompany: 'Company',
+        infoLocation: 'Location',
+        infoBio: 'Bio',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -267,6 +274,13 @@ I18n.translations = {
         author: '作者',
         projectUrl: '项目地址',
         feedback: '反馈',
+        person: '个人信息',
+        infoName: '名字',
+        infoEmail: '邮箱',
+        infoBlog: '链接',
+        infoCompany: '公司',
+        infoLocation: '位置',
+        infoBio: '简介',
     }
 };
 

@@ -95,6 +95,20 @@ const setAllNotificationAsRead = async () => {
     }
 };
 
+const updateUser = async (params) => {
+    let res = await UserDao.updateUserDao(params);
+    if (res && res.result) {
+        dispatch({
+            type: USER.USER_INFO,
+            res: res.data
+        });
+    }
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
 
 export default {
     initUserInfo,
@@ -105,5 +119,6 @@ export default {
     getFollowedList,
     getNotifation,
     setNotificationAsRead,
-    setAllNotificationAsRead
+    setAllNotificationAsRead,
+    updateUser
 }

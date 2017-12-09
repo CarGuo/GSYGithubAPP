@@ -14,6 +14,7 @@ import loginActions from '../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import CommonRowItem from './common/CommonRowItem'
+import VersionNumber from "react-native-version-number";
 
 /**
  * 设置
@@ -32,6 +33,24 @@ class SettingPage extends Component {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
+                <CommonRowItem
+                    showIconNext={true}
+                    topLine={false}
+                    bottomLine={false}
+                    itemIcon={"person"}
+                    textStyle={[styles.centered, styles.normalText, {
+                        textAlignVertical: 'center',
+                        marginHorizontal: Constant.normalMarginEdge
+                    }]}
+                    iconSize={20}
+                    viewStyle={[{
+                        borderRadius: 4, marginTop: Constant.normalMarginEdge,
+                        paddingLeft: Constant.normalMarginEdge
+                    }, styles.shadowCard]}
+                    itemText={I18n('person')}
+                    onClickFun={() => {
+                        Actions.PersonInfoPage();
+                    }}/>
                 <CommonRowItem
                     showIconNext={true}
                     topLine={false}

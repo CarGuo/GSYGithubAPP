@@ -42,7 +42,7 @@ class CommonRowItem extends Component {
     }
 
     render() {
-        let {onClickFun, itemText, showIconNext, textStyle, topLine, bottomLine, itemIcon, iconSize} = this.props;
+        let {onClickFun, itemText, showIconNext, textStyle, nameStyle, topLine, bottomLine, itemIcon, iconSize, nameText} = this.props;
         let IconComponent = (showIconNext) ?
             <Icon name={Constant.nextIcon} size={Constant.smallIconSize} color={Constant.primaryColor}/>
             : <View/>;
@@ -50,6 +50,9 @@ class CommonRowItem extends Component {
         let bl = (bottomLine) ? StyleSheet.hairlineWidth : 0;
         let leftIcon = (itemIcon) ?
             <IconC name={itemIcon} size={iconSize ? iconSize : 13} color={Constant.primaryColor}/>
+            : <View/>;
+        let leftText = (nameText) ?
+            <Text style={[...nameStyle]}>{nameText}</Text>
             : <View/>;
         return (
             <TouchableOpacity
@@ -63,6 +66,7 @@ class CommonRowItem extends Component {
                     {borderTopWidth: tl, borderTopColor: Constant.lineColor},
                     {borderBottomWidth: bl, borderBottomColor: Constant.lineColor},]}>
                     {leftIcon}
+                    {leftText}
                     <Text style={[{flex: 1}, ...textStyle]}>{itemText}</Text>
                     {IconComponent}
                 </View>
@@ -78,7 +82,9 @@ const propTypes = {
     topLine: PropTypes.bool,
     bottomLine: PropTypes.bool,
     itemIcon: PropTypes.string,
+    iconSize: PropTypes.number,
     itemIconColor: PropTypes.string,
+    nameText: PropTypes.string,
     itemIconSize: PropTypes.number,
     textStyle: PropTypes.any,
     viewStyle: PropTypes.array,

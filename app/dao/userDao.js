@@ -238,6 +238,18 @@ const setAllNotificationAsReadDao = async () => {
 
 };
 
+const updateUserDao = async (params) => {
+    let url = Address.getMyUserInfo()
+    let res = await Api.netFetch(url, "PATCH", params, true);
+    if (res && res.result) {
+        AsyncStorage.setItem(Constant.USER_INFO, JSON.stringify(res.data));
+    }
+    return {
+        result: res.result,
+        data: res.data
+    }
+};
+
 export default {
     getUserInfoLocal,
     getUserInfoDao,
@@ -245,5 +257,6 @@ export default {
     getFollowedListDao,
     getNotifationDao,
     setNotificationAsReadDao,
-    setAllNotificationAsReadDao
+    setAllNotificationAsReadDao,
+    updateUserDao,
 }

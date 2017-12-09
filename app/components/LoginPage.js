@@ -135,6 +135,7 @@ class LoginPage extends Component {
             iconClass: Icon,
             iconColor: Constant.primaryColor,
             iconSize: 25,
+            clearButtonMode: "always"
         };
         return (
             <Animated.View
@@ -201,7 +202,7 @@ class LoginPage extends Component {
     }
 }
 
-export default connect(state => ( {state}), dispatch => ({
+export default connect(state => ({state}), dispatch => ({
         login: bindActionCreators(loginActions, dispatch)
     })
 )(LoginPage)

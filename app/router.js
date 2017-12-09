@@ -11,6 +11,7 @@ import DynamicPage from './components/DynamicPage'
 import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
 import RecommendPage from './components/RecommendPage'
+import PersonInfoPage from './components/PersonInfoPage'
 import PhotoPage from './components/PhotoPage'
 import AboutPage from './components/AboutPage'
 import NotifyPage from './components/NotifyPage'
@@ -172,6 +173,10 @@ const getRouter = () => {
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="AboutPage" component={AboutPage}
+                           title={I18n('about')}
+                           renderLeftButton={() => <CustomBackButton/>}
+                    />
+                    <Scene key="PersonInfoPage" component={PersonInfoPage}
                            title={I18n('about')}
                            renderLeftButton={() => <CustomBackButton/>}
                     />

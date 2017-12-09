@@ -169,7 +169,7 @@ class SearchPage extends Component {
     }
 
     _getBottomItem() {
-        let {select} = this.state.showSelect;
+        let select = this.state.showSelect;
         return [{
             itemName: I18n("searchRepos"),
             itemTextColor: select === 0 ? Constant.white : Constant.subTextColor,
