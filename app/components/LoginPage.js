@@ -7,7 +7,7 @@ import {
     View,
     TouchableOpacity,
     Animated,
-    InteractionManager,
+    Image,
     StatusBar,
     BackHandler,
     Keyboard
@@ -152,8 +152,9 @@ class LoginPage extends Component {
                     onClosed={this.onClose}
                     onOpened={this.onOpen}>
                     <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
-                        <Icon name={"github-square"} size={Constant.largeIconSize}
-                              color={Constant.primaryColor}/>
+                        <Image source={require("../img/logo.png")}
+                               resizeMode={"center"}
+                               style={{width: 80, height: 80}}/>
                     </View>
                     <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
                         <Fumi

@@ -13,6 +13,7 @@ import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import * as Constant from "../style/constant"
 import Api from '../net'
 import address from '../net/address'
 
@@ -47,11 +48,11 @@ class WelcomePage extends Component {
 
     render() {
         return (
-            <View style={styles.mainBox}>
+            <View style={[styles.mainBox, {backgroundColor: Constant.white}]}>
                 <StatusBar hidden={true}/>
                 <View style={[styles.centered, {flex: 1}]}>
                     <Image source={require("../img/welcome.png")}
-                           resizeMethod="scale"
+                           resizeMode={"center"}
                            style={{width: screenWidth, height: screenHeight}}/>
                 </View>
             </View>

@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import {
-    View, Text, ListView, RefreshControl, ActivityIndicator, Platform, TouchableOpacity, ScrollView
+    View, Text, ListView, RefreshControl, ActivityIndicator, Platform, TouchableOpacity, ScrollView, Image
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles, {screenHeight, screenWidth} from "../../style"
@@ -121,7 +121,9 @@ class PullLoadMoreListView extends Component {
                                                   this._refresh();
                                                   this.showRefreshState();
                                               }}>
-                                <Icon name={'logo-octocat'} size={50} color={Constant.primaryColor}/>
+                                <Image source={require("../../img/logo.png")}
+                                       resizeMode={"center"}
+                                       style={{width: 80, height: 80}}/>
                                 <Text style={[styles.normalText]}>
                                     {I18n("listEmpty")}
                                 </Text>
@@ -135,7 +137,9 @@ class PullLoadMoreListView extends Component {
                                                   this._refresh();
                                                   this.showRefreshState();
                                               }}>
-                                <Icon name={'logo-octocat'} size={50} color={Constant.primaryColor}/>
+                                <Image source={require("../../img/logo.png")}
+                                       resizeMode={"center"}
+                                       style={{width: 80, height: 80}}/>
                                 <Text style={[styles.normalText]}>
                                     {I18n("listEmpty")}
                                 </Text>
