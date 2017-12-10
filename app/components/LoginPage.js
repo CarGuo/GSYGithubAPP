@@ -10,7 +10,8 @@ import {
     Image,
     StatusBar,
     BackHandler,
-    Keyboard
+    Keyboard,
+    Linking
 } from 'react-native';
 import styles, {screenHeight, screenWidth} from "../style"
 import * as Constant from "../style/constant"
@@ -196,6 +197,13 @@ class LoginPage extends Component {
                             }]}>
                             <Text style={[styles.normalTextWhite]}>{I18n('Login')}</Text>
                         </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}
+                                      onPress={() => {
+                                          Linking.openURL("https://github.com/join")
+                                      }}>
+                        <Text
+                            style={[styles.subSmallText,]}>{" " + I18n('register') + " "}</Text>
                     </TouchableOpacity>
                 </View>
             </Animated.View>

@@ -148,6 +148,7 @@ I18n.translations = {
         infoBio: 'Bio',
         unFollowed: 'unFollow',
         doFollowed: 'Follow',
+        register: 'Register',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -285,6 +286,7 @@ I18n.translations = {
         infoBio: '简介',
         unFollowed: '取消关注',
         doFollowed: '关注',
+        register: 'Github注册',
     }
 };
 
