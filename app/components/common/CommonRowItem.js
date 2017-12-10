@@ -60,7 +60,7 @@ class CommonRowItem extends Component {
                     onClickFun && onClickFun()
                 }}
                 style={[{
-                    height: 50, marginLeft: Constant.normalMarginEdge, marginRight: Constant.normalMarginEdge,
+                    minHeight: 50, marginLeft: Constant.normalMarginEdge, marginRight: Constant.normalMarginEdge,
                 }, ...this.props.viewStyle]}>
                 <View style={[styles.flexDirectionRow, styles.centerH,
                     {borderTopWidth: tl, borderTopColor: Constant.lineColor},
