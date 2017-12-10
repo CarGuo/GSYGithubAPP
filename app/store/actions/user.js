@@ -32,17 +32,16 @@ const initUserInfo = async () => {
 
 };
 
-const getUserInfo = () => {
-    UserDao.getUserInfoDao().then((res) => {
-        return res.next();
-    }).then((res) => {
-        if (res && res.result) {
-            dispatch({
-                type: USER.USER_INFO,
-                res: res.data
-            });
-        }
-    });
+const getUserInfo = async () => {
+    let res = await UserDao.getUserInfoDao();
+    let resData = await res.next();
+    if (resData && resData.result) {
+        dispatch({
+            type: USER.USER_INFO,
+            res: resData.data
+        });
+    }
+    return resData;
 };
 
 const getPersonUserInfo = async (userName) => {

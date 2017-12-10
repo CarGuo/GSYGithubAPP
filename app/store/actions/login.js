@@ -33,7 +33,7 @@ const doLogin = (userName, password, callback) => async (dispatch, getState) => 
     let res = await Api.netFetch(Address.getAuthorization(), 'POST', requestParams, true);
     if (res && res.result) {
         AsyncStorage.setItem(Constant.PW_KEY, password);
-        userAction.getUserInfo();
+        let current = await userAction.getUserInfo();
         dispatch({
             type: LOGIN.IN,
             res

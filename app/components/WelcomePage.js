@@ -4,10 +4,10 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, TouchableHighlight
+    View, Image, StatusBar, TouchableHighlight
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import styles from "../style"
+import styles, {screenHeight, screenWidth} from "../style"
 import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
@@ -50,14 +50,9 @@ class WelcomePage extends Component {
             <View style={styles.mainBox}>
                 <StatusBar hidden={true}/>
                 <View style={[styles.centered, {flex: 1}]}>
-                    <TouchableHighlight onPress={
-                        () => {
-                        }
-                    }>
-                        <Text style={[styles.welcomeText]}>
-                            {I18n('appName')}
-                        </Text>
-                    </TouchableHighlight>
+                    <Image source={require("../img/welcome.png")}
+                           resizeMethod="scale"
+                           style={{width: screenWidth, height: screenHeight}}/>
                 </View>
             </View>
         )
