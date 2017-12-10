@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Clipboard, Linking, Image, TouchableWithoutFeedback, View} from 'react-native';
+import {Clipboard, Linking, Image, TouchableWithoutFeedback, View, ImageBackground} from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import Toast from './ToastProxy'
 import {Actions} from "react-native-router-flux";
@@ -46,28 +46,18 @@ class CommonHtmlView extends Component {
                             if (node.name === 'img') {
                                 return (
                                     <TouchableWithoutFeedback
-                                        key={index} onPress={() => {
-                                        Actions.PhotoPage({uri: node.attribs.src})
-                                    }}>
-                                        <View style={{
-                                            width: screenWidth - 105,
-                                            height: 300
+                                        key={index}
+                                        onPress={() => {
+                                            Actions.PhotoPage({uri: node.attribs.src})
                                         }}>
-                                            <View style={[styles.centered, styles.absoluteFull, {
-                                                zIndex: -888,
-                                                width: screenWidth - 105,
-                                                height: 300,
-                                            }]}>
-                                                <Icon name={'ios-image'} size={80} color={Constant.miWhite}/>
-                                            </View>
-                                            <Image source={{uri: node.attribs.src}}
-                                                   resizeMethod="scale"
-                                                   style={[styles.centerH, {
-                                                       width: screenWidth - 105,
-                                                       height: 300,
-                                                       marginTop: 5
-                                                   }]}/>
-                                        </View>
+                                        <Image source={{uri: node.attribs.src}}
+                                               resizeMethod="scale"
+                                               style={[styles.centerH, {
+                                                   width: screenWidth - 105,
+                                                   height: 300,
+                                                   marginTop: 5
+                                               }]}>
+                                        </Image>
                                     </TouchableWithoutFeedback>
                                 )
                             }
