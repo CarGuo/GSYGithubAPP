@@ -99,7 +99,7 @@ class IssueItem extends Component {
                             style={[styles.flexDirectionRowNotFlex, {
                                 marginBottom: Constant.normalMarginEdge
                             }]}>
-                            <Text style={[styles.miLightSmallText,]}>{issueComment}</Text>
+                            <Text style={[styles.miLightSmallText,] } selectable={true}>{issueComment}</Text>
                         </View>
                     </View>
                 </View>
