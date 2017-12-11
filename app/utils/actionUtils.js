@@ -38,6 +38,15 @@ export const RepositoryMore = (props) => {
                 Toast(I18n("hadCopy"));
             }
         }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
+    },{
+        itemName: I18n("copyClone"),
+        itemValue: 'copyClone',
+        itemClick: () => {
+            if (props.titleData && props.titleData.clone_url) {
+                Clipboard.setString(props.titleData.clone_url);
+                Toast(I18n("hadCopy"));
+            }
+        }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
     }, {
         itemName: I18n("download"),
         itemValue: 'download',

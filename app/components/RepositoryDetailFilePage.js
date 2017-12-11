@@ -105,7 +105,8 @@ class RepositoryDetailFilePage extends Component {
                             ownerName: this.props.ownerName,
                             repositoryName: this.props.repositoryName,
                             branch: this.curBranch ? this.curBranch : 'master',
-                            html_url: rowData.html_url
+                            html_url: rowData.html_url,
+                            clone_url: rowData.clone_url
                         })
                     }}/>
 

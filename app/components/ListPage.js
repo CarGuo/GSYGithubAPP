@@ -122,7 +122,8 @@ class ListPage extends Component {
                                     title: rowData.name,
                                     needRequest: false,
                                     detail: generateHtml(rowData.body_html, Constant.primaryColor),
-                                    html_url: rowData.html_url
+                                    html_url: rowData.html_url,
+                                    clone_url: rowData.clone_url,
                                 })
                             }
                         }}
