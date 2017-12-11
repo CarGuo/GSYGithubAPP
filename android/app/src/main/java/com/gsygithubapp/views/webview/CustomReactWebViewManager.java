@@ -143,37 +143,12 @@ public class CustomReactWebViewManager extends SimpleViewManager<WebView> {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            boolean useDefaultIntent = false;
-            if (mUrlPrefixesForDefaultIntent != null && mUrlPrefixesForDefaultIntent.size() > 0) {
-                ArrayList<Object> urlPrefixesForDefaultIntent =
-                        mUrlPrefixesForDefaultIntent.toArrayList();
-                for (Object urlPrefix : urlPrefixesForDefaultIntent) {
-                    if (url.startsWith((String) urlPrefix)) {
-                        useDefaultIntent = true;
-                        break;
-                    }
-                }
-            }
-
-            if (!useDefaultIntent &&
-                    (url.startsWith("http://") || url.startsWith("https://") ||
-                            url.startsWith("file://") || url.equals("about:blank"))) {
-                dispatchEvent(
-                        view,
-                        new TopAndroidLoadWithRequest(
-                                view.getId(),
-                                createWebViewEvent(view, url)));
-                return true;
-            } else {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    view.getContext().startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    FLog.w(ReactConstants.TAG, "activity not found to handle uri scheme for: " + url, e);
-                }
-                return true;
-            }
+            dispatchEvent(
+                    view,
+                    new TopAndroidLoadWithRequest(
+                            view.getId(),
+                            createWebViewEvent(view, url)));
+            return true;
         }
 
         @Override
