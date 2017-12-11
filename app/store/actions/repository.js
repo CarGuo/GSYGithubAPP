@@ -49,8 +49,14 @@ const searchRepository = async (q, language, sort, order, type, page = 1, pageSi
 /**
  * 搜索仓库
  */
-const searchRepositoryIssue = async (q, name, reposName, page = 1) => {
-    let qu = q + `%2Brepo%3A${name}%2F${reposName}`;
+const searchRepositoryIssue = async (q, name, reposName, page = 1, state) => {
+    let qu;
+    if (!state || state === 'all') {
+        qu = q + `+repo%3A${name}%2F${reposName}`;
+    } else {
+        qu = q + `+repo%3A${name}%2F${reposName}+state%3A${state}`;
+    }
+
     let res = await RepositoryDao.searchRepositoryIssueDao(qu, page);
     return {
         result: res.result,
