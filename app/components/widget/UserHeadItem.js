@@ -112,11 +112,13 @@ class UserHeadItem extends Component {
                                         iconType: 3,
                                         rightBtnPress: () => {
                                             Actions.LoadingModal({backExit: false});
-                                            userActions.setAllNotificationAsRead().then(() => {
-                                                setTimeout(() => {
-                                                    Actions.pop();
+                                            userActions.setAllNotificationAsRead().then((res) => {
+                                                Actions.pop();
+                                                setTimeout(()=>{
+                                                    if (res && res.result) {
+                                                        Actions.pop();
+                                                    }
                                                 }, 500);
-                                                Actions.refresh({type: "allRead"});
                                             })
                                         }
                                     });
