@@ -4,7 +4,7 @@
 
 import React, {Component, PureComponent} from 'react';
 import {
-    View, InteractionManager, StatusBar, Dimensions, StyleSheet
+    View, InteractionManager, StatusBar, Dimensions, StyleSheet, BackHandler
 } from 'react-native';
 import {Actions, Tabs} from 'react-native-router-flux';
 import styles, {screenHeight} from "../style"
@@ -33,6 +33,7 @@ class RepositoryDetailPage extends Component {
         this._refreshChangeBranch = this._refreshChangeBranch.bind(this);
         this._forked = this._forked.bind(this);
         this._renderScene = this._renderScene.bind(this);
+        this._backHandler = this._backHandler.bind(this);
         this.curBranch = null;
         this.state = {
             dataDetail: this.props.defaultProps,
@@ -89,13 +90,24 @@ class RepositoryDetailPage extends Component {
                     }
                 });
         });
+        this.handle = BackHandler.addEventListener('hardwareBackPress', this._backHandler)
     }
 
     componentWillUnmount() {
-
+        BackHandler.removeEventListener('hardwareBackPress', this.handle)
     }
 
     componentWillReceiveProps(newProps) {
+    }
+
+    _backHandler() {
+        if (this.state.index === 2) {
+            if (!this.detailFile || !this.detailFile.backHandler()) {
+                Actions.pop();
+            }
+            return true
+        }
+        return false
     }
 
     resolveBranchesData(data) {
@@ -147,7 +159,9 @@ class RepositoryDetailPage extends Component {
         })
     }
 
-    _handleIndexChange = index => this.setState({index});
+    _handleIndexChange = index => {
+        this.setState({index})
+    };
 
     _renderHeader = props =>
         <TabBar {...props}
@@ -256,10 +270,10 @@ class RepositoryDetailPage extends Component {
             itemName: I18n("reposFork"),
             icon: 'repo-forked',
             itemClick: () => {
-                if (dataDetail.fork) {
+                /*if (dataDetail.fork) {
                     Toast(I18n("reposForked"));
                     return
-                }
+                }*/
                 Actions.ConfirmModal({
                     titleText: I18n('reposFork'),
                     text: I18n('reposForkedTip'),

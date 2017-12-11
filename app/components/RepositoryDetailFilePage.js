@@ -50,6 +50,22 @@ class RepositoryDetailFilePage extends Component {
     componentWillReceiveProps(newProps) {
     }
 
+    backHandler() {
+        if (this.state.headerList.length <= 1) {
+            return false
+        }
+        let {headerList} = this.state;
+        let newHeaderList = headerList.slice(0, headerList.length - 1);
+        let path = newHeaderList.slice(1, newHeaderList.length).join("/");
+        this.setState({
+            path: path,
+            headerList: newHeaderList,
+        });
+        this._refresh(path);
+        return true
+
+    }
+
     _renderHeaderRow(rowData, sectionID, rowID, highlightRow) {
         return (
             <TouchableOpacity
