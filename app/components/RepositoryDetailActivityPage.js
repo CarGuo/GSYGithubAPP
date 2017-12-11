@@ -114,7 +114,7 @@ class RepositoryDetailActivityPage extends Component {
                         size = res.data.length;
                     }
                     if (this.refs.pullList) {
-                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
                     }
                 })
         } else if (select === 1) {
@@ -139,7 +139,7 @@ class RepositoryDetailActivityPage extends Component {
                         size = res.data.length;
                     }
                     if (this.refs.pullList) {
-                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
                     }
                 })
 

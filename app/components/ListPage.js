@@ -365,7 +365,7 @@ class ListPage extends Component {
         }
         setTimeout(() => {
             if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
             }
         }, 500);
 

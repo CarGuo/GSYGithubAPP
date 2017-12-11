@@ -198,7 +198,7 @@ class UserHeadItem extends Component {
                                 currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('repositoryText'),
                                 needRightBtn: true,
                                 rightBtn: 'filter',
-                                filterSelect: RepositoryFilter()[0].itemValue,
+                                filterSelect: RepositoryFilter()[1].itemValue,
                                 rightBtnPress: () => {
                                     Actions.OptionModal({dataList: RepositoryFilter()});
                                 }

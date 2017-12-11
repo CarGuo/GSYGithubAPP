@@ -167,7 +167,7 @@ class RepositoryDetailFilePage extends Component {
                 }
                 setTimeout(() => {
                     if (this.refs.pullList) {
-                        this.refs.pullList.refreshComplete(false);
+                        this.refs.pullList.refreshComplete(false, true);
                     }
                 }, 500);
                 this.loading = false;
