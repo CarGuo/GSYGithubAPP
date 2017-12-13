@@ -122,7 +122,8 @@ class ListPage extends Component {
                                     title: rowData.name,
                                     needRequest: false,
                                     detail: generateHtml(rowData.body_html, Constant.primaryColor),
-                                    html_url: rowData.html_url
+                                    html_url: rowData.html_url,
+                                    clone_url: rowData.clone_url,
                                 })
                             }
                         }}
@@ -365,7 +366,7 @@ class ListPage extends Component {
         }
         setTimeout(() => {
             if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
             }
         }, 500);
 

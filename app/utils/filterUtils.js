@@ -33,86 +33,86 @@ export const adjustFrame = (style) => {
 export const TrendTime = [
     {
         "name": 'trendDay', "value": 'daily', toString() {
-        return I18n('trendDay')
-    }
+            return I18n('trendDay')
+        }
     },
     {
         "name": 'trendWeek', "value": 'weekly', toString() {
-        return I18n('trendWeek')
-    }
+            return I18n('trendWeek')
+        }
     },
     {
         "name": 'trendMonth', "value": 'monthly', toString() {
-        return I18n('trendMonth')
-    }
+            return I18n('trendMonth')
+        }
     },
 ];
 
 export const TrendType = [
     {
         "name": 'trendAll', "value": null, toString() {
-        return I18n('trendAll')
-    }
+            return I18n('trendAll')
+        }
     },
     {
         "name": 'Java', "value": 'Java', toString() {
-        return 'Java'
-    }
+            return 'Java'
+        }
     },
     {
         "name": 'Kotlin', "value": 'Kotlin', toString() {
-        return 'Kotlin'
-    }
+            return 'Kotlin'
+        }
     },
     {
         "name": 'Objective_C', "value": 'Objective-C', toString() {
-        return 'Objective_C'
-    }
+            return 'Objective_C'
+        }
     },
     {
         "name": 'Swift', "value": 'Swift', toString() {
-        return 'Swift'
-    }
+            return 'Swift'
+        }
     },
     {
         "name": 'JavaScript', "value": 'JavaScript', toString() {
-        return 'JavaScript'
-    }
+            return 'JavaScript'
+        }
     },
     {
         "name": 'PHP', "value": 'PHP', toString() {
-        return 'PHP'
-    }
+            return 'PHP'
+        }
     },
     {
         "name": 'Go', "value": 'Go', toString() {
-        return 'Go'
-    }
+            return 'Go'
+        }
     },
     {
         "name": 'C__', "value": 'C++', toString() {
-        return 'C__'
-    }
+            return 'C__'
+        }
     },
     {
         "name": 'C', "value": 'C', toString() {
-        return 'C'
-    }
+            return 'C'
+        }
     },
     {
         "name": 'HTML', "value": 'HTML', toString() {
-        return 'HTML'
-    }
+            return 'HTML'
+        }
     },
     {
         "name": 'CSS', "value": 'CSS', toString() {
-        return 'CSS'
-    }
+            return 'CSS'
+        }
     },
     {
         "name": 'unknown', "value": 'unknown', toString() {
-        return 'unknown'
-    }
+            return 'unknown'
+        }
     },
 
 ];
@@ -162,6 +162,14 @@ export const IssueSortType = [
 
 export const RepositoryFilter = () => {
     return [{
+        itemName: I18n("filterPushed"),
+        itemValue: 'pushed',
+        itemClick: () => {
+            Actions.refresh({filterSelect: 'pushed'});
+        }, itemStyle: {
+            borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
+        }
+    }, {
         itemName: I18n("filterCreated"),
         itemValue: 'created',
         itemClick: () => {
@@ -172,14 +180,6 @@ export const RepositoryFilter = () => {
         itemValue: 'updated',
         itemClick: () => {
             Actions.refresh({filterSelect: 'updated'});
-        }, itemStyle: {
-            borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
-        }
-    }, {
-        itemName: I18n("filterPushed"),
-        itemValue: 'pushed',
-        itemClick: () => {
-            Actions.refresh({filterSelect: 'pushed'});
         }, itemStyle: {
             borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
         }

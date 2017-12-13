@@ -88,12 +88,12 @@ class RepositoryIssueListPage extends Component {
                     size = res.data.length;
                 }
                 if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
                 }
             });
             return
         }
-        repositoryActions.searchRepositoryIssue(this.searchText, this.props.userName, this.props.repositoryName, 1).then((res) => {
+        repositoryActions.searchRepositoryIssue(this.searchText, this.props.userName, this.props.repositoryName, 1, this.filter).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;
@@ -104,7 +104,7 @@ class RepositoryIssueListPage extends Component {
             }
             setTimeout(() => {
                 if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
                 }
             }, 500);
         });
@@ -159,7 +159,7 @@ class RepositoryIssueListPage extends Component {
             });
             return
         }
-        repositoryActions.searchRepositoryIssue(this.searchText, this.props.userName, this.props.repositoryName, this.page).then((res) => {
+        repositoryActions.searchRepositoryIssue(this.searchText, this.props.userName, this.props.repositoryName, this.page, this.filter).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page++;

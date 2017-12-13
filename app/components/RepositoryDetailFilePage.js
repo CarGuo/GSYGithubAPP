@@ -50,6 +50,22 @@ class RepositoryDetailFilePage extends Component {
     componentWillReceiveProps(newProps) {
     }
 
+    backHandler() {
+        if (this.state.headerList.length <= 1) {
+            return false
+        }
+        let {headerList} = this.state;
+        let newHeaderList = headerList.slice(0, headerList.length - 1);
+        let path = newHeaderList.slice(1, newHeaderList.length).join("/");
+        this.setState({
+            path: path,
+            headerList: newHeaderList,
+        });
+        this._refresh(path);
+        return true
+
+    }
+
     _renderHeaderRow(rowData, sectionID, rowID, highlightRow) {
         return (
             <TouchableOpacity
@@ -105,7 +121,8 @@ class RepositoryDetailFilePage extends Component {
                             ownerName: this.props.ownerName,
                             repositoryName: this.props.repositoryName,
                             branch: this.curBranch ? this.curBranch : 'master',
-                            html_url: rowData.html_url
+                            html_url: rowData.html_url,
+                            clone_url: rowData.clone_url
                         })
                     }}/>
 
@@ -167,7 +184,7 @@ class RepositoryDetailFilePage extends Component {
                 }
                 setTimeout(() => {
                     if (this.refs.pullList) {
-                        this.refs.pullList.refreshComplete(false);
+                        this.refs.pullList.refreshComplete(false, true);
                     }
                 }, 500);
                 this.loading = false;

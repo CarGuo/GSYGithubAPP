@@ -112,11 +112,13 @@ class UserHeadItem extends Component {
                                         iconType: 3,
                                         rightBtnPress: () => {
                                             Actions.LoadingModal({backExit: false});
-                                            userActions.setAllNotificationAsRead().then(() => {
-                                                setTimeout(() => {
-                                                    Actions.pop();
+                                            userActions.setAllNotificationAsRead().then((res) => {
+                                                Actions.pop();
+                                                setTimeout(()=>{
+                                                    if (res && res.result) {
+                                                        Actions.pop();
+                                                    }
                                                 }, 500);
-                                                Actions.refresh({type: "allRead"});
                                             })
                                         }
                                     });
@@ -198,7 +200,7 @@ class UserHeadItem extends Component {
                                 currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('repositoryText'),
                                 needRightBtn: true,
                                 rightBtn: 'filter',
-                                filterSelect: RepositoryFilter()[0].itemValue,
+                                filterSelect: RepositoryFilter()[1].itemValue,
                                 rightBtnPress: () => {
                                     Actions.OptionModal({dataList: RepositoryFilter()});
                                 }

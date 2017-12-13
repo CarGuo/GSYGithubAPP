@@ -71,7 +71,7 @@ class TrendPage extends Component {
             this.page = 2;
             setTimeout(() => {
                 if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete(false);
+                    this.refs.pullList.refreshComplete(false, true);
                 }
             }, 500);
         })
