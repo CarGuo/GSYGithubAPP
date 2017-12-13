@@ -6,6 +6,7 @@
 import Api from '../net'
 import Address from '../net/address'
 import realm from "./db";
+import {changeServiceResult} from '../utils/htmlUtils'
 
 
 const getRepositoryIssueDao = (page = 0, userName, repository, state, sort, direction, localNeed) => {
@@ -141,6 +142,10 @@ const getIssueInfoDao = async (userName, repository, number) => {
 const addIssueCommentDao = async (userName, repository, number, comment) => {
     let url = Address.addIssueComment(userName, repository, number);
     let res = await Api.netFetch(url, 'POST', {body: comment}, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
+    if (res && res.result) {
+        res.data.body_html = changeServiceResult(res.data.body);
+        //todo 保存到db
+    }
     return {
         data: res.data,
         result: res.result
@@ -150,6 +155,10 @@ const addIssueCommentDao = async (userName, repository, number, comment) => {
 const editIssueDao = async (userName, repository, number, issue) => {
     let url = Address.editIssue(userName, repository, number);
     let res = await Api.netFetch(url, 'PATCH', issue, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
+    if (res && res.result) {
+        res.data.body_html = changeServiceResult(res.data.body);
+        //todo 保存到db
+    }
     return {
         data: res.data,
         result: res.result
@@ -159,6 +168,10 @@ const editIssueDao = async (userName, repository, number, issue) => {
 const createIssueDao = async (userName, repository, issue) => {
     let url = Address.createIssue(userName, repository);
     let res = await Api.netFetch(url, 'POST', issue, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
+    if (res && res.result) {
+        res.data.body_html = changeServiceResult(res.data.body);
+        //todo 保存到db
+    }
     return {
         data: res.data,
         result: res.result
@@ -168,6 +181,10 @@ const createIssueDao = async (userName, repository, issue) => {
 const editCommentDao = async (userName, repository, commentId, comment) => {
     let url = Address.editComment(userName, repository, commentId);
     let res = await Api.netFetch(url, 'PATCH', comment, true, {Accept: 'application/vnd.github.VERSION.raw+json'});
+    if (res && res.result) {
+        res.data.body_html = changeServiceResult(res.data.body);
+        //todo 保存到db
+    }
     return {
         data: res.data,
         result: res.result

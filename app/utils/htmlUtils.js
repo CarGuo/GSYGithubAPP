@@ -10,6 +10,42 @@ import URL from 'url-parse';
  */
 
 
+
+export const changeServiceResult = (data) => {
+    let dataPre = data.replace(/src=*[^>]*>/gi, function (match, capture) {
+        let newStr = match;
+        if (match) {
+            newStr = match.replace(new RegExp("/blob/", "gm"), "/raw/");
+        }
+        return newStr;
+    });
+    let renderer = new marked.Renderer();
+    renderer.image = function (href, title, text) {
+        if (href.indexOf('https://github.com/') === 0) {
+            href = href.replace(new RegExp("/blob/", "gm"), "/raw/");
+        }
+        let out = '<img src="' + href + '" alt="' + text + '"';
+        if (title) {
+            out += ' title="' + title + '"';
+        }
+        out += '/>';
+        return out;
+    };
+    marked.setOptions({
+        renderer: renderer,
+        gfm: true,
+        tables: true,
+        breaks: true,
+        pedantic: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false,
+
+    });
+    return marked(dataPre);
+};
+
+
 export const generateCode2HTml = (mdData, backgroundColor = Constant.white) => {
     let currentData = (mdData && mdData.indexOf("<code>") === -1) ?
         "<body>\n" +
