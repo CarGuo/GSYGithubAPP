@@ -24,6 +24,7 @@ import UserImage from './UserImage'
 import IconTextItem from './IconTextItem'
 import HTMLView from '../common/CommonHtmlView';
 import I18n from '../../style/i18n'
+import TagGroup from "./TagGroup";
 
 /**
  * 仓库相关Item显示
@@ -60,6 +61,7 @@ class RepositoryHeader extends Component {
             repositoryParentName,
             created_at,
             push_at,
+            topics
         } = this.props;
 
         let bottomIconStyle = {
@@ -229,6 +231,9 @@ class RepositoryHeader extends Component {
                             </IconC>
                         </TouchableOpacity>
                     </View>
+                    <TagGroup
+                        tagList={topics}
+                    />
                 </View>
             </ImageBackground>
         );
