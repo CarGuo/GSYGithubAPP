@@ -136,6 +136,12 @@ export default AddressLocal = {
         return `${host}repos/${reposOwner}/${reposName}/tags`
     },
     /**
+     * 仓Contributors
+     */
+    getReposContributors: (reposOwner, reposName)=>{
+        return `${host}repos/${reposOwner}/${reposName}/contributors`
+    },
+    /**
      * 仓库Issue评论 get
      */
     getIssueComment: (reposOwner, reposName, issueNumber) => {

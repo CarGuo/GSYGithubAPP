@@ -163,7 +163,7 @@ const getRepositoryDetailDao = (userName, reposName) => {
     let fullName = userName + "/" + reposName;
     let nextStep = async () => {
         let url = Address.getReposDetail(userName, reposName);
-        let res = await await Api.netFetch(url);
+        let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.mercy-preview+json'});
         if (res && res.result && res.data) {
             realm.write(() => {
                 let data = realm.objects('RepositoryDetail').filtered(`fullName="${fullName}" AND branch="master"`);
