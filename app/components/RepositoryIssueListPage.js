@@ -117,7 +117,7 @@ class RepositoryIssueListPage extends Component {
                 actionTime={rowData.created_at}
                 actionUser={rowData.user.login}
                 actionUserPic={rowData.user.avatar_url}
-                issueComment={fullName + rowData.title}
+                issueComment={fullName + "- " + rowData.title}
                 commentCount={rowData.comments + ""}
                 state={rowData.state}
                 issueTag={"#" + rowData.number}
@@ -227,10 +227,16 @@ class RepositoryIssueListPage extends Component {
         let {repositoryName, userName} = this.props;
         Actions.LoadingModal({backExit: false});
         issueActions.createIssue(userName, repositoryName,
-            {title: title, body: text}).then(() => {
+            {title: title, body: text}).then((res) => {
             setTimeout(() => {
                 Actions.pop();
-                this._refresh();
+                if (res && res.data) {
+                    let data = this.state.dataSource;
+                    data.splice(0, 0, res.data);
+                    this.setState({
+                        dataSource: data,
+                    })
+                }
             }, 500);
         })
     }
