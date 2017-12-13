@@ -47,7 +47,7 @@ const editIssue = async (userName, repository, number, issue) => {
         };
     }
 };
-const createIssue = async (userName, repository, issue) => {
+const createIssue = async (userName, repository,  issue) => {
     let res = await IssueDao.createIssueDao(userName, repository, issue);
     if (res && res.result) {
         return {
@@ -62,12 +62,12 @@ const createIssue = async (userName, repository, issue) => {
 };
 
 
-const editComment = async (userName, repository, commentId, comment, type) => {
+const editComment = async (userName, repository, number, commentId, comment, type) => {
     let res;
     if (type === 'delete') {
-        res = await IssueDao.deleteCommentDao(userName, repository, commentId);
+        res = await IssueDao.deleteCommentDao(userName, repository, number, commentId);
     } else {
-        res = await IssueDao.editCommentDao(userName, repository, commentId, comment);
+        res = await IssueDao.editCommentDao(userName, repository, number, commentId, comment);
     }
     if (res && res.result) {
         return {

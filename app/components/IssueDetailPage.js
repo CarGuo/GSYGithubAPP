@@ -45,7 +45,8 @@ class IssueDetailPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this.refs.pullList.showRefreshState();
+            if (this.refs.pullList)
+                this.refs.pullList.showRefreshState();
             this._refresh();
         })
     }
@@ -65,7 +66,9 @@ class IssueDetailPage extends Component {
                 issueComment={rowData.body}
                 onLongPressItem={() => {
                     if (isCommentOwner(this.props.userName, rowData.user.login)) {
-                        Actions.OptionModal({dataList: this._getOptionItem(rowData, rowID)});
+                        Actions.OptionModal({dataList: this._getOptionItem(rowData, rowID, true)});
+                    } else {
+                        Actions.OptionModal({dataList: this._getOptionItem(rowData, rowID, false)});
                     }
                 }}
                 issueCommentHtml={rowData.body_html}/>
@@ -113,8 +116,9 @@ class IssueDetailPage extends Component {
 
     editComment(commentId, text, rowID) {
         let {repositoryName, userName} = this.props;
+        let {issue} = this.state;
         Actions.LoadingModal({backExit: false});
-        issueActions.editComment(userName, repositoryName, commentId,
+        issueActions.editComment(userName, repositoryName, issue.number, commentId,
             {body: text}).then((res) => {
             setTimeout(() => {
                 Actions.pop();
@@ -131,8 +135,9 @@ class IssueDetailPage extends Component {
 
     deleteComment(commentId, rowID) {
         let {repositoryName, userName} = this.props;
+        let {number} = this.state;
         Actions.LoadingModal({backExit: false});
-        issueActions.editComment(userName, repositoryName, commentId, null, 'delete').then((res) => {
+        issueActions.editComment(userName, repositoryName, number, commentId, null, 'delete').then((res) => {
             setTimeout(() => {
                 Actions.pop();
                 if (res && res.result) {
@@ -273,8 +278,17 @@ class IssueDetailPage extends Component {
     }
 
 
-    _getOptionItem(data, rowID) {
-        return [{
+    _getOptionItem(data, rowID, owner) {
+        let copy = [{
+            itemName: I18n("copyComment"),
+            itemClick: () => {
+                Clipboard.setString(data.body);
+                Toast(I18n("hadCopy"));
+            }, itemStyle: {
+                borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
+            }
+        }];
+        let action = [{
             itemName: I18n("issueCommentEdit"),
             itemClick: () => {
                 Actions.TextInputModal({
@@ -294,15 +308,9 @@ class IssueDetailPage extends Component {
             }, itemStyle: {
                 borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
             }
-        }, {
-            itemName: I18n("copyComment"),
-            itemClick: () => {
-                Clipboard.setString(data.body);
-                Toast(I18n("hadCopy"));
-            }, itemStyle: {
-                borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
-            }
-        },]
+        },];
+        let ownerAction = action.concat(copy);
+        return owner ? ownerAction : copy;
     }
 
     render() {

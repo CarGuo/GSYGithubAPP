@@ -177,6 +177,7 @@ const IssueComment = {
     properties: {
         fullName: 'string',
         number: 'string',
+        commentId: 'string',
         data: 'string',
     }
 };

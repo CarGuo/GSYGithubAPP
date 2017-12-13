@@ -68,6 +68,7 @@ const getIssueCommentDao = async (page = 0, userName, repository, number, localN
                 res.data.forEach((item) => {
                     realm.create('IssueComment', {
                         number: number + "",
+                        commentId: item.id + "",
                         fullName: fullName,
                         data: JSON.stringify(item)
                     });
@@ -140,11 +141,17 @@ const getIssueInfoDao = async (userName, repository, number) => {
 };
 
 const addIssueCommentDao = async (userName, repository, number, comment) => {
+    let fullName = userName + "/" + repository;
     let url = Address.addIssueComment(userName, repository, number);
     let res = await Api.netFetch(url, 'POST', {body: comment}, true, {Accept: 'application/vnd.github.VERSION.full+json'});
     if (res && res.result) {
-        //res.data.body_html = changeServiceResult(res.data.body);
-        //todo 保存到db
+        realm.write(() => {
+            let id = res.data.id;
+            let items = realm.objects('IssueComment').filtered(`fullName="${fullName}" AND number ="${number}" AND commentId="${id}"`);
+            if (items && items.length > 0) {
+                items[0].data = JSON.stringify(res.data);
+            }
+        });
     }
     return {
         data: res.data,
@@ -153,11 +160,16 @@ const addIssueCommentDao = async (userName, repository, number, comment) => {
 };
 
 const editIssueDao = async (userName, repository, number, issue) => {
+    let fullName = userName + "/" + repository;
     let url = Address.editIssue(userName, repository, number);
     let res = await Api.netFetch(url, 'PATCH', issue, true, {Accept: 'application/vnd.github.VERSION.full+json'});
     if (res && res.result) {
-        //res.data.body_html = changeServiceResult(res.data.body);
-        //todo 保存到db
+        realm.write(() => {
+            let items = realm.objects('IssueDetail').filtered(`fullName="${fullName}" AND number ="${number}"`);
+            if (items && items.length > 0) {
+                items[0].data = JSON.stringify(res.data);
+            }
+        });
     }
     return {
         data: res.data,
@@ -166,11 +178,15 @@ const editIssueDao = async (userName, repository, number, issue) => {
 };
 
 const createIssueDao = async (userName, repository, issue) => {
+    let fullName = userName + "/" + repository;
     let url = Address.createIssue(userName, repository);
     let res = await Api.netFetch(url, 'POST', issue, true, {Accept: 'application/vnd.github.VERSION.full+json'});
     if (res && res.result) {
-        //res.data.body_html = changeServiceResult(res.data.body);
-        //todo 保存到db
+        realm.create('IssueDetail', {
+            number: res.data.number,
+            fullName: fullName,
+            data: JSON.stringify(res.data)
+        });
     }
     return {
         data: res.data,
@@ -178,12 +194,17 @@ const createIssueDao = async (userName, repository, issue) => {
     };
 };
 
-const editCommentDao = async (userName, repository, commentId, comment) => {
+const editCommentDao = async (userName, repository, number, commentId, comment) => {
+    let fullName = userName + "/" + repository;
     let url = Address.editComment(userName, repository, commentId);
     let res = await Api.netFetch(url, 'PATCH', comment, true, {Accept: 'application/vnd.github.VERSION.full+json'});
     if (res && res.result) {
-        //res.data.body_html = changeServiceResult(res.data.body);
-        //todo 保存到db
+        realm.write(() => {
+            let items = realm.objects('IssueComment').filtered(`fullName="${fullName}" AND number ="${number}" AND commentId="${commentId}"`);
+            if (items && items.length > 0) {
+                items[0].data = JSON.stringify(res.data);
+            }
+        });
     }
     return {
         data: res.data,
@@ -191,9 +212,16 @@ const editCommentDao = async (userName, repository, commentId, comment) => {
     };
 };
 
-const deleteCommentDao = async (userName, repository, commentId) => {
+const deleteCommentDao = async (userName, repository, number, commentId) => {
+    let fullName = userName + "/" + repository;
     let url = Address.editComment(userName, repository, commentId);
     let res = await Api.netFetch(url, 'DELETE', null, true, {Accept: 'application/vnd.github.VERSION.full+json'});
+    if (res && res.result) {
+        realm.write(() => {
+            let items = realm.objects('IssueComment').filtered(`fullName="${fullName}" AND number ="${number}" AND commentId="${commentId}"`);
+            realm.delete(items)
+        });
+    }
     return {
         data: res.data,
         result: res.result
