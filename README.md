@@ -65,3 +65,11 @@
 2、win下在npm出现问题时，再次npm时可以删除.lock文件先（如果是mac就简单很多了）。
 
 ```
+
+### LICENSE
+```
+CarGuo/GSYGithubAPP is licensed under the
+Apache License 2.0
+
+A permissive license whose main conditions require preservation of copyright and license notices. Contributors provide an express grant of patent rights. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+```
