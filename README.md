@@ -66,6 +66,8 @@
 
 ```
 
+![](https://github.com/CarGuo/GSYGithubApp/blob/master/thanks.jpg)
+
 ### LICENSE
 ```
 CarGuo/GSYGithubAPP is licensed under the
