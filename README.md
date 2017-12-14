@@ -22,11 +22,11 @@
 
 ### 下载Apk
 
-##### [下载链接](http://osvlwlt4g.bkt.clouddn.com/GSYGithubApp-1.0-beat1.apk)
+#### [下载链接](http://osvlwlt4g.bkt.clouddn.com/GSYGithubApp-1.0-beat1.apk)
 
-##### 二维码
+#### 二维码
 
-<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/download.jpg" width="220px"/>
+<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/download.png" width="220px"/>
 
 
 ### 示例图片
