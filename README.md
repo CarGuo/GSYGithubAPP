@@ -66,7 +66,7 @@
 
 ```
 
-![](https://github.com/CarGuo/GSYGithubApp/blob/master/thanks.jpg)
+<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/thanks.jpg" width="426px"/>
 
 ### LICENSE
 ```
