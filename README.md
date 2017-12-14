@@ -1,11 +1,14 @@
 ![](https://github.com/CarGuo/GSYGithubApp/blob/master/logo.png)
 
-### 一款跨平台的开源Github客户端App，旨在更好的日常管理和维护个人Github，提供更好更方便的体验～～Σ(￣。￣ﾉ)ﾉ。
+## 一款跨平台的开源Github客户端App，旨在更好的日常管理和维护个人Github，提供更好更方便的驾车体验～～Σ(￣。￣ﾉ)ﾉ。
 
 基于React Native开发，适配Android与IOS。
 
+项目的目的是为方便个人日常维护和查阅Github，更好的沉浸于码友之间的互基，Github就是你的家。
 
-项目的目的是为方便个人日常维护和查阅Github，更好的沉浸与码友之间的互基。随着项目的使用情况和反馈，将时不时根据更新并完善用户体验与功能优化。
+项目同时适合react native的练手学习，覆盖了各种框架的使用，与原生的交互等。
+
+随着项目的使用情况和反馈，将时不时根据更新并完善用户体验与功能优化吗，欢迎提出问题。
 
 
 ### 编译运行流程
@@ -19,11 +22,12 @@
 
 ### 示例图片
 
-![](https://github.com/CarGuo/GSYGithubApp/blob/master/1.jpg)
+<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/1.jpg" width="426px"/>
 
-![](https://github.com/CarGuo/GSYGithubApp/blob/master/2.jpg)
+<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/2.jpg" width="426px"/>
 
-![](https://github.com/CarGuo/GSYGithubApp/blob/master/3.jpg)
+<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/3.jpg" width="426px"/>
+
 
 ### 第三方框架
 
