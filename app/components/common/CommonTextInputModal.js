@@ -157,6 +157,16 @@ class CommonTextInputModal extends Component {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
             }
+        }, {
+            icon: "at",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                let curText = this.text + " @";
+                if (this.refs.contentInput) {
+                    this.refs.contentInput.setNativeProps({text: curText});
+                }
+            }
         },]
     }
 

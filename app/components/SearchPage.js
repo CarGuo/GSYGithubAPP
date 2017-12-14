@@ -221,7 +221,7 @@ class SearchPage extends Component {
                         returnKeyLabel={'search'}
                         onSubmitEditing={(event) => {
                             this.searchText = event.nativeEvent.text;
-                            this._searchText()
+                            this._refresh()
                         }}
                         underlineColorAndroid="transparent"
                         clearButtonMode="always"
