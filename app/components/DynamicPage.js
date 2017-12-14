@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, InteractionManager
+    View, AppState, StatusBar, InteractionManager
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
@@ -30,19 +30,37 @@ class DynamicPage extends Component {
         this._renderRow = this._renderRow.bind(this);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
+        this._handleAppStateChange = this._handleAppStateChange.bind(this);
+        this.startRefresh = this.startRefresh.bind(this);
         this.page = 1;
+        this.appState = 'active';
     }
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this.refs.pullList.showRefreshState();
-            this._refresh();
-        })
+            this.startRefresh();
+        });
+        AppState.addEventListener('change', this._handleAppStateChange);
     }
 
     componentWillUnmount() {
-
+        AppState.removeEventListener('change', this._handleAppStateChange);
     }
+
+    startRefresh() {
+        if (this.refs.pullList)
+            this.refs.pullList.showRefreshState();
+        this._refresh();
+    }
+
+    _handleAppStateChange = (nextAppState) => {
+        if (this.appState.match(/inactive|background/) && nextAppState === 'active') {
+            if (this.refs.pullList)
+                this.refs.pullList.scrollToTop();
+            this.startRefresh();
+        }
+        this.appState = nextAppState;
+    };
 
     _renderRow(rowData, sectionID, rowID, highlightRow) {
         let res = getActionAndDes(rowData);
