@@ -4,19 +4,25 @@
 
 基于React Native开发，适配Android与IOS。
 
+
 项目的目的是为方便个人日常维护和查阅Github，更好的沉浸与码友之间的互基。随着项目的使用情况和反馈，将时不时根据更新并完善用户体验与功能优化。
 
 
 ### 编译运行流程
 
 1、配置好react native开发环境，可参阅[搭建环境](http://reactnative.cn/docs/0.51/getting-started.html)、[React Native开发（一、入门）](http://www.jianshu.com/p/97692b1c451d)
+
 2、clone代码，根目录下执行`npm install`安装node_modules(建议科学上网或使用淘宝镜像)
+
 3、打开xcode运行或执行`react-native run-android`
+
 
 ### 示例图片
 
 ![](https://github.com/CarGuo/GSYGithubApp/blob/master/1.jpg)
+
 ![](https://github.com/CarGuo/GSYGithubApp/blob/master/2.jpg)
+
 ![](https://github.com/CarGuo/GSYGithubApp/blob/master/3.jpg)
 
 ### 第三方框架
@@ -35,4 +41,5 @@
 
 ### 常见问题
 //TODO
+
 1、realm 第一次在xcode下编译同步包比较耗时。
