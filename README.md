@@ -20,6 +20,15 @@
 3、打开xcode运行或执行`react-native run-android`
 
 
+### 下载Apk
+
+##### [下载链接](http://osvlwlt4g.bkt.clouddn.com/GSYGithubApp-1.0-beat1.apk)
+
+##### 二维码
+
+<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/download.jpg" width="220px"/>
+
+
 ### 示例图片
 
 <img src="https://github.com/CarGuo/GSYGithubApp/blob/master/1.jpg" width="426px"/>
