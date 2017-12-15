@@ -5,6 +5,9 @@
 import {EVENT} from '../type'
 import EventDao from '../../dao/eventDao'
 
+/**
+ * 用户接收事件
+ */
 const getEventReceived = (page = 0, callback) => async (dispatch, getState) => {
     let user = getState()['user'];
     if (!user || !user.userInfo || !user.userInfo.login) {
@@ -40,7 +43,9 @@ const getEventReceived = (page = 0, callback) => async (dispatch, getState) => {
     }
 };
 
-
+/**
+ * 用户行为事件
+ */
 const getEvent = async (page = 0, userName) => {
     if (!userName) {
         return null;
@@ -51,7 +56,9 @@ const getEvent = async (page = 0, userName) => {
     return EventDao.getEventDao(page, userName);
 };
 
-
+/**
+ * 仓库活动事件
+ */
 const getRepositoryEvent = async (page = 0, userName, repository) => {
     if (page <= 1) {
         return EventDao.getRepositoryEventDao(page, userName, repository, true);

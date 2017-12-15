@@ -16,7 +16,7 @@ import {Actions} from "react-native-router-flux";
 
 
 /**
- *
+ * 确认弹出模态框
  */
 class CommentConfirmModal extends Component {
 

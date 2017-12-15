@@ -5,6 +5,7 @@ import {USER} from '../type';
 import {createReducer} from '../'
 
 const initialState = {
+    //当前登录用户信息
     userInfo: {},
 };
 

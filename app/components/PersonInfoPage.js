@@ -19,7 +19,7 @@ import issueActions from "../store/actions/issue";
 import Toast from "./common/ToastProxy";
 
 /**
- * 用户信息
+ * 用户信息修改页面
  */
 class PersonInfoPage extends Component {
 

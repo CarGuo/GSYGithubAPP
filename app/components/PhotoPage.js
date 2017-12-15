@@ -13,7 +13,7 @@ import styles from "../style/index";
 import * as Constant from "../style/constant";
 
 /**
- * 推荐
+ * 大图查看
  */
 class PhotoPage extends Component {
 

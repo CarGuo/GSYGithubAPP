@@ -2,6 +2,9 @@ import Realm from 'realm';
 
 const SearchHistory = {};
 
+/**
+ * 本地已读历史表
+ */
 const ReadHistory = {
     name: 'ReadHistory',
     properties: {
@@ -11,6 +14,9 @@ const ReadHistory = {
     }
 };
 
+/**
+ * 仓库分支表
+ */
 const RepositoryBranch = {
     name: 'RepositoryBranch',
     properties: {
@@ -19,6 +25,9 @@ const RepositoryBranch = {
     }
 };
 
+/**
+ * 仓库提交信息表
+ */
 const RepositoryCommits = {
     name: 'RepositoryCommits',
     properties: {
@@ -27,7 +36,9 @@ const RepositoryCommits = {
     }
 };
 
-
+/**
+ * 仓库订阅用户表
+ */
 const RepositoryWatcher = {
     name: 'RepositoryWatcher',
     properties: {
@@ -36,6 +47,9 @@ const RepositoryWatcher = {
     }
 };
 
+/**
+ * 仓库收藏用户表
+ */
 const RepositoryStar = {
     name: 'RepositoryStar',
     properties: {
@@ -44,6 +58,9 @@ const RepositoryStar = {
     }
 };
 
+/**
+ * 仓库分支表
+ */
 const RepositoryFork = {
     name: 'RepositoryFork',
     properties: {
@@ -52,6 +69,9 @@ const RepositoryFork = {
     }
 };
 
+/**
+ * 仓库详情数据表
+ */
 const RepositoryDetail = {
     name: 'RepositoryDetail',
     properties: {
@@ -61,6 +81,9 @@ const RepositoryDetail = {
     }
 };
 
+/**
+ * 仓库readme文件表
+ */
 const RepositoryDetailReadme = {
     name: 'RepositoryDetailReadme',
     properties: {
@@ -70,6 +93,9 @@ const RepositoryDetailReadme = {
     }
 };
 
+/**
+ * 仓库活跃事件表
+ */
 const RepositoryEvent = {
     name: 'RepositoryEvent',
     properties: {
@@ -78,6 +104,9 @@ const RepositoryEvent = {
     }
 };
 
+/**
+ * 仓库issue表
+ */
 const RepositoryIssue = {
     name: 'RepositoryIssue',
     properties: {
@@ -87,7 +116,9 @@ const RepositoryIssue = {
     }
 };
 
-
+/**
+ * 仓库提交信息详情表
+ */
 const RepositoryCommitInfoDetail = {
     name: 'RepositoryCommitInfoDetail',
     properties: {
@@ -97,6 +128,9 @@ const RepositoryCommitInfoDetail = {
     }
 };
 
+/**
+ * 趋势表
+ */
 const TrendRepository = {
     name: 'TrendRepository',
     properties: {
@@ -106,6 +140,9 @@ const TrendRepository = {
     }
 };
 
+/**
+ * 用户表
+ */
 const UserInfo = {
     name: 'UserInfo',
     properties: {
@@ -114,6 +151,9 @@ const UserInfo = {
     }
 };
 
+/**
+ * 用户粉丝表
+ */
 const UserFollower = {
     name: 'UserFollower',
     properties: {
@@ -122,6 +162,9 @@ const UserFollower = {
     }
 };
 
+/**
+ * 用户关注表
+ */
 const UserFollowed = {
     name: 'UserFollowed',
     properties: {
@@ -130,6 +173,9 @@ const UserFollowed = {
     }
 };
 
+/**
+ * 用户收藏表
+ */
 const UserStared = {
     name: 'UserStared',
     properties: {
@@ -139,6 +185,9 @@ const UserStared = {
     }
 };
 
+/**
+ * 用户仓库表
+ */
 const UserRepos = {
     name: 'UserRepos',
     properties: {
@@ -148,6 +197,9 @@ const UserRepos = {
     }
 };
 
+/**
+ * 用户接受事件表
+ */
 const ReceivedEvent = {
     name: 'ReceivedEvent',
     properties: {
@@ -155,6 +207,9 @@ const ReceivedEvent = {
     }
 };
 
+/**
+ * 用户动态表
+ */
 const UserEvent = {
     name: 'UserEvent',
     properties: {
@@ -163,6 +218,9 @@ const UserEvent = {
     }
 };
 
+/**
+ * issue详情表
+ */
 const IssueDetail = {
     name: 'IssueDetail',
     properties: {
@@ -172,6 +230,9 @@ const IssueDetail = {
     }
 };
 
+/**
+ * issue评论表
+ */
 const IssueComment = {
     name: 'IssueComment',
     properties: {

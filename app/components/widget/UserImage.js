@@ -7,7 +7,9 @@ import {
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
 
-
+/**
+ * 用户头像
+ */
 export default class UserImage extends Component {
 
     render() {

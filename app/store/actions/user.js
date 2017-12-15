@@ -32,6 +32,9 @@ const initUserInfo = async () => {
 
 };
 
+/**
+ * 获取登录用户信息
+ */
 const getUserInfo = async () => {
     let res = await UserDao.getUserInfoDao();
     let resData = await res.next();
@@ -44,10 +47,16 @@ const getUserInfo = async () => {
     return resData;
 };
 
+/**
+ * 获取其他用户信息
+ */
 const getPersonUserInfo = async (userName) => {
     return UserDao.getUserInfoDao(userName);
 };
 
+/**
+ * 清除登录用户信息
+ */
 const clearUserInfo = () => {
     AsyncStorage.removeItem(Constant.USER_INFO);
     dispatch({
@@ -56,6 +65,9 @@ const clearUserInfo = () => {
     });
 };
 
+/**
+ * 获取用户粉丝列表
+ */
 const getFollowerList = async (userName, page = 1) => {
     if (page <= 1) {
         return UserDao.getFollowerListDao(userName, page, true);
@@ -64,6 +76,9 @@ const getFollowerList = async (userName, page = 1) => {
     }
 };
 
+/**
+ * 获取用户关注列表
+ */
 const getFollowedList = async (userName, page = 1) => {
     if (page <= 1) {
         return UserDao.getFollowedListDao(userName, page, true);
@@ -72,6 +87,9 @@ const getFollowedList = async (userName, page = 1) => {
     }
 };
 
+/**
+ * 获取用户相关通知
+ */
 const getNotifation = async (all, participating, page) => {
     let res = await UserDao.getNotifationDao(all, participating, page)
     return {
@@ -80,6 +98,9 @@ const getNotifation = async (all, participating, page) => {
     }
 };
 
+/**
+ * 设置单个通知已读
+ */
 const setNotificationAsRead = async (id) => {
     let res = await UserDao.setNotificationAsReadDao(id);
     return {
@@ -88,6 +109,9 @@ const setNotificationAsRead = async (id) => {
     }
 };
 
+/**
+ * 设置所有通知已读
+ */
 const setAllNotificationAsRead = async () => {
     let res = await UserDao.setAllNotificationAsReadDao();
     return {
@@ -96,6 +120,9 @@ const setAllNotificationAsRead = async () => {
     }
 };
 
+/**
+ * 更新用户信息
+ */
 const updateUser = async (params) => {
     let res = await UserDao.updateUserDao(params);
     if (res && res.result) {
@@ -110,6 +137,9 @@ const updateUser = async (params) => {
     }
 };
 
+/**
+ * 关注用户
+ */
 const doFollow = async (name, followed) => {
     let res = await UserDao.doFollowDao(name, followed);
     return {
@@ -118,6 +148,9 @@ const doFollow = async (name, followed) => {
     }
 };
 
+/**
+ * 检查用户关注状态
+ */
 const checkFollow = async (name, followed) => {
     let res = await UserDao.checkFollowDao(name);
     return {

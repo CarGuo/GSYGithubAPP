@@ -8,7 +8,16 @@ import Address from '../net/address'
 import realm from "./db";
 import {changeServiceResult} from '../utils/htmlUtils'
 
-
+/**
+ * 获取仓库issue
+ * @param page
+ * @param userName
+ * @param repository
+ * @param state issue状态
+ * @param sort 排序类型 created updated等
+ * @param direction 正序或者倒序
+ * @returns {Promise.<void>}
+ */
 const getRepositoryIssueDao = (page = 0, userName, repository, state, sort, direction, localNeed) => {
     let fullName = userName + "/" + repository;
     let stateName = state ? state : "all";
@@ -56,6 +65,9 @@ const getRepositoryIssueDao = (page = 0, userName, repository, state, sort, dire
     return localNeed ? local() : nextStep();
 };
 
+/**
+ * issue的回复列表
+ */
 const getIssueCommentDao = async (page = 0, userName, repository, number, localNeed) => {
     let fullName = userName + "/" + repository;
     let nextStep = async () => {
@@ -103,6 +115,9 @@ const getIssueCommentDao = async (page = 0, userName, repository, number, localN
     return localNeed ? local() : nextStep();
 };
 
+/**
+ * issue的详请
+ */
 const getIssueInfoDao = async (userName, repository, number) => {
     let fullName = userName + "/" + repository;
     let nextStep = async () => {
@@ -140,6 +155,9 @@ const getIssueInfoDao = async (userName, repository, number) => {
     }
 };
 
+/**
+ * 增加issue的回复
+ */
 const addIssueCommentDao = async (userName, repository, number, comment) => {
     let fullName = userName + "/" + repository;
     let url = Address.addIssueComment(userName, repository, number);
@@ -159,6 +177,10 @@ const addIssueCommentDao = async (userName, repository, number, comment) => {
     };
 };
 
+
+/**
+ * 编辑issue
+ */
 const editIssueDao = async (userName, repository, number, issue) => {
     let fullName = userName + "/" + repository;
     let url = Address.editIssue(userName, repository, number);
@@ -177,6 +199,10 @@ const editIssueDao = async (userName, repository, number, issue) => {
     };
 };
 
+
+/**
+ * 创建issue
+ */
 const createIssueDao = async (userName, repository, issue) => {
     let fullName = userName + "/" + repository;
     let url = Address.createIssue(userName, repository);
@@ -194,6 +220,10 @@ const createIssueDao = async (userName, repository, issue) => {
     };
 };
 
+
+/**
+ * 编辑issue回复
+ */
 const editCommentDao = async (userName, repository, number, commentId, comment) => {
     let fullName = userName + "/" + repository;
     let url = Address.editComment(userName, repository, commentId);
@@ -212,6 +242,9 @@ const editCommentDao = async (userName, repository, number, commentId, comment) 
     };
 };
 
+/**
+ * 删除issue回复
+ */
 const deleteCommentDao = async (userName, repository, number, commentId) => {
     let fullName = userName + "/" + repository;
     let url = Address.editComment(userName, repository, commentId);

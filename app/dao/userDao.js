@@ -6,7 +6,7 @@ import realm from './db'
 
 
 /**
- *
+ * 获取本地登录用户信息
  */
 const getUserInfoLocal = async () => {
     let userText = await AsyncStorage.getItem(Constant.USER_INFO);
@@ -23,6 +23,9 @@ const getUserInfoLocal = async () => {
     }
 };
 
+/**
+ * 获取用户详细信息
+ */
 const getUserInfoDao = async (userName) => {
     let nextStep = async () => {
         let res;
@@ -119,6 +122,9 @@ const getUserStaredCountNet = async (userName) => {
 };
 
 
+/**
+ * 获取用户粉丝列表
+ */
 const getFollowerListDao = async (userName, page, localNeed) => {
     let nextStep = async () => {
         let url = Address.getUserFollower(userName) + Address.getPageParams("?", page);
@@ -163,6 +169,9 @@ const getFollowerListDao = async (userName, page, localNeed) => {
     return localNeed ? local() : nextStep();
 };
 
+/**
+ * 获取用户关注列表
+ */
 const getFollowedListDao = async (userName, page, localNeed) => {
     let nextStep = async () => {
         let url = Address.getUserFollow(userName) + Address.getPageParams("?", page);
@@ -207,6 +216,9 @@ const getFollowedListDao = async (userName, page, localNeed) => {
     return localNeed ? local() : nextStep();
 };
 
+/**
+ * 获取用户相关通知
+ */
 const getNotifationDao = async (all, participating, page) => {
     let tag = (!all && !participating) ? '?' : "&";
     let url = Address.getNotifation(all, participating) + Address.getPageParams(tag, page);
@@ -217,6 +229,9 @@ const getNotifationDao = async (all, participating, page) => {
     }
 };
 
+/**
+ * 设置单个通知已读
+ */
 const setNotificationAsReadDao = async (id) => {
     let url = Address.setNotificationAsRead(id)
     let res = await Api.netFetch(url, "PATCH");
@@ -228,6 +243,10 @@ const setNotificationAsReadDao = async (id) => {
 };
 
 
+
+/**
+ * 设置所有通知已读
+ */
 const setAllNotificationAsReadDao = async () => {
     let url = Address.setAllNotificationAsRead()
     let res = await Api.netFetch(url, "PUT", {}, true);
@@ -238,6 +257,9 @@ const setAllNotificationAsReadDao = async () => {
 
 };
 
+/**
+ * 更新用户信息
+ */
 const updateUserDao = async (params) => {
     let url = Address.getMyUserInfo()
     let res = await Api.netFetch(url, "PATCH", params, true);
@@ -250,6 +272,9 @@ const updateUserDao = async (params) => {
     }
 };
 
+/**
+ * 关注用户
+ */
 const doFollowDao = async (name, followed) => {
     let url = Address.doFollow(name);
     let res = await Api.netFetch(url, followed ? "PUT" : "DELETE");
@@ -259,6 +284,9 @@ const doFollowDao = async (name, followed) => {
     }
 };
 
+/**
+ * 检查用户关注状态
+ */
 const checkFollowDao = async (name) => {
     let url = Address.doFollow(name);
     let res = await Api.netFetch(url);

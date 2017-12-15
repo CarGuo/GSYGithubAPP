@@ -94,20 +94,19 @@ export default AddressLocal = {
 
     },
     /**
-     * 仓库提交
+     * 仓库提交 get
      */
     getReposCommits: (reposOwner, reposName) => {
         return `${host}repos/${reposOwner}/${reposName}/commits`
 
     },
     /**
-     * 仓库提交
+     * 仓库提交详情 get
      */
     getReposCommitsInfo: (reposOwner, reposName, sha) => {
         return `${host}repos/${reposOwner}/${reposName}/commits/${sha}`
 
     },
-
     /**
      * 仓库Issue get
      */
@@ -136,7 +135,7 @@ export default AddressLocal = {
         return `${host}repos/${reposOwner}/${reposName}/tags`
     },
     /**
-     * 仓Contributors
+     * 仓Contributors get
      */
     getReposContributors: (reposOwner, reposName)=>{
         return `${host}repos/${reposOwner}/${reposName}/contributors`

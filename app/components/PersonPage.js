@@ -5,6 +5,9 @@ import store from "../store";
 
 const {dispatch, getState} = store;
 
+/**
+ * 用户信息页面
+ */
 class PersonPage extends BasePersonPage {
     constructor(props) {
         super(props);

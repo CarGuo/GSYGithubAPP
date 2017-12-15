@@ -8,7 +8,7 @@ import Address from '../net/address'
 import realm from './db'
 
 /**
- *
+ * 用户接收事件
  */
 const getEventReceivedDao = (page = 0, userName, localNeed) => {
     let nextStep = async () => {
@@ -53,6 +53,9 @@ const getEventReceivedDao = (page = 0, userName, localNeed) => {
     return localNeed ? local() : nextStep();
 };
 
+/**
+ * 用户行为事件
+ */
 const getEventDao = (page = 0, userName, localNeed) => {
     let nextStep = async () => {
         let url = Address.getEvent(userName) + Address.getPageParams("?", page);
@@ -97,6 +100,9 @@ const getEventDao = (page = 0, userName, localNeed) => {
     return localNeed ? local() : nextStep();
 };
 
+/**
+ * 仓库活动事件
+ */
 const getRepositoryEventDao = async (page = 0, userName, repository, localNeed) => {
     let fullName = userName + "/" + repository;
     let nextStep = async () => {

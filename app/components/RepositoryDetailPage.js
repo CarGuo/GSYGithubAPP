@@ -21,7 +21,7 @@ import Toast from './common/ToastProxy'
 import PopmenuItem from './widget/BottomPopmenuItem'
 
 /**
- * 详情
+ * 仓库详情
  */
 class RepositoryDetailPage extends Component {
 

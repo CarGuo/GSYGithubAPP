@@ -18,6 +18,9 @@ import userActions from "../../store/actions/user";
 
 const hintNum = '---';
 
+/**
+ * 用户页面头部
+ */
 class UserHeadItem extends Component {
 
     constructor(props) {

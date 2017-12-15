@@ -22,7 +22,7 @@ import * as Config from '../config'
 import {getActionAndDes} from '../utils/eventUtils'
 
 /**
- * 详情
+ * 仓库动态页面
  */
 class RepositoryDetailActivityPage extends Component {
 

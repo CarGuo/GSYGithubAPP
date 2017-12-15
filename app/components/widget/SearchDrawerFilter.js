@@ -5,7 +5,7 @@ import {Router, Actions, Scene} from 'react-native-router-flux';
 import styles, {statusHeight, drawerWidth} from "../../style"
 import * as Constant from '../../style/constant'
 import {SortType, SearchFilterType, SearchLanguageType} from '../../utils/filterUtils'
-import SelectList from './SeachFilterSelectList'
+import SelectList from './SearchFilterSelectList'
 
 class SearchDrawerFilter extends React.Component {
     static propTypes = {

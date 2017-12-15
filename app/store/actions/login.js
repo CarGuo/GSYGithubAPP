@@ -44,6 +44,9 @@ const doLogin = (userName, password, callback) => async (dispatch, getState) => 
     }, 1000)
 };
 
+/**
+ * 退出登录
+ */
 const loginOut = () => async (dispatch, getState) => {
     Api.clearAuthorization();
     AsyncStorage.removeItem(Constant.USER_BASIC_CODE);
@@ -54,6 +57,9 @@ const loginOut = () => async (dispatch, getState) => {
     });
 };
 
+/**
+ * 获取当前登录用户的参数
+ */
 const getLoginParams = async () => {
     let userName = await AsyncStorage.getItem(Constant.USER_NAME_KEY);
     let password = await AsyncStorage.getItem(Constant.PW_KEY);

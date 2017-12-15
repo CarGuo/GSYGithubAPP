@@ -14,6 +14,9 @@ import {screenWidth} from '../style'
 import {Actions} from "react-native-router-flux";
 import styles from "../style"
 
+/**
+ * Web浏览页面
+ */
 export default class WebPage extends Component {
 
     constructor(props: Object) {

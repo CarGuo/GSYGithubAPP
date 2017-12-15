@@ -21,7 +21,7 @@ import * as Config from '../config'
 import CommonBottomBar from "./common/CommonBottomBar";
 
 /**
- * 搜索
+ * 仓库issue列表
  */
 class RepositoryIssueListPage extends Component {
 

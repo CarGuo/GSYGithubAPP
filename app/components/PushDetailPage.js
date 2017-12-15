@@ -19,7 +19,7 @@ import * as Config from '../config'
 import {generateCode2HTml, parseDiffSource} from "../utils/htmlUtils";
 
 /**
- * Issue详情
+ * 仓库提交推送详情
  */
 class PushDetailPage extends Component {
 

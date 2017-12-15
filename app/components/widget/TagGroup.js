@@ -10,7 +10,9 @@ import PropTypes from 'prop-types';
 import styles from "../../style/index"
 import * as Constant from "../../style/constant"
 
-
+/**
+ * 标签控件
+ */
 class TagGroup extends Component {
 
     constructor(props) {

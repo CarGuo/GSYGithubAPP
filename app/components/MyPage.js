@@ -9,6 +9,9 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import BasePersonPage from "./widget/BasePersonPage";
 
+/**
+ * 我的
+ */
 class MyPage extends BasePersonPage {
 
     constructor(props) {

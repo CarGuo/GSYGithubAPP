@@ -12,6 +12,9 @@ import I18n from '../../style/i18n'
 import * as Config from '../../config'
 import Icon from 'react-native-vector-icons/Ionicons'
 
+/**
+ * 上下拉列表控件
+ */
 class PullLoadMoreListView extends Component {
 
     constructor(props) {

@@ -32,6 +32,9 @@ const injectedScript = function () {
     waitForBridge();
 };
 
+/**
+ * web控件
+ */
 export default class WebComponent extends Component {
 
     constructor(props: Object) {

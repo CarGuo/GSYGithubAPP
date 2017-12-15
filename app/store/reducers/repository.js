@@ -2,6 +2,7 @@ import {REPOSITORY} from '../type';
 import {createReducer} from '../'
 
 const initialState = {
+    //当前趋势列表
     trend_repos_data_list: [],
     trend_repos_current_size: 0,
 };

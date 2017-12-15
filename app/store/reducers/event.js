@@ -6,6 +6,7 @@ import {EVENT} from '../type';
 import {createReducer} from '../'
 
 const initialState = {
+    //当前用户事件列表
     received_events_data_list: [],
     received_events_current_size: 0,
 };

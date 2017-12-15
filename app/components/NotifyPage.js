@@ -19,7 +19,7 @@ import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 import ListPage from "./ListPage";
 
 /**
- * 详情
+ * 通知页面
  */
 class NotifyPage extends Component {
 

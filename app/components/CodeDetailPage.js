@@ -15,6 +15,9 @@ import {generateCode2HTml} from '../utils/htmlUtils'
 import {Actions, Tabs} from 'react-native-router-flux';
 import * as Constant from '../style/constant'
 
+/**
+ * 代码详情
+ */
 class CodeDetailPage extends Component {
 
     constructor(props) {

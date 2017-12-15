@@ -17,7 +17,7 @@ import CommonRowItem from './common/CommonRowItem'
 import CodeFileItem from './widget/CodeFileItem'
 
 /**
- * 详情
+ * 仓库文件列表
  */
 class RepositoryDetailFilePage extends Component {
 

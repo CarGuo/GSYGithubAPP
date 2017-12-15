@@ -28,7 +28,7 @@ import {generateHtml} from "../utils/htmlUtils";
 
 
 /**
- * 列表
+ * 多种数据列表
  */
 class ListPage extends Component {
 

@@ -17,6 +17,9 @@ import * as Constant from "../style/constant"
 import Api from '../net'
 import address from '../net/address'
 
+/**
+ * 欢迎页
+ */
 class WelcomePage extends Component {
 
     constructor(props) {

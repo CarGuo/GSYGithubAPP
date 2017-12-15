@@ -14,7 +14,7 @@ import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 import ListPage from "./ListPage";
 
 /**
- * 详情
+ * 仓库发布列表
  */
 class ReleasePage extends Component {
 

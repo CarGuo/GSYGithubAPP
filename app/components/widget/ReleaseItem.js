@@ -20,7 +20,7 @@ import UserImage from './UserImage'
 import HTMLView from '../common/CommonHtmlView';
 
 /**
- * 事件列表Item
+ * 发布列表Item
  */
 class ReleaseItem extends Component {
     constructor(props) {

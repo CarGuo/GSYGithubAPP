@@ -19,7 +19,9 @@ import PickerItem from './widget/TrendPickerItem';
 import {TrendTime, TrendType} from '../utils/filterUtils';
 import {filterItemHeight, pickerViewStyle, pickerTextStyle, dropDownStyle, adjustFrame} from '../utils/filterUtils';
 
-
+/**
+ * 趋势数据列表
+ */
 class TrendPage extends Component {
 
     constructor(props) {
