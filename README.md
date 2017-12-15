@@ -23,8 +23,7 @@
  
      export const CLIENT_SECRET = "xxxx";
      
-   [注册地址](https://github.com/settings/applications/new)
-     
+   [      注册 Github APP 传送门](https://github.com/settings/applications/new)，当然，前提是你现有一个github账号(～￣▽￣)～ 。
 
 4、打开xcode运行或执行`react-native run-android`
 
