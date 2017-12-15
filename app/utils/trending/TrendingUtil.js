@@ -15,12 +15,12 @@ var TAGS = {
         start: '<span class="d-inline-block float-sm-right">',
         end: '</span>'
     },
-    forkCount: {
+    starCount: {
         start: '<a class="muted-link d-inline-block mr-3"',
         flag: '/stargazers">',
         end: '</a>'
     },
-    starCount: {
+    forkCount: {
         start: '<a class="muted-link d-inline-block mr-3"',
         flag: '/network">',
         end: '</a>'
