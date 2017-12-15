@@ -50,12 +50,14 @@ class RepositoryItem extends Component {
             repositoryDes,
             repositoryStared,
             repositoryForked,
-            repositoryWatched
+            repositoryWatched,
+            hideWatchIcon
         } = this.props;
 
         let bottomIconStyle = {
             backgroundColor: Constant.transparentColor,
-            color: Constant.subTextColor, size: Constant.minIconSize,
+            color: Constant.subTextColor,
+            size: Constant.minIconSize,
             marginTop: Constant.normalMarginEdge / 2,
             marginLeft: -Constant.normalMarginEdge / 2
         };
@@ -70,8 +72,10 @@ class RepositoryItem extends Component {
                     borderRadius: 4,
                 }, styles.shadowCard]}
                 onPress={() => {
-                    Actions.RepositoryDetail({repositoryName: repositoryName, ownerName: ownerName
-                    , title: repositoryName});
+                    Actions.RepositoryDetail({
+                        repositoryName: repositoryName, ownerName: ownerName
+                        , title: repositoryName
+                    });
                 }}
             >
                 <View style={[styles.flexDirectionRowNotFlex]}>
@@ -129,7 +133,8 @@ class RepositoryItem extends Component {
                         </Icon.Button>
                     </View>
                     <View style={[styles.flex, styles.centered,]}>
-                        <IconC.Button name="issue-opened" {...bottomIconStyle}>
+                        <IconC.Button name="issue-opened" {...bottomIconStyle}
+                                      size={hideWatchIcon ? 1 : Constant.minIconSize}>
                             <Text style={[styles.subSmallText]}>{repositoryWatch}</Text>
                         </IconC.Button>
                     </View>
@@ -151,6 +156,7 @@ const propTypes = {
     repositoryStared: PropTypes.bool,
     repositoryForked: PropTypes.bool,
     repositoryWatched: PropTypes.bool,
+    hideWatchIcon: PropTypes.bool,
 };
 
 RepositoryItem.propTypes = propTypes;
@@ -163,6 +169,7 @@ RepositoryItem.defaultProps = {
     repositoryStared: false,
     repositoryForked: false,
     repositoryWatched: false,
+    hideWatchIcon: false,
 };
 
 

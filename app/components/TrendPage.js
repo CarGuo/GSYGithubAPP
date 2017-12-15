@@ -55,7 +55,8 @@ class TrendPage extends Component {
                 repositoryName={rowData.reposName}
                 repositoryStar={rowData.starCount}
                 repositoryFork={rowData.forkCount}
-                repositoryWatch={'---'}
+                repositoryWatch={rowData.meta}
+                hideWatchIcon={true}
                 repositoryType={rowData.language}
                 repositoryDes={rowData.description}
             />
