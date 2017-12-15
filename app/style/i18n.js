@@ -153,6 +153,7 @@ I18n.translations = {
         notFound: 'Request Not Found',
         errorUnKnow: 'UnKnow',
         noPower: 'No authority',
+        share: 'Share',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -295,6 +296,7 @@ I18n.translations = {
         notFound: '请求找不到地址啦·~',
         errorUnKnow: '就是不知道是什么错误···',
         noPower: '为啥你没有权限呢？',
+        share: '分享',
     }
 };
 

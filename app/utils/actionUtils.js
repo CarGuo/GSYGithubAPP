@@ -1,5 +1,5 @@
 import * as Constant from "../style/constant"
-import {StyleSheet, Linking, Clipboard, Platform} from "react-native";
+import {StyleSheet, Linking, Clipboard, Platform, Share} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import I18n from '../style/i18n'
 import Toast from '../components/common/ToastProxy'
@@ -38,7 +38,7 @@ export const RepositoryMore = (props) => {
                 Toast(I18n("hadCopy"));
             }
         }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
-    },{
+    }, {
         itemName: I18n("copyClone"),
         itemValue: 'copyClone',
         itemClick: () => {
@@ -59,8 +59,32 @@ export const RepositoryMore = (props) => {
                     description: (I18n("downloadDescription") + props.ownerName + "/" + props.repositoryName)
                 })
             }
+        }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
+    }, {
+
+        itemName: I18n("share"),
+        itemValue: 'share',
+        itemClick: () => {
+            if (Platform.OS === "ios") {
+                Share.share({
+                    title: I18n("appName"),
+                    url: props.titleData.html_url,
+                    message: props.titleData.html_url
+                }).then(() => {
+
+                }).catch(() => {
+
+                })
+            } else {
+                Share.share({title: I18n("appName"), message: props.titleData.html_url}).then(() => {
+
+                }).catch(() => {
+
+                })
+            }
         }, itemStyle: {}
-    },]
+
+    }]
 };
 
 export const CommonMoreRightBtnPress = (props) => {
@@ -85,5 +109,29 @@ export const CommonMore = (props) => {
                 Toast(I18n("hadCopy"));
             }
         }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
-    },]
+    }, {
+
+        itemName: I18n("share"),
+        itemValue: 'share',
+        itemClick: () => {
+            if (Platform.OS === "ios") {
+                Share.share({
+                    title: I18n("appName"),
+                    url: props.titleData.html_url,
+                    message: props.titleData.html_url
+                }).then(() => {
+
+                }).catch(() => {
+
+                })
+            } else {
+                Share.share({title: I18n("appName"), message: props.titleData.html_url}).then(() => {
+
+                }).catch(() => {
+
+                })
+            }
+        }, itemStyle: {}
+
+    }]
 };
