@@ -150,6 +150,9 @@ I18n.translations = {
         unFollowed: 'unFollow',
         doFollowed: 'Follow',
         register: 'Register',
+        notFound: 'Request Not Found',
+        errorUnKnow: 'UnKnow',
+        noPower: 'No authority',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -289,6 +292,9 @@ I18n.translations = {
         unFollowed: '取消关注',
         doFollowed: '关注',
         register: 'Github注册',
+        notFound: '请求找不到地址啦·~',
+        errorUnKnow: '就是不知道是什么错误···',
+        noPower: '为啥你没有权限呢？',
     }
 };
 

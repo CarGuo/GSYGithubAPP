@@ -93,7 +93,7 @@ class HttpManager {
             return {
                 result: false,
                 code: response.status,
-                data: handlerError(response.status),
+                data: handlerError(response.status, response.statusText),
             }
         }
         try {
@@ -124,7 +124,7 @@ class HttpManager {
         return {
             result: false,
             code: response.status,
-            data: handlerError(response.status),
+            data: handlerError(response.status, response.statusText),
         }
     }
 
