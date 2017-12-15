@@ -297,7 +297,7 @@ const addRepositoryLocalRead = async (userName, reposName, data) => {
 /**
  * 获取本地已读数据列表
  */
-const getRepositoryLocalRead = async (page = 0) => {
+const getRepositoryLocalRead = async (page = 1) => {
     let res = RepositoryDao.getRepositoryLocalReadDao(page);
     return {
         result: true,

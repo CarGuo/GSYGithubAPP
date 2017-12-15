@@ -296,9 +296,9 @@ const addRepositoryLocalReadDao = (userName, reposName, data) => {
 /**
  * 获取本地已读数据列表
  */
-const getRepositoryLocalReadDao = (page = 0) => {
-    let size = page * Config.PAGE_SIZE;
-    let allEvent = realm.objects('ReadHistory').sorted("readDate").slice(size, size + Config.PAGE_SIZE);
+const getRepositoryLocalReadDao = (page = 1) => {
+    let size = (page - 1) * Config.PAGE_SIZE;
+    let allEvent = realm.objects('ReadHistory').sorted("readDate", true).slice(size, size + Config.PAGE_SIZE);
     let data = [];
     allEvent.forEach((item) => {
         let showItem = {

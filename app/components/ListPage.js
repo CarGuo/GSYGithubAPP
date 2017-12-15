@@ -278,7 +278,7 @@ class ListPage extends Component {
                 });
                 break;
             case 'history':
-                repositoryActions.getRepositoryLocalRead(0).then((res) => {
+                repositoryActions.getRepositoryLocalRead(1).then((res) => {
                     this._refreshRes(res)
                 });
                 break;
