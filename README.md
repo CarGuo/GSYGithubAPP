@@ -30,7 +30,7 @@
 
 ### 下载
 
-#### [Apk下载链接](http://osvlwlt4g.bkt.clouddn.com/GSYGithubApp-1.0-beat1.apk)
+#### [Apk下载链接](https://www.pgyer.com/GSYGithubApp)
 
 #### Apk二维码
 
