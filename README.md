@@ -17,7 +17,13 @@
 
 2、clone代码，根目录下执行`npm install`安装node_modules(太慢建议科学上网或使用淘宝镜像)
 
-3、打开xcode运行或执行`react-native run-android`
+3、你需要自己在app/config目录下 创建一个ignoreConfig.js文件，然后输入你的client_id 和 client_secret
+
+     export const CLIENT_ID = "xxxx";
+ 
+     export const CLIENT_SECRET = "xxxx";
+
+4、打开xcode运行或执行`react-native run-android`
 
 
 ### 下载
