@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import styles from "../../style/index"
 import * as Constant from "../../style/constant"
+import {Actions} from "react-native-router-flux";
 
 /**
  * 标签控件
@@ -30,6 +31,13 @@ class TagGroup extends Component {
                     this.props.tagList.map((data) => {
                         return (
                             <TouchableOpacity
+                                onPress={() => {
+                                    Actions.ListPage({
+                                        dataType: 'topics', showType: 'repository',
+                                        title: data,
+                                        topic: data
+                                    })
+                                }}
                                 key={"_" + data}
                                 style={[styles.centered, {
                                     borderRadius: 4,

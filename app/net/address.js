@@ -17,7 +17,7 @@ export default AddressLocal = {
     /**
      * 搜索 get
      */
-    sreach: (q, sort, order, type, page, pageSize = Config.PAGE_SIZE) => {
+    search: (q, sort, order, type, page, pageSize = Config.PAGE_SIZE) => {
         if (type === 'user') {
             return `${host}search/users?q=${q}&page=${page}&per_page=${pageSize}`
 
@@ -38,17 +38,10 @@ export default AddressLocal = {
         return `${host}search/repositories?q=${q}&sort=${sort}&order=${order}&page=${page}&per_page=${pageSize}`
     },
     /**
-     * 我的仓库 get
+     * 搜索topic tag
      */
-    myRepos: (sort, type) => {
-        if (!sort) {
-            sort = 'updated'
-        }
-
-        if (!type) {
-            type = 'all'
-        }
-        return `${host}user/repos?sort=${sort}&type=${type}`;
+    searchTopic: (topic) => {
+        return `${host}search/repositories?q=topic:${topic}&sort=stars&order=desc`;
     },
     /**
      * 用户的仓库 get

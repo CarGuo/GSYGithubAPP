@@ -282,6 +282,11 @@ class ListPage extends Component {
                     this._refreshRes(res)
                 });
                 break;
+            case 'topics':
+                repositoryActions.searchTopicRepository(this.props.topic, 0).then((res) => {
+                    this._refreshRes(res)
+                });
+                break;
 
         }
 
@@ -345,6 +350,11 @@ class ListPage extends Component {
                 break;
             case 'history':
                 repositoryActions.getRepositoryLocalRead(this.page).then((res) => {
+                    this._loadMoreRes(res)
+                });
+                break;
+            case 'topics':
+                repositoryActions.searchTopicRepository(this.props.topic, this.page).then((res) => {
                     this._loadMoreRes(res)
                 });
                 break;

@@ -66,7 +66,7 @@ const getTrendDao = async (page = 0, since, languageType) => {
  * @returns {Promise.<{result, data}>}
  */
 const searchRepositoryDao = async (q, sort, order, type, page, pageSize) => {
-    let url = Address.sreach(q, sort, order, type, page, pageSize);
+    let url = Address.search(q, sort, order, type, page, pageSize);
     let res = await await Api.netFetch(url);
     return {
         data: res.data ? res.data.items : res.data,
@@ -696,6 +696,18 @@ const getRepositoryDetailReadmeDao = async (userName, reposName, branch) => {
     };
 };
 
+/**
+ * 搜索话题
+ */
+const searchTopicRepositoryDao = async(searchTopic, page = 0) => {
+    let url = Address.searchTopic(searchTopic) + Address.getPageParams("&", page);
+    let res = await await Api.netFetch(url);
+    return {
+        data: res.data ? res.data.items : res.data,
+        result: res.result
+    };
+};
+
 export default {
     getTrendDao,
     searchRepositoryDao,
@@ -720,4 +732,5 @@ export default {
     getBranchesDao,
     getRepositoryLocalReadDao,
     addRepositoryLocalReadDao,
+    searchTopicRepositoryDao
 }

@@ -305,6 +305,18 @@ const getRepositoryLocalRead = async (page = 0) => {
     }
 };
 
+/**
+ * 搜索话题
+ */
+const searchTopicRepository = async (searchTopic, page = 0) => {
+    let res = await RepositoryDao.searchTopicRepositoryDao(searchTopic, page);
+    return {
+        data: res.data,
+        result: res.result
+    }
+};
+
+
 export default {
     getTrend,
     searchRepository,
@@ -329,5 +341,6 @@ export default {
     getBranches,
     getRepositoryLocalRead,
     addRepositoryLocalRead,
+    searchTopicRepository
 
 }
