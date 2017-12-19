@@ -54,14 +54,11 @@ class RepositoryHeader extends Component {
             repositoryDes,
             repositorySize,
             repositoryIssue,
-            repositoryLastActivity,
-            repositoryStared,
-            repositoryForked,
-            repositoryWatched,
             repositoryParentName,
             created_at,
             push_at,
-            topics
+            topics,
+            license
         } = this.props;
 
         let bottomIconStyle = {
@@ -117,10 +114,18 @@ class RepositoryHeader extends Component {
                         </Text>
                         <Text style={[styles.shadowText, {
                             color: Constant.miWhite, fontSize: Constant.minTextSize,
+                            marginRight: Constant.normalMarginEdge,
                             backgroundColor: Constant.transparentColor,
                         }]}
                               numberOfLines={1}>
                             {repositorySize}
+                        </Text>
+                        <Text style={[styles.shadowText, {
+                            color: Constant.miWhite, fontSize: Constant.minTextSize,
+                            backgroundColor: Constant.transparentColor,
+                        }]}
+                              numberOfLines={1}>
+                            {license}
                         </Text>
                     </View>
                     <HTMLView
