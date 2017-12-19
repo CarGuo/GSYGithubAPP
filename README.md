@@ -67,12 +67,11 @@
 * [url-parse url解析](https://github.com/unshiftio/url-parse)
 
 ### 常见问题
-```
-1、xcode的运行，第一次下载 react native 和 realm 相关包比较耗时。
 
-2、win下在npm出现问题时，再次npm时可以删除.lock文件先（如果是mac就简单很多了）。
+* 1、xcode的运行，第一次下载 react native 和 realm 相关包比较耗时。[iOS RN 0.45以上版本所需的第三方编译库(boost等)解决](http://reactnative.cn/post/4301)
 
-```
+* 2、win下在npm出现问题时，再次npm时可以删除.lock文件先（如果是mac就简单很多了）。
+
 
 <img src="https://github.com/CarGuo/GSYGithubApp/blob/master/thanks.jpg" width="426px"/>
 
