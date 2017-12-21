@@ -88,6 +88,14 @@ class IssueDetailPage extends Component {
                     this.setState({
                         dataSource: dataList
                     })
+                } else {
+                    Actions.TextInputModal({
+                        needEditTitle: false,
+                        textConfirm: this.sendIssueComment,
+                        text: text,
+                        titleText: I18n('commentsIssue'),
+                        bottomBar: true
+                    })
                 }
             }, 500);
         });
@@ -109,6 +117,15 @@ class IssueDetailPage extends Component {
                     this.setState({
                         issue: res.data
                     })
+                } else {
+                    Actions.TextInputModal({
+                        textConfirm: this.editIssue,
+                        titleText: I18n('editIssue'),
+                        needEditTitle: true,
+                        text: text,
+                        titleValue: title,
+                        bottomBar: true
+                    })
                 }
             }, 500);
         })
@@ -127,6 +144,16 @@ class IssueDetailPage extends Component {
                     dataList.splice(parseInt(rowID), 1, res.data);
                     this.setState({
                         dataSource: dataList
+                    })
+                }  else {
+                    Actions.TextInputModal({
+                        textConfirm: (text) => {
+                            this.editComment(commentId, text, rowID)
+                        },
+                        titleText: I18n('editIssue'),
+                        needEditTitle: false,
+                        text: text,
+                        bottomBar: true
                     })
                 }
             }, 500);
