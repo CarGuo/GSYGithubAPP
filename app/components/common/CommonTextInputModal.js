@@ -7,6 +7,9 @@ import {
     View,
     TextInput,
     TouchableOpacity,
+    StyleSheet,
+    ScrollView,
+    TouchableHighlight
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles, {screenWidth, screenHeight} from "../../style/index"
@@ -30,9 +33,14 @@ class CommonTextInputModal extends Component {
         this._onOpened = this._onOpened.bind(this);
         this._searchTextChange = this._searchTextChange.bind(this);
         this._searchTextTitleChange = this._searchTextTitleChange.bind(this);
+        this._getOptionItem = this._getOptionItem.bind(this);
         this.getDataList = this.getDataList.bind(this);
+        this.getUserList = this.getUserList.bind(this);
         this.text = this.props.text;
         this.title = this.props.titleValue;
+        this.state = {
+            showList: false,
+        }
     }
 
     componentDidMount() {
@@ -83,6 +91,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "\n## ";
+                this. _searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -93,6 +102,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "\n### ";
+                this. _searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -103,6 +113,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "****";
+                this. _searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -113,6 +124,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "__";
+                this. _searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -123,6 +135,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "``";
+                this. _searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -133,6 +146,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + " \n``` \n\n``` \n";
+                this. _searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -143,6 +157,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "[](url)";
+                this. _searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -153,6 +168,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "\n- ";
+                this. _searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -162,12 +178,87 @@ class CommonTextInputModal extends Component {
             iconType: 2,
             iconSize: iconSize,
             itemClick: () => {
-                let curText = this.text + " @";
-                if (this.refs.contentInput) {
-                    this.refs.contentInput.setNativeProps({text: curText});
+                let {userList} = this.props;
+                if (userList && userList.length > 0) {
+                    this.setState({
+                        showList: true
+                    })
+                } else {
+                    let curText = this.text + " @";
+                    this. _searchTextChange(curText);
+                    if (this.refs.contentInput) {
+                        this.refs.contentInput.setNativeProps({text: curText});
+                    }
                 }
             }
         },]
+    }
+
+
+    _getOptionItem() {
+        let {userList} = this.props;
+        let optionList = [];
+        userList.forEach((item) => {
+            let optionItem = {
+                itemName: item,
+                itemClick: () => {
+                    this.setState({
+                        showList: false
+                    });
+                    let curText = this.text + " @" + item + " ";
+                    this. _searchTextChange(curText);
+                    if (this.refs.contentInput) {
+                        this.refs.contentInput.setNativeProps({text: curText});
+                    }
+                }, itemStyle: {
+                    borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
+                }
+            };
+            optionList.push(optionItem)
+        });
+        return optionList;
+    }
+
+
+    getUserList() {
+        let {showList} = this.state;
+        if (!showList) {
+            return (<View/>)
+        }
+        let _renderListItem = (data) => {
+            let width = screenWidth - 170;
+            return (
+                <TouchableOpacity style={[styles.centered, {width: width, height: 50}, styles.centerH, data.itemStyle]}
+                                  onPress={() => {
+                                      data.itemClick && data.itemClick(data);
+                                  }}
+                                  key={data.itemName}>
+                    <Text style={[styles.normalText]}>{data.itemName}</Text>
+                </TouchableOpacity>
+            )
+        };
+        let dataList = this._getOptionItem();
+        let items = [];
+        dataList.forEach((data) => {
+            items.push(_renderListItem(data))
+        });
+        return (
+            <TouchableOpacity
+                style={[styles.absoluteFull,]}
+                onPress={() => {
+                    this.setState({
+                        showList: false
+                    });
+                }}>
+                <View style={[styles.centered, {padding: 40, backgroundColor: "#000000", opacity: 0.8}]}>
+                    <View style={[styles.centered, {backgroundColor: Constant.white, borderRadius: 4}]}>
+                        <ScrollView>
+                            {items}
+                        </ScrollView>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
     }
 
     render() {
@@ -272,6 +363,7 @@ class CommonTextInputModal extends Component {
                                 <Text style={[styles.normalText, {fontWeight: 'bold'}]}>{I18n("ok")}</Text>
                             </TouchableOpacity>
                         </View>
+                        {this.getUserList()}
                     </View>
                 </View>
             </Modal>
@@ -288,12 +380,14 @@ CommonTextInputModal.propTypes = {
     textConfirm: PropTypes.func,
     needEditTitle: PropTypes.bool,
     bottomBar: PropTypes.bool,
+    userList: PropTypes.array
 };
 CommonTextInputModal.defaultProps = {
     text: '',
     titleText: '',
     needEditTitle: false,
     bottomBar: true,
+    userList: [],
 };
 
 

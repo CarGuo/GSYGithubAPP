@@ -37,6 +37,7 @@ class IssueDetailPage extends Component {
         this.closeIssue = this.closeIssue.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
         this.page = 2;
+        this.actionUser = new Map();
         this.state = {
             dataSource: [],
             issue: this.props.issue
@@ -94,7 +95,8 @@ class IssueDetailPage extends Component {
                         textConfirm: this.sendIssueComment,
                         text: text,
                         titleText: I18n('commentsIssue'),
-                        bottomBar: true
+                        bottomBar: true,
+                        userList: [...this.actionUser.values()]
                     })
                 }
             }, 500);
@@ -124,7 +126,8 @@ class IssueDetailPage extends Component {
                         needEditTitle: true,
                         text: text,
                         titleValue: title,
-                        bottomBar: true
+                        bottomBar: true,
+                        userList: [...this.actionUser.values()]
                     })
                 }
             }, 500);
@@ -145,7 +148,7 @@ class IssueDetailPage extends Component {
                     this.setState({
                         dataSource: dataList
                     })
-                }  else {
+                } else {
                     Actions.TextInputModal({
                         textConfirm: (text) => {
                             this.editComment(commentId, text, rowID)
@@ -153,7 +156,8 @@ class IssueDetailPage extends Component {
                         titleText: I18n('editIssue'),
                         needEditTitle: false,
                         text: text,
-                        bottomBar: true
+                        bottomBar: true,
+                        userList: [...this.actionUser.values()]
                     })
                 }
             }, 500);
@@ -219,6 +223,15 @@ class IssueDetailPage extends Component {
                         dataSource: dataList
                     });
                     size = res.data.length;
+                    if (dataList) {
+                        this.actionUser = new Map();
+                        dataList.forEach((item) => {
+                            if (!this.actionUser.has(item.user.login)) {
+                                this.actionUser.set(item.user.login, item.user.login);
+                            }
+                        })
+                    }
+
                 }
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
@@ -256,6 +269,13 @@ class IssueDetailPage extends Component {
                     dataSource: dataList
                 });
                 size = res.data.length;
+                if (dataList) {
+                    dataList.forEach((item) => {
+                        if (!this.actionUser.has(item.user.login)) {
+                            this.actionUser.set(item.user.login, item.user.login);
+                        }
+                    })
+                }
             }
             if (this.refs.pullList) {
                 this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
@@ -274,7 +294,8 @@ class IssueDetailPage extends Component {
                     textConfirm: this.sendIssueComment,
                     text: "",
                     titleText: I18n('commentsIssue'),
-                    bottomBar: true
+                    bottomBar: true,
+                    userList: [...this.actionUser.values()]
                 })
             }, itemStyle: {}
         }, {
@@ -286,7 +307,8 @@ class IssueDetailPage extends Component {
                     needEditTitle: true,
                     text: this.state.issue.body,
                     titleValue: issue.title,
-                    bottomBar: true
+                    bottomBar: true,
+                    userList: [...this.actionUser.values()]
                 })
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
@@ -325,7 +347,8 @@ class IssueDetailPage extends Component {
                     titleText: I18n('editIssue'),
                     needEditTitle: false,
                     text: data.body,
-                    bottomBar: true
+                    bottomBar: true,
+                    userList: [...this.actionUser.values()]
                 })
             }, itemStyle: {}
         }, {
