@@ -15,10 +15,12 @@ import PropTypes from 'prop-types';
 import styles, {screenWidth, screenHeight} from "../../style/index"
 import * as Constant from "../../style/constant"
 import I18n from '../../style/i18n'
+import {uploadQiNiu} from '../../net/qiniu'
 import Modal from 'react-native-modalbox';
 import Spinner from 'react-native-spinkit';
 import {Actions} from "react-native-router-flux";
 import CommonInputBar from "./CommonInputBar";
+import ImagePicker from 'react-native-image-crop-picker';
 
 const iconSize = 16;
 
@@ -36,6 +38,7 @@ class CommonTextInputModal extends Component {
         this._getOptionItem = this._getOptionItem.bind(this);
         this.getDataList = this.getDataList.bind(this);
         this.getUserList = this.getUserList.bind(this);
+        this.openImagePicker = this.openImagePicker.bind(this);
         this.text = this.props.text;
         this.title = this.props.titleValue;
         this.state = {
@@ -91,7 +94,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "\n## ";
-                this. _searchTextChange(curText);
+                this._searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -102,7 +105,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "\n### ";
-                this. _searchTextChange(curText);
+                this._searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -113,7 +116,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "****";
-                this. _searchTextChange(curText);
+                this._searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -124,7 +127,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "__";
-                this. _searchTextChange(curText);
+                this._searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -135,7 +138,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "``";
-                this. _searchTextChange(curText);
+                this._searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -146,7 +149,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + " \n``` \n\n``` \n";
-                this. _searchTextChange(curText);
+                this._searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -157,7 +160,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "[](url)";
-                this. _searchTextChange(curText);
+                this._searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -168,7 +171,7 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "\n- ";
-                this. _searchTextChange(curText);
+                this._searchTextChange(curText);
                 if (this.refs.contentInput) {
                     this.refs.contentInput.setNativeProps({text: curText});
                 }
@@ -185,11 +188,18 @@ class CommonTextInputModal extends Component {
                     })
                 } else {
                     let curText = this.text + " @";
-                    this. _searchTextChange(curText);
+                    this._searchTextChange(curText);
                     if (this.refs.contentInput) {
                         this.refs.contentInput.setNativeProps({text: curText});
                     }
                 }
+            }
+        }, {
+            icon: "file-image",
+            iconType: 2,
+            iconSize: iconSize,
+            itemClick: () => {
+                this.openImagePicker();
             }
         },]
     }
@@ -206,7 +216,7 @@ class CommonTextInputModal extends Component {
                         showList: false
                     });
                     let curText = this.text + " @" + item + " ";
-                    this. _searchTextChange(curText);
+                    this._searchTextChange(curText);
                     if (this.refs.contentInput) {
                         this.refs.contentInput.setNativeProps({text: curText});
                     }
@@ -259,6 +269,18 @@ class CommonTextInputModal extends Component {
                 </View>
             </TouchableOpacity>
         )
+    }
+
+    openImagePicker() {
+        ImagePicker.openPicker({
+            includeBase64: true
+        }).then(image => {
+            if (image && image.data) {
+                uploadQiNiu(image.data).then((res) => {
+                    console.log("upload", res)
+                });
+            }
+        });
     }
 
     render() {
