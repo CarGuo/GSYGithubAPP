@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, StatusBar, InteractionManager
+    View, StatusBar, InteractionManager, BackHandler
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from "../style"
@@ -24,7 +24,8 @@ class CodeDetailPage extends Component {
         super(props);
         this.state = {
             detail: this.props.detail
-        }
+        };
+        this._backHandler = this._backHandler.bind(this)
     }
 
     componentDidMount() {
@@ -51,13 +52,19 @@ class CodeDetailPage extends Component {
                 )
             }
             Actions.refresh({titleData: {html_url: this.props.html_url}})
-        })
+        });
+        this.handle = BackHandler.addEventListener('CodeDetailPage-hardwareBackPress', this._backHandler)
     }
+
 
     componentWillUnmount() {
-
+        BackHandler.removeEventListener('CodeDetailPage-hardwareBackPress', this.handle)
     }
 
+    _backHandler() {
+        Actions.pop();
+        return false
+    }
 
     render() {
         let {detail} = this.state;

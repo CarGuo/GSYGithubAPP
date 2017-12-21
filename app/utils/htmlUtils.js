@@ -72,7 +72,7 @@ export const generateHtml = (mdData, backgroundColor = Constant.white) => {
         if (match) {
             if (Platform.OS === 'android') {
                 if (match && match.indexOf("\n") !== -1) {
-                    match = match.replace(/[\n]/g, '</br>');
+                    match = match.replace(/[\n]/g, '\n\r</br>');
                 }
             }
             return match;
@@ -98,7 +98,7 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
             let newStr = highlightAuto(capture).value;
             if (Platform.OS === 'android') {
                 if (newStr && newStr.indexOf("\n") !== -1) {
-                    newStr = newStr.replace(/[\n]/g, '</p>');
+                    newStr = newStr.replace(/[\n]/g, "\n\r</br>");
                 }
             }
             return "<pre><code>" + newStr + "</code></pre>";
@@ -136,7 +136,7 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
             let newCode = highlightAuto(code).value;
             if (Platform.OS === 'android') {
                 if (newCode && newCode.indexOf("\n") !== -1) {
-                    return newCode.replace(/[\n]/g, '</p>');
+                    return newCode.replace(/[\n]/g, '\n\r</br>');
                 }
             }
             return newCode;
