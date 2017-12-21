@@ -63,7 +63,7 @@ class CodeDetailPage extends Component {
 
     _backHandler() {
         Actions.pop();
-        return false
+        return true
     }
 
     render() {
