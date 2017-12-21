@@ -134,7 +134,6 @@ class ListPage extends Component {
                     <EventItem
                         actionTime={rowData.updated_at}
                         actionUser={rowData.repository.full_name}
-                        actionUserPic={rowData.repository.owner.avatar_url}
                         des={rowData.reason + "  " + I18n('notifyType', {
                             option1: rowData.subject.type,
                             option2: (rowData.unread) ? I18n('unread') : I18n('readed')
