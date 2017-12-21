@@ -39,10 +39,12 @@ class CommonTextInputModal extends Component {
         this.getDataList = this.getDataList.bind(this);
         this.getUserList = this.getUserList.bind(this);
         this.openImagePicker = this.openImagePicker.bind(this);
+        this.getLoading = this.getLoading.bind(this);
         this.text = this.props.text;
         this.title = this.props.titleValue;
         this.state = {
             showList: false,
+            showLoading: false,
         }
     }
 
@@ -271,13 +273,50 @@ class CommonTextInputModal extends Component {
         )
     }
 
+    getLoading() {
+        let {showLoading} = this.state;
+        if (!showLoading) {
+            return (<View/>)
+        }
+        return (
+            <TouchableOpacity
+                style={[styles.absoluteFull, styles.centered, {backgroundColor: "#000000", opacity: 0.8}]}>
+                <View style={[styles.centered]}>
+                    <View>
+                        <Spinner style={[styles.centered]}
+                                 isVisible={true}
+                                 size={50} type="9CubeGrid"
+                                 color="#FFFFFF"/>
+                        <Text style={styles.normalTextWhite}>{I18n('loading')}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     openImagePicker() {
         ImagePicker.openPicker({
-            includeBase64: true
+            includeBase64: true,
+            cropping: true,
+            width: 600,
+            height: 600
+
         }).then(image => {
             if (image && image.data) {
+                this.setState({
+                    showLoading: true
+                });
                 uploadQiNiu(image.data).then((res) => {
-                    console.log("upload", res)
+                    if (res) {
+                        let curText = this.text + ` ![](${res.data}) `;
+                        this._searchTextChange(curText);
+                        if (this.refs.contentInput) {
+                            this.refs.contentInput.setNativeProps({text: curText});
+                        }
+                    }
+                    this.setState({
+                        showLoading: false
+                    });
                 });
             }
         });
@@ -388,6 +427,7 @@ class CommonTextInputModal extends Component {
                         {this.getUserList()}
                     </View>
                 </View>
+                {this.getLoading()}
             </Modal>
         )
     }
