@@ -19,7 +19,7 @@ import CommonBottomBar from './common/CommonBottomBar'
 import EventItem from './widget/EventItem'
 import resolveTime from '../utils/timeUtil'
 import * as Config from '../config'
-import {getActionAndDes} from '../utils/eventUtils'
+import {getActionAndDes, ActionUtils} from '../utils/eventUtils'
 
 /**
  * 仓库动态页面
@@ -57,12 +57,16 @@ class RepositoryDetailActivityPage extends Component {
     _renderRow(rowData, sectionID, rowID, highlightRow) {
         if (this.state.select === 0) {
             let res = getActionAndDes(rowData);
+            let fullName = this.props.ownerName + "/" + this.props.repositoryName;
             return (
                 <EventItem
                     actionTime={rowData.created_at}
                     actionUser={rowData.actor.display_login}
                     actionUserPic={rowData.actor.avatar_url}
                     des={res.des}
+                    onPressItem={() => {
+                        ActionUtils(rowData, fullName)
+                    }}
                     actionTarget={res.actionStr}/>
 
             )

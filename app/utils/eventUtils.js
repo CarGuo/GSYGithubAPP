@@ -130,7 +130,7 @@ export const getActionAndDes = (event) => {
 };
 
 
-export const ActionUtils = (event) => {
+export const ActionUtils = (event, currentRepository) => {
     if (!event.repo) {
         Actions.PersonPage({currentUser: event.actor.login})
         return;
@@ -140,6 +140,10 @@ export const ActionUtils = (event) => {
     let fullName = owner + '/' + repositoryName;
     switch (event.type) {
         case 'ForkEvent':
+            let forkName =  event.actor.login + "/" + repositoryName;
+            if (forkName === currentRepository) {
+                return
+            }
             Actions.RepositoryDetail({
                 repositoryName: repositoryName, ownerName: event.actor.login
                 , title: repositoryName
@@ -147,6 +151,9 @@ export const ActionUtils = (event) => {
             break;
         case 'PushEvent':
             if (!event.payload.commits) {
+                if (fullName === currentRepository) {
+                    return
+                }
                 Actions.RepositoryDetail({
                     repositoryName: repositoryName, ownerName: owner
                     , title: repositoryName
@@ -179,6 +186,9 @@ export const ActionUtils = (event) => {
             });
             break;
         default:
+            if (fullName === currentRepository) {
+                return
+            }
             Actions.RepositoryDetail({
                 repositoryName: repositoryName, ownerName: owner
                 , title: repositoryName
