@@ -60,7 +60,6 @@ class CommonHtmlView extends Component {
                 renderNode={
                     (node, index, list, parent, domToElement) => {
                         if (node.type === 'tag') {
-                            console.log("GGGGGGGGGGGGGGGGGGG",  node.name);
                             if (node.name === 'img') {
                                 return (
                                     <TouchableWithoutFeedback
