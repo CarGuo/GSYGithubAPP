@@ -11,7 +11,7 @@ import styles from "../style"
 import I18n from '../style/i18n'
 import reposActions from '../store/actions/repository'
 import WebComponent from './widget/CustomWebComponent'
-import {generateCode2HTml} from '../utils/htmlUtils'
+import {generateCode2HTml, formName} from '../utils/htmlUtils'
 import {Actions, Tabs} from 'react-native-router-flux';
 import * as Constant from '../style/constant'
 
@@ -25,7 +25,7 @@ class CodeDetailPage extends Component {
         this.state = {
             detail: this.props.detail
         };
-        this._backHandler = this._backHandler.bind(this)
+        this._BackHandler = this._BackHandler.bind(this)
     }
 
     componentDidMount() {
@@ -34,8 +34,24 @@ class CodeDetailPage extends Component {
                 reposActions.getReposFileDir(this.props.ownerName,
                     this.props.repositoryName, this.props.path, this.props.branch).then((res) => {
                         if (res && res.result) {
+                            let startTag = `<div class="announce instapaper_body `;
+                            let startLang = res.data.indexOf(startTag);
+                            let endLang = res.data.indexOf(`" data-path="`);
+                            let lang;
+                            if (startLang >= 0 && endLang >= 0) {
+                                let tmpLang = res.data.substring(startLang + startTag.length, endLang);
+                                if (tmpLang) {
+                                    lang = formName(tmpLang.toLowerCase());
+                                }
+                            }
+                            if (__DEV__) {
+                                console.log("Code Lang ", lang)
+                            }
+                            if (!lang) {
+                                lang = this.props.lang
+                            }
                             this.setState({
-                                detail: generateCode2HTml(res.data, Constant.primaryColor),
+                                detail: generateCode2HTml(res.data, Constant.primaryColor, lang),
                             })
                         } else {
                             this.setState({
@@ -53,17 +69,17 @@ class CodeDetailPage extends Component {
             }
             Actions.refresh({titleData: {html_url: this.props.html_url}})
         });
-        this.handle = BackHandler.addEventListener('CodeDetailPage-hardwareBackPress', this._backHandler)
+        this.handle = BackHandler.addEventListener('CodeDetailPage-hardwareBackPress', this._BackHandler)
     }
 
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('CodeDetailPage-hardwareBackPress', this.handle)
+        this.handle.remove()
     }
 
-    _backHandler() {
+    _BackHandler() {
         Actions.pop();
-        return false
+        return true
     }
 
     render() {
@@ -87,6 +103,7 @@ CodeDetailPage.propTypes = {
     branch: PropTypes.string,
     detail: PropTypes.string,
     needRequest: PropTypes.bool,
+    lang: PropTypes.string,
 };
 
 
@@ -97,6 +114,7 @@ CodeDetailPage.defaultProps = {
     repositoryName: '',
     branch: 'master',
     needRequest: true,
+    lang: 'java',
 };
 
 export default CodeDetailPage

@@ -63,8 +63,9 @@ class PushDetailPage extends Component {
                         ownerName: this.props.userName,
                         repositoryName: this.props.repositoryName,
                         branch: 'master',
+                        lang: '',
                         needRequest: false,
-                        detail: generateCode2HTml(parseDiffSource(patch), Constant.primaryColor),
+                        detail: generateCode2HTml(parseDiffSource(patch), Constant.primaryColor, '', false),
                         html_url: rowData.blob_url
                     })
                 }}/>

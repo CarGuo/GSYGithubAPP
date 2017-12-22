@@ -5,7 +5,7 @@
 import {REPOSITORY} from '../type'
 import RepositoryDao from '../../dao/repositoryDao'
 import {Buffer} from 'buffer'
-import {generateMd2Html, generateHtml} from "../../utils/htmlUtils";
+import {generateMd2Html} from "../../utils/htmlUtils";
 import realm from "../../dao/db";
 import * as Config from "../../config";
 

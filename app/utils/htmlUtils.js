@@ -46,11 +46,11 @@ export const changeServiceResult = (data) => {
 };
 
 
-export const generateCode2HTml = (mdData, backgroundColor = Constant.white) => {
+export const generateCode2HTml = (mdData, backgroundColor = Constant.white, lang = 'java', userBR = true) => {
     let currentData = (mdData && mdData.indexOf("<code>") === -1) ?
         "<body>\n" +
         "<pre class=\"pre\">\n" +
-        "<code>\n" +
+        `<code lang='${lang}'>\n` +
         mdData +
         "</code>\n" +
         "</pre>\n" +
@@ -61,10 +61,10 @@ export const generateCode2HTml = (mdData, backgroundColor = Constant.white) => {
         mdData +
         "</pre>\n" +
         "</body>\n";
-    return generateHtml(currentData, backgroundColor)
+    return generateHtml(currentData, backgroundColor, userBR)
 };
 
-export const generateHtml = (mdData, backgroundColor = Constant.white) => {
+export const generateHtml = (mdData, backgroundColor = Constant.white, userBR = true) => {
     if (!mdData) {
         return "";
     }
@@ -72,7 +72,7 @@ export const generateHtml = (mdData, backgroundColor = Constant.white) => {
         if (match) {
             if (Platform.OS === 'android') {
                 if (match && match.indexOf("\n") !== -1) {
-                    match = match.replace(/[\n]/g, '\n\r</br>');
+                    match = match.replace(/[\n]/g, '\n\r<br>');
                 }
             }
             return match;
@@ -81,7 +81,7 @@ export const generateHtml = (mdData, backgroundColor = Constant.white) => {
         }
     });
 
-    return generateCodeHtml(data, false, backgroundColor);
+    return generateCodeHtml(data, false, backgroundColor, Constant.actionBlue, userBR);
 };
 
 
@@ -98,7 +98,7 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
             let newStr = highlightAuto(capture).value;
             if (Platform.OS === 'android') {
                 if (newStr && newStr.indexOf("\n") !== -1) {
-                    newStr = newStr.replace(/[\n]/g, "\n\r</br>");
+                    newStr = newStr.replace(/[\n]/g, "\n\r<br>");
                 }
             }
             return "<pre><code>" + newStr + "</code></pre>";
@@ -136,7 +136,7 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
             let newCode = highlightAuto(code).value;
             if (Platform.OS === 'android') {
                 if (newCode && newCode.indexOf("\n") !== -1) {
-                    return newCode.replace(/[\n]/g, '\n\r</br>');
+                    return newCode.replace(/[\n]/g, '\n\r<br>');
                 }
             }
             return newCode;
@@ -149,7 +149,7 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
 /**
  * style for mdHTml
  */
-export const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white, actionColor = Constant.actionBlue) => {
+const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white, actionColor = Constant.actionBlue, userBR = true) => {
     return "<html>\n" +
         "<head>\n" +
         "<meta charset=\"utf-8\" />\n" +
@@ -157,7 +157,7 @@ export const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white,
         "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
         "<link href=\"https:\/\/cdn.bootcss.com/highlight.js/9.12.0/styles/dracula.min.css\" rel=\"stylesheet\">\n" +
         "<script src=\"https:\/\/cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js\"></script>  " +
-        "<script>hljs.initHighlightingOnLoad();</script>  " +
+        "<script>hljs.configure({'useBR': " + userBR + "});hljs.initHighlightingOnLoad();</script> " +
         "<style>" +
         "body{background: " + backgroundColor + ";}" +
         "a {color:" + actionColor + " !important;}" +
@@ -192,11 +192,6 @@ export const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white,
         mdHTML +
         "</body>\n" +
         "</html>";
-};
-
-const formatCode = (codeSource) => {
-    if (!codeSource && codeSource.length === 0) return codeSource;
-    return codeSource.replace(new RegExp("<", "gm"), "&lt;").replace(new RegExp(">", "gm"), "&gt;");
 };
 
 export const parseDiffSource = (diffSource, wrap) => {
@@ -290,6 +285,27 @@ export const getFullName = (repository_url) => {
         }
     }
     return fullName;
+};
+
+export const formName = (name) => {
+    switch (name) {
+        case 'sh':
+            return 'shell';
+        case 'js':
+            return 'javascript';
+        case 'kt':
+            return 'kotlin';
+        case 'c':
+        case 'cpp':
+            return 'cpp';
+        case 'md':
+            return 'markdown';
+        case 'html':
+            return 'xml';
+
+
+    }
+    return name
 };
 
 
