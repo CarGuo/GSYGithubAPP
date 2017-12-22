@@ -25,6 +25,23 @@ class CommonHtmlView extends Component {
 
     }
 
+    hadImageChildren(node) {
+        let hadImageNode = false;
+        if (node.children && node.children.length > 0) {
+            node.children.forEach((item) => {
+                hadImageNode = this.hadImageChildren(item);
+                if (hadImageNode) {
+                    return true;
+                }
+            });
+        }
+        if (node.type === 'tag' && node.name === 'img') {
+            return true;
+        } else {
+            return hadImageNode;
+        }
+    }
+
     render() {
         return (
             <HTMLView
@@ -40,10 +57,10 @@ class CommonHtmlView extends Component {
                     Clipboard.setString(link);
                     Toast(I18n("hadCopy"));
                 }}
-                NodeComponent={View}
                 renderNode={
                     (node, index, list, parent, domToElement) => {
                         if (node.type === 'tag') {
+                            console.log("GGGGGGGGGGGGGGGGGGG",  node.name);
                             if (node.name === 'img') {
                                 return (
                                     <TouchableWithoutFeedback
@@ -73,6 +90,13 @@ class CommonHtmlView extends Component {
                                         </View>
                                     </TouchableWithoutFeedback>
                                 )
+                            } else {
+                                let img = this.hadImageChildren(node);
+                                if (img) {
+                                    return <View key={index}>
+                                        {domToElement(node.children, node)}
+                                    </View>
+                                }
                             }
                         }
                     }
