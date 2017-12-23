@@ -121,6 +121,7 @@ class ListPage extends Component {
                                 Actions.CodeDetailPage({
                                     title: rowData.name,
                                     needRequest: false,
+                                    lang: 'markdown',
                                     detail: generateHtml(rowData.body_html, Constant.primaryColor),
                                     html_url: rowData.html_url,
                                     clone_url: rowData.clone_url,
