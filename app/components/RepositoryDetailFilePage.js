@@ -15,6 +15,8 @@ import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import CommonRowItem from './common/CommonRowItem'
 import CodeFileItem from './widget/CodeFileItem'
+import {isImageEnd, launchUrl} from '../utils/htmlUtils'
+import {hostWeb} from '../net/address'
 
 /**
  * 仓库文件列表
@@ -115,15 +117,27 @@ class RepositoryDetailFilePage extends Component {
                     needTitle={false}
                     itemText={rowData.name}
                     onClickFun={() => {
-                        Actions.CodeDetailPage({
-                            path: headerList.slice(1, headerList.length).join("/") + "/" + rowData.name,
-                            title: rowData.name,
-                            ownerName: this.props.ownerName,
-                            repositoryName: this.props.repositoryName,
-                            branch: this.curBranch ? this.curBranch : 'master',
-                            html_url: rowData.html_url,
-                            clone_url: rowData.clone_url
-                        })
+                        let path = headerList.slice(1, headerList.length).join("/") + "/" + rowData.name;
+                        let repositoryName = this.props.repositoryName;
+                        let ownerName = this.props.ownerName;
+                        let curBranch = this.curBranch ? this.curBranch : 'master';
+                        if (isImageEnd(rowData.name)) {
+                            let urlLink = hostWeb + ownerName + "/" + repositoryName + "/" + "raw/" + curBranch + "/" + path;
+                            if (__DEV__) {
+                                console.log("file image link ", urlLink)
+                            }
+                            Actions.PhotoPage({uri: urlLink});
+                        } else {
+                            Actions.CodeDetailPage({
+                                path: path,
+                                title: rowData.name,
+                                ownerName: ownerName,
+                                repositoryName: repositoryName,
+                                branch: curBranch,
+                                html_url: rowData.html_url,
+                                clone_url: rowData.clone_url
+                            })
+                        }
                     }}/>
 
             )

@@ -361,4 +361,15 @@ export function launchUrl(url) {
     }
 }
 
+export const isImageEnd = (path)=> {
+    let image = false;
+    IMAGE_END.forEach((item) => {
+        if (path.indexOf(item) + item.length === path.length) {
+            image = true;
+        }
+    });
+    return image
+
+}
+
 const IMAGE_END = [".png", ".jpg", ".jpeg", ".gif", ".svg"];
