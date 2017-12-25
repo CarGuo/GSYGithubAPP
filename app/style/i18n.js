@@ -154,6 +154,7 @@ I18n.translations = {
         errorUnKnow: 'UnKnow',
         noPower: 'No authority',
         share: 'Share',
+        newestVersion: 'newest',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -297,6 +298,7 @@ I18n.translations = {
         errorUnKnow: '就是不知道是什么错误···',
         noPower: '为啥你没有权限呢？',
         share: '分享',
+        newestVersion: '当前是最新版本',
     }
 };
 

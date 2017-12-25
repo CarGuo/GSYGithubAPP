@@ -6,6 +6,7 @@ import * as Config from '../config'
 
 let host = "https://api.github.com/";
 let hostWeb = "https://github.com/";
+export const downloadUrl = 'https://www.pgyer.com/GSYGithubApp';
 
 export default AddressLocal = {
     /**

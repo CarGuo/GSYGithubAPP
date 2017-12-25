@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, ScrollView
+    View, Text, StatusBar, ScrollView, Linking
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
@@ -13,7 +13,9 @@ import CommonRowItem from "./common/CommonRowItem";
 import * as Constant from "../style/constant";
 import VersionNumber from 'react-native-version-number';
 import issueActions from "../store/actions/issue";
+import repositoryActions from "../store/actions/repository";
 import Toast from './common/ToastProxy'
+import {downloadUrl} from '../net/address'
 
 
 /**
@@ -23,8 +25,9 @@ class AboutPage extends Component {
 
     constructor(props) {
         super(props);
-        this._createIssue = this._createIssue.bind(this)
-        this.showFeedback = this.showFeedback.bind(this)
+        this._createIssue = this._createIssue.bind(this);
+        this.showFeedback = this.showFeedback.bind(this);
+        this.getNewsVersion = this.getNewsVersion.bind(this);
     }
 
     componentDidMount() {
@@ -61,6 +64,33 @@ class AboutPage extends Component {
         })
     }
 
+    getNewsVersion() {
+        repositoryActions.getRepositoryRelease("CarGuo", 'GSYGithubApp').then((res)=>{
+            if (res && res.result) {
+                //github只能有release的versionName，没有code，囧
+                let versionName = res.data[0].name;
+                if(__DEV__) {
+                    console.log("service versionName ", versionName)
+                }
+                if (versionName) {
+                    let versionNameNum = parseFloat(versionName);
+                    let currentNum = parseFloat(VersionNumber.appVersion);
+                    let newsHad = versionNameNum > currentNum;
+                    if(__DEV__) {
+                        console.log("service versionNameNum ", versionNameNum);
+                        console.log("local currentNum ", currentNum);
+                        console.log("version update newsHad ", newsHad);
+                    }
+                    if (newsHad) {
+                        Linking.openURL(downloadUrl)
+                    } else {
+                        Toast(I18n("newestVersion"));
+                    }
+                }
+            }
+        })
+    }
+
     render() {
         return (
             <View style={styles.mainBox}>
@@ -82,7 +112,7 @@ class AboutPage extends Component {
                         }, styles.shadowCard]}
                         itemText={I18n('version') + ": " + VersionNumber.appVersion}
                         onClickFun={() => {
-
+                            this.getNewsVersion()
                         }}/>
                     <CommonRowItem
                         showIconNext={true}
