@@ -32,6 +32,7 @@ import TagGroup from "./TagGroup";
 class RepositoryHeader extends Component {
     constructor(props) {
         super(props)
+        this.getOptionItem = this.getOptionItem.bind(this);
     }
 
     componentDidMount() {
@@ -40,6 +41,51 @@ class RepositoryHeader extends Component {
     componentWillUnmount() {
 
     }
+
+
+    getOptionItem = () => {
+        let {
+            repositoryIssue,
+            repositoryIssueClose,
+            repositoryIssueAll,
+        } = this.props;
+        if (!repositoryIssue) {
+            repositoryIssue = "---"
+        }
+        if (!repositoryIssueClose) {
+            repositoryIssueClose = "---"
+        }
+        if (!repositoryIssueAll) {
+            repositoryIssueAll = "---"
+        }
+        let data = [];
+        let item1 = {
+            itemName: "Open: " + repositoryIssue,
+            itemClick: () => {
+            }, itemStyle: {
+                borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
+            }
+        };
+        let item2 = {
+            itemName: "Closed: " + repositoryIssueClose,
+            itemClick: () => {
+            }, itemStyle: {
+                borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
+            }
+        };
+        let item3 = {
+            itemName: "All: " + repositoryIssueAll,
+            itemClick: () => {
+            }, itemStyle: {
+                borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
+            }
+        };
+        data.push(item1);
+        data.push(item2);
+        data.push(item3);
+        return data;
+    };
+
 
     render() {
         let {
@@ -229,7 +275,10 @@ class RepositoryHeader extends Component {
                             </IconC>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}>
+                            style={[styles.flex, styles.centered, {paddingVertical: Constant.normalMarginEdge}]}
+                            onPress={() => {
+                                Actions.OptionModal({dataList: this.getOptionItem()});
+                            }}>
                             <IconC name="issue-opened" {...bottomIconStyle}>
                                 <Text
                                     style={[styles.miLightSmallText, styles.shadowText,]}>{" " + repositoryIssue}</Text>
@@ -254,6 +303,8 @@ const propTypes = {
     repositoryFork: PropTypes.string,
     repositoryWatch: PropTypes.string,
     repositoryIssue: PropTypes.string,
+    repositoryIssueClose: PropTypes.string,
+    repositoryIssueAll: PropTypes.string,
     repositoryType: PropTypes.string,
     repositoryDes: PropTypes.string,
     repositoryLastActivity: PropTypes.string,

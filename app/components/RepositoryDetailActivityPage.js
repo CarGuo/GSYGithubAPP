@@ -221,7 +221,7 @@ class RepositoryDetailActivityPage extends Component {
         let {
             forks_count, fork, open_issues_count, size, watchers_count, owner,
             subscribers_count, description, language, created_at, pushed_at, parent,
-            topics, license
+            topics, license, all_issues_count, closed_issues_count
         } = this.props.dataDetail;
         let data = this.state.select === 0 ? this.state.dataSource : this.state.dataSourceCommits;
         let header =
@@ -234,6 +234,8 @@ class RepositoryDetailActivityPage extends Component {
                     repositoryFork={forks_count + ""}
                     repositoryWatch={subscribers_count + ""}
                     repositoryIssue={open_issues_count + ""}
+                    repositoryIssueClose={closed_issues_count ? (closed_issues_count + "") : null}
+                    repositoryIssueAll={all_issues_count ? (all_issues_count + "") : null}
                     repositorySize={(size / 1024).toFixed(2) + "M"}
                     repositoryType={language}
                     repositoryDes={description}

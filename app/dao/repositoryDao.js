@@ -196,13 +196,23 @@ const getRepositoryDetailDao = (userName, reposName) => {
         let url = Address.getReposDetail(userName, reposName);
         let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.mercy-preview+json'});
         if (res && res.result && res.data) {
+            let issueRes = await getRepositoryIssueStatusDao(userName, reposName);
+            let netData = res.data;
+            try {
+                if (issueRes && issueRes.result && issueRes.data) {
+                    netData.all_issues_count = parseInt(issueRes.data);
+                    netData.closed_issues_count =  netData.all_issues_count  - netData.open_issues_count;
+                }
+            } catch (e) {
+                console.log(e)
+            }
             realm.write(() => {
                 let data = realm.objects('RepositoryDetail').filtered(`fullName="${fullName}" AND branch="master"`);
                 realm.delete(data);
                 realm.create('RepositoryDetail', {
                     branch: "master",
                     fullName: fullName,
-                    data: JSON.stringify(res.data)
+                    data: JSON.stringify(netData)
                 });
             });
         }
@@ -708,6 +718,47 @@ const searchTopicRepositoryDao = async(searchTopic, page = 0) => {
     };
 };
 
+
+/**
+ * 获取issue总数
+ */
+const getRepositoryIssueStatusDao = async (userName, repository) => {
+    let url = Address.getReposIssue(userName, repository) +  "&per_page=1";
+    let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
+    if (res && res.result && res.headers && res.headers.map) {
+        try {
+            let link = res.headers.map['link'];
+            if (link && (typeof link) === 'object') {
+                let indexStart = link[0].lastIndexOf("page=") + 5;
+                let indexEnd = link[0].lastIndexOf(">");
+                if (indexStart >= 0 && indexEnd >= 0) {
+                    let count = link[0].substring(indexStart, indexEnd);
+                    return {
+                        result: true,
+                        data: count
+                    }
+                }
+            }
+            return {
+                result: true,
+            }
+        } catch (e) {
+            console.log(e)
+        }
+        return {
+            result: false,
+        }
+    } else {
+        return {
+            result: false,
+        }
+    }
+
+
+
+};
+
+
 export default {
     getTrendDao,
     searchRepositoryDao,
@@ -732,5 +783,6 @@ export default {
     getBranchesDao,
     getRepositoryLocalReadDao,
     addRepositoryLocalReadDao,
-    searchTopicRepositoryDao
+    searchTopicRepositoryDao,
+    getRepositoryIssueStatusDao
 }
