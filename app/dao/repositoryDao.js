@@ -560,8 +560,8 @@ const doRepositoryWatchDao = async (userName, reposName, watch) => {
 /**
  * 获取仓库的release列表
  */
-const getRepositoryReleaseDao = async (userName, reposName) => {
-    let url = Address.getReposRelease(userName, reposName);
+const getRepositoryReleaseDao = async (userName, reposName, page) => {
+    let url = Address.getReposRelease(userName, reposName) + Address.getPageParams("?", page);
     let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
     return {
         data: res.data,
@@ -572,8 +572,8 @@ const getRepositoryReleaseDao = async (userName, reposName) => {
 /**
  * 获取仓库的tag列表
  */
-const getRepositoryTagDao = async (userName, reposName) => {
-    let url = Address.getReposTag(userName, reposName);
+const getRepositoryTagDao = async (userName, reposName, page) => {
+    let url = Address.getReposTag(userName, reposName) + Address.getPageParams("?", page);
     let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
     return {
         data: res.data,
