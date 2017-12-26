@@ -12,7 +12,7 @@ export const RepositoryDetailRightBtnPress = (props) => {
 
 
 export const RepositoryMore = (props) => {
-    return [{
+    let normalAction = [{
         itemName: I18n("reposRelease"),
         itemValue: 'reposRelease',
         itemClick: () => {
@@ -82,9 +82,21 @@ export const RepositoryMore = (props) => {
 
                 })
             }
-        }, itemStyle: {}
+        }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
 
-    }]
+    }];
+    if (props.titleData && props.titleData.has_wiki) {
+        let wiki = {
+            itemName: "wiki",
+            itemValue: 'wiki',
+            itemClick: () => {
+                if (props.titleData && props.titleData.html_url)
+                    Linking.openURL(props.titleData.html_url + "/wiki")
+            }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
+        };
+        normalAction.push(wiki)
+    }
+    return normalAction;
 };
 
 export const CommonMoreRightBtnPress = (props) => {
@@ -131,7 +143,7 @@ export const CommonMore = (props) => {
 
                 })
             }
-        }, itemStyle: {}
+        }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
 
     }]
 };
