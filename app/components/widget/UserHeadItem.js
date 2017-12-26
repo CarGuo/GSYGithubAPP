@@ -32,8 +32,8 @@ class UserHeadItem extends Component {
         let hint = I18n('userInfoNoting');
         let {
             link, userPic, userName, userDisPlayName, des, location, groupName,
-            follower, followed, repos, star, setting, unRead, settingNeed, needFollow, hadFollowed,
-            doFollowLogic
+            follower, followed, repos, star, setting, unRead, settingNeed, needFollow, hadFollowed, beStared,
+            doFollowLogic, beStaredList
         } = this.props;
         let followView = needFollow ? <TouchableOpacity
             style={[styles.flexDirectionRowNotFlex, {
@@ -208,6 +208,23 @@ class UserHeadItem extends Component {
                                 rightBtnPress: () => {
                                     Actions.OptionModal({dataList: RepositoryFilter()});
                                 }
+                            })
+                        }}/>
+                    <NameValueItem
+                        itemStyle={[styles.flex, styles.centered,
+                            {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.primaryLightColor},]}
+                        itemName={I18n("beStaredText")}
+                        itemValue={beStared ? beStared : hintNum}
+                        onItemPress={() => {
+                            if(!beStaredList || beStaredList.length === 0) {
+                                return
+                            }
+                            Actions.ListPage({
+                                dataType: 'user_be_stared',
+                                showType: 'repository',
+                                localData: beStaredList,
+                                currentUser: userDisPlayName,
+                                title: userDisPlayName + I18n('beStared100Title'),
                             })
                         }}/>
                 </View>

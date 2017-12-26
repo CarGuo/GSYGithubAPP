@@ -289,6 +289,10 @@ class ListPage extends Component {
                     this._refreshRes(res)
                 });
                 break;
+            case 'user_be_stared':
+                this._refreshRes({result: true, data: this.props.localData});
+                break;
+
 
         }
 
@@ -359,6 +363,9 @@ class ListPage extends Component {
                 repositoryActions.searchTopicRepository(this.props.topic, this.page).then((res) => {
                     this._loadMoreRes(res)
                 });
+                break;
+            case 'user_be_stared':
+                this._loadMoreRes({result: false});
                 break;
         }
     }
@@ -431,7 +438,8 @@ ListPage.propTypes = {
     participating: PropTypes.bool,
     onItemClickEx: PropTypes.func,
     currentUser: PropTypes.string,
-    currentRepository: PropTypes.string
+    currentRepository: PropTypes.string,
+    localData: PropTypes.any
 };
 
 export default ListPage

@@ -9,6 +9,7 @@ import {
 import styles from "../../style"
 import * as Constant from '../../style/constant'
 import eventActions from '../../store/actions/event'
+import repositoryActions from '../../store/actions/repository'
 import UserHeadItem from './UserHeadItem'
 import PullListView from './PullLoadMoreListView'
 import EventItem from './EventItem'
@@ -26,10 +27,13 @@ class BasePersonPage extends Component {
         super(props);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
+        this._getMoreInfo = this._getMoreInfo.bind(this);
         this.getBackNotifyCall = this.getBackNotifyCall.bind(this);
         this.doFollowLogic = this.doFollowLogic.bind(this);
         this.state = {
-            dataSource: []
+            dataSource: [],
+            beStaredCount: "---",
+            beStaredList: null
         };
         this.page = 2;
     }
@@ -38,6 +42,7 @@ class BasePersonPage extends Component {
         InteractionManager.runAfterInteractions(() => {
             this.refs.pullList.showRefreshState();
             this._refresh();
+            this._getMoreInfo();
         })
     }
 
@@ -112,6 +117,19 @@ class BasePersonPage extends Component {
         });
     }
 
+    _getMoreInfo() {
+        let userInfo = this.getUserInfo();
+        repositoryActions.getUserRepository100Status(userInfo.login)
+            .then((res) => {
+                if (res.result) {
+                    this.setState({
+                        beStaredCount: res.data.stared + "",
+                        beStaredList: res.data.list,
+                    })
+                }
+            })
+    }
+
     getUserInfo() {
         return {}
     }
@@ -161,6 +179,8 @@ class BasePersonPage extends Component {
                                     groupName={userInfo.company}
                                     location={userInfo.location}
                                     link={userInfo.blog}
+                                    beStared={this.state.beStaredCount}
+                                    beStaredList={this.state.beStaredList}
                                     settingNeed={this.getSettingNeed()}
                                     des={(userInfo.bio ? (userInfo.bio + "\n") : "") + I18n("userCreate") + resolveTime(userInfo.created_at)}
                                     backNotifyCall={this.getBackNotifyCall}

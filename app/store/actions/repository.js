@@ -316,6 +316,17 @@ const searchTopicRepository = async (searchTopic, page = 0) => {
     }
 };
 
+/**
+ * 用户的前100仓库
+ */
+const getUserRepository100Status = async (userName) => {
+    let res = await RepositoryDao.getUserRepository100StatusDao(userName);
+    return {
+        data: res.data,
+        result: res.result
+    }
+};
+
 
 export default {
     getTrend,
@@ -341,6 +352,7 @@ export default {
     getBranches,
     getRepositoryLocalRead,
     addRepositoryLocalRead,
-    searchTopicRepository
+    searchTopicRepository,
+    getUserRepository100Status
 
 }
