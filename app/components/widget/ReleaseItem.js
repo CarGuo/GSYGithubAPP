@@ -64,6 +64,9 @@ class ReleaseItem extends Component {
                     padding: Constant.normalMarginEdge,
                     borderRadius: 4,
                 }, styles.shadowCard]}
+                onLongPress={()=>{
+                    this.props.onLongPressItem && this.props.onLongPressItem();
+                }}
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem();
                 }}>
@@ -92,6 +95,7 @@ const propTypes = {
     actionMode: PropTypes.string,
     actionTarget: PropTypes.string,
     onPressItem: PropTypes.func,
+    onLongPressItem: PropTypes.func,
 };
 
 ReleaseItem.propTypes = propTypes;
