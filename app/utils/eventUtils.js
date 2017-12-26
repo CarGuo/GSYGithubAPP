@@ -1,6 +1,7 @@
 import {Actions} from 'react-native-router-flux'
 import {StyleSheet} from 'react-native'
 import * as Constant from '../style/constant'
+import {launchUrl} from "./htmlUtils";
 
 export const getActionAndDes = (event) => {
     let actionStr;
@@ -165,7 +166,8 @@ export const ActionUtils = (event, currentRepository) => {
             }
             break;
         case 'ReleaseEvent':
-            //todo release 相关
+            let url = event.payload.release.html_url;
+            launchUrl(url);
             break;
         case 'IssueCommentEvent':
         case 'IssuesEvent':
