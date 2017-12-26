@@ -10,7 +10,7 @@ export const getActionAndDes = (event) => {
             actionStr = "Commit comment at " + event.repo.name;
             break;
         case "CreateEvent":
-            if (event.payload.ref_type = "repository") {
+            if (event.payload.ref_type === "repository") {
                 actionStr = "Created repository " + event.repo.name;
             } else {
                 actionStr = "Created " + event.payload.ref_type + " "
@@ -28,7 +28,7 @@ export const getActionAndDes = (event) => {
             actionStr = "Forked " + oriRepo + " to " + newRepo;
             break;
         case "GollumEvent":
-            actionStr = event.payload.action + " a wiki page ";
+            actionStr = event.actor.login + " a wiki page ";
             break;
 
         case "InstallationEvent":
