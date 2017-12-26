@@ -19,6 +19,7 @@ import RepositoryDetailFile from './RepositoryDetailFilePage'
 import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
 import Toast from './common/ToastProxy'
 import PopmenuItem from './widget/BottomPopmenuItem'
+import {launchUrl} from "../utils/htmlUtils";
 
 /**
  * 仓库详情
@@ -177,7 +178,18 @@ class RepositoryDetailPage extends Component {
                     <WebComponent
                         source={{html: this.state.dataDetailReadme}}
                         userName={this.props.ownerName}
-                        reposName={this.props.repositoryName}/>
+                        reposName={this.props.repositoryName}
+                        gsygithubLink={(url) => {
+                            if (url) {
+                                let owner = this.props.ownerName;
+                                let repo = this.props.repositoryName;
+                                let branch = this.curBranch ? this.curBranch : "master";
+                                let currentPath = url.replace("gsygithub://.", "");
+                                let fixedUrl = "https://github.com/" + owner + "/" + repo + "/blob/" + branch + currentPath;
+                                launchUrl(fixedUrl);
+                            }
+                        }}
+                    />
                 );
             case '2':
                 return (

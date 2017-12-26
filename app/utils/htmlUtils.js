@@ -68,7 +68,7 @@ export const generateHtml = (mdData, backgroundColor = Constant.white, userBR = 
     if (!mdData) {
         return "";
     }
-    let data = mdData.replace(/<code(([\s\S])*?)<\/code>/gi, function (match, capture) {
+    let mdDataCode = mdData.replace(/<code(([\s\S])*?)<\/code>/gi, function (match, capture) {
         if (match) {
             if (Platform.OS === 'android') {
                 if (match && match.indexOf("\n") !== -1) {
@@ -80,7 +80,21 @@ export const generateHtml = (mdData, backgroundColor = Constant.white, userBR = 
             return match;
         }
     });
-
+    let data = mdDataCode.replace(/href="(.*?)"/gi, function (match, capture) {
+        if (match && capture) {
+            if (capture.indexOf("./") === 0) {
+                if (capture.indexOf("http://") >= 0 || capture.indexOf("https://") >= 0) {
+                    return match;
+                }
+                let fixedUrl = "gsygithub://" + capture;
+                let href = `href="${fixedUrl}"`;
+                return href;
+            }
+            return match;
+        } else {
+            return match;
+        }
+    });
     return generateCodeHtml(data, false, backgroundColor, Constant.actionBlue, userBR);
 };
 
@@ -361,7 +375,7 @@ export function launchUrl(url) {
     }
 }
 
-export const isImageEnd = (path)=> {
+export const isImageEnd = (path) => {
     let image = false;
     IMAGE_END.forEach((item) => {
         if (path.indexOf(item) + item.length === path.length) {
@@ -370,6 +384,6 @@ export const isImageEnd = (path)=> {
     });
     return image
 
-}
+};
 
 const IMAGE_END = [".png", ".jpg", ".jpeg", ".gif", ".svg"];

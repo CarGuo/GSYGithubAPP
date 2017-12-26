@@ -6,6 +6,7 @@ import {
     ActivityIndicator,
     Linking
 } from 'react-native';
+import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux'
 import {launchUrl} from '../../utils/htmlUtils'
 import CusWebView from './native/CustomWebView'
@@ -45,11 +46,14 @@ export default class WebComponent extends Component {
     }
 
     reload() {
-        if(this.webview) {
+        if (this.webview) {
             this.webview.reload();
         }
     }
 
+    static propTypes = {
+        gsygithubLink: PropTypes.func,
+    };
 
     render() {
         const _w = this.props.width || Dimensions.get('window').width;
@@ -60,7 +64,9 @@ export default class WebComponent extends Component {
                     this.webview = ref;
                 }}
                 onShouldStartLoadWithRequest={(event) => {
-                    if (event.url && event.url.indexOf("https://github.com/") === 0) {
+                    if (event.url.indexOf('gsygithub://') === 0 ) {
+                        this.props.gsygithubLink && this.props.gsygithubLink(event.url);
+                    } else if (event.url && event.url.indexOf("https://github.com/") === 0) {
                         launchUrl(event.url)
                     } else if (event.url && (event.url.indexOf('http') === 0 || event.url.indexOf('www') === 0)) {
                         Actions.WebPage({uri: event.url});

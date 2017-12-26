@@ -7,15 +7,14 @@ import {
     View, Text, StatusBar, InteractionManager, TouchableOpacity, ListView
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Actions, Tabs} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 import styles from "../style"
 import * as Constant from "../style/constant"
-import I18n from '../style/i18n'
 import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import CommonRowItem from './common/CommonRowItem'
 import CodeFileItem from './widget/CodeFileItem'
-import {isImageEnd, launchUrl} from '../utils/htmlUtils'
+import {isImageEnd} from '../utils/htmlUtils'
 import {hostWeb} from '../net/address'
 
 /**
