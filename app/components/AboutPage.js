@@ -27,7 +27,6 @@ class AboutPage extends Component {
         super(props);
         this._createIssue = this._createIssue.bind(this);
         this.showFeedback = this.showFeedback.bind(this);
-        this.getNewsVersion = this.getNewsVersion.bind(this);
     }
 
     componentDidMount() {
@@ -64,32 +63,6 @@ class AboutPage extends Component {
         })
     }
 
-    getNewsVersion() {
-        repositoryActions.getRepositoryRelease("CarGuo", 'GSYGithubApp').then((res)=>{
-            if (res && res.result) {
-                //github只能有release的versionName，没有code，囧
-                let versionName = res.data[0].name;
-                if(__DEV__) {
-                    console.log("service versionName ", versionName)
-                }
-                if (versionName) {
-                    let versionNameNum = parseFloat(versionName);
-                    let currentNum = parseFloat(VersionNumber.appVersion);
-                    let newsHad = versionNameNum > currentNum;
-                    if(__DEV__) {
-                        console.log("service versionNameNum ", versionNameNum);
-                        console.log("local currentNum ", currentNum);
-                        console.log("version update newsHad ", newsHad);
-                    }
-                    if (newsHad) {
-                        Linking.openURL(downloadUrl)
-                    } else {
-                        Toast(I18n("newestVersion"));
-                    }
-                }
-            }
-        })
-    }
 
     render() {
         return (
@@ -112,7 +85,7 @@ class AboutPage extends Component {
                         }, styles.shadowCard]}
                         itemText={I18n('version') + ": " + VersionNumber.appVersion}
                         onClickFun={() => {
-                            this.getNewsVersion()
+                            getNewsVersion(true)
                         }}/>
                     <CommonRowItem
                         showIconNext={true}
@@ -175,6 +148,41 @@ class AboutPage extends Component {
             </View>
         )
     }
+}
+
+
+export const getNewsVersion = (showTip) => {
+    repositoryActions.getRepositoryRelease("CarGuo", 'GSYGithubApp', 1, false).then((res) => {
+        if (res && res.result) {
+            //github只能有release的versionName，没有code，囧
+            let versionName = res.data[0].name;
+            if (__DEV__) {
+                console.log("service versionName ", versionName)
+            }
+            if (versionName) {
+                let versionNameNum = parseFloat(versionName);
+                let currentNum = parseFloat(VersionNumber.appVersion);
+                let newsHad = versionNameNum > currentNum;
+                if (__DEV__) {
+                    console.log("service versionNameNum ", versionNameNum);
+                    console.log("local currentNum ", currentNum);
+                    console.log("version update newsHad ", newsHad);
+                }
+                if (newsHad) {
+                    Actions.ConfirmModal({
+                        titleText: I18n('update'),
+                        text: I18n('update') + ": " + res.data[0].name + "\n" + res.data[0].body,
+                        textConfirm: () => {
+                            Linking.openURL(downloadUrl)
+                        }
+                    });
+                } else {
+                    if (showTip)
+                        Toast(I18n("newestVersion"));
+                }
+            }
+        }
+    })
 }
 
 export default AboutPage

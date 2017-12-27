@@ -198,8 +198,8 @@ const doRepositoryWatch = async (userName, reposName, watch) => {
 /**
  * 获取仓库的release列表
  */
-const getRepositoryRelease = async (userName, reposName, page = 1) => {
-    let res = await RepositoryDao.getRepositoryReleaseDao(userName, reposName, page);
+const getRepositoryRelease = async (userName, reposName, page = 1, needHtml = true) => {
+    let res = await RepositoryDao.getRepositoryReleaseDao(userName, reposName, page, needHtml);
     return {
         data: res.data,
         result: res.result

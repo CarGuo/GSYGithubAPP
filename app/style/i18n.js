@@ -157,6 +157,7 @@ I18n.translations = {
         share: 'Share',
         newestVersion: 'newest',
         beStared100Title: ' Top 100 repository',
+        update: 'Update',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -303,6 +304,7 @@ I18n.translations = {
         share: '分享',
         newestVersion: '当前是最新版本',
         beStared100Title: ' 最受欢迎前100仓库',
+        update: '更新',
     }
 };
 
