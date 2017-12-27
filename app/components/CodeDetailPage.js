@@ -51,7 +51,7 @@ class CodeDetailPage extends Component {
                                 lang = this.props.lang
                             }
                             this.setState({
-                                detail: generateCode2HTml(res.data, Constant.primaryColor, lang),
+                                detail: generateCode2HTml(res.data, Constant.webDraculaBackgroundColor, lang),
                             })
                         } else {
                             this.setState({

@@ -119,7 +119,7 @@ class ListPage extends Component {
                                     title: rowData.name,
                                     needRequest: false,
                                     lang: 'markdown',
-                                    detail: generateHtml(rowData.body_html, Constant.primaryColor),
+                                    detail: generateHtml(rowData.body_html, Constant.webDraculaBackgroundColor),
                                     html_url: rowData.html_url,
                                     clone_url: rowData.clone_url,
                                 })

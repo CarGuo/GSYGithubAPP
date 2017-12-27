@@ -20,6 +20,8 @@ export const primaryColor = '#24292e';
 export const primaryDarkColor = '#121917';
 export const primaryLightColor = '#42464b';
 
+export const webDraculaBackgroundColor = '#282a36';
+
 
 export const selectedColor = primaryDarkColor;
 

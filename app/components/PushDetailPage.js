@@ -65,7 +65,7 @@ class PushDetailPage extends Component {
                         branch: 'master',
                         lang: '',
                         needRequest: false,
-                        detail: generateCode2HTml(parseDiffSource(patch), Constant.primaryColor, '', false),
+                        detail: generateCode2HTml(parseDiffSource(patch), Constant.webDraculaBackgroundColor, '', false),
                         html_url: rowData.blob_url
                     })
                 }}/>
