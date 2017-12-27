@@ -32,7 +32,9 @@ class LoadingModal extends Component {
     }
 
     componentWillUnmount() {
-        this.handle.remove();
+        if (this.handle) {
+            this.handle.remove();
+        }
     }
 
     onClose() {

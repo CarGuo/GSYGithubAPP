@@ -91,11 +91,13 @@ class RepositoryDetailPage extends Component {
                     }
                 });
         });
-        this.handle = BackHandler.addEventListener('hardwareBackPress', this._backHandler)
+        this.handle = BackHandler.addEventListener('hardwareBackPress-RepositoryDetail', this._backHandler)
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.handle)
+        if (this.handle) {
+            this.handle.remove();
+        }
     }
 
     componentWillReceiveProps(newProps) {
