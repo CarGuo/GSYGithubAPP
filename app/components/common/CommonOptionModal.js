@@ -27,7 +27,8 @@ class CommonOptionModal extends Component {
     }
 
     componentDidMount() {
-        this.refs.modal.open();
+        if (this.refs.modal)
+            this.refs.modal.open();
     }
 
     componentWillUnmount() {

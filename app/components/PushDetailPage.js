@@ -35,7 +35,8 @@ class PushDetailPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this.refs.pullList.showRefreshState();
+            if (this.refs.pullList)
+                this.refs.pullList.showRefreshState();
             this._refresh();
         })
     }

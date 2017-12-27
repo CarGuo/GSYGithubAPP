@@ -40,7 +40,8 @@ class BasePersonPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this.refs.pullList.showRefreshState();
+            if (this.refs.pullList)
+                this.refs.pullList.showRefreshState();
             this._refresh();
             this._getMoreInfo();
         })

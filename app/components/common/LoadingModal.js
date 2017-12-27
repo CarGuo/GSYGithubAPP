@@ -27,7 +27,8 @@ class LoadingModal extends Component {
     }
 
     componentDidMount() {
-        this.refs.loginModal.open();
+        if (this.refs.loginModal)
+            this.refs.loginModal.open();
         this.handle = BackHandler.addEventListener('loaddingBack', this.onClose)
     }
 
