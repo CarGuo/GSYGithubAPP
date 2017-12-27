@@ -99,7 +99,7 @@ class UserHeadItem extends Component {
                     </View>
                     <View style={{marginLeft: Constant.normalMarginEdge}}>
                         <View style={[styles.centerH, styles.flexDirectionRowNotFlex]}>
-                            <Text style={[styles.largeTextWhite, {fontWeight: "bold",},
+                            <Text selectable={true} style={[styles.largeTextWhite, {fontWeight: "bold",},
                                 {marginRight: setting ? Constant.normalMarginEdge / 2 : 150}]}>
                                 {(userDisPlayName) ? userDisPlayName : hintNum}
                             </Text>
@@ -131,7 +131,7 @@ class UserHeadItem extends Component {
                                        color={unRead ? Constant.actionBlue : Constant.miWhite}/>
                             </TouchableOpacity>
                         </View>
-                        <Text style={[styles.subLightSmallText]}>{(userName) ? userName : hintNum}</Text>
+                        <Text selectable={true} style={[styles.subLightSmallText]}>{(userName) ? userName : hintNum}</Text>
                         <IconTextItem
                             text={(groupName) ? groupName : hint} icon={'group'}
                             viewstyle={[{marginTop: halfEdge}]}

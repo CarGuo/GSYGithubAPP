@@ -42,6 +42,7 @@ class ReleaseItem extends Component {
                 marginTop: Constant.normalMarginEdge / 2,
                 backgroundColor: Constant.transparentColor
             }]}
+            selectable={true}
             numberOfLines={100}
             value={actionTarget}
             textComponentProps={{

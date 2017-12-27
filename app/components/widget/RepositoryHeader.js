@@ -147,9 +147,10 @@ class RepositoryHeader extends Component {
                         <Text style={[styles.normalTextMitWhite, styles.shadowText, {fontWeight: "bold"}, {
                             backgroundColor: Constant.transparentColor,
                         }]}>{" / "}</Text>
-                        <Text style={[styles.normalTextMitWhite, styles.shadowText, {fontWeight: "bold"}, {
-                            backgroundColor: Constant.transparentColor,
-                        }]}>{repositoryName}</Text>
+                        <Text selectable={true}
+                              style={[styles.normalTextMitWhite, styles.shadowText, {fontWeight: "bold"}, {
+                                  backgroundColor: Constant.transparentColor,
+                              }]}>{repositoryName}</Text>
                     </View>
                     <View style={[styles.flexDirectionRowNotFlex, {marginTop: Constant.normalMarginEdge / 2}, {
                         backgroundColor: Constant.transparentColor,
@@ -190,6 +191,7 @@ class RepositoryHeader extends Component {
                             style: styles.miLightSmallText,
                             numberOfLines: 100,
                         }}
+                        selectable={true}
                         textComponent={() => {
                             return (
                                 <Text/>
@@ -218,6 +220,7 @@ class RepositoryHeader extends Component {
                                 fontSize: Constant.minTextSize,
                                 backgroundColor: Constant.transparentColor,
                             }]}
+                            selectable={true}
                             numberOfLines={2}>
                             {infoText}
                         </Text>
