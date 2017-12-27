@@ -136,9 +136,14 @@ class RepositoryHeader extends Component {
                     <View style={[styles.flexDirectionRowNotFlex, {
                         backgroundColor: Constant.transparentColor,
                     }]}>
-                        <Text style={[styles.normalTextMitWhite, styles.shadowText, {fontWeight: "bold"}, {
-                            backgroundColor: Constant.transparentColor,
-                        }]}>{ownerName}</Text>
+                        <TouchableOpacity
+                            onPress={() => {
+                                Actions.PersonPage({currentUser: ownerName})
+                            }}>
+                            <Text style={[styles.normalTextMitWhite, styles.shadowText, {fontWeight: "bold"}, {
+                                backgroundColor: Constant.transparentColor,
+                            }]}>{ownerName}</Text>
+                        </TouchableOpacity>
                         <Text style={[styles.normalTextMitWhite, styles.shadowText, {fontWeight: "bold"}, {
                             backgroundColor: Constant.transparentColor,
                         }]}>{" / "}</Text>
