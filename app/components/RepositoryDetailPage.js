@@ -186,7 +186,7 @@ class RepositoryDetailPage extends Component {
                                 let owner = this.props.ownerName;
                                 let repo = this.props.repositoryName;
                                 let branch = this.curBranch ? this.curBranch : "master";
-                                let currentPath = url.replace("gsygithub://.", "");
+                                let currentPath = url.replace("gsygithub://.", "").replace("gsygithub://", "/");
                                 let fixedUrl = "https://github.com/" + owner + "/" + repo + "/blob/" + branch + currentPath;
                                 launchUrl(fixedUrl);
                             }

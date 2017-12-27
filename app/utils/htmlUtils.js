@@ -82,10 +82,7 @@ export const generateHtml = (mdData, backgroundColor = Constant.white, userBR = 
     });
     let data = mdDataCode.replace(/href="(.*?)"/gi, function (match, capture) {
         if (match && capture) {
-            if (capture.indexOf("./") === 0) {
-                if (capture.indexOf("http://") >= 0 || capture.indexOf("https://") >= 0) {
-                    return match;
-                }
+            if (capture.indexOf("http://") < 0 && capture.indexOf("https://") < 0 && capture.indexOf("#") !== 0) {
                 let fixedUrl = "gsygithub://" + capture;
                 let href = `href="${fixedUrl}"`;
                 return href;
