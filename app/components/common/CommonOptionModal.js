@@ -6,14 +6,16 @@ import {
     Text,
     View,
     TouchableOpacity,
+    ScrollView
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles, {screenWidth, screenHeight} from "../../style/index"
 import * as Constant from "../../style/constant"
-import I18n from '../../style/i18n'
 import Modal from 'react-native-modalbox';
 import {Actions} from "react-native-router-flux";
 
+const width = screenWidth - 100;
+const itemHeight = 50;
 
 /**
  * 通用配置item选择modal
@@ -40,14 +42,14 @@ class CommonOptionModal extends Component {
     }
 
     _renderItem(data) {
-        let width = screenWidth - 100;
         return (
-            <TouchableOpacity style={[styles.centered, {width: width, height: 50}, styles.centerH, data.itemStyle]}
-                              onPress={() => {
-                                  Actions.pop();
-                                  data.itemClick && data.itemClick(data);
-                              }}
-                              key={data.itemName}>
+            <TouchableOpacity
+                style={[styles.centered, {width: width, height: itemHeight}, styles.centerH, data.itemStyle]}
+                onPress={() => {
+                    Actions.pop();
+                    data.itemClick && data.itemClick(data);
+                }}
+                key={data.itemName}>
                 <Text style={[styles.normalText]}>{data.itemName}</Text>
             </TouchableOpacity>
         )
@@ -59,6 +61,8 @@ class CommonOptionModal extends Component {
         dataList.forEach((data) => {
             items.push(this._renderItem(data))
         });
+        let sumHeight = itemHeight * items.length + 2;
+        let currentHeight = (sumHeight >= screenHeight) ? screenHeight : sumHeight;
         return (
             <Modal ref={"modal"}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
@@ -69,8 +73,14 @@ class CommonOptionModal extends Component {
                    swipeToClose={true}
                    backdropOpacity={0.8}>
                 <View style={[styles.centered, {height: screenHeight, width: screenWidth}]}>
-                    <View style={[styles.centered, {backgroundColor: Constant.white, borderRadius: 4}]}>
-                        {items}
+                    <View style={[styles.centered, {height: currentHeight, width: screenWidth}]}>
+                        <ScrollView style={[{
+                            backgroundColor: Constant.white,
+                            borderRadius: 4,
+                            width: width,
+                        }]}>
+                            {items}
+                        </ScrollView>
                     </View>
                 </View>
             </Modal>
