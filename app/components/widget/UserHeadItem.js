@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, Text, Image, StyleSheet, TouchableOpacity
+    View, Text, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, WebView
 } from 'react-native';
 import styles, {screenWidth} from "../../style"
 import PropTypes from 'prop-types';
@@ -15,6 +15,7 @@ import NameValueItem from '../common/CommonNameValueItem'
 import {RepositoryFilter} from '../../utils/filterUtils'
 import repositoryActions from "../../store/actions/repository";
 import userActions from "../../store/actions/user";
+import {graphicHost} from "../../net/address";
 
 const hintNum = '---';
 
@@ -51,183 +52,235 @@ class UserHeadItem extends Component {
                 style={styles.smallTextWhite}>{hadFollowed ? I18n("unFollowed") : I18n("doFollowed")}</Text>
         </TouchableOpacity> : <View/>;
         return (
-            <View style={[{
-                paddingHorizontal: Constant.normalMarginEdge,
-                paddingTop: 2 * Constant.normalMarginEdge,
-                backgroundColor: Constant.primaryColor,
-                shadowColor: '#000',
-                shadowOffset: {
-                    width: 1,
-                    height: 2
-                },
-                shadowOpacity: 0.7,
-                shadowRadius: 5,
-                borderBottomRightRadius: 2,
-                borderBottomLeftRadius: 2,
-                elevation: 2,
-            }]}>
+            <View>
                 <View style={[{
-                    position: "absolute",
-                    left: screenWidth - 100,
-                    right: Constant.normalMarginEdge,
-                    top: Constant.normalMarginEdge,
-                    bottom: 80,
-                    zIndex: 12,
-                }, styles.alignItemsEnd]}>
-                    {followView}
-                </View>
-                <View style={[styles.flexDirectionRowNotFlex]}>
+                    paddingHorizontal: Constant.normalMarginEdge,
+                    paddingTop: 2 * Constant.normalMarginEdge,
+                    backgroundColor: Constant.primaryColor,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                        width: 1,
+                        height: 2
+                    },
+                    shadowOpacity: 0.7,
+                    shadowRadius: 5,
+                    borderBottomRightRadius: 2,
+                    borderBottomLeftRadius: 2,
+                    elevation: 2,
+                }]}>
                     <View style={[{
-                        height: Constant.largeIconSize, width: Constant.largeIconSize,
-                    }]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                if (settingNeed) {
-                                    Actions.SettingPage();
-                                } else {
-                                    Actions.PhotoPage({uri: userPic});
-                                }
-                            }}>
-                            <Image source={{uri: userPic}}
-                                   resizeMethod="scale"
-                                   style={[styles.centerH, {
-                                       height: Constant.largeIconSize, width: Constant.largeIconSize,
-                                       borderRadius: Constant.largeIconSize / 2,
-                                       marginTop: 5
-                                   }]}/>
-                        </TouchableOpacity>
+                        position: "absolute",
+                        left: screenWidth - 100,
+                        right: Constant.normalMarginEdge,
+                        top: Constant.normalMarginEdge,
+                        bottom: 80,
+                        zIndex: 12,
+                    }, styles.alignItemsEnd]}>
+                        {followView}
                     </View>
-                    <View style={{marginLeft: Constant.normalMarginEdge}}>
-                        <View style={[styles.centerH, styles.flexDirectionRowNotFlex]}>
-                            <Text selectable={true} style={[styles.largeTextWhite, {fontWeight: "bold",},
-                                {marginRight: setting ? Constant.normalMarginEdge / 2 : 150}]}>
-                                {(userDisPlayName) ? userDisPlayName : hintNum}
-                            </Text>
+                    <View style={[styles.flexDirectionRowNotFlex]}>
+                        <View style={[{
+                            height: Constant.largeIconSize, width: Constant.largeIconSize,
+                        }]}>
                             <TouchableOpacity
-                                style={[styles.flexDirectionRowNotFlex, {
-                                    marginLeft: Constant.normalMarginEdge / 2,
-                                    padding: Constant.normalMarginEdge
-                                }]}
                                 onPress={() => {
-                                    Actions.NotifyPage({
-                                        backNotifyCall: this.props.backNotifyCall,
-                                        needRightBtn: true,
-                                        rightBtn: 'read',
-                                        iconType: 3,
-                                        rightBtnPress: () => {
-                                            Actions.LoadingModal({backExit: false});
-                                            userActions.setAllNotificationAsRead().then((res) => {
-                                                Actions.pop();
-                                                setTimeout(() => {
-                                                    if (res && res.result) {
-                                                        Actions.pop();
-                                                    }
-                                                }, 500);
-                                            })
-                                        }
-                                    });
+                                    if (settingNeed) {
+                                        Actions.SettingPage();
+                                    } else {
+                                        Actions.PhotoPage({uri: userPic});
+                                    }
                                 }}>
-                                <IconF name={'bell'} size={setting ? 15 : 1}
-                                       color={unRead ? Constant.actionBlue : Constant.miWhite}/>
+                                <Image source={{uri: userPic}}
+                                       resizeMethod="scale"
+                                       style={[styles.centerH, {
+                                           height: Constant.largeIconSize, width: Constant.largeIconSize,
+                                           borderRadius: Constant.largeIconSize / 2,
+                                           marginTop: 5
+                                       }]}/>
                             </TouchableOpacity>
                         </View>
-                        <Text selectable={true} style={[styles.subLightSmallText]}>{(userName) ? userName : hintNum}</Text>
-                        <IconTextItem
-                            text={(groupName) ? groupName : hint} icon={'group'}
-                            viewstyle={[{marginTop: halfEdge}]}
-                            textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
-                        <IconTextItem
-                            text={(location) ? location : hint} icon={'map-marker'}
-                            viewstyle={[{marginTop: halfEdge, marginLeft: 3, marginRight: 3}]}
-                            textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
+                        <View style={{marginLeft: Constant.normalMarginEdge}}>
+                            <View style={[styles.centerH, styles.flexDirectionRowNotFlex]}>
+                                <Text selectable={true} style={[styles.largeTextWhite, {fontWeight: "bold",},
+                                    {marginRight: setting ? Constant.normalMarginEdge / 2 : 150}]}>
+                                    {(userDisPlayName) ? userDisPlayName : hintNum}
+                                </Text>
+                                <TouchableOpacity
+                                    style={[styles.flexDirectionRowNotFlex, {
+                                        marginLeft: Constant.normalMarginEdge / 2,
+                                        padding: Constant.normalMarginEdge
+                                    }]}
+                                    onPress={() => {
+                                        Actions.NotifyPage({
+                                            backNotifyCall: this.props.backNotifyCall,
+                                            needRightBtn: true,
+                                            rightBtn: 'read',
+                                            iconType: 3,
+                                            rightBtnPress: () => {
+                                                Actions.LoadingModal({backExit: false});
+                                                userActions.setAllNotificationAsRead().then((res) => {
+                                                    Actions.pop();
+                                                    setTimeout(() => {
+                                                        if (res && res.result) {
+                                                            Actions.pop();
+                                                        }
+                                                    }, 500);
+                                                })
+                                            }
+                                        });
+                                    }}>
+                                    <IconF name={'bell'} size={setting ? 15 : 1}
+                                           color={unRead ? Constant.actionBlue : Constant.miWhite}/>
+                                </TouchableOpacity>
+                            </View>
+                            <Text selectable={true}
+                                  style={[styles.subLightSmallText]}>{(userName) ? userName : hintNum}</Text>
+                            <IconTextItem
+                                text={(groupName) ? groupName : hint} icon={'group'}
+                                viewstyle={[{marginTop: halfEdge}]}
+                                textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
+                            <IconTextItem
+                                text={(location) ? location : hint} icon={'map-marker'}
+                                viewstyle={[{marginTop: halfEdge, marginLeft: 3, marginRight: 3}]}
+                                textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
+                        </View>
+                    </View>
+                    <IconTextAutoLinkItem text={(link) ? link : hint} icon={'link'}
+                                          textstyle={[{marginLeft: Constant.normalMarginEdge},
+                                              {fontSize: Constant.smallTextSize},]}
+                                          viewstyle={[{marginTop: halfEdge}]}/>
+                    <IconTextItem text={(des) ? des : hint}
+                                  textstyle={[{marginVertical: Constant.normalMarginEdge},
+                                      styles.subLightSmallText,]}/>
+
+                    <View style={[styles.flexDirectionRowNotFlex,
+                        {borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Constant.primaryLightColor},
+                        {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.primaryLightColor},
+                    ]}>
+                        <NameValueItem
+                            itemStyle={[styles.flex, styles.centered,]}
+                            itemName={I18n("repositoryText")}
+                            itemValue={repos ? repos : hintNum}
+                            onItemPress={() => {
+                                Actions.ListPage({
+                                    dataType: 'user_repos',
+                                    showType: 'repository',
+                                    currentUser: userDisPlayName,
+                                    title: userDisPlayName + " - " + I18n('repositoryText'),
+                                    needRightBtn: true,
+                                    rightBtn: 'filter',
+                                    filterSelect: RepositoryFilter()[0].itemValue,
+                                    rightBtnPress: () => {
+                                        Actions.OptionModal({dataList: RepositoryFilter()});
+                                    }
+                                })
+                            }}/>
+                        <NameValueItem
+                            itemStyle={[styles.flex, styles.centered,
+                                {
+                                    borderLeftWidth: StyleSheet.hairlineWidth,
+                                    borderLeftColor: Constant.primaryLightColor
+                                },
+                                {
+                                    borderRightWidth: StyleSheet.hairlineWidth,
+                                    borderRightColor: Constant.primaryLightColor
+                                },
+                            ]}
+                            itemName={I18n("FollowersText")}
+                            itemValue={follower ? follower : hintNum}
+                            onItemPress={() => {
+                                Actions.ListPage({
+                                    dataType: 'follower', showType: 'user',
+                                    currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowersText')
+                                })
+                            }}/>
+                        <NameValueItem
+                            itemStyle={[styles.flex, styles.centered,]}
+                            itemName={I18n("FollowedText")}
+                            itemValue={followed ? followed : hintNum}
+                            onItemPress={() => {
+                                Actions.ListPage({
+                                    dataType: 'followed', showType: 'user',
+                                    currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowedText')
+                                })
+                            }}/>
+                        <NameValueItem
+                            itemStyle={[styles.flex, styles.centered,
+                                {
+                                    borderLeftWidth: StyleSheet.hairlineWidth,
+                                    borderLeftColor: Constant.primaryLightColor
+                                },]}
+                            itemName={I18n("staredText")}
+                            itemValue={star ? star : hintNum}
+                            onItemPress={() => {
+                                Actions.ListPage({
+                                    dataType: 'user_star',
+                                    showType: 'repository',
+                                    currentUser: userDisPlayName,
+                                    title: userDisPlayName + " - " + I18n('repositoryText'),
+                                    needRightBtn: true,
+                                    rightBtn: 'filter',
+                                    filterSelect: RepositoryFilter()[1].itemValue,
+                                    rightBtnPress: () => {
+                                        Actions.OptionModal({dataList: RepositoryFilter()});
+                                    }
+                                })
+                            }}/>
+                        <NameValueItem
+                            itemStyle={[styles.flex, styles.centered,
+                                {
+                                    borderLeftWidth: StyleSheet.hairlineWidth,
+                                    borderLeftColor: Constant.primaryLightColor
+                                },]}
+                            itemName={I18n("beStaredText")}
+                            itemValue={beStared ? beStared : hintNum}
+                            onItemPress={() => {
+                                if (!beStaredList || beStaredList.length === 0) {
+                                    return
+                                }
+                                Actions.ListPage({
+                                    dataType: 'user_be_stared',
+                                    showType: 'repository',
+                                    localData: beStaredList,
+                                    currentUser: userDisPlayName,
+                                    title: userDisPlayName + I18n('beStared100Title'),
+                                })
+                            }}/>
                     </View>
                 </View>
-                <IconTextAutoLinkItem text={(link) ? link : hint} icon={'link'}
-                                      textstyle={[{marginLeft: Constant.normalMarginEdge},
-                                          {fontSize: Constant.smallTextSize},]}
-                                      viewstyle={[{marginTop: halfEdge}]}/>
-                <IconTextItem text={(des) ? des : hint}
-                              textstyle={[{marginVertical: Constant.normalMarginEdge},
-                                  styles.subLightSmallText,]}/>
+                <TouchableWithoutFeedback
+                    onPress={() => {
 
-                <View style={[styles.flexDirectionRowNotFlex,
-                    {borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Constant.primaryLightColor},
-                    {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.primaryLightColor},
-                ]}>
-                    <NameValueItem
-                        itemStyle={[styles.flex, styles.centered,]}
-                        itemName={I18n("repositoryText")}
-                        itemValue={repos ? repos : hintNum}
-                        onItemPress={() => {
-                            Actions.ListPage({
-                                dataType: 'user_repos', showType: 'repository',
-                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('repositoryText'),
-                                needRightBtn: true,
-                                rightBtn: 'filter',
-                                filterSelect: RepositoryFilter()[0].itemValue,
-                                rightBtnPress: () => {
-                                    Actions.OptionModal({dataList: RepositoryFilter()});
-                                }
-                            })
-                        }}/>
-                    <NameValueItem
-                        itemStyle={[styles.flex, styles.centered,
-                            {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.primaryLightColor},
-                            {borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.primaryLightColor},
-                        ]}
-                        itemName={I18n("FollowersText")}
-                        itemValue={follower ? follower : hintNum}
-                        onItemPress={() => {
-                            Actions.ListPage({
-                                dataType: 'follower', showType: 'user',
-                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowersText')
-                            })
-                        }}/>
-                    <NameValueItem
-                        itemStyle={[styles.flex, styles.centered,]}
-                        itemName={I18n("FollowedText")}
-                        itemValue={followed ? followed : hintNum}
-                        onItemPress={() => {
-                            Actions.ListPage({
-                                dataType: 'followed', showType: 'user',
-                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowedText')
-                            })
-                        }}/>
-                    <NameValueItem
-                        itemStyle={[styles.flex, styles.centered,
-                            {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.primaryLightColor},]}
-                        itemName={I18n("staredText")}
-                        itemValue={star ? star : hintNum}
-                        onItemPress={() => {
-                            Actions.ListPage({
-                                dataType: 'user_star', showType: 'repository',
-                                currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('repositoryText'),
-                                needRightBtn: true,
-                                rightBtn: 'filter',
-                                filterSelect: RepositoryFilter()[1].itemValue,
-                                rightBtnPress: () => {
-                                    Actions.OptionModal({dataList: RepositoryFilter()});
-                                }
-                            })
-                        }}/>
-                    <NameValueItem
-                        itemStyle={[styles.flex, styles.centered,
-                            {borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.primaryLightColor},]}
-                        itemName={I18n("beStaredText")}
-                        itemValue={beStared ? beStared : hintNum}
-                        onItemPress={() => {
-                            if(!beStaredList || beStaredList.length === 0) {
-                                return
-                            }
-                            Actions.ListPage({
-                                dataType: 'user_be_stared',
-                                showType: 'repository',
-                                localData: beStaredList,
-                                currentUser: userDisPlayName,
-                                title: userDisPlayName + I18n('beStared100Title'),
-                            })
-                        }}/>
-                </View>
+                    }}>
+                    <View style={[styles.centered, styles.shadowCard, {
+                        borderRadius: 4,
+                        width: screenWidth,
+                        height: 120,
+                        marginVertical: Constant.normalMarginEdge
+                    }]}>
+                        <View style={[styles.centered, styles.absoluteFull, {
+                            zIndex: -888,
+                            width: screenWidth - Constant.normalMarginEdge * 2,
+                            height: 120,
+                        }]}>
+                            <Icon name={'ios-image'} size={40} color={Constant.primaryColor}/>
+                        </View>
+                        <WebView source={{uri: graphicHost + userDisPlayName}}
+                                 javaScriptEnabled={true}
+                                 dataDetectorTypes={'none'}
+                                 domStorageEnabled={true}
+                                 scalesPageToFit={true}
+                                 scrollEnabled={false}
+                                 automaticallyAdjustContentInsets={true}
+                                 mixedContentMode={'always'}
+                                 startInLoadingState={true}
+                                 style={[styles.centerH, {
+                                     width: screenWidth - Constant.normalMarginEdge * 2,
+                                     height: 120,
+                                 }]}>
+                        </WebView>
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
         )
     }
