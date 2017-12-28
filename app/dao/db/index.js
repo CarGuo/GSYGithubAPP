@@ -1,6 +1,15 @@
 import Realm from 'realm';
 
-const SearchHistory = {};
+/**
+ * 仓库pulse表
+ */
+const RepositoryPulse = {
+    name: 'RepositoryPulse',
+    properties: {
+        fullName: 'string',
+        data: 'string',
+    }
+};
 
 /**
  * 本地已读历史表
@@ -249,7 +258,7 @@ let realm = new Realm({
         RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
         RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits,
         UserFollower, UserFollowed, UserStared, UserRepos, RepositoryCommitInfoDetail,
-        IssueDetail, IssueComment, ReadHistory
+        IssueDetail, IssueComment, ReadHistory, RepositoryPulse
     ]
 });
 

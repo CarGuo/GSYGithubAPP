@@ -21,7 +21,6 @@ import EventItem from './widget/EventItem'
 import resolveTime from '../utils/timeUtil'
 import * as Config from '../config'
 import {getActionAndDes, ActionUtils} from '../utils/eventUtils'
-import getPulse from "../utils/pulse/PulseUtils";
 
 /**
  * 仓库动态页面
@@ -91,9 +90,13 @@ class RepositoryDetailActivityPage extends Component {
 
             )
         } else if (this.state.select === 2) {
+            let openStatus = this.state.pulseData.issueOpenStatus ? this.state.pulseData.issueOpenStatus : "";
+            let closeStatus = this.state.pulseData.issueClosedStatus ? this.state.pulseData.issueClosedStatus : "";
+            let statusText = openStatus + closeStatus;
             return (
                 <RepositoryPulseItem
                     opened={this.state.pulseData.openIssue}
+                    statusText={statusText}
                     infoText={this.state.pulseData.des}
                     closed={this.state.pulseData.closedIssue}/>
             )
@@ -165,21 +168,23 @@ class RepositoryDetailActivityPage extends Component {
                 }
                 return
             }
-            getPulse(this.props.ownerName, this.props.repositoryName)
-                .then((res) => {
-                    if (res && res.result) {
-                        this.setState({
-                            pulseData: res.data
-                        })
-                    }
-                    if (this.refs.pullList) {
-                        this.refs.pullList.refreshComplete(false);
-                    }
-                }).catch(() => {
+            reposActions.getPulse(this.props.ownerName, this.props.repositoryName).then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        pulseData: res.data
+                    })
+                }
+                return res.next()
+            }).then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        pulseData: res.data
+                    })
+                }
                 if (this.refs.pullList) {
                     this.refs.pullList.refreshComplete(false);
                 }
-            })
+            });
         }
     }
 

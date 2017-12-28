@@ -4,6 +4,7 @@ import GitHubTrending from '../utils/trending/GitHubTrending'
 import realm from './db'
 import {generateHtml} from "../utils/htmlUtils";
 import * as Config from '../config'
+import getPulse from "../utils/pulse/PulseUtils";
 
 /**
  * 趋势数据
@@ -42,6 +43,47 @@ const getTrendDao = async (page = 0, since, languageType) => {
         });
         return {
             data: data,
+            next: nextStep,
+            result: true
+        };
+    } else {
+        return {
+            data: [],
+            next: nextStep,
+            result: false
+        };
+    }
+
+};
+
+
+/**
+ * Pulse
+ */
+const getPulseDao = async (owner, repositoryName) => {
+    let fullName = owner + "/" + repositoryName;
+    let nextStep = async () => {
+        let res = await getPulse(owner, repositoryName);
+        if (res && res.result && res.data) {
+            realm.write(() => {
+                let allData = realm.objects('RepositoryPulse').filtered(`fullName="${fullName}"`);
+                realm.delete(allData);
+                realm.create('RepositoryPulse', {
+                    fullName: fullName,
+                    data: JSON.stringify(res.data)
+                });
+
+            });
+        }
+        return {
+            data: res.data,
+            result: res.result
+        };
+    };
+    let allData = realm.objects('RepositoryPulse').filtered(`fullName="${fullName}"`);
+    if (allData && allData.length > 0) {
+        return {
+            data: JSON.parse(allData[0].data),
             next: nextStep,
             result: true
         };
@@ -813,5 +855,6 @@ export default {
     addRepositoryLocalReadDao,
     searchTopicRepositoryDao,
     getRepositoryIssueStatusDao,
-    getUserRepository100StatusDao
+    getUserRepository100StatusDao,
+    getPulseDao
 }

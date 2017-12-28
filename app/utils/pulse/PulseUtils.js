@@ -10,6 +10,11 @@ const openIssue = '<a href="#new-issues"';
 const desStart = '<div class="authors-and-code">';
 const desEnd = '</div>';
 
+const issueOpenStatusStart = '<h3 class="conversation-list-heading" id="new-issues">';
+const issueClosedStatusStart = '<h3 class="conversation-list-heading" id="closed-issues">';
+const issueStatusEnd = '</h3>';
+
+
 const middleTag = '</svg>';
 const middleLength = middleTag.length;
 const endTag = "</span>";
@@ -82,6 +87,22 @@ const htmlToRepo = (responseData) => {
     end = responseData.indexOf(desEnd, start);
     data = responseData.substring(start, end).trim();
     resultData.des = data;
+
+    start = responseData.indexOf(issueOpenStatusStart);
+    end = responseData.indexOf(issueStatusEnd, start);
+    if (start >= 0 && end >= 0) {
+        data = responseData.substring(start + issueOpenStatusStart.length, end).trim();
+        if (data && data.indexOf("</span>") >= 0)
+            resultData.issueOpenStatus = data;
+    }
+
+    start = responseData.indexOf(issueClosedStatusStart);
+    end = responseData.indexOf(issueStatusEnd, start);
+    if (start >= 0 && end >= 0) {
+        data = responseData.substring(start + issueClosedStatusStart.length, end).trim();
+        if (data && data.indexOf("</span>") >= 0)
+            resultData.issueClosedStatus = data;
+    }
 
     return resultData;
 };

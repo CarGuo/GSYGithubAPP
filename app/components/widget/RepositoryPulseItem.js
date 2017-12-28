@@ -48,7 +48,7 @@ class RepositoryPulseItem extends Component {
             size: 22,
         };
 
-        let {opened, closed, infoText} = this.props;
+        let {opened, closed, infoText, statusText} = this.props;
 
         return (
             <View style={[{
@@ -80,13 +80,17 @@ class RepositoryPulseItem extends Component {
                             style={[styles.smallText, styles.shadowText, {marginLeft: 5}]}>{I18n("weekOpened") + opened}</Text>
                     </View>
                 </View>
+                <Text
+                    style={[styles.normalText, styles.shadowText, {marginTop: Constant.normalMarginEdge}]}>{I18n("thisWeek")}</Text>
                 <HTMLView
                     style={[{
                         backgroundColor: Constant.transparentColor,
-                        marginBottom: Constant.normalMarginEdge * 2
+                        marginBottom: Constant.normalMarginEdge * 2,
+                        flex: 2,
+                        paddingLeft: Constant.normalMarginEdge
                     }]}
                     numberOfLines={100}
-                    value={infoText}
+                    value={statusText + infoText}
                     textComponentProps={{
                         style: styles.subSmallText,
                         numberOfLines: 100,

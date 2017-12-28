@@ -36,6 +36,15 @@ const getTrend = (page = 0, since = 'daily', languageType, callback) => async (d
     }
 };
 
+
+/**
+ * Pulse
+ */
+const getPulse = async (owner, repositoryName) => {
+    let resLocal = await RepositoryDao.getPulseDao(owner, repositoryName);
+    return resLocal;
+};
+
 /**
  * 搜索仓库
  * @param q 搜索关键字
@@ -353,6 +362,7 @@ export default {
     getRepositoryLocalRead,
     addRepositoryLocalRead,
     searchTopicRepository,
-    getUserRepository100Status
+    getUserRepository100Status,
+    getPulse
 
 }
