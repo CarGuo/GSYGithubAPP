@@ -15,6 +15,7 @@ import eventActions from '../store/actions/event'
 import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import RepositoryHeader from './widget/RepositoryHeader'
+import RepositoryPulseItem from './widget/RepositoryPulseItem'
 import CommonBottomBar from './common/CommonBottomBar'
 import EventItem from './widget/EventItem'
 import resolveTime from '../utils/timeUtil'
@@ -35,6 +36,7 @@ class RepositoryDetailActivityPage extends Component {
         this.page = 2;
         this.state = {
             select: 0,
+            pulseData: null,
             dataSource: [],
             dataSourceCommits: [],
         };
@@ -42,7 +44,8 @@ class RepositoryDetailActivityPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this.refs.pullList.showRefreshState();
+            if (this.refs.pullList)
+                this.refs.pullList.showRefreshState();
             this._refresh(this.state.select);
         })
     }
@@ -85,6 +88,17 @@ class RepositoryDetailActivityPage extends Component {
                     }}
                     actionTarget={rowData.commit.message}/>
 
+            )
+        } else if (this.state.select === 2) {
+            let openStatus = this.state.pulseData.issueOpenStatus ? this.state.pulseData.issueOpenStatus : "";
+            let closeStatus = this.state.pulseData.issueClosedStatus ? this.state.pulseData.issueClosedStatus : "";
+            let statusText = openStatus + closeStatus;
+            return (
+                <RepositoryPulseItem
+                    opened={this.state.pulseData.openIssue}
+                    statusText={statusText}
+                    infoText={this.state.pulseData.des}
+                    closed={this.state.pulseData.closedIssue}/>
             )
         }
     }
@@ -147,6 +161,30 @@ class RepositoryDetailActivityPage extends Component {
                     }
                 })
 
+        } else if (select === 2) {
+            if (this.state.pulseData) {
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete(false);
+                }
+                return
+            }
+            reposActions.getPulse(this.props.ownerName, this.props.repositoryName).then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        pulseData: res.data
+                    })
+                }
+                return res.next()
+            }).then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        pulseData: res.data
+                    })
+                }
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete(false);
+                }
+            });
         }
     }
 
@@ -185,6 +223,10 @@ class RepositoryDetailActivityPage extends Component {
                 }
             })
 
+        } else if (this.state.select === 2) {
+            if (this.refs.pullList) {
+                this.refs.pullList.loadMoreComplete(false);
+            }
         }
     }
 
@@ -214,6 +256,19 @@ class RepositoryDetailActivityPage extends Component {
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
             }
+        }, {
+            itemName: 'Pulse',
+            itemTextColor: select === 2 ? Constant.white : Constant.subTextColor,
+            icon: select === 2 ? "check" : null,
+            iconColor: Constant.white,
+            itemClick: () => {
+                this.setState({
+                    select: 2,
+                });
+                this._refresh(2);
+            }, itemStyle: {
+                borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
+            }
         },]
     }
 
@@ -221,7 +276,7 @@ class RepositoryDetailActivityPage extends Component {
         let {
             forks_count, fork, open_issues_count, size, watchers_count, owner,
             subscribers_count, description, language, created_at, pushed_at, parent,
-            topics, license
+            topics, license, all_issues_count, closed_issues_count
         } = this.props.dataDetail;
         let data = this.state.select === 0 ? this.state.dataSource : this.state.dataSourceCommits;
         let header =
@@ -234,6 +289,8 @@ class RepositoryDetailActivityPage extends Component {
                     repositoryFork={forks_count + ""}
                     repositoryWatch={subscribers_count + ""}
                     repositoryIssue={open_issues_count + ""}
+                    repositoryIssueClose={closed_issues_count ? (closed_issues_count + "") : null}
+                    repositoryIssueAll={all_issues_count ? (all_issues_count + "") : null}
                     repositorySize={(size / 1024).toFixed(2) + "M"}
                     repositoryType={language}
                     repositoryDes={description}
@@ -253,6 +310,13 @@ class RepositoryDetailActivityPage extends Component {
                     }}
                     dataList={this._getBottomItem()}/>
             </View>;
+
+        if (this.state.select === 2) {
+            data = [];
+            if (this.state.pulseData)
+                data.push(this.state.pulseData);
+        }
+
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>

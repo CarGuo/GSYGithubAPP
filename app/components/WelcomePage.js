@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Image, StatusBar, TouchableHighlight
+    View, Image, StatusBar, Platform
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles, {screenHeight, screenWidth} from "../style"
@@ -14,8 +14,7 @@ import userActions from '../store/actions/user'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as Constant from "../style/constant"
-import Api from '../net'
-import address from '../net/address'
+import SplashScreen from './widget/native/SplashNative'
 
 /**
  * 欢迎页
@@ -29,6 +28,9 @@ class WelcomePage extends Component {
 
 
     componentDidMount() {
+        if(Platform.OS === 'android') {
+            SplashScreen.hide();
+        }
         //是否登陆，是否用户信息
         userActions.initUserInfo().then((res) => {
             this.toNext(res)

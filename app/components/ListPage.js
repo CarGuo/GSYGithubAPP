@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, InteractionManager, TouchableOpacity, Keyboard
+    View, Linking, StatusBar, InteractionManager, TouchableOpacity, Keyboard
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style/index"
@@ -12,13 +12,10 @@ import * as Constant from "../style/constant"
 import userActions from '../store/actions/user'
 import repositoryActions from '../store/actions/repository'
 import I18n from '../style/i18n'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import UserItem from './widget/UserItem'
 import IssueItem from './widget/IssueItem'
 import EventItem from './widget/EventItem'
 import ReleaseItem from './widget/ReleaseItem'
-import CustomSearchButton from './widget/CustomSearchButton'
 import PullListView from './widget/PullLoadMoreListView'
 import RepositoryItem from './widget/RepositoryItem'
 import * as Config from '../config/index'
@@ -122,10 +119,15 @@ class ListPage extends Component {
                                     title: rowData.name,
                                     needRequest: false,
                                     lang: 'markdown',
-                                    detail: generateHtml(rowData.body_html, Constant.primaryColor),
+                                    detail: generateHtml(rowData.body_html, Constant.webDraculaBackgroundColor),
                                     html_url: rowData.html_url,
                                     clone_url: rowData.clone_url,
                                 })
+                            }
+                        }}
+                        onLongPressItem={() => {
+                            if (rowData.html_url) {
+                                Linking.openURL(rowData.html_url)
                             }
                         }}
                     />
@@ -287,6 +289,10 @@ class ListPage extends Component {
                     this._refreshRes(res)
                 });
                 break;
+            case 'user_be_stared':
+                this._refreshRes({result: true, data: this.props.localData});
+                break;
+
 
         }
 
@@ -357,6 +363,9 @@ class ListPage extends Component {
                 repositoryActions.searchTopicRepository(this.props.topic, this.page).then((res) => {
                     this._loadMoreRes(res)
                 });
+                break;
+            case 'user_be_stared':
+                this._loadMoreRes({result: false});
                 break;
         }
     }
@@ -429,7 +438,8 @@ ListPage.propTypes = {
     participating: PropTypes.bool,
     onItemClickEx: PropTypes.func,
     currentUser: PropTypes.string,
-    currentRepository: PropTypes.string
+    currentRepository: PropTypes.string,
+    localData: PropTypes.any
 };
 
 export default ListPage

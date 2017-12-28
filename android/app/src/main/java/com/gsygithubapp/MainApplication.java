@@ -5,6 +5,7 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.apsl.versionnumber.RNVersionNumberPackage;
 import com.gsygithubapp.module.download.DownloadFilePackage;
+import com.gsygithubapp.module.splash.SplashScreenReactPackage;
 import com.gsygithubapp.views.webview.CustomWebViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.react.rnspinkit.RNSpinkitPackage;
@@ -37,7 +38,8 @@ public class MainApplication extends Application implements ReactApplication {
             new CustomWebViewPackage(),
             new DownloadFilePackage(),
             new PickerPackage(),
-            new RealmReactPackage()
+            new RealmReactPackage(),
+            new SplashScreenReactPackage()
       );
     }
 

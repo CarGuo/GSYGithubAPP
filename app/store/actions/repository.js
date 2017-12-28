@@ -36,6 +36,15 @@ const getTrend = (page = 0, since = 'daily', languageType, callback) => async (d
     }
 };
 
+
+/**
+ * Pulse
+ */
+const getPulse = async (owner, repositoryName) => {
+    let resLocal = await RepositoryDao.getPulseDao(owner, repositoryName);
+    return resLocal;
+};
+
 /**
  * 搜索仓库
  * @param q 搜索关键字
@@ -198,8 +207,8 @@ const doRepositoryWatch = async (userName, reposName, watch) => {
 /**
  * 获取仓库的release列表
  */
-const getRepositoryRelease = async (userName, reposName) => {
-    let res = await RepositoryDao.getRepositoryReleaseDao(userName, reposName);
+const getRepositoryRelease = async (userName, reposName, page = 1, needHtml = true) => {
+    let res = await RepositoryDao.getRepositoryReleaseDao(userName, reposName, page, needHtml);
     return {
         data: res.data,
         result: res.result
@@ -209,8 +218,8 @@ const getRepositoryRelease = async (userName, reposName) => {
 /**
  * 获取仓库的tag列表
  */
-const getRepositoryTag = async (userName, reposName) => {
-    let res = await RepositoryDao.getRepositoryTagDao(userName, reposName);
+const getRepositoryTag = async (userName, reposName, page = 1) => {
+    let res = await RepositoryDao.getRepositoryTagDao(userName, reposName, page);
     return {
         data: res.data,
         result: res.result
@@ -316,6 +325,17 @@ const searchTopicRepository = async (searchTopic, page = 0) => {
     }
 };
 
+/**
+ * 用户的前100仓库
+ */
+const getUserRepository100Status = async (userName) => {
+    let res = await RepositoryDao.getUserRepository100StatusDao(userName);
+    return {
+        data: res.data,
+        result: res.result
+    }
+};
+
 
 export default {
     getTrend,
@@ -341,6 +361,8 @@ export default {
     getBranches,
     getRepositoryLocalRead,
     addRepositoryLocalRead,
-    searchTopicRepository
+    searchTopicRepository,
+    getUserRepository100Status,
+    getPulse
 
 }

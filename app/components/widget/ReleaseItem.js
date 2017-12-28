@@ -42,6 +42,7 @@ class ReleaseItem extends Component {
                 marginTop: Constant.normalMarginEdge / 2,
                 backgroundColor: Constant.transparentColor
             }]}
+            selectable={true}
             numberOfLines={100}
             value={actionTarget}
             textComponentProps={{
@@ -64,6 +65,9 @@ class ReleaseItem extends Component {
                     padding: Constant.normalMarginEdge,
                     borderRadius: 4,
                 }, styles.shadowCard]}
+                onLongPress={()=>{
+                    this.props.onLongPressItem && this.props.onLongPressItem();
+                }}
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem();
                 }}>
@@ -92,6 +96,7 @@ const propTypes = {
     actionMode: PropTypes.string,
     actionTarget: PropTypes.string,
     onPressItem: PropTypes.func,
+    onLongPressItem: PropTypes.func,
 };
 
 ReleaseItem.propTypes = propTypes;

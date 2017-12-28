@@ -18,6 +18,7 @@ import {getActionAndDes, ActionUtils} from '../utils/eventUtils'
 import EventItem from './widget/EventItem'
 import PullListView from './widget/PullLoadMoreListView'
 import * as Config from '../config'
+import {getNewsVersion} from './AboutPage'
 
 
 /**
@@ -39,6 +40,7 @@ class DynamicPage extends Component {
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
             this.startRefresh();
+            getNewsVersion();
         });
         AppState.addEventListener('change', this._handleAppStateChange);
     }

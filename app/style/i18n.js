@@ -40,6 +40,7 @@ I18n.translations = {
         doublePressExit: 'Press again to Exit',
         userInfoNoting: 'nothing',
         staredText: 'stared',
+        beStaredText: 'honour',
         FollowersText: 'follower',
         FollowedText: 'followed',
         repositoryText: 'repository',
@@ -154,6 +155,12 @@ I18n.translations = {
         errorUnKnow: 'UnKnow',
         noPower: 'No authority',
         share: 'Share',
+        newestVersion: 'newest',
+        beStared100Title: ' Top 100 repository',
+        update: 'Update',
+        weekClosed: 'Week Closed: ',
+        weekOpened: 'Week Opened： ',
+        thisWeek: 'This Week ',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -183,6 +190,7 @@ I18n.translations = {
         doublePressExit: '双击退出',
         userInfoNoting: 'Ta什么都没留下',
         staredText: '星标',
+        beStaredText: '荣耀',
         FollowersText: '粉丝',
         FollowedText: '关注',
         repositoryText: '仓库',
@@ -297,6 +305,12 @@ I18n.translations = {
         errorUnKnow: '就是不知道是什么错误···',
         noPower: '为啥你没有权限呢？',
         share: '分享',
+        newestVersion: '当前是最新版本',
+        beStared100Title: ' 最受欢迎前100仓库',
+        update: '更新',
+        weekClosed: '本周关闭: ',
+        weekOpened: '本周打开: ',
+        thisWeek: ' 本周动态 ',
     }
 };
 

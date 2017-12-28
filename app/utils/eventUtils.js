@@ -1,6 +1,7 @@
 import {Actions} from 'react-native-router-flux'
 import {StyleSheet} from 'react-native'
 import * as Constant from '../style/constant'
+import {launchUrl} from "./htmlUtils";
 
 export const getActionAndDes = (event) => {
     let actionStr;
@@ -10,7 +11,7 @@ export const getActionAndDes = (event) => {
             actionStr = "Commit comment at " + event.repo.name;
             break;
         case "CreateEvent":
-            if (event.payload.ref_type = "repository") {
+            if (event.payload.ref_type === "repository") {
                 actionStr = "Created repository " + event.repo.name;
             } else {
                 actionStr = "Created " + event.payload.ref_type + " "
@@ -28,7 +29,7 @@ export const getActionAndDes = (event) => {
             actionStr = "Forked " + oriRepo + " to " + newRepo;
             break;
         case "GollumEvent":
-            actionStr = event.payload.action + " a wiki page ";
+            actionStr = event.actor.login + " a wiki page ";
             break;
 
         case "InstallationEvent":
@@ -71,7 +72,7 @@ export const getActionAndDes = (event) => {
             actionStr = event.payload.action + " a project ";
             break;
         case "PublicEvent":
-            actionStr = "Made " + event.repo.name + "public";
+            actionStr = "Made " + event.repo.name + " public";
             break;
         case "PullRequestEvent":
             actionStr = event.payload.action + " pull request " + event.repo.name;
@@ -165,7 +166,8 @@ export const ActionUtils = (event, currentRepository) => {
             }
             break;
         case 'ReleaseEvent':
-            //todo release 相关
+            let url = event.payload.release.html_url;
+            launchUrl(url);
             break;
         case 'IssueCommentEvent':
         case 'IssuesEvent':

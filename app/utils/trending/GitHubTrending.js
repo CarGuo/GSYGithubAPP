@@ -5,6 +5,8 @@
  * @flow
  */
 import TrendingUtil from './TrendingUtil';
+import * as Code from '../../net/netwrokCode'
+import I18n from '../../style/i18n'
 
 export default class GitHubTrending {
     GitHubTrending() {//Singleton pattern
@@ -16,9 +18,20 @@ export default class GitHubTrending {
 
     fetchTrending(url) {
         return new Promise((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
+                resolve({
+                    result: false,
+                    status: Code.NETWORK_TIMEOUT,
+                    message: I18n('netTimeout')
+                })
+            }, 15000);
             fetch(url)
-                .then((response) => response.text())
+                .then((response) => {
+                    clearTimeout(timeoutId);
+                    return response.text()
+                })
                 .catch((error) => {
+                    clearTimeout(timeoutId);
                     reject({result: false, data: error});
                     console.log(error);
                 }).then((responseData) => {

@@ -45,7 +45,8 @@ class TrendPage extends Component {
     }
 
     _refreshData() {
-        this.refs.pullList.showRefreshState();
+        if (this.refs.pullList)
+            this.refs.pullList.showRefreshState();
         this._refresh();
     }
 

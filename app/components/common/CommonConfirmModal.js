@@ -18,7 +18,7 @@ import {Actions} from "react-native-router-flux";
 /**
  * 确认弹出模态框
  */
-class CommentConfirmModal extends Component {
+class CommonConfirmModal extends Component {
 
     constructor(props) {
         super(props);
@@ -27,7 +27,8 @@ class CommentConfirmModal extends Component {
     }
 
     componentDidMount() {
-        this.refs.loginModal.open();
+        if (this.refs.loginModal)
+            this.refs.loginModal.open();
     }
 
     componentWillUnmount() {
@@ -98,15 +99,15 @@ class CommentConfirmModal extends Component {
     }
 }
 
-CommentConfirmModal.propTypes = {
+CommonConfirmModal.propTypes = {
     text: PropTypes.string,
     titleText: PropTypes.string,
     textConfirm: PropTypes.func,
 };
-CommentConfirmModal.defaultProps = {
+CommonConfirmModal.defaultProps = {
     text: '',
     titleText: '',
 };
 
 
-export default CommentConfirmModal;
+export default CommonConfirmModal;

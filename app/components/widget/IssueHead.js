@@ -36,7 +36,8 @@ class IssueItem extends Component {
         let {actionTime, actionUser, actionUserPic, issueComment, issueDes, issueDesHtml, closed_by} = this.props;
         let stateText = (closed_by) ?
             <View>
-                <Text style={[styles.subSmallText, {marginVertical: 5,}]}>{"Closed by " + closed_by.login}</Text>
+                <Text selectable={true}
+                      style={[styles.subSmallText, {marginVertical: 5,}]}>{"Closed by " + closed_by.login}</Text>
             </View> : <View/>;
         return (
             <View
@@ -99,7 +100,7 @@ class IssueItem extends Component {
                             style={[styles.flexDirectionRowNotFlex, {
                                 marginBottom: Constant.normalMarginEdge
                             }]}>
-                            <Text style={[styles.miLightSmallText,] } selectable={true}>{issueComment}</Text>
+                            <Text style={[styles.miLightSmallText,]} selectable={true}>{issueComment}</Text>
                         </View>
                     </View>
                 </View>
@@ -109,6 +110,7 @@ class IssueItem extends Component {
                             marginTop: Constant.normalMarginEdge / 2,
                             backgroundColor: Constant.transparentColor
                         }]}
+                        selectable={true}
                         numberOfLines={100}
                         value={issueDesHtml ? issueDesHtml : ""}
                         stylesheet={{pre: styles.inCode, code: styles.pCode}}

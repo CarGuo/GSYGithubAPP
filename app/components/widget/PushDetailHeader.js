@@ -96,7 +96,8 @@ class PushDetailHeader extends Component {
                             style={[styles.flexDirectionRowNotFlex, {
                                 marginBottom: Constant.normalMarginEdge
                             }]}>
-                            <Text style={[styles.miLightSmallText,]}>{pushDes}</Text>
+                            <Text style={[styles.miLightSmallText,]}
+                                  selectable={true}>{pushDes}</Text>
                         </View>
                     </View>
                 </View>

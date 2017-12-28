@@ -115,6 +115,7 @@ class RepositoryItem extends Component {
                         style: styles.subSmallText,
                         numberOfLines: Constant.normalNumberOfLine
                     }}
+                    selectable={true}
                     textComponent={() => {
                         return (
                             <Text/>

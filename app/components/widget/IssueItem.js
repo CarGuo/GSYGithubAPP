@@ -67,13 +67,14 @@ class IssueItem extends Component {
                 style: styles.subSmallText,
                 numberOfLines: 100,
             }}
+            selectable={true}
             stylesheet={{pre: styles.inCode, code: styles.pCode}}
             textComponent={() => {
                 return (
                     <Text/>
                 )
             }}
-        /> : <Text style={[styles.subSmallText,]}>{issueComment}</Text>;
+        /> : <Text selectable={true} style={[styles.subSmallText,]}>{issueComment}</Text>;
 
 
         return (
@@ -107,7 +108,7 @@ class IssueItem extends Component {
                         marginBottom: bottomMargin
                     }}>
                         <View style={[styles.flexDirectionRowNotFlex, styles.centerH]}>
-                            <Text style={[styles.flex, styles.normalText, {fontWeight: "bold",}]}>
+                            <Text selectable={true} style={[styles.flex, styles.normalText, {fontWeight: "bold",}]}>
                                 {actionUser}
                             </Text>
                             <TimeText style={[styles.subSmallText, {marginTop: -3}]}

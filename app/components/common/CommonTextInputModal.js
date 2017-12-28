@@ -49,7 +49,8 @@ class CommonTextInputModal extends Component {
     }
 
     componentDidMount() {
-        this.refs.loginModal.open();
+        if (this.refs.loginModal)
+            this.refs.loginModal.open();
 
     }
 
