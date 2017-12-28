@@ -15,11 +15,13 @@ import eventActions from '../store/actions/event'
 import reposActions from '../store/actions/repository'
 import PullListView from './widget/PullLoadMoreListView'
 import RepositoryHeader from './widget/RepositoryHeader'
+import RepositoryPulseItem from './widget/RepositoryPulseItem'
 import CommonBottomBar from './common/CommonBottomBar'
 import EventItem from './widget/EventItem'
 import resolveTime from '../utils/timeUtil'
 import * as Config from '../config'
 import {getActionAndDes, ActionUtils} from '../utils/eventUtils'
+import getPulse from "../utils/pulse/PulseUtils";
 
 /**
  * 仓库动态页面
@@ -35,6 +37,7 @@ class RepositoryDetailActivityPage extends Component {
         this.page = 2;
         this.state = {
             select: 0,
+            pulseData: null,
             dataSource: [],
             dataSourceCommits: [],
         };
@@ -86,6 +89,13 @@ class RepositoryDetailActivityPage extends Component {
                     }}
                     actionTarget={rowData.commit.message}/>
 
+            )
+        } else if (this.state.select === 2) {
+            return (
+                <RepositoryPulseItem
+                    opened={this.state.pulseData.openIssue}
+                    infoText={this.state.pulseData.des}
+                    closed={this.state.pulseData.closedIssue}/>
             )
         }
     }
@@ -148,6 +158,28 @@ class RepositoryDetailActivityPage extends Component {
                     }
                 })
 
+        } else if (select === 2) {
+            if (this.state.pulseData) {
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete(false);
+                }
+                return
+            }
+            getPulse(this.props.ownerName, this.props.repositoryName)
+                .then((res) => {
+                    if (res && res.result) {
+                        this.setState({
+                            pulseData: res.data
+                        })
+                    }
+                    if (this.refs.pullList) {
+                        this.refs.pullList.refreshComplete(false);
+                    }
+                }).catch(() => {
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete(false);
+                }
+            })
         }
     }
 
@@ -186,6 +218,10 @@ class RepositoryDetailActivityPage extends Component {
                 }
             })
 
+        } else if (this.state.select === 2) {
+            if (this.refs.pullList) {
+                this.refs.pullList.loadMoreComplete(false);
+            }
         }
     }
 
@@ -212,6 +248,19 @@ class RepositoryDetailActivityPage extends Component {
                     select: 1,
                 });
                 this._refresh(1);
+            }, itemStyle: {
+                borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
+            }
+        }, {
+            itemName: 'Pulse',
+            itemTextColor: select === 2 ? Constant.white : Constant.subTextColor,
+            icon: select === 2 ? "check" : null,
+            iconColor: Constant.white,
+            itemClick: () => {
+                this.setState({
+                    select: 2,
+                });
+                this._refresh(2);
             }, itemStyle: {
                 borderLeftWidth: StyleSheet.hairlineWidth, borderLeftColor: Constant.lineColor,
             }
@@ -256,6 +305,13 @@ class RepositoryDetailActivityPage extends Component {
                     }}
                     dataList={this._getBottomItem()}/>
             </View>;
+
+        if (this.state.select === 2) {
+            data = [];
+            if (this.state.pulseData)
+                data.push(this.state.pulseData);
+        }
+
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>

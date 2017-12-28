@@ -158,6 +158,8 @@ I18n.translations = {
         newestVersion: 'newest',
         beStared100Title: ' Top 100 repository',
         update: 'Update',
+        weekClosed: 'Week Closed ',
+        weekOpened: 'Week Opened ',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -305,6 +307,8 @@ I18n.translations = {
         newestVersion: '当前是最新版本',
         beStared100Title: ' 最受欢迎前100仓库',
         update: '更新',
+        weekClosed: '本周关闭: ',
+        weekOpened: '本周打开: ',
     }
 };
 

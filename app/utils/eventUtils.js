@@ -72,7 +72,7 @@ export const getActionAndDes = (event) => {
             actionStr = event.payload.action + " a project ";
             break;
         case "PublicEvent":
-            actionStr = "Made " + event.repo.name + "public";
+            actionStr = "Made " + event.repo.name + " public";
             break;
         case "PullRequestEvent":
             actionStr = event.payload.action + " pull request " + event.repo.name;
