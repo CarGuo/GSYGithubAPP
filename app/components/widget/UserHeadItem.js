@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, Text, Image, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, WebView
+    View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, WebView, ActivityIndicator
 } from 'react-native';
 import styles, {screenWidth} from "../../style"
 import PropTypes from 'prop-types';
@@ -13,9 +13,9 @@ import {Actions} from "react-native-router-flux";
 import I18n from '../../style/i18n'
 import NameValueItem from '../common/CommonNameValueItem'
 import {RepositoryFilter} from '../../utils/filterUtils'
-import repositoryActions from "../../store/actions/repository";
-import userActions from "../../store/actions/user";
 import {graphicHost} from "../../net/address";
+import userActions from "../../store/actions/user";
+import {generateImageHtml} from "../../utils/htmlUtils";
 
 const hintNum = '---';
 
@@ -26,6 +26,10 @@ class UserHeadItem extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            chartWidth: screenWidth,
+            chartLoading: true
+        }
     }
 
     render() {
@@ -51,6 +55,20 @@ class UserHeadItem extends Component {
             <Text
                 style={styles.smallTextWhite}>{hadFollowed ? I18n("unFollowed") : I18n("doFollowed")}</Text>
         </TouchableOpacity> : <View/>;
+        let loadingChart = (this.state.chartLoading === true) ? <View style={[{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }, styles.absoluteFull]}>
+            <ActivityIndicator
+                color={Constant.primaryColor}
+                animating={true}
+                style={{height: 50}}
+                size="large"/>
+            <Text style={{fontSize: 15, color: 'black'}}>
+                {I18n('loading')}
+            </Text>
+        </View> : <View/>;
         return (
             <View>
                 <View style={[{
@@ -248,39 +266,53 @@ class UserHeadItem extends Component {
                             }}/>
                     </View>
                 </View>
-                <TouchableWithoutFeedback
-                    onPress={() => {
-
-                    }}>
-                    <View style={[styles.centered, styles.shadowCard, {
-                        borderRadius: 4,
-                        width: screenWidth,
-                        height: 120,
-                        marginVertical: Constant.normalMarginEdge
+                <View style={styles.flex}>
+                    <Text style={[styles.normalText, {
+                        fontWeight: "bold", marginTop: Constant.normalMarginEdge,
+                        marginLeft: Constant.normalMarginEdge,
                     }]}>
-                        <View style={[styles.centered, styles.absoluteFull, {
-                            zIndex: -888,
-                            width: screenWidth - Constant.normalMarginEdge * 2,
-                            height: 120,
+                        {I18n('personDynamic')}
+                    </Text>
+                </View>
+                <View
+                    style={[styles.shadowCard, styles.centered, {
+                        height: 130,
+                        width: screenWidth - 2 * Constant.normalMarginEdge,
+                        marginHorizontal: Constant.normalMarginEdge,
+                        marginTop: Constant.normalMarginEdge,
+                        paddingHorizontal: Constant.normalMarginEdge,
+                        paddingTop: Constant.normalMarginEdge,
+                        borderRadius: 4,
+                    }]}>
+                    <ScrollView
+                        horizontal={true}
+                        style={[{
+                            height: 130,
+                            width: screenWidth - 4 * Constant.normalMarginEdge
                         }]}>
-                            <Icon name={'ios-image'} size={40} color={Constant.primaryColor}/>
-                        </View>
-                        <WebView source={{uri: graphicHost + userDisPlayName}}
-                                 javaScriptEnabled={true}
-                                 dataDetectorTypes={'none'}
-                                 domStorageEnabled={true}
-                                 scalesPageToFit={true}
-                                 scrollEnabled={false}
-                                 automaticallyAdjustContentInsets={true}
-                                 mixedContentMode={'always'}
-                                 startInLoadingState={true}
-                                 style={[styles.centerH, {
-                                     width: screenWidth - Constant.normalMarginEdge * 2,
-                                     height: 120,
-                                 }]}>
+                        <WebView
+                            //source={{html: generateImageHtml(userDisPlayName, Constant.primaryColor.replace("#", ""))}}
+                            source={{uri: graphicHost + "/" + Constant.primaryColor.replace("#", "") + "/" + userDisPlayName}}
+                            javaScriptEnabled={true}
+                            dataDetectorTypes={'none'}
+                            domStorageEnabled={true}
+                            scalesPageToFit={true}
+                            onLoadEnd={() => {
+                                this.setState({
+                                    chartLoading: false
+                                })
+                            }}
+                            scrollEnabled={false}
+                            automaticallyAdjustContentInsets={true}
+                            mixedContentMode={'always'}
+                            style={[styles.centered, {
+                                width: screenWidth * 2,
+                                height: 130,
+                            }]}>
                         </WebView>
-                    </View>
-                </TouchableWithoutFeedback>
+                    </ScrollView>
+                    {loadingChart}
+                </View>
             </View>
         )
     }

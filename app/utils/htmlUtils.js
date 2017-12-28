@@ -4,6 +4,7 @@ import * as Constant from '../style/constant'
 import {Platform} from 'react-native'
 import {Actions} from 'react-native-router-flux'
 import URL from 'url-parse';
+import {graphicHost} from "../net/address";
 
 /**
  * markdown to html parser
@@ -384,3 +385,24 @@ export const isImageEnd = (path) => {
 };
 
 const IMAGE_END = [".png", ".jpg", ".jpeg", ".gif", ".svg"];
+
+
+export const generateImageHtml = (user, color) => {
+    let source = "<html>\n" +
+        "<head>\n" +
+        "<meta charset=\"utf-8\" />\n" +
+        "<title></title>\n" +
+        "<meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
+        "<style>" +
+        "body{background: " + "#FFFFFF" + ";}" +
+        "</style>" +
+        "</head>\n" +
+        "<body>\n" +
+        `<img src="${graphicHost}${color}/${user}" alt="${user}'s Blue Github Chart" />\n` +
+        "</body>\n" +
+        "</html>";
+
+    console.log(source)
+
+    return source
+};

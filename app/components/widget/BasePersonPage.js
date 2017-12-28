@@ -192,14 +192,6 @@ class BasePersonPage extends Component {
                                     followed={userInfo.following + ""}
                                     setting={this.getSetting()}
                                 />
-                                <View style={styles.flex}>
-                                    <Text style={[styles.normalText, {
-                                        fontWeight: "bold", marginTop: Constant.normalMarginEdge,
-                                        marginLeft: Constant.normalMarginEdge,
-                                    }]}>
-                                        {I18n('personDynamic')}
-                                    </Text>
-                                </View>
                             </View>
                         );
                     }}
