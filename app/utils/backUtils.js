@@ -5,6 +5,7 @@ import {
 
 import I18n from '../style/i18n'
 import Toast from '../components/common/ToastProxy'
+import SplashScreen from '../components/widget/native/SplashNative'
 
 import {Router, Actions, Scene} from 'react-native-router-flux';
 
@@ -31,7 +32,8 @@ export default function BackUtils() {
             Toast(I18n("doublePressExit"));
             return true
         } else {
-            BackHandler.exitApp();
+            //BackHandler.exitApp();
+            SplashScreen.exit();
             return true
         }
     }

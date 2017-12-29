@@ -12,7 +12,7 @@ import com.facebook.react.bridge.ReactMethod;
  * GitHub:https://github.com/crazycodeboy
  * Email:crazycodeboy@gmail.com
  */
-public class SplashScreenModule extends ReactContextBaseJavaModule{
+public class SplashScreenModule extends ReactContextBaseJavaModule {
     public SplashScreenModule(ReactApplicationContext reactContext) {
         super(reactContext);
     }
@@ -36,5 +36,15 @@ public class SplashScreenModule extends ReactContextBaseJavaModule{
     @ReactMethod
     public void hide() {
         SplashScreen.hide(getCurrentActivity());
+    }
+
+    /**
+     * 关闭启动屏
+     */
+    @ReactMethod
+    public void exit() {
+        if (getCurrentActivity() != null)
+            getCurrentActivity().finish();
+        System.exit(0);
     }
 }
