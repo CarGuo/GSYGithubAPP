@@ -81,6 +81,34 @@ export const generateHtml = (mdData, backgroundColor = Constant.white, userBR = 
             return match;
         }
     });
+    mdDataCode = mdDataCode.replace(/<pre(([\s\S])*?)<\/pre>/gi, function (match, capture) {
+        if (match) {
+            if (Platform.OS === 'android' && match.indexOf("<code>") < 0) {
+                if (match && match.indexOf("\n") !== -1) {
+                    match = match.replace(/[\n]/g, '\n\r<br>');
+                }
+            }
+            return match;
+        } else {
+            return match;
+        }
+    });
+
+    mdDataCode = mdDataCode.replace(/<pre>(([\s\S])*?)<\/pre>/gi, function (match, capture) {
+        if (match && capture) {
+            if (Platform.OS === 'android' && match.indexOf("<code>") < 0) {
+                let code = `<pre><code>${capture}</code></pre>`;
+                if (code.indexOf("\n") !== -1) {
+                    code = code.replace(/[\n]/g, '\n\r<br>');
+                }
+                return code
+            }
+            return match;
+        } else {
+            return match;
+        }
+    });
+
     let data = mdDataCode.replace(/href="(.*?)"/gi, function (match, capture) {
         if (match && capture) {
             if (capture.indexOf("http://") < 0 && capture.indexOf("https://") < 0 && capture.indexOf("#") !== 0) {
@@ -184,7 +212,7 @@ const generateCodeHtml = (mdHTML, wrap, backgroundColor = Constant.white, action
         "font-size: 12px;" +
         "direction:hor" +
         "}" +
-        ".highlight {overflow: scroll; background: " + Constant.subLightTextColor + "}" +
+        ".highlight {overflow: scroll; background: " + Constant.webDraculaBackgroundColor + "}" +
         "tr:nth-child(even) {" +
         "background:" + Constant.primaryLightColor + ";" +
         "color:" + Constant.miWhite + ";" +
