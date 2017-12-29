@@ -39,7 +39,7 @@ class BasePersonPage extends Component {
             beStaredList: null
         };
         this.page = 2;
-        this.showType = 0;
+        this.showType = -1;
     }
 
     componentDidMount() {
@@ -62,7 +62,9 @@ class BasePersonPage extends Component {
                 this.showType = 1;
                 this._refresh();
             } else {
+                this.showType = 0;
                 this._getOrgsList();
+                this._refresh();
             }
             newProps.showType = "";
         }
@@ -75,7 +77,7 @@ class BasePersonPage extends Component {
                 actionUser={rowData.login}
                 actionUserPic={rowData.avatar_url}
                 des={rowData.bio}/>);
-        } else {
+        } else if (this.showType === 0) {
             let res = getActionAndDes(rowData);
             return (
                 <EventItem
@@ -88,6 +90,8 @@ class BasePersonPage extends Component {
                     }}
                     actionTarget={res.actionStr}/>
             )
+        } else {
+            return <View/>
         }
     }
 
@@ -119,7 +123,7 @@ class BasePersonPage extends Component {
                     }
                 }, 500);
             })
-        } else {
+        } else if (this.showType === 0) {
             eventActions.getEvent(1, userInfo.login).then((res) => {
                 if (res && res.result) {
                     this.setState({
@@ -142,6 +146,12 @@ class BasePersonPage extends Component {
                     }
                 }, 500);
             })
+        } else {
+            setTimeout(() => {
+                if (this.refs.pullList) {
+                    this.refs.pullList.refreshComplete(false, false);
+                }
+            }, 500);
         }
     }
 
@@ -167,7 +177,7 @@ class BasePersonPage extends Component {
                     }
                 }, 500);
             });
-        } else {
+        } else if (this.showType === 0) {
             eventActions.getEvent(this.page, userInfo.login).then((res) => {
                 this.page++;
                 let size = 0;
@@ -184,6 +194,12 @@ class BasePersonPage extends Component {
                     }
                 }, 500);
             });
+        } else {
+            setTimeout(() => {
+                if (this.refs.pullList) {
+                    this.refs.pullList.loadMoreComplete(false);
+                }
+            }, 500);
         }
     }
 
