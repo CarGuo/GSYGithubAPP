@@ -1,6 +1,6 @@
 ![](https://github.com/CarGuo/GSYGithubApp/blob/master/logo.png)
 
-## 一款跨平台的开源Github客户端App，旨在更好的日常管理和维护个人Github，提供更好更方便的驾车体验～～Σ(￣。￣ﾉ)ﾉ。
+## 一款跨平台的开源Github客户端App，提供更丰富的功能，更好体验，旨在更好的日常管理和维护个人Github，提供更好更方便的驾车体验～～Σ(￣。￣ﾉ)ﾉ。
 ```
 基于React Native开发，适配Android与IOS。
 
