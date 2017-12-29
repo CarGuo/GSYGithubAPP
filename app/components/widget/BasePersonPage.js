@@ -9,6 +9,7 @@ import {
 import styles from "../../style"
 import * as Constant from '../../style/constant'
 import eventActions from '../../store/actions/event'
+import userActions from '../../store/actions/user'
 import repositoryActions from '../../store/actions/repository'
 import UserHeadItem from './UserHeadItem'
 import PullListView from './PullLoadMoreListView'
@@ -17,6 +18,7 @@ import {getActionAndDes, ActionUtils} from '../../utils/eventUtils'
 import * as Config from '../../config'
 import I18n from '../../style/i18n'
 import resolveTime from '../../utils/timeUtil'
+import UserItem from '../widget/UserItem'
 
 /**
  * 用户显示基础控件
@@ -36,6 +38,7 @@ class BasePersonPage extends Component {
             beStaredList: null
         };
         this.page = 2;
+        this.showType = 0;
     }
 
     componentDidMount() {
@@ -51,19 +54,36 @@ class BasePersonPage extends Component {
 
     }
 
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.showType && newProps.showType !== this.props.showType && newProps.showType === "Organization") {
+            this.showType = 1;
+            newProps.showType = "";
+            this._refresh();
+        }
+    }
+
     _renderRow(rowData, sectionID, rowID, highlightRow) {
-        let res = getActionAndDes(rowData);
-        return (
-            <EventItem
-                actionTime={rowData.created_at}
-                actionUser={rowData.actor.display_login}
-                actionUserPic={rowData.actor.avatar_url}
-                des={res.des}
-                onPressItem={() => {
-                    ActionUtils(rowData)
-                }}
-                actionTarget={res.actionStr}/>
-        )
+        if (this.showType === 1) {
+            return (<UserItem
+                location={rowData.location}
+                actionUser={rowData.login}
+                actionUserPic={rowData.avatar_url}
+                des={rowData.bio}/>);
+        } else {
+            let res = getActionAndDes(rowData);
+            return (
+                <EventItem
+                    actionTime={rowData.created_at}
+                    actionUser={rowData.actor.display_login}
+                    actionUserPic={rowData.actor.avatar_url}
+                    des={res.des}
+                    onPressItem={() => {
+                        ActionUtils(rowData)
+                    }}
+                    actionTarget={res.actionStr}/>
+            )
+        }
     }
 
     /**
@@ -71,28 +91,53 @@ class BasePersonPage extends Component {
      * */
     _refresh() {
         let userInfo = this.getUserInfo();
-        eventActions.getEvent(1, userInfo.login).then((res) => {
-            if (res && res.result) {
-                this.setState({
-                    dataSource: res.data
-                });
-            }
-            return res.next();
-        }).then((res) => {
-            let size = 0;
-            if (res && res.result) {
-                this.page = 2;
-                this.setState({
-                    dataSource: res.data
-                });
-                size = res.data.length;
-            }
-            setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), false);
+        if (this.showType === 1) {
+            userActions.getMember(1, userInfo.login).then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        dataSource: res.data
+                    });
                 }
-            }, 500);
-        })
+                return res.next();
+            }).then((res) => {
+                let size = 0;
+                if (res && res.result) {
+                    this.page = 2;
+                    this.setState({
+                        dataSource: res.data
+                    });
+                    size = res.data.length;
+                }
+                setTimeout(() => {
+                    if (this.refs.pullList) {
+                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), false);
+                    }
+                }, 500);
+            })
+        } else {
+            eventActions.getEvent(1, userInfo.login).then((res) => {
+                if (res && res.result) {
+                    this.setState({
+                        dataSource: res.data
+                    });
+                }
+                return res.next();
+            }).then((res) => {
+                let size = 0;
+                if (res && res.result) {
+                    this.page = 2;
+                    this.setState({
+                        dataSource: res.data
+                    });
+                    size = res.data.length;
+                }
+                setTimeout(() => {
+                    if (this.refs.pullList) {
+                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), false);
+                    }
+                }, 500);
+            })
+        }
     }
 
     /**
@@ -100,22 +145,41 @@ class BasePersonPage extends Component {
      * */
     _loadMore() {
         let userInfo = this.getUserInfo();
-        eventActions.getEvent(this.page, userInfo.login).then((res) => {
-            this.page++;
-            let size = 0;
-            if (res && res.result) {
-                let localData = this.state.dataSource.concat(res.data);
-                this.setState({
-                    dataSource: localData
-                });
-                size = res.data.length;
-            }
-            setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+        if (this.showType === 1) {
+            userActions.getMember(this.page, userInfo.login).then((res) => {
+                this.page++;
+                let size = 0;
+                if (res && res.result) {
+                    let localData = this.state.dataSource.concat(res.data);
+                    this.setState({
+                        dataSource: localData
+                    });
+                    size = res.data.length;
                 }
-            }, 500);
-        });
+                setTimeout(() => {
+                    if (this.refs.pullList) {
+                        this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+                    }
+                }, 500);
+            });
+        } else {
+            eventActions.getEvent(this.page, userInfo.login).then((res) => {
+                this.page++;
+                let size = 0;
+                if (res && res.result) {
+                    let localData = this.state.dataSource.concat(res.data);
+                    this.setState({
+                        dataSource: localData
+                    });
+                    size = res.data.length;
+                }
+                setTimeout(() => {
+                    if (this.refs.pullList) {
+                        this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+                    }
+                }, 500);
+            });
+        }
     }
 
     _getMoreInfo() {
@@ -176,6 +240,7 @@ class BasePersonPage extends Component {
                                     hadFollowed={this.getHanFollow()}
                                     userDisPlayName={userInfo.login}
                                     userName={userInfo.name}
+                                    userType={userInfo.type}
                                     isOrganizations={"Organization" === userInfo.type || !userInfo.type}
                                     userPic={userInfo.avatar_url}
                                     groupName={userInfo.company}

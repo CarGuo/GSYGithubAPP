@@ -183,6 +183,17 @@ const UserFollowed = {
 };
 
 /**
+ * 用户关注表
+ */
+const OrgMember = {
+    name: 'OrgMember',
+    properties: {
+        org: 'string',
+        data: 'string',
+    }
+};
+
+/**
  * 用户收藏表
  */
 const UserStared = {
@@ -258,7 +269,7 @@ let realm = new Realm({
         RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
         RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits,
         UserFollower, UserFollowed, UserStared, UserRepos, RepositoryCommitInfoDetail,
-        IssueDetail, IssueComment, ReadHistory, RepositoryPulse
+        IssueDetail, IssueComment, ReadHistory, RepositoryPulse, OrgMember
     ]
 });
 

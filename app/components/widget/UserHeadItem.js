@@ -96,10 +96,10 @@ class UserHeadItem extends Component {
         let {
             link, userPic, userName, userDisPlayName, des, location, groupName,
             follower, followed, repos, star, setting, unRead, settingNeed, needFollow, hadFollowed, beStared,
-            doFollowLogic, beStaredList, isOrganizations
+            doFollowLogic, beStaredList, isOrganizations, userType
         } = this.props;
 
-        let followView = needFollow ? <TouchableOpacity
+        let followView = (needFollow && !isOrganizations) ? <TouchableOpacity
             style={[styles.flexDirectionRowNotFlex, {
                 marginTop: Constant.normalMarginEdge,
                 borderColor: Constant.miWhite,
@@ -117,6 +117,8 @@ class UserHeadItem extends Component {
 
 
         let Organizations = this.getActivity(isOrganizations, userDisPlayName);
+
+        let menuTitle = !userType ? "" : (userType === "Organization" ? I18n("Member") : I18n("personDynamic"));
 
         return (
             <View>
@@ -320,7 +322,7 @@ class UserHeadItem extends Component {
                         fontWeight: "bold", marginTop: Constant.normalMarginEdge,
                         marginLeft: Constant.normalMarginEdge,
                     }]}>
-                        {I18n('personDynamic')}
+                        {menuTitle}
                     </Text>
                 </View>
                 {Organizations}

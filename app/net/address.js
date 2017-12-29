@@ -313,6 +313,12 @@ export default AddressLocal = {
         return `${host}users/${userName}/events`
     },
     /**
+     * 组织成员
+     */
+    getMember:(orgs)=>{
+        return `${host}orgs/${orgs}/members`;
+    },
+    /**
      * 通知 get
      */
     getNotifation: (all, participating) => {
