@@ -29,7 +29,65 @@ class UserHeadItem extends Component {
         this.state = {
             chartWidth: screenWidth,
             chartLoading: true
-        }
+        };
+        this.getActivity = this.getActivity.bind(this);
+    }
+
+    getActivity(isOrganizations, userDisPlayName) {
+        let loadingChart = (this.state.chartLoading === true) ? <View style={[{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }, styles.absoluteFull]}>
+            <ActivityIndicator
+                color={Constant.primaryColor}
+                animating={true}
+                style={{height: 50}}
+                size="large"/>
+            <Text style={{fontSize: 15, color: 'black'}}>
+                {I18n('loading')}
+            </Text>
+        </View> : <View/>;
+        let item = !isOrganizations ? <View
+            style={[styles.shadowCard, styles.centered, {
+                height: 130,
+                width: screenWidth - 2 * Constant.normalMarginEdge,
+                marginHorizontal: Constant.normalMarginEdge,
+                marginTop: Constant.normalMarginEdge,
+                paddingHorizontal: Constant.normalMarginEdge,
+                paddingTop: Constant.normalMarginEdge,
+                borderRadius: 4,
+            }]}>
+            <ScrollView
+                horizontal={true}
+                style={[{
+                    height: 130,
+                    width: screenWidth - 4 * Constant.normalMarginEdge
+                }]}>
+                <WebView
+                    //source={{html: generateImageHtml(userDisPlayName, Constant.primaryColor.replace("#", ""))}}
+                    source={{uri: graphicHost + "/" + Constant.primaryColor.replace("#", "") + "/" + userDisPlayName}}
+                    javaScriptEnabled={true}
+                    dataDetectorTypes={'none'}
+                    domStorageEnabled={true}
+                    scalesPageToFit={true}
+                    onLoadEnd={() => {
+                        this.setState({
+                            chartLoading: false
+                        })
+                    }}
+                    scrollEnabled={false}
+                    automaticallyAdjustContentInsets={true}
+                    mixedContentMode={'always'}
+                    style={[styles.centered, {
+                        width: screenWidth * 2,
+                        height: 130,
+                    }]}>
+                </WebView>
+            </ScrollView>
+            {loadingChart}
+        </View> : <View/>;
+        return (item);
     }
 
     render() {
@@ -38,8 +96,9 @@ class UserHeadItem extends Component {
         let {
             link, userPic, userName, userDisPlayName, des, location, groupName,
             follower, followed, repos, star, setting, unRead, settingNeed, needFollow, hadFollowed, beStared,
-            doFollowLogic, beStaredList
+            doFollowLogic, beStaredList, isOrganizations
         } = this.props;
+
         let followView = needFollow ? <TouchableOpacity
             style={[styles.flexDirectionRowNotFlex, {
                 marginTop: Constant.normalMarginEdge,
@@ -55,20 +114,10 @@ class UserHeadItem extends Component {
             <Text
                 style={styles.smallTextWhite}>{hadFollowed ? I18n("unFollowed") : I18n("doFollowed")}</Text>
         </TouchableOpacity> : <View/>;
-        let loadingChart = (this.state.chartLoading === true) ? <View style={[{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center'
-        }, styles.absoluteFull]}>
-            <ActivityIndicator
-                color={Constant.primaryColor}
-                animating={true}
-                style={{height: 50}}
-                size="large"/>
-            <Text style={{fontSize: 15, color: 'black'}}>
-                {I18n('loading')}
-            </Text>
-        </View> : <View/>;
+
+
+        let Organizations = this.getActivity(isOrganizations, userDisPlayName);
+
         return (
             <View>
                 <View style={[{
@@ -274,45 +323,7 @@ class UserHeadItem extends Component {
                         {I18n('personDynamic')}
                     </Text>
                 </View>
-                <View
-                    style={[styles.shadowCard, styles.centered, {
-                        height: 130,
-                        width: screenWidth - 2 * Constant.normalMarginEdge,
-                        marginHorizontal: Constant.normalMarginEdge,
-                        marginTop: Constant.normalMarginEdge,
-                        paddingHorizontal: Constant.normalMarginEdge,
-                        paddingTop: Constant.normalMarginEdge,
-                        borderRadius: 4,
-                    }]}>
-                    <ScrollView
-                        horizontal={true}
-                        style={[{
-                            height: 130,
-                            width: screenWidth - 4 * Constant.normalMarginEdge
-                        }]}>
-                        <WebView
-                            //source={{html: generateImageHtml(userDisPlayName, Constant.primaryColor.replace("#", ""))}}
-                            source={{uri: graphicHost + "/" + Constant.primaryColor.replace("#", "") + "/" + userDisPlayName}}
-                            javaScriptEnabled={true}
-                            dataDetectorTypes={'none'}
-                            domStorageEnabled={true}
-                            scalesPageToFit={true}
-                            onLoadEnd={() => {
-                                this.setState({
-                                    chartLoading: false
-                                })
-                            }}
-                            scrollEnabled={false}
-                            automaticallyAdjustContentInsets={true}
-                            mixedContentMode={'always'}
-                            style={[styles.centered, {
-                                width: screenWidth * 2,
-                                height: 130,
-                            }]}>
-                        </WebView>
-                    </ScrollView>
-                    {loadingChart}
-                </View>
+                {Organizations}
             </View>
         )
     }
@@ -332,6 +343,7 @@ UserHeadItem.propTypes = {
     followed: PropTypes.string,
     repos: PropTypes.string,
     setting: PropTypes.bool,
+    isOrganizations: PropTypes.bool,
 };
 
 
@@ -343,6 +355,7 @@ UserHeadItem.defaultProps = {
     followed: hintNum,
     repos: hintNum,
     setting: false,
+    isOrganizations: true
 };
 
 

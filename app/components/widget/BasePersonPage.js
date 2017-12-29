@@ -176,6 +176,7 @@ class BasePersonPage extends Component {
                                     hadFollowed={this.getHanFollow()}
                                     userDisPlayName={userInfo.login}
                                     userName={userInfo.name}
+                                    isOrganizations={"Organization" === userInfo.type || !userInfo.type}
                                     userPic={userInfo.avatar_url}
                                     groupName={userInfo.company}
                                     location={userInfo.location}
