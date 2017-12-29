@@ -54,7 +54,7 @@ class OrgItemBar extends Component {
         if (dataList.length > 0) {
             let title =
                 <View
-                    loginUser={"title"}
+                    key={"title"}
                     style={[styles.centered, {
                         height: itemSize,
                         width: itemSize,
@@ -71,7 +71,9 @@ class OrgItemBar extends Component {
         let more =
             <TouchableOpacity
                 style={[styles.shadowCard, {
+                    shadowColor: Constant.subLightTextColor,
                     margin: 5,
+                    padding: 5,
                     height: Constant.smallIconSize, width: Constant.smallIconSize,
                     borderRadius: (Constant.smallIconSize) / 2,
                 }, styles.centered]}
@@ -88,7 +90,7 @@ class OrgItemBar extends Component {
                        color={Constant.primaryColor}
                        size={16}/>
             </TouchableOpacity>;
-        if (dataList.length > 4) {
+        if (dataList.length > 5) {
             items = items.slice(0, 4);
             items.push(more)
         }
