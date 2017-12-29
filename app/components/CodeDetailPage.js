@@ -12,7 +12,7 @@ import I18n from '../style/i18n'
 import reposActions from '../store/actions/repository'
 import WebComponent from './widget/CustomWebComponent'
 import {generateCode2HTml, formName} from '../utils/htmlUtils'
-import {Actions, Tabs} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 import * as Constant from '../style/constant'
 
 /**

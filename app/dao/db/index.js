@@ -193,6 +193,19 @@ const OrgMember = {
     }
 };
 
+
+/**
+ * 用户组织表
+ */
+const UserOrgs = {
+    name: 'UserOrgs',
+    properties: {
+        userName: 'string',
+        data: 'string',
+    }
+};
+
+
 /**
  * 用户收藏表
  */
@@ -269,7 +282,7 @@ let realm = new Realm({
         RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
         RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits,
         UserFollower, UserFollowed, UserStared, UserRepos, RepositoryCommitInfoDetail,
-        IssueDetail, IssueComment, ReadHistory, RepositoryPulse, OrgMember
+        IssueDetail, IssueComment, ReadHistory, RepositoryPulse, OrgMember, UserOrgs
     ]
 });
 

@@ -171,6 +171,16 @@ const getMember = async (page = 1, userName) => {
     }
 };
 
+/**
+ * 获取用户组织
+ */
+const getUserOrgs = async (page = 1, userName) => {
+    if (page <= 1) {
+        return UserDao.getUserOrgsDao(userName, page, true);
+    } else {
+        return UserDao.getUserOrgsDao(userName, page)
+    }
+};
 
 export default {
     initUserInfo,
@@ -185,5 +195,6 @@ export default {
     updateUser,
     doFollow,
     checkFollow,
-    getMember
+    getMember,
+    getUserOrgs
 }

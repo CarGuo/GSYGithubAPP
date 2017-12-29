@@ -87,6 +87,12 @@ class ListPage extends Component {
                     actionUser={rowData.login}
                     actionUserPic={rowData.avatar_url}
                     des={rowData.bio}/>);
+            case 'org':
+                return (<UserItem
+                    location={""}
+                    actionUser={rowData.login}
+                    actionUserPic={rowData.avatar_url}
+                    des={rowData.description}/>);
             case 'issue':
                 let fullName = getFullName(rowData.repository_url) + "--";
                 return (
@@ -292,6 +298,18 @@ class ListPage extends Component {
             case 'user_be_stared':
                 this._refreshRes({result: true, data: this.props.localData});
                 break;
+            case 'user_orgs':
+                userActions.getUserOrgs(0, this.props.currentUser)
+                    .then((res) => {
+                        this.setState({
+                            dataSource: res.data
+                        });
+                        return res.next();
+                    })
+                    .then((res) => {
+                        this._refreshRes(res)
+                    });
+                break;
 
 
         }
@@ -366,6 +384,11 @@ class ListPage extends Component {
                 break;
             case 'user_be_stared':
                 this._loadMoreRes({result: false});
+                break;
+            case 'user_orgs':
+                userActions.getUserOrgs(this.page, this.props.currentUser).then((res) => {
+                    this._loadMoreRes(res)
+                });
                 break;
         }
     }

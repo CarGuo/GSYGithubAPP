@@ -28,6 +28,7 @@ class BasePersonPage extends Component {
     constructor(props) {
         super(props);
         this._refresh = this._refresh.bind(this);
+        this._getOrgsList = this._getOrgsList.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this._getMoreInfo = this._getMoreInfo.bind(this);
         this.getBackNotifyCall = this.getBackNotifyCall.bind(this);
@@ -56,10 +57,14 @@ class BasePersonPage extends Component {
 
 
     componentWillReceiveProps(newProps) {
-        if (newProps.showType && newProps.showType !== this.props.showType && newProps.showType === "Organization") {
-            this.showType = 1;
+        if (newProps.showType && newProps.showType !== this.props.showType) {
+            if (newProps.showType === "Organization") {
+                this.showType = 1;
+                this._refresh();
+            } else {
+                this._getOrgsList();
+            }
             newProps.showType = "";
-            this._refresh();
         }
     }
 
@@ -182,6 +187,25 @@ class BasePersonPage extends Component {
         }
     }
 
+    _getOrgsList() {
+        let userInfo = this.getUserInfo();
+        userActions.getUserOrgs(1, userInfo.login)
+            .then((res) => {
+                if (res.result) {
+                    this.setState({
+                        orgsList: res.data,
+                    })
+                }
+                return res.next()
+            }).then((res) => {
+            if (res.result) {
+                this.setState({
+                    orgsList: res.data,
+                })
+            }
+        })
+    }
+
     _getMoreInfo() {
         let userInfo = this.getUserInfo();
         repositoryActions.getUserRepository100Status(userInfo.login)
@@ -241,6 +265,7 @@ class BasePersonPage extends Component {
                                     userDisPlayName={userInfo.login}
                                     userName={userInfo.name}
                                     userType={userInfo.type}
+                                    orgsList={this.state.orgsList}
                                     isOrganizations={"Organization" === userInfo.type || !userInfo.type}
                                     userPic={userInfo.avatar_url}
                                     groupName={userInfo.company}

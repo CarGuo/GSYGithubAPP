@@ -8,6 +8,7 @@ import userActions from '../store/actions/user'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import BasePersonPage from "./widget/BasePersonPage";
+import {Actions} from 'react-native-router-flux';
 
 /**
  * 我的
@@ -38,7 +39,12 @@ class MyPage extends BasePersonPage {
             if (res && res.result && res.data && res.data.length > 0) {
                 this.setState({
                     unRead: true,
-                })
+                });
+                if (res.data.type === "Organization") {
+                    Actions.refresh({showType: "Organization"});
+                } else {
+                    Actions.refresh({showType: "user"});
+                }
             } else {
                 this.setState({
                     unRead: false,

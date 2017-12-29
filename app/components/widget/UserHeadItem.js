@@ -12,10 +12,10 @@ import IconF from 'react-native-vector-icons/FontAwesome'
 import {Actions} from "react-native-router-flux";
 import I18n from '../../style/i18n'
 import NameValueItem from '../common/CommonNameValueItem'
+import OrgItemBar from '../widget/OrgItemBar'
 import {RepositoryFilter} from '../../utils/filterUtils'
 import {graphicHost} from "../../net/address";
 import userActions from "../../store/actions/user";
-import {generateImageHtml} from "../../utils/htmlUtils";
 
 const hintNum = '---';
 
@@ -30,9 +30,32 @@ class UserHeadItem extends Component {
             chartWidth: screenWidth,
             chartLoading: true
         };
+        this.hint = I18n('userInfoNoting');
         this.getActivity = this.getActivity.bind(this);
+        this.getOrgItemBar = this.getOrgItemBar.bind(this);
+        this.getBottomItem = this.getBottomItem.bind(this);
     }
 
+    /**
+     * 获取用户的组织列表
+     */
+    getOrgItemBar(dataList) {
+        let {
+            userDisPlayName,
+        } = this.props;
+        if (!dataList || dataList.length === 0) {
+            return (<View/>)
+        }
+        return (
+            <OrgItemBar
+                ownerName={userDisPlayName}
+                dataList={dataList}/>
+        )
+    }
+
+    /**
+     * 获取用户的提交统计动态
+     */
     getActivity(isOrganizations, userDisPlayName) {
         let loadingChart = (this.state.chartLoading === true) ? <View style={[{
             flexDirection: 'row',
@@ -90,13 +113,117 @@ class UserHeadItem extends Component {
         return (item);
     }
 
+    /**
+     * 底部item
+     */
+    getBottomItem() {
+        let {
+            userDisPlayName,
+            follower, followed, repos, star, beStared,
+            beStaredList
+        } = this.props;
+        return ( <View style={[styles.flexDirectionRowNotFlex,
+            {borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Constant.primaryLightColor},
+            {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.primaryLightColor},
+        ]}>
+            <NameValueItem
+                itemStyle={[styles.flex, styles.centered,]}
+                itemName={I18n("repositoryText")}
+                itemValue={repos ? repos : hintNum}
+                onItemPress={() => {
+                    Actions.ListPage({
+                        dataType: 'user_repos',
+                        showType: 'repository',
+                        currentUser: userDisPlayName,
+                        title: userDisPlayName + " - " + I18n('repositoryText'),
+                        needRightBtn: true,
+                        rightBtn: 'filter',
+                        filterSelect: RepositoryFilter()[0].itemValue,
+                        rightBtnPress: () => {
+                            Actions.OptionModal({dataList: RepositoryFilter()});
+                        }
+                    })
+                }}/>
+            <NameValueItem
+                itemStyle={[styles.flex, styles.centered,
+                    {
+                        borderLeftWidth: StyleSheet.hairlineWidth,
+                        borderLeftColor: Constant.primaryLightColor
+                    },
+                    {
+                        borderRightWidth: StyleSheet.hairlineWidth,
+                        borderRightColor: Constant.primaryLightColor
+                    },
+                ]}
+                itemName={I18n("FollowersText")}
+                itemValue={follower ? follower : hintNum}
+                onItemPress={() => {
+                    Actions.ListPage({
+                        dataType: 'follower', showType: 'user',
+                        currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowersText')
+                    })
+                }}/>
+            <NameValueItem
+                itemStyle={[styles.flex, styles.centered,]}
+                itemName={I18n("FollowedText")}
+                itemValue={followed ? followed : hintNum}
+                onItemPress={() => {
+                    Actions.ListPage({
+                        dataType: 'followed', showType: 'user',
+                        currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowedText')
+                    })
+                }}/>
+            <NameValueItem
+                itemStyle={[styles.flex, styles.centered,
+                    {
+                        borderLeftWidth: StyleSheet.hairlineWidth,
+                        borderLeftColor: Constant.primaryLightColor
+                    },]}
+                itemName={I18n("staredText")}
+                itemValue={star ? star : hintNum}
+                onItemPress={() => {
+                    Actions.ListPage({
+                        dataType: 'user_star',
+                        showType: 'repository',
+                        currentUser: userDisPlayName,
+                        title: userDisPlayName + " - " + I18n('repositoryText'),
+                        needRightBtn: true,
+                        rightBtn: 'filter',
+                        filterSelect: RepositoryFilter()[1].itemValue,
+                        rightBtnPress: () => {
+                            Actions.OptionModal({dataList: RepositoryFilter()});
+                        }
+                    })
+                }}/>
+            <NameValueItem
+                itemStyle={[styles.flex, styles.centered,
+                    {
+                        borderLeftWidth: StyleSheet.hairlineWidth,
+                        borderLeftColor: Constant.primaryLightColor
+                    },]}
+                itemName={I18n("beStaredText")}
+                itemValue={beStared ? beStared : hintNum}
+                onItemPress={() => {
+                    if (!beStaredList || beStaredList.length === 0) {
+                        return
+                    }
+                    Actions.ListPage({
+                        dataType: 'user_be_stared',
+                        showType: 'repository',
+                        localData: beStaredList,
+                        currentUser: userDisPlayName,
+                        title: userDisPlayName + I18n('beStared100Title'),
+                    })
+                }}/>
+        </View>)
+    }
+
     render() {
         let halfEdge = Constant.normalMarginEdge / 2;
-        let hint = I18n('userInfoNoting');
         let {
             link, userPic, userName, userDisPlayName, des, location, groupName,
-            follower, followed, repos, star, setting, unRead, settingNeed, needFollow, hadFollowed, beStared,
-            doFollowLogic, beStaredList, isOrganizations, userType
+            setting, unRead, settingNeed, needFollow, hadFollowed,
+            doFollowLogic, isOrganizations, userType, orgsList
         } = this.props;
 
         let followView = (needFollow && !isOrganizations) ? <TouchableOpacity
@@ -205,117 +332,24 @@ class UserHeadItem extends Component {
                             <Text selectable={true}
                                   style={[styles.subLightSmallText]}>{(userName) ? userName : hintNum}</Text>
                             <IconTextItem
-                                text={(groupName) ? groupName : hint} icon={'group'}
+                                text={(groupName) ? groupName : this.hint} icon={'group'}
                                 viewstyle={[{marginTop: halfEdge}]}
                                 textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
                             <IconTextItem
-                                text={(location) ? location : hint} icon={'map-marker'}
+                                text={(location) ? location : this.hint} icon={'map-marker'}
                                 viewstyle={[{marginTop: halfEdge, marginLeft: 3, marginRight: 3}]}
                                 textstyle={[{marginLeft: halfEdge}, styles.smallTextWhite,]}/>
                         </View>
                     </View>
-                    <IconTextAutoLinkItem text={(link) ? link : hint} icon={'link'}
+                    <IconTextAutoLinkItem text={(link) ? link : this.hint} icon={'link'}
                                           textstyle={[{marginLeft: Constant.normalMarginEdge},
                                               {fontSize: Constant.smallTextSize},]}
                                           viewstyle={[{marginTop: halfEdge}]}/>
-                    <IconTextItem text={(des) ? des : hint}
+                    {this.getOrgItemBar(orgsList)}
+                    <IconTextItem text={(des) ? des : this.hint}
                                   textstyle={[{marginVertical: Constant.normalMarginEdge},
                                       styles.subLightSmallText,]}/>
-
-                    <View style={[styles.flexDirectionRowNotFlex,
-                        {borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Constant.primaryLightColor},
-                        {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.primaryLightColor},
-                    ]}>
-                        <NameValueItem
-                            itemStyle={[styles.flex, styles.centered,]}
-                            itemName={I18n("repositoryText")}
-                            itemValue={repos ? repos : hintNum}
-                            onItemPress={() => {
-                                Actions.ListPage({
-                                    dataType: 'user_repos',
-                                    showType: 'repository',
-                                    currentUser: userDisPlayName,
-                                    title: userDisPlayName + " - " + I18n('repositoryText'),
-                                    needRightBtn: true,
-                                    rightBtn: 'filter',
-                                    filterSelect: RepositoryFilter()[0].itemValue,
-                                    rightBtnPress: () => {
-                                        Actions.OptionModal({dataList: RepositoryFilter()});
-                                    }
-                                })
-                            }}/>
-                        <NameValueItem
-                            itemStyle={[styles.flex, styles.centered,
-                                {
-                                    borderLeftWidth: StyleSheet.hairlineWidth,
-                                    borderLeftColor: Constant.primaryLightColor
-                                },
-                                {
-                                    borderRightWidth: StyleSheet.hairlineWidth,
-                                    borderRightColor: Constant.primaryLightColor
-                                },
-                            ]}
-                            itemName={I18n("FollowersText")}
-                            itemValue={follower ? follower : hintNum}
-                            onItemPress={() => {
-                                Actions.ListPage({
-                                    dataType: 'follower', showType: 'user',
-                                    currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowersText')
-                                })
-                            }}/>
-                        <NameValueItem
-                            itemStyle={[styles.flex, styles.centered,]}
-                            itemName={I18n("FollowedText")}
-                            itemValue={followed ? followed : hintNum}
-                            onItemPress={() => {
-                                Actions.ListPage({
-                                    dataType: 'followed', showType: 'user',
-                                    currentUser: userDisPlayName, title: userDisPlayName + " - " + I18n('FollowedText')
-                                })
-                            }}/>
-                        <NameValueItem
-                            itemStyle={[styles.flex, styles.centered,
-                                {
-                                    borderLeftWidth: StyleSheet.hairlineWidth,
-                                    borderLeftColor: Constant.primaryLightColor
-                                },]}
-                            itemName={I18n("staredText")}
-                            itemValue={star ? star : hintNum}
-                            onItemPress={() => {
-                                Actions.ListPage({
-                                    dataType: 'user_star',
-                                    showType: 'repository',
-                                    currentUser: userDisPlayName,
-                                    title: userDisPlayName + " - " + I18n('repositoryText'),
-                                    needRightBtn: true,
-                                    rightBtn: 'filter',
-                                    filterSelect: RepositoryFilter()[1].itemValue,
-                                    rightBtnPress: () => {
-                                        Actions.OptionModal({dataList: RepositoryFilter()});
-                                    }
-                                })
-                            }}/>
-                        <NameValueItem
-                            itemStyle={[styles.flex, styles.centered,
-                                {
-                                    borderLeftWidth: StyleSheet.hairlineWidth,
-                                    borderLeftColor: Constant.primaryLightColor
-                                },]}
-                            itemName={I18n("beStaredText")}
-                            itemValue={beStared ? beStared : hintNum}
-                            onItemPress={() => {
-                                if (!beStaredList || beStaredList.length === 0) {
-                                    return
-                                }
-                                Actions.ListPage({
-                                    dataType: 'user_be_stared',
-                                    showType: 'repository',
-                                    localData: beStaredList,
-                                    currentUser: userDisPlayName,
-                                    title: userDisPlayName + I18n('beStared100Title'),
-                                })
-                            }}/>
-                    </View>
+                    {this.getBottomItem()}
                 </View>
                 <View style={styles.flex}>
                     <Text style={[styles.normalText, {

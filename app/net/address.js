@@ -319,6 +319,12 @@ export default AddressLocal = {
         return `${host}orgs/${orgs}/members`;
     },
     /**
+     * 获取用户组织
+     */
+    getUserOrgs:(userName)=>{
+        return `${host}users/${userName}/orgs`;
+    },
+    /**
      * 通知 get
      */
     getNotifation: (all, participating) => {

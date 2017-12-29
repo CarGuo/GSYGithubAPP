@@ -162,6 +162,7 @@ I18n.translations = {
         weekClosed: 'Week Closed: ',
         weekOpened: 'Week Opened： ',
         thisWeek: 'This Week ',
+        userOrg: 'Org',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -313,6 +314,7 @@ I18n.translations = {
         weekClosed: '本周关闭: ',
         weekOpened: '本周打开: ',
         thisWeek: ' 本周动态 ',
+        userOrg: '组织',
     }
 };
 

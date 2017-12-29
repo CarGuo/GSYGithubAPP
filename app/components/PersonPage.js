@@ -61,7 +61,7 @@ class PersonPage extends BasePersonPage {
                 if (res.data.type === "Organization") {
                     Actions.refresh({titleData: res.data, showType: "Organization"});
                 } else {
-                    Actions.refresh({titleData: res.data});
+                    Actions.refresh({titleData: res.data, showType: "user"});
                 }
             }
             return res.next();
@@ -73,7 +73,7 @@ class PersonPage extends BasePersonPage {
                 if (res.data.type === "Organization") {
                     Actions.refresh({titleData: res.data, showType: "Organization"});
                 } else {
-                    Actions.refresh({titleData: res.data});
+                    Actions.refresh({titleData: res.data, showType: "user"});
                 }
             }
         });
