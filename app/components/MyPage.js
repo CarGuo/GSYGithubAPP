@@ -3,12 +3,12 @@
  */
 
 import React, {Component} from 'react';
+import {InteractionManager} from 'react-native';
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import BasePersonPage from "./widget/BasePersonPage";
-import {Actions} from 'react-native-router-flux';
 
 /**
  * 我的
@@ -18,11 +18,15 @@ class MyPage extends BasePersonPage {
     constructor(props) {
         super(props);
         this.refreshUnRead = this.refreshUnRead.bind(this);
+        this.showType = 0;
     }
 
     componentDidMount() {
         super.componentDidMount();
-        this.refreshUnRead();
+        InteractionManager.runAfterInteractions(() => {
+            this.refreshUnRead();
+            this._getOrgsList();
+        });
     }
 
     _refresh() {
@@ -40,11 +44,6 @@ class MyPage extends BasePersonPage {
                 this.setState({
                     unRead: true,
                 });
-                if (res.data.type === "Organization") {
-                    Actions.refresh({showType: "Organization"});
-                } else {
-                    Actions.refresh({showType: "user"});
-                }
             } else {
                 this.setState({
                     unRead: false,
