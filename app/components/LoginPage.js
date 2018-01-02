@@ -23,6 +23,7 @@ import {bindActionCreators} from 'redux'
 import Modal from 'react-native-modalbox';
 import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import IconC from 'react-native-vector-icons/Entypo'
 import {Fumi} from 'react-native-textinput-effects';
 import Toast from './common/ToastProxy'
 
@@ -47,6 +48,8 @@ class LoginPage extends Component {
         this.state = {
             saveUserName: '',
             savePassword: '',
+            secureTextEntry: true,
+            secureIcon: "eye-with-line",
             opacity: new Animated.Value(0),
         }
     }
@@ -175,12 +178,34 @@ class LoginPage extends Component {
                             {...textInputProps}
                             label={I18n('Password')}
                             returnKeyType={'send'}
-                            secureTextEntry={true}
-                            password={true}
+                            secureTextEntry={this.state.secureTextEntry}
+                            password={this.state.secureTextEntry}
                             iconName={'keyboard-o'}
                             value={this.state.savePassword}
                             onChangeText={this.passwordChange}
                         />
+                        <View style={[{
+                            position: "absolute",
+                            left: screenWidth - 150,
+                            right: 2 * Constant.normalMarginEdge,
+                            zIndex: 12,
+                        }, styles.alignItemsEnd]}>
+                            <TouchableOpacity style={[styles.centered, {
+                                marginTop: Constant.normalMarginEdge,
+                                padding: Constant.normalMarginEdge
+                            }]}
+                                              onPress={() => {
+                                                  this.setState({
+                                                      secureIcon: (this.state.secureTextEntry) ? "eye" : "eye-with-line",
+                                                      secureTextEntry: !this.state.secureTextEntry,
+                                                  });
+                                              }}>
+                                <IconC name={this.state.secureIcon}
+                                       backgroundColor={Constant.transparentColor}
+                                       color={Constant.primaryColor} size={13}
+                                       style={styles.centered}/>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <View>
                     </View>
