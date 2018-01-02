@@ -44,7 +44,7 @@ class IconTextAutoLinkItem extends Component {
                         Clipboard.setString(link);
                         Toast(I18n("hadCopy"));
                     }}
-                    style={[{marginLeft: halfEdge},]}
+                    style={[{marginLeft: halfEdge}, styles.miLightSmallText]}
                     linkStyle={[
                         ...this.props.textstyle]}>
                 </Autolink>

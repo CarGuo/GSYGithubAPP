@@ -71,6 +71,31 @@ class UserHeadItem extends Component {
                 {I18n('loading')}
             </Text>
         </View> : <View/>;
+
+        let errorChart = (this.state.chartError === true) ? <View style={[{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }, styles.absoluteFull]}>
+            <TouchableOpacity style={[styles.centered]}
+                              onPress={() => {
+                                  this.setState({
+                                      chartError: false,
+                                      chartLoading: true
+                                  });
+                                  if (this.refs.activity) {
+                                      this.refs.activity.reload();
+                                  }
+                              }}>
+                <Image source={require("../../img/logo.png")}
+                       resizeMode={"center"}
+                       style={{width: 30, height: 30}}/>
+                <Text style={[styles.smallText]}>
+                    {I18n("reloadClick")}
+                </Text>
+            </TouchableOpacity>
+        </View> : <View/>;
+
         let item = !isOrganizations ? <View
             style={[styles.shadowCard, styles.centered, {
                 height: 130,
@@ -88,6 +113,7 @@ class UserHeadItem extends Component {
                     width: screenWidth - 4 * Constant.normalMarginEdge
                 }]}>
                 <WebView
+                    ref={"activity"}
                     //source={{html: generateImageHtml(userDisPlayName, Constant.primaryColor.replace("#", ""))}}
                     source={{uri: graphicHost + "/" + Constant.primaryColor.replace("#", "") + "/" + userDisPlayName}}
                     javaScriptEnabled={true}
@@ -99,6 +125,14 @@ class UserHeadItem extends Component {
                             chartLoading: false
                         })
                     }}
+                    onError={() => {
+                        this.setState({
+                            chartError: true
+                        });
+                    }}
+                    renderError={() => {
+                        return (<View/>)
+                    }}
                     scrollEnabled={false}
                     automaticallyAdjustContentInsets={true}
                     mixedContentMode={'always'}
@@ -109,6 +143,7 @@ class UserHeadItem extends Component {
                 </WebView>
             </ScrollView>
             {loadingChart}
+            {errorChart}
         </View> : <View/>;
         return (item);
     }

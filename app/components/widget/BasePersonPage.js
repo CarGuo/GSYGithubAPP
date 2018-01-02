@@ -146,12 +146,6 @@ class BasePersonPage extends Component {
                     }
                 }, 500);
             })
-        } else {
-            setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete(false, false);
-                }
-            }, 500);
         }
     }
 

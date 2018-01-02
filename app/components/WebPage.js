@@ -133,7 +133,7 @@ export default class WebPage extends Component {
                         defaultValue={this.state.showCurUri}
                         onSubmitEditing={this.onSubmitEditing}
                         onChange={this.handleTextInputChange}
-                        clearButtonMode="while-editing"
+                        clearButtonMode="always"
                         underlineColorAndroid="transparent"
                         style={[styles.smallText, {
                             padding: 0,
@@ -160,6 +160,7 @@ export default class WebPage extends Component {
                     onNavigationStateChange={this.onNavigationStateChange}
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
+                    scalesPageToFit={true}
                     mixedContentMode={'always'}
                     automaticallyAdjustContentInsets={true}
                     allowUniversalAccessFromFileURLs={true}
