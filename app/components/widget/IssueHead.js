@@ -39,6 +39,9 @@ class IssueItem extends Component {
                 <Text selectable={true}
                       style={[styles.subSmallText, {marginVertical: 5,}]}>{"Closed by " + closed_by.login}</Text>
             </View> : <View/>;
+        if (issueDesHtml && issueDesHtml.indexOf("<br>") >= 0) {
+            issueDesHtml = issueDesHtml.replace(/<br>/g, '\n');
+        }
         return (
             <View
                 style={[{
@@ -111,15 +114,12 @@ class IssueItem extends Component {
                             backgroundColor: Constant.transparentColor
                         }]}
                         selectable={true}
-                        numberOfLines={100}
+                        numberOfLines={9999}
                         value={issueDesHtml ? issueDesHtml : ""}
                         stylesheet={{pre: styles.inCode, code: styles.pCode}}
                         textComponentProps={{
                             style: styles.miLightSmallText,
-                            numberOfLines: 100,
-                        }}
-                        customRenderer={() => {
-
+                            numberOfLines: 9999,
                         }}
                         textComponent={() => {
                             return (
