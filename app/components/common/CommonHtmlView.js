@@ -28,12 +28,13 @@ class CommonHtmlView extends Component {
     hadImageChildren(node) {
         let hadImageNode = false;
         if (node.children && node.children.length > 0) {
-            node.children.forEach((item) => {
+            for (let i = 0; i < node.children.length; i++) {
+                let item = node.children[i];
                 hadImageNode = this.hadImageChildren(item);
                 if (hadImageNode) {
-                    return true;
+                    break;
                 }
-            });
+            }
         }
         if (node.type === 'tag' && node.name === 'img') {
             return true;
@@ -59,45 +60,46 @@ class CommonHtmlView extends Component {
                 }}
                 renderNode={
                     (node, index, list, parent, domToElement) => {
-                        if (node.type === 'tag') {
-                            if (node.name === 'img') {
-                                return (
-                                    <TouchableWithoutFeedback
-                                        key={index}
-                                        onPress={() => {
-                                            Actions.PhotoPage({uri: node.attribs.src})
-                                        }}>
-                                        <View style={{
-                                            width: screenWidth - 105,
-                                            height: 300
-                                        }}>
-                                            <View style={[styles.centered, styles.absoluteFull, {
-                                                zIndex: -888,
+                        if (node.type === 'tag')
+                            if (node.type === 'tag') {
+                                if (node.name === 'img') {
+                                    return (
+                                        <TouchableWithoutFeedback
+                                            key={index}
+                                            onPress={() => {
+                                                Actions.PhotoPage({uri: node.attribs.src})
+                                            }}>
+                                            <View style={{
                                                 width: screenWidth - 105,
-                                                height: 300,
-                                            }]}>
-                                                <Icon name={'ios-image'} size={80} color={Constant.miWhite}/>
+                                                height: 300
+                                            }}>
+                                                <View style={[styles.centered, styles.absoluteFull, {
+                                                    zIndex: -888,
+                                                    width: screenWidth - 105,
+                                                    height: 300,
+                                                }]}>
+                                                    <Icon name={'ios-image'} size={80} color={Constant.miWhite}/>
+                                                </View>
+                                                <Image source={{uri: node.attribs.src}}
+                                                       resizeMethod="scale"
+                                                       style={[styles.centerH, {
+                                                           width: screenWidth - 105,
+                                                           height: 300,
+                                                           marginTop: 5
+                                                       }]}>
+                                                </Image>
                                             </View>
-                                            <Image source={{uri: node.attribs.src}}
-                                                   resizeMethod="scale"
-                                                   style={[styles.centerH, {
-                                                       width: screenWidth - 105,
-                                                       height: 300,
-                                                       marginTop: 5
-                                                   }]}>
-                                            </Image>
+                                        </TouchableWithoutFeedback>
+                                    )
+                                } else {
+                                    let img = this.hadImageChildren(node);
+                                    if (img) {
+                                        return <View key={index}>
+                                            {domToElement(node.children, node)}
                                         </View>
-                                    </TouchableWithoutFeedback>
-                                )
-                            } else {
-                                let img = this.hadImageChildren(node);
-                                if (img) {
-                                    return <View key={index}>
-                                        {domToElement(node.children, node)}
-                                    </View>
+                                    }
                                 }
                             }
-                        }
                     }
                 }
                 {...this.props}/>
