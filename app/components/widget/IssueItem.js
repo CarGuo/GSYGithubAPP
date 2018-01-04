@@ -61,11 +61,11 @@ class IssueItem extends Component {
                 marginTop: Constant.normalMarginEdge / 2,
                 backgroundColor: Constant.transparentColor
             }]}
-            numberOfLines={100}
+            numberOfLines={9999}
             value={issueCommentHtml}
             textComponentProps={{
                 style: styles.subSmallText,
-                numberOfLines: 100,
+                numberOfLines: 9999,
             }}
             selectable={true}
             stylesheet={{pre: styles.inCode, code: styles.pCode}}
@@ -85,7 +85,6 @@ class IssueItem extends Component {
                     marginRight: Constant.normalMarginEdge,
                     paddingHorizontal: Constant.normalMarginEdge,
                     paddingTop: Constant.normalMarginEdge,
-                    borderRadius: 4,
                 }, styles.shadowCard]}
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem();

@@ -125,6 +125,7 @@ class RepositoryHeader extends Component {
                     backgroundColor: Constant.primaryColor,
                     marginTop: Constant.normalMarginEdge,
                     marginHorizontal: Constant.normalMarginEdge,
+                    borderRadius: 4,
                 }]}
                 blurRadius={Platform.OS === 'ios' ? 14 : 5}
                 source={{uri: (ownerPic) ? ownerPic : ""}}
@@ -132,6 +133,7 @@ class RepositoryHeader extends Component {
                 <View style={{
                     backgroundColor: Constant.primaryColor, opacity: 0.5,
                     padding: Constant.normalMarginEdge,
+                    borderRadius: 4,
                 }}>
                     <View style={[styles.flexDirectionRowNotFlex, {
                         backgroundColor: Constant.transparentColor,

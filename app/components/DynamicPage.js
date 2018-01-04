@@ -43,6 +43,22 @@ class DynamicPage extends Component {
             getNewsVersion();
         });
         AppState.addEventListener('change', this._handleAppStateChange);
+
+        /*setTimeout(() => {
+            if (__DEV__) {
+                Actions.IssueDetail({
+                    issue: {
+                        user: {},
+                        comments: 0,
+                        state: "",
+                        number: 696
+                    }, title: "Test",
+                    repositoryName: "GSYVideoPlayer",
+                    userName: "CarGuo"
+                })
+            }
+        }, 1000)*/
+
     }
 
     componentWillUnmount() {
@@ -72,7 +88,7 @@ class DynamicPage extends Component {
                 actionUser={rowData.actor.display_login}
                 actionUserPic={rowData.actor.avatar_url}
                 des={res.des}
-                onPressItem={()=>{
+                onPressItem={() => {
                     ActionUtils(rowData)
                 }}
                 actionTarget={res.actionStr}/>

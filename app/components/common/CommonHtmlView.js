@@ -60,7 +60,6 @@ class CommonHtmlView extends Component {
                 }}
                 renderNode={
                     (node, index, list, parent, domToElement) => {
-                        if (node.type === 'tag')
                             if (node.type === 'tag') {
                                 if (node.name === 'img') {
                                     return (
