@@ -10,26 +10,50 @@ import {Actions} from 'react-native-router-flux';
 import styles from "../style"
 import I18n from '../style/i18n'
 import * as Constant from '../style/constant'
+import {getLanguageCurrent, LanguageSelect} from '../utils/actionUtils'
 import loginActions from '../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import CommonRowItem from './common/CommonRowItem'
-import VersionNumber from "react-native-version-number";
+import {getRefreshHandler} from '../utils/actionUtils'
 
 /**
  * 设置
  */
 class SettingPage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.initLanguage = this.initLanguage.bind(this);
+        this.state = {
+            language: ""
+        }
+    }
+
     componentDidMount() {
+        this.initLanguage();
     }
 
     componentWillUnmount() {
 
     }
 
+    componentWillReceiveProps(newProps) {
+        this.initLanguage();
+    }
+
+    initLanguage() {
+        getLanguageCurrent().then((res) => {
+            let language = (res && res.languageName) ? I18n(res.languageName) : I18n("systemLanguage");
+            this.setState({
+                language: language
+            });
+        })
+    }
 
     render() {
         let {loginActions} = this.props;
+
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -89,6 +113,30 @@ class SettingPage extends Component {
                     itemText={I18n('about')}
                     onClickFun={() => {
                         Actions.AboutPage();
+                    }}/>
+                <CommonRowItem
+                    showIconNext={true}
+                    topLine={false}
+                    bottomLine={false}
+                    itemIcon={"globe"}
+                    textStyle={[styles.centered, styles.normalText, {
+                        textAlignVertical: 'center',
+                        marginHorizontal: Constant.normalMarginEdge
+                    }]}
+                    iconSize={20}
+                    viewStyle={[{
+                        borderRadius: 4, marginTop: Constant.normalMarginEdge,
+                        paddingLeft: Constant.normalMarginEdge
+                    }, styles.shadowCard]}
+                    itemText={I18n('language') + ": " + this.state.language}
+                    onClickFun={() => {
+                        Actions.OptionModal({
+                            dataList: LanguageSelect(() => {
+                                this.initLanguage();
+                                let handler = getRefreshHandler();
+                                handler.get(Constant.REFRESH_LANGUAGE) && handler.get(Constant.REFRESH_LANGUAGE)();
+                            })
+                        });
                     }}/>
                 <CommonRowItem
                     showIconNext={false}

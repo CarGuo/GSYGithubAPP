@@ -49,7 +49,6 @@ import {screenWidth, drawerWidth} from "./style/index";
  * 全局路由
  */
 const getRouter = () => {
-    changeLocale();
     return (
         <Router
             getSceneStyle={() => {

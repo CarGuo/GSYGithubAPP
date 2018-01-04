@@ -10,12 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import styles from '../../style'
 import * as Constant from '../../style/constant'
-import I18n from '../../style/i18n'
-import loginActions from '../../store/actions/login'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import TimeText from './TimeText'
-import UserImage from './UserImage'
 import HTMLView from '../common/CommonHtmlView';
 
 /**

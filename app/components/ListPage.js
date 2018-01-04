@@ -43,7 +43,8 @@ class ListPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this.refs.pullList.showRefreshState();
+            if (this.refs.pullList)
+                this.refs.pullList.showRefreshState();
             this._refresh();
         })
     }
@@ -60,7 +61,8 @@ class ListPage extends Component {
     }
 
     _doRefresh() {
-        this.refs.pullList.showRefreshState();
+        if (this.refs.pullList)
+            this.refs.pullList.showRefreshState();
         this._refresh();
     }
 

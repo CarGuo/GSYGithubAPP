@@ -1,9 +1,10 @@
 import * as Constant from "../style/constant"
-import {StyleSheet, Linking, Clipboard, Platform, Share} from "react-native";
+import {StyleSheet, Linking, Clipboard, Platform, Share, AsyncStorage} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import I18n from '../style/i18n'
 import Toast from '../components/common/ToastProxy'
 import {FSModule} from '../net'
+import {changeLocale} from '../style/i18n'
 
 
 export const RepositoryDetailRightBtnPress = (props) => {
@@ -146,4 +147,57 @@ export const CommonMore = (props) => {
         }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
 
     }]
+};
+
+export const LanguageSelect = (callback) => {
+    return [{
+        itemName: I18n("systemLanguage"),
+        itemValue: 'systemLanguage',
+        itemClick: () => {
+            AsyncStorage.removeItem(Constant.LANGUAGE_SELECT);
+            AsyncStorage.removeItem(Constant.LANGUAGE_SELECT_NAME);
+            changeLocale();
+            Actions.refresh();
+            callback && callback()
+        }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
+    }, {
+        itemName: I18n("zhLanguage"),
+        itemValue: 'zhLanguage',
+        itemClick: () => {
+            selectLanguage("zh-CN", 'zhLanguage');
+            callback && callback()
+        }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
+    }, {
+
+        itemName: I18n("enLanguage"),
+        itemValue: 'enLanguage',
+        itemClick: () => {
+            selectLanguage("en", 'enLanguage');
+            callback && callback()
+        }, itemStyle: {borderBottomWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,}
+
+    }]
+};
+
+
+export const getLanguageCurrent = async () => {
+    let language = await  AsyncStorage.getItem(Constant.LANGUAGE_SELECT);
+    let languageName = await  AsyncStorage.getItem(Constant.LANGUAGE_SELECT_NAME);
+    return {
+        language: language,
+        languageName: languageName,
+    };
+};
+
+const selectLanguage = (lang, langName) => {
+    AsyncStorage.setItem(Constant.LANGUAGE_SELECT, lang);
+    AsyncStorage.setItem(Constant.LANGUAGE_SELECT_NAME, langName);
+    changeLocale(lang);
+    Actions.refresh();
+};
+
+
+const refreshHandler = new Map();
+export const getRefreshHandler = () => {
+    return refreshHandler;
 };

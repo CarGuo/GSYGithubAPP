@@ -46,16 +46,7 @@ class DynamicPage extends Component {
 
         /*setTimeout(() => {
             if (__DEV__) {
-                Actions.IssueDetail({
-                    issue: {
-                        user: {},
-                        comments: 0,
-                        state: "",
-                        number: 696
-                    }, title: "Test",
-                    repositoryName: "GSYVideoPlayer",
-                    userName: "CarGuo"
-                })
+                Actions.SettingPage()
             }
         }, 1000)*/
 

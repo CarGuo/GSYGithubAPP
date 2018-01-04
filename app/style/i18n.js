@@ -76,7 +76,7 @@ I18n.translations = {
         forked_at: "Forked from",
         latest_update: "Latest update",
         latest_commit: "Latest commit",
-        reposActivity: "activity",
+        reposActivity: "Info",
         reposPush: "Push",
         reposReadme: "readme",
         reposFile: "files",
@@ -164,6 +164,10 @@ I18n.translations = {
         thisWeek: 'This Week ',
         userOrg: 'Org',
         reloadClick: 'Reload',
+        language: 'Language',
+        systemLanguage: 'System',
+        zhLanguage: 'Chinese',
+        enLanguage: 'English',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -317,22 +321,32 @@ I18n.translations = {
         thisWeek: ' 本周动态 ',
         userOrg: '组织',
         reloadClick: '点击重新加载',
+        language: '语言',
+        systemLanguage: '系统',
+        zhLanguage: '中文',
+        enLanguage: '英文',
     }
 };
 
 export const changeLocale = function (multilingual) {
     if (multilingual === 'local' || !multilingual) {
-        I18n.locale = (RNI18n && RNI18n.locale) ? RNI18n.locale.replace(/_/, '-') : ''
+        if(__DEV__) {
+            if(RNI18n !== undefined && typeof RNI18n !== 'undefined') {
+                console.log("language system", RNI18n.languages[0])
+            }
+        }
+        I18n.locale = (RNI18n !== undefined && typeof RNI18n !== 'undefined') ? RNI18n.languages[0].replace(/_/, '-') : ''
     } else {
         I18n.locale = multilingual
     }
-
     // for ios
     if (I18n.locale.indexOf('zh-Hans') !== -1) {
         I18n.locale = 'zh-CN'
     } else if (I18n.locale.indexOf('zh-Hant') !== -1 || I18n.locale === 'zh-HK' || I18n.locale === 'zh-MO') {
         I18n.locale = 'zh-CN'
     }
+
+
 };
 
 export default function (name, option1, option2) {
