@@ -1,5 +1,6 @@
 package com.gsygithubapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
@@ -12,6 +13,10 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this,true);
         super.onCreate(savedInstanceState);
+		if((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0){
+		   finish();
+		   return;
+		}
     }
 
     /**

@@ -11,7 +11,7 @@ import styles from "../style"
 import I18n from '../style/i18n'
 import reposActions from '../store/actions/repository'
 import WebComponent from './widget/CustomWebComponent'
-import {generateCode2HTml, formName} from '../utils/htmlUtils'
+import {generateCode2HTml, formName, generateHtml, launchUrl} from '../utils/htmlUtils'
 import {Actions} from 'react-native-router-flux';
 import * as Constant from '../style/constant'
 
@@ -50,9 +50,15 @@ class CodeDetailPage extends Component {
                             if (!lang) {
                                 lang = this.props.lang
                             }
-                            this.setState({
-                                detail: generateCode2HTml(res.data, Constant.webDraculaBackgroundColor, lang),
-                            })
+                            if ('markdown' === lang) {
+                                this.setState({
+                                    detail: generateHtml(res.data)
+                                })
+                            } else {
+                                this.setState({
+                                    detail: generateCode2HTml(res.data, Constant.webDraculaBackgroundColor, lang),
+                                })
+                            }
                         } else {
                             this.setState({
                                 detail: "<h1>" + I18n("fileNotSupport") + "</h1>",
@@ -90,6 +96,16 @@ class CodeDetailPage extends Component {
             <View style={[styles.mainBox]}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
                 <WebComponent
+                    gsygithubLink={(url) => {
+                        if (url) {
+                            let owner = this.props.ownerName;
+                            let repo = this.props.repositoryName;
+                            let branch = this.props.branch ? this.props.branch : "master";
+                            let currentPath = url.replace("gsygithub://.", "").replace("gsygithub://", "/");
+                            let fixedUrl = "https://github.com/" + owner + "/" + repo + "/blob/" + branch + currentPath;
+                            launchUrl(fixedUrl);
+                        }
+                    }}
                     source={{html: detail}}/>
             </View>
         )
