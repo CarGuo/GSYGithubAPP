@@ -37,6 +37,12 @@
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* GSYGithubAPPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GSYGithubAPPTests.m */; };
 		3ED498A573784806999FD35F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 34DB6BAE67554CCCBFBB0DA3 /* libz.tbd */; };
+		4BEB22AB2001F7E80033BBA6 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEB22AD2001F7E80033BBA6 /* QBImagePicker.framework */; };
+		4BEB22AC2001F7E80033BBA6 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEB22AE2001F7E80033BBA6 /* RSKImageCropper.framework */; };
+		4BEB22AF2001FA870033BBA6 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEB22AD2001F7E80033BBA6 /* QBImagePicker.framework */; };
+		4BEB22B02001FA870033BBA6 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEB22AD2001F7E80033BBA6 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4BEB22B22001FABF0033BBA6 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEB22AE2001F7E80033BBA6 /* RSKImageCropper.framework */; };
+		4BEB22B32001FABF0033BBA6 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEB22AE2001F7E80033BBA6 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5684FB83FA214DA1AA0DA21E /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 532AD542F51D4D61B62F6484 /* libRNSpinkit.a */; };
 		5BFE8020353E4BDD803E10C1 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5171E8959C934B729B5317EF /* Ionicons.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
@@ -382,6 +388,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4BEB22B12001FA880033BBA6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4BEB22B02001FA870033BBA6 /* QBImagePicker.framework in Embed Frameworks */,
+				4BEB22B32001FABF0033BBA6 /* RSKImageCropper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
@@ -411,6 +432,8 @@
 		34DB6BAE67554CCCBFBB0DA3 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4083AB50E44E42FE95D76D4F /* libc++.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		446E4F0EEFEF49CBA949E535 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		4BEB22AD2001F7E80033BBA6 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BEB22AE2001F7E80033BBA6 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C24AD59E844F2A9431BEBA /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		5171E8959C934B729B5317EF /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		532AD542F51D4D61B62F6484 /* libRNSpinkit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSpinkit.a; sourceTree = "<group>"; };
@@ -447,10 +470,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BEB22AB2001F7E80033BBA6 /* QBImagePicker.framework in Frameworks */,
+				4BEB22AC2001F7E80033BBA6 /* RSKImageCropper.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
+				4BEB22B22001FABF0033BBA6 /* RSKImageCropper.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -468,6 +494,7 @@
 				3ED498A573784806999FD35F /* libz.tbd in Frameworks */,
 				FCB92FCF0A5947BEBF5BBF19 /* libRNVersionNumber.a in Frameworks */,
 				869056AA82AE4F13B20FDA50 /* libimageCropPicker.a in Frameworks */,
+				4BEB22AF2001FA870033BBA6 /* QBImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,6 +703,8 @@
 		5261E509DAFE488CADB7820A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BEB22AD2001F7E80033BBA6 /* QBImagePicker.framework */,
+				4BEB22AE2001F7E80033BBA6 /* RSKImageCropper.framework */,
 				4083AB50E44E42FE95D76D4F /* libc++.tbd */,
 				34DB6BAE67554CCCBFBB0DA3 /* libz.tbd */,
 			);
@@ -817,6 +846,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				4BEB22B12001FA880033BBA6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -874,7 +904,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = B29J9885S3;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = B29J9885S3;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1423,6 +1457,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = B29J9885S3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1462,6 +1497,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = B29J9885S3;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
@@ -1499,6 +1535,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = B29J9885S3;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
@@ -1515,6 +1552,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shuyu.GSYGithubAPP;
 				PRODUCT_NAME = GSYGithubAPP;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1526,6 +1564,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B29J9885S3;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
@@ -1542,6 +1581,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shuyu.GSYGithubAPP;
 				PRODUCT_NAME = GSYGithubAPP;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
