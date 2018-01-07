@@ -125,7 +125,7 @@ class PullLoadMoreListView extends Component {
                                                   this.showRefreshState();
                                               }}>
                                 <Image source={require("../../img/logo.png")}
-                                       resizeMode={"center"}
+                                       resizeMode={"contain"}
                                        style={{width: 80, height: 80}}/>
                                 <Text style={[styles.normalText]}>
                                     {I18n("listEmpty")}
@@ -141,7 +141,7 @@ class PullLoadMoreListView extends Component {
                                                   this.showRefreshState();
                                               }}>
                                 <Image source={require("../../img/logo.png")}
-                                       resizeMode={"center"}
+                                       resizeMode={"contain"}
                                        style={{width: 80, height: 80}}/>
                                 <Text style={[styles.normalText]}>
                                     {I18n("listEmpty")}

@@ -159,7 +159,7 @@ class LoginPage extends Component {
                     onOpened={this.onOpen}>
                     <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
                         <Image source={require("../img/logo.png")}
-                               resizeMode={"center"}
+                               resizeMode={"contain"}
                                style={{width: 80, height: 80}}/>
                     </View>
                     <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>

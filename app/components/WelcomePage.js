@@ -57,7 +57,7 @@ class WelcomePage extends Component {
                 <StatusBar hidden={true}/>
                 <View style={[styles.centered, {flex: 1}]}>
                     <Image source={require("../img/welcome.png")}
-                           resizeMode={"center"}
+                           resizeMode={"contain"}
                            style={{width: screenWidth, height: screenHeight}}/>
                 </View>
             </View>

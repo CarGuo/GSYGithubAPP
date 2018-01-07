@@ -88,7 +88,7 @@ class UserHeadItem extends Component {
                                   }
                               }}>
                 <Image source={require("../../img/logo.png")}
-                       resizeMode={"center"}
+                       resizeMode={"contain"}
                        style={{width: 30, height: 30}}/>
                 <Text style={[styles.smallText]}>
                     {I18n("reloadClick")}
