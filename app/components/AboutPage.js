@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, ScrollView, Linking
+    View, Platform, StatusBar, ScrollView, Linking
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
@@ -15,7 +15,7 @@ import VersionNumber from 'react-native-version-number';
 import issueActions from "../store/actions/issue";
 import repositoryActions from "../store/actions/repository";
 import Toast from './common/ToastProxy'
-import {downloadUrl} from '../net/address'
+import {downloadUrl, hostWeb} from '../net/address'
 
 
 /**
@@ -85,7 +85,7 @@ class AboutPage extends Component {
                         }, styles.shadowCard]}
                         itemText={I18n('version') + ": " + VersionNumber.appVersion}
                         onClickFun={() => {
-                            getNewsVersion(true)
+                            getNewsVersion(true, false)
                         }}/>
                     <CommonRowItem
                         showIconNext={true}
@@ -151,7 +151,11 @@ class AboutPage extends Component {
 }
 
 
-export const getNewsVersion = (showTip) => {
+export const getNewsVersion = (showTip, onlyCheck = true) => {
+    //ios不检查更新
+    if (Platform.OS === "ios" && onlyCheck) {
+        return
+    }
     repositoryActions.getRepositoryRelease("CarGuo", 'GSYGithubApp', 1, false).then((res) => {
         if (res && res.result) {
             //github只能有release的versionName，没有code，囧
@@ -173,7 +177,11 @@ export const getNewsVersion = (showTip) => {
                         titleText: I18n('update'),
                         text: I18n('update') + ": " + res.data[0].name + "\n" + res.data[0].body,
                         textConfirm: () => {
-                            Linking.openURL(downloadUrl)
+                            if (Platform.OS === "ios") {
+                                Linking.openURL(hostWeb + "CarGuo/GSYGithubApp/releases")
+                            } else {
+                                Linking.openURL(downloadUrl)
+                            }
                         }
                     });
                 } else {
