@@ -116,14 +116,27 @@ class PushDetailPage extends Component {
 
     render() {
         let {pushDetail} = this.state;
+        let name = "";
+        let pic = "";
+        if (pushDetail) {
+            if (pushDetail.committer) {
+                name = pushDetail.committer.login;
+            } else if (pushDetail.commit && pushDetail.commit.author) {
+                name = pushDetail.commit.author.name;
+            }
+            if (pushDetail.committer && pushDetail.committer.avatar_url) {
+                pic = pushDetail.committer.avatar_url;
+            }
+        }
         let header = (pushDetail) ?
-            <PushDetailHeader actionUser={pushDetail.committer.login}
-                              actionUserPic={pushDetail.committer.avatar_url}
-                              pushDes={"Push at " + pushDetail.commit.message}
-                              pushTime={pushDetail.commit.committer.date}
-                              editCount={pushDetail.files.length + ""}
-                              addCount={pushDetail.stats.additions + ""}
-                              deleteCount={pushDetail.stats.deletions + ""}/> : <View/>;
+            <PushDetailHeader
+                actionUser={name}
+                actionUserPic={pic}
+                pushDes={"Push at " + pushDetail.commit.message}
+                pushTime={pushDetail.commit.committer.date}
+                editCount={pushDetail.files.length + ""}
+                addCount={pushDetail.stats.additions + ""}
+                deleteCount={pushDetail.stats.deletions + ""}/> : <View/>;
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
