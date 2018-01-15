@@ -89,12 +89,16 @@ I18n.translations = {
         createIssue: "Create",
         issueClose: "Close",
         issueOpen: "Open",
+        issueLocked: "Locked",
+        issueUnlock: "Unlock",
         issueInputTitleTip: "enjoy yourself",
         issueInputTip: "enjoy yourself",
         closeIssue: "Close？",
         openIssue: "Open？",
         closeIssueTip: "Close？",
         openIssueTip: "Open？",
+        lockIssueTip: "Locked？",
+        unLockIssueTip: "UnLock？",
         commentsIssue: "Comment",
         editIssue: "Edit Issue",
         copyComment: "Copy",
@@ -168,6 +172,7 @@ I18n.translations = {
         systemLanguage: 'System',
         zhLanguage: 'Chinese',
         enLanguage: 'English',
+        gone410: '410 Gone',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -245,12 +250,16 @@ I18n.translations = {
         issueEdit: "编辑",
         issueClose: "关闭",
         issueOpen: "打开",
+        issueLocked: "锁定",
+        issueUnlock: "解锁",
         issueInputTip: "请输入答复哟",
         issueInputTipTitle: "请输入标题",
         closeIssue: "关闭？",
         openIssue: "打开？",
         closeIssueTip: "你确定要关闭这个Issue吗？",
         openIssueTip: "你确定要打开这个Issue吗？",
+        lockIssueTip: "你确定要锁定这个Issue吗？",
+        unLockIssueTip: "你确定要解锁这个Issue吗？",
         commentsIssue: "提交回复",
         editIssue: "编辑",
         copyComment: "复制",
@@ -325,13 +334,14 @@ I18n.translations = {
         systemLanguage: '系统',
         zhLanguage: '中文',
         enLanguage: '英文',
+        gone410: '410 Gone，不存在吧？',
     }
 };
 
 export const changeLocale = function (multilingual) {
     if (multilingual === 'local' || !multilingual) {
-        if(__DEV__) {
-            if(RNI18n !== undefined && typeof RNI18n !== 'undefined') {
+        if (__DEV__) {
+            if (RNI18n !== undefined && typeof RNI18n !== 'undefined') {
                 console.log("language system", RNI18n.languages[0])
             }
         }

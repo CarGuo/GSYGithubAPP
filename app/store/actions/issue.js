@@ -70,6 +70,24 @@ const editIssue = async (userName, repository, number, issue) => {
 };
 
 /**
+ * 锁定issue
+ */
+const lockIssue = async (userName, repository, number, locked) => {
+    let res = await IssueDao.lockIssueDao(userName, repository, number, locked);
+    if (res && res.result) {
+        return {
+            data: res.data,
+            result: true
+        };
+    } else {
+        return {
+            result: false
+        };
+    }
+};
+
+
+/**
  * 创建issue
  */
 const createIssue = async (userName, repository,  issue) => {
@@ -116,5 +134,6 @@ export default {
     addIssueComment,
     editIssue,
     editComment,
-    createIssue
+    createIssue,
+    lockIssue
 }

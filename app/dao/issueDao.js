@@ -199,6 +199,32 @@ const editIssueDao = async (userName, repository, number, issue) => {
     };
 };
 
+/**
+ * 锁定issue
+ */
+const lockIssueDao = async (userName, repository, number, locked) => {
+    let fullName = userName + "/" + repository;
+    let url = Address.lockIssue(userName, repository, number);
+    let res = await Api.netFetch(url, locked ? "DELETE" : 'PUT', {}, true, {Accept: 'application/vnd.github.VERSION.full+json'});
+    let objectData = null;
+    if (res && res.result) {
+        realm.write(() => {
+            let items = realm.objects('IssueDetail').filtered(`fullName="${fullName}" AND number ="${number}"`);
+            if (items && items.length > 0) {
+                let resultData = items[0].data;
+                if (resultData) {
+                    objectData = JSON.parse(resultData);
+                    objectData.locked = !locked;
+                    items[0].data = JSON.stringify(objectData);
+                }
+            }
+        });
+    }
+    return {
+        data: objectData,
+        result: res.result
+    };
+};
 
 /**
  * 创建issue
@@ -208,10 +234,12 @@ const createIssueDao = async (userName, repository, issue) => {
     let url = Address.createIssue(userName, repository);
     let res = await Api.netFetch(url, 'POST', issue, true, {Accept: 'application/vnd.github.VERSION.full+json'});
     if (res && res.result) {
-        realm.create('IssueDetail', {
-            number: res.data.number,
-            fullName: fullName,
-            data: JSON.stringify(res.data)
+        realm.write(() => {
+            realm.create('IssueDetail', {
+                number: res.data.number + "",
+                fullName: fullName,
+                data: JSON.stringify(res.data)
+            });
         });
     }
     return {
@@ -270,5 +298,6 @@ export default {
     editIssueDao,
     editCommentDao,
     deleteCommentDao,
-    createIssueDao
+    createIssueDao,
+    lockIssueDao
 }

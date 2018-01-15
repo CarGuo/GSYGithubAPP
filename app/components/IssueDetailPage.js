@@ -36,6 +36,7 @@ class IssueDetailPage extends Component {
         this.editComment = this.editComment.bind(this);
         this.closeIssue = this.closeIssue.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
+        this.lockedIssue = this.lockedIssue.bind(this);
         this.page = 2;
         this.actionUser = new Map();
         this.state = {
@@ -199,6 +200,23 @@ class IssueDetailPage extends Component {
         })
     }
 
+
+    lockedIssue() {
+        let {repositoryName, userName} = this.props;
+        let {issue} = this.state;
+        Actions.LoadingModal({backExit: false});
+        issueActions.lockIssue(userName, repositoryName, issue.number, issue.locked).then((res) => {
+            setTimeout(() => {
+                Actions.pop();
+                if (res && res.result && res.data) {
+                    this.setState({
+                        issue: res.data
+                    })
+                }
+            }, 500);
+        })
+    }
+
     /**
      * 刷新
      * */
@@ -322,6 +340,17 @@ class IssueDetailPage extends Component {
                     text: (issue.state === "open") ? I18n('closeIssueTip') : I18n('openIssueTip'),
                     textConfirm: this.closeIssue
                 })
+            }, itemStyle: {
+                borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: Constant.lineColor
+            }
+        }, {
+            itemName: (issue.locked) ? I18n('issueUnlock') : I18n('issueLocked'),
+            itemClick: () => {
+                Actions.ConfirmModal({
+                    titleText: (issue.locked) ? I18n('issueUnlock') : I18n('issueLocked'),
+                    text: (issue.locked) ? I18n('lockIssueTip') : I18n('unLockIssueTip'),
+                    textConfirm: this.lockedIssue
+                })
             }, itemStyle: {}
         },]
     }
@@ -374,6 +403,7 @@ class IssueDetailPage extends Component {
                 actionUser={issue.user.login}
                 actionUserPic={issue.user.avatar_url}
                 closed_by={issue.closed_by}
+                locked={issue.locked}
                 issueComment={issue.title}
                 issueDesHtml={issue.body_html ? issue.body_html : ""}
                 commentCount={issue.comments + ""}

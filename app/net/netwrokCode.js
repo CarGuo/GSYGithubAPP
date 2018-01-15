@@ -27,6 +27,9 @@ export default function (code, statusText) {
         case 404:
             //Toast(I18n('notFound'));
             return "404错误";
+        case 410:
+            Toast(I18n('gone410'));
+            return "410错误";
         case NETWORK_TIMEOUT:
             //超时
             Toast(I18n('netTimeout'));

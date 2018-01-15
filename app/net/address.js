@@ -161,6 +161,13 @@ export default AddressLocal = {
         return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}`
     },
     /**
+     * 锁定issue put
+     * 解锁issue delete
+     */
+    lockIssue: (reposOwner, reposName, issueNumber) => {
+        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}/lock`
+    },
+    /**
      * 创建issue post
      */
     createIssue: (reposOwner, reposName) => {
