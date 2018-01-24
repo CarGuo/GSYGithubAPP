@@ -165,10 +165,12 @@ const addIssueCommentDao = async (userName, repository, number, comment) => {
     if (res && res.result) {
         realm.write(() => {
             let id = res.data.id;
-            let items = realm.objects('IssueComment').filtered(`fullName="${fullName}" AND number ="${number}" AND commentId="${id}"`);
-            if (items && items.length > 0) {
-                items[0].data = JSON.stringify(res.data);
-            }
+            realm.create('IssueComment', {
+                number: number + "",
+                commentId: id + "",
+                fullName: fullName,
+                data: JSON.stringify(res.data)
+            });
         });
     }
     return {

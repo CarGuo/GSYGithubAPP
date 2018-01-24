@@ -167,7 +167,7 @@ class IssueDetailPage extends Component {
 
     deleteComment(commentId, rowID) {
         let {repositoryName, userName} = this.props;
-        let {number} = this.state;
+        let {number} = this.state.issue;
         Actions.LoadingModal({backExit: false});
         issueActions.editComment(userName, repositoryName, number, commentId, null, 'delete').then((res) => {
             setTimeout(() => {
