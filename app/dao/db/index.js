@@ -286,4 +286,10 @@ let realm = new Realm({
     ]
 });
 
+export const clearCache = () => {
+    realm.write(() => {
+        realm.deleteAll()
+    })
+};
+
 export default realm;

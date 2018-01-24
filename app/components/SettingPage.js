@@ -16,6 +16,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import CommonRowItem from './common/CommonRowItem'
 import {getRefreshHandler} from '../utils/actionUtils'
+import {clearCache} from "../dao/db";
 
 /**
  * 设置
@@ -139,6 +140,24 @@ class SettingPage extends Component {
                         });
                     }}/>
                 <CommonRowItem
+                    showIconNext={true}
+                    topLine={false}
+                    bottomLine={false}
+                    itemIcon={"broadcast"}
+                    textStyle={[styles.centered, styles.normalText, {
+                        textAlignVertical: 'center',
+                        marginHorizontal: Constant.normalMarginEdge
+                    }]}
+                    iconSize={20}
+                    viewStyle={[{
+                        borderRadius: 4, marginTop: Constant.normalMarginEdge,
+                        paddingLeft: Constant.normalMarginEdge
+                    }, styles.shadowCard]}
+                    itemText={I18n('clearCache')}
+                    onClickFun={() => {
+                        clearCache()
+                    }}/>
+                <CommonRowItem
                     showIconNext={false}
                     topLine={false}
                     bottomLine={false}
@@ -153,6 +172,8 @@ class SettingPage extends Component {
                         Actions.reset("LoginPage");
                         loginActions.loginOut();
                     }}/>
+
+
             </View>
         )
     }

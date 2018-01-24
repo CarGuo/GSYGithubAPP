@@ -173,6 +173,7 @@ I18n.translations = {
         zhLanguage: 'Chinese',
         enLanguage: 'English',
         gone410: '410 Gone',
+        clearCache: 'clearCache',
     },
     'zh-CN': {
         appName: 'GSYGitHubApp',
@@ -335,6 +336,7 @@ I18n.translations = {
         zhLanguage: '中文',
         enLanguage: '英文',
         gone410: '410 Gone，不存在吧？',
+        clearCache: '清除缓存',
     }
 };
 
