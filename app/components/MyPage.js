@@ -32,6 +32,11 @@ class MyPage extends BasePersonPage {
     _refresh() {
         super._refresh();
         this.refreshUnRead();
+        userActions.getUserInfo().then((res)=>{
+            if(__DEV__) {
+                console.log("***MyPage***", res)
+            }
+        })
     }
 
     getBackNotifyCall() {
