@@ -140,6 +140,11 @@ const getRouter = () => {
                            renderLeftButton={() => <CustomBackButton/>}
                     />
                     <Scene key="IssueDetail" component={IssueDetail}
+                           rightBtn={'ios-more'}
+                           iconType={2}
+                           rightBtnPress={(params) => {
+                               return CommonMoreRightBtnPress(params)
+                           }}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
                     />

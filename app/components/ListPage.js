@@ -167,6 +167,7 @@ class ListPage extends Component {
                                     repositoryName: rowData.repository.name,
                                     userName: rowData.repository.owner.login,
                                     needRightBtn: true,
+                                    iconType:1,
                                     rightBtn: 'home',
                                     rightBtnPress: () => {
                                         Actions.RepositoryDetail({

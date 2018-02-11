@@ -178,6 +178,7 @@ export const ActionUtils = (event, currentRepository) => {
                 repositoryName: repositoryName,
                 userName: owner,
                 needRightBtn: true,
+                iconType:1,
                 rightBtn: 'home',
                 rightBtnPress: () => {
                     Actions.RepositoryDetail({

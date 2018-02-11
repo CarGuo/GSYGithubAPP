@@ -268,7 +268,8 @@ class IssueDetailPage extends Component {
                 if (res && res.result) {
                     this.setState({
                         issue: res.data,
-                    })
+                    });
+                    Actions.refresh({titleData: res.data});
                 }
             })
     }

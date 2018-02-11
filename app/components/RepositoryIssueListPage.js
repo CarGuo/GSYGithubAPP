@@ -123,6 +123,7 @@ class RepositoryIssueListPage extends Component {
                 issueTag={"#" + rowData.number}
                 onPressItem={() => {
                     Actions.IssueDetail({
+                        needRightBtn: true,
                         issue: rowData, title: fullName,
                         repositoryName: this.props.repositoryName,
                         userName: this.props.userName
