@@ -229,7 +229,9 @@ class IssueDetailPage extends Component {
                     this.setState({
                         dataSource: dataList
                     });
+                    Actions.refresh({titleData: res.data});
                 }
+
                 return res.next();
             })
             .then((res) => {

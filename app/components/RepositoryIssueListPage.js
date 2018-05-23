@@ -19,6 +19,7 @@ import {getFullName} from '../utils/htmlUtils'
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Config from '../config'
 import CommonBottomBar from "./common/CommonBottomBar";
+import {CommonMoreRightBtnPress} from '../utils/actionUtils'
 
 /**
  * 仓库issue列表
@@ -123,10 +124,15 @@ class RepositoryIssueListPage extends Component {
                 issueTag={"#" + rowData.number}
                 onPressItem={() => {
                     Actions.IssueDetail({
+                        iconType:2,
+                        rightBtn: 'ios-more',
                         needRightBtn: true,
                         issue: rowData, title: fullName,
                         repositoryName: this.props.repositoryName,
-                        userName: this.props.userName
+                        userName: this.props.userName,
+                        rightBtnPress: (params) => {
+                            return CommonMoreRightBtnPress(params)
+                        }
                     })
                 }}/>
         )
