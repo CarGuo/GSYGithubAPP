@@ -61,6 +61,8 @@
 
 ### 示例图片
 
+![](https://github.com/CarGuo/GSYGithubApp/blob/master/1.gif)
+
 <img src="https://github.com/CarGuo/GSYGithubApp/blob/master/1.jpg" width="426px"/>
 
 <img src="https://github.com/CarGuo/GSYGithubApp/blob/master/2.jpg" width="426px"/>
