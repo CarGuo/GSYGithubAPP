@@ -83,6 +83,7 @@
 * [react-native-spinkit loading](https://github.com/maxs15/react-native-spinkit)
 * [react-native-textinput-effects 输入框](https://github.com/halilb/react-native-textinput-effects)
 * [url-parse url解析](https://github.com/unshiftio/url-parse)
+* [lottie](https://github.com/airbnb/lottie-react-native)
 
 ### 常见问题
 
