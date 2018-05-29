@@ -11,7 +11,8 @@ import {
     StatusBar,
     BackHandler,
     Keyboard,
-    Linking
+    Linking,
+    Easing
 } from 'react-native';
 import styles, {screenHeight, screenWidth} from "../style"
 import * as Constant from "../style/constant"
@@ -26,6 +27,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Entypo'
 import {Fumi} from 'react-native-textinput-effects';
 import Toast from './common/ToastProxy'
+import LottieView from 'lottie-react-native';
 
 const animaTime = 600;
 
@@ -51,7 +53,9 @@ class LoginPage extends Component {
             secureTextEntry: true,
             secureIcon: "eye-with-line",
             opacity: new Animated.Value(0),
+            progress: new Animated.Value(0),
         }
+        this.thisUnmount = false;
     }
 
     componentDidMount() {
@@ -61,14 +65,37 @@ class LoginPage extends Component {
             duration: animaTime,
             toValue: 1,
         }).start();
+        this.startAnimation();
     }
 
     componentWillUnmount() {
+        this.thisUnmount = true;
         if (this.handle) {
             this.handle.remove();
         }
+        if (this.refs.lottieView) {
+            this.refs.lottieView.reset();
+        }
     }
-
+    startAnimation() {
+        if (this.thisUnmount) {
+            return;
+        }
+        Animated.timing(this.state.progress, {
+            toValue: 1,
+            duration: 2000,
+            easing: Easing.linear
+        }).start(({finished}) => {
+            if (!finished) {
+                return;
+            }
+            //重复播放
+            this.setState({
+                progress: new Animated.Value(0),
+            });
+            this.startAnimation()
+        });
+    }
 
     onOpen() {
         loginActions.getLoginParams().then((res) => {
@@ -148,6 +175,14 @@ class LoginPage extends Component {
                 style={[styles.centered, styles.absoluteFull, {backgroundColor: Constant.primaryColor}, {opacity: this.state.opacity}]}>
                 <StatusBar hidden={false} backgroundColor={Constant.primaryColor} translucent
                            barStyle={'light-content'}/>
+                <View style={[styles.absoluteFull,{zIndex: -999, justifyContent:'flex-end'}]}>
+                    <LottieView
+                        ref="lottieView"
+                        style={{width: screenWidth, height:screenHeight / 2}}
+                        source={require('../style/lottie/animation-login.json')}
+                        progress={this.state.progress}
+                    />
+                </View>
                 <View
                     style={[{backgroundColor: Constant.miWhite}, {
                         height: 360,
