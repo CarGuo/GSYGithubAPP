@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Image, StatusBar, Platform
+    View, Image, StatusBar, Platform, Animated, Easing
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles, {screenHeight, screenWidth} from "../style"
@@ -15,6 +15,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as Constant from "../style/constant"
 import SplashScreen from './widget/native/SplashNative'
+import LottieView from 'lottie-react-native';
 
 /**
  * 欢迎页
@@ -24,10 +25,14 @@ class WelcomePage extends Component {
     constructor(props) {
         super(props);
         this.toNext = this.toNext.bind(this);
+        this.state = {
+            progress: new Animated.Value(0),
+        };
     }
 
 
     componentDidMount() {
+        //处理白屏
         if(Platform.OS === 'android') {
             SplashScreen.hide();
         }
@@ -35,10 +40,17 @@ class WelcomePage extends Component {
         userActions.initUserInfo().then((res) => {
             this.toNext(res)
         });
+        Animated.timing(this.state.progress, {
+            toValue: 1,
+            duration: 2000,
+            easing: Easing.linear,
+        }).start();
     }
 
     componentWillUnmount() {
-
+        if (this.refs.lottieView) {
+            this.refs.lottieView.reset();
+        }
     }
 
     toNext(res) {
@@ -48,7 +60,7 @@ class WelcomePage extends Component {
             } else {
                 Actions.reset("LoginPage");
             }
-        }, 1000);
+        }, 2100);
     }
 
     render() {
@@ -59,6 +71,17 @@ class WelcomePage extends Component {
                     <Image source={require("../img/welcome.png")}
                            resizeMode={"contain"}
                            style={{width: screenWidth, height: screenHeight}}/>
+                    <View style={[{justifyContent:'flex-end', alignItems: 'center', }, styles.absoluteFull]}>
+                        <LottieView
+                            ref="lottieView"
+                            style={{
+                                width: 150,
+                                height: 150,
+                            }}
+                            source={require('../style/lottie/animation-w800-h800.json')}
+                            progress={this.state.progress}
+                        />
+                    </View>
                 </View>
             </View>
         )
