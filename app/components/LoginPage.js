@@ -86,14 +86,14 @@ class LoginPage extends Component {
             duration: 2000,
             easing: Easing.linear
         }).start(({finished}) => {
-            if (!finished) {
+            /*if (!finished) {
                 return;
             }
             //重复播放
             this.setState({
                 progress: new Animated.Value(0),
             });
-            this.startAnimation()
+            this.startAnimation()*/
         });
     }
 
