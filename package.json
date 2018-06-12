@@ -30,7 +30,7 @@
     "react-native-tab-view": "0.0.70",
     "react-native-textinput-effects": "^0.4.1",
     "react-native-vector-icons": "^4.4.2",
-    "react-native-version-number": "git+https://github.com/CarSmallGuo/react-native-version-number.git",
+    "react-native-version-number": "^0.3.4",
     "react-redux": "^5.0.6",
     "realm": "^2.0.12",
     "redux": "^3.7.2",

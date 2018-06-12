@@ -33,7 +33,7 @@ class WelcomePage extends Component {
 
     componentDidMount() {
         //处理白屏
-        if(Platform.OS === 'android') {
+        if (Platform.OS === 'android') {
             SplashScreen.hide();
         }
         //是否登陆，是否用户信息
@@ -71,16 +71,18 @@ class WelcomePage extends Component {
                     <Image source={require("../img/welcome.png")}
                            resizeMode={"contain"}
                            style={{width: screenWidth, height: screenHeight}}/>
-                    <View style={[{justifyContent:'flex-end', alignItems: 'center', }, styles.absoluteFull]}>
-                        <LottieView
-                            ref="lottieView"
-                            style={{
-                                width: 150,
-                                height: 150,
-                            }}
-                            source={require('../style/lottie/animation-w800-h800.json')}
-                            progress={this.state.progress}
-                        />
+                    <View style={[styles.absoluteFull, styles.centered, {justifyContent: "flex-end"}]}>
+                        <View style={[styles.centered, {width: 150, height:150}]}>
+                            <LottieView
+                                ref="lottieView"
+                                style={{
+                                    width: 150,
+                                    height: 150,
+                                }}
+                                source={require('../style/lottie/animation-w800-h800.json')}
+                                progress={this.state.progress}
+                            />
+                        </View>
                     </View>
                 </View>
             </View>

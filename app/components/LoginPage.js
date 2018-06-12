@@ -77,6 +77,7 @@ class LoginPage extends Component {
             this.refs.lottieView.reset();
         }
     }
+
     startAnimation() {
         if (this.thisUnmount) {
             return;
@@ -175,13 +176,15 @@ class LoginPage extends Component {
                 style={[styles.centered, styles.absoluteFull, {backgroundColor: Constant.primaryColor}, {opacity: this.state.opacity}]}>
                 <StatusBar hidden={false} backgroundColor={Constant.primaryColor} translucent
                            barStyle={'light-content'}/>
-                <View style={[styles.absoluteFull,{zIndex: -999, justifyContent:'flex-end'}]}>
-                    <LottieView
-                        ref="lottieView"
-                        style={{width: screenWidth, height:screenHeight / 2}}
-                        source={require('../style/lottie/animation-login.json')}
-                        progress={this.state.progress}
-                    />
+                <View style={[styles.absoluteFull, {zIndex: -999, justifyContent: 'flex-end'}]}>
+                    <View style={{width: screenWidth, height: screenHeight / 2}}>
+                        <LottieView
+                            ref="lottieView"
+                            style={{width: screenWidth, height: screenHeight / 2}}
+                            source={require('../style/lottie/animation-login.json')}
+                            progress={this.state.progress}
+                        />
+                    </View>
                 </View>
                 <View
                     style={[{backgroundColor: Constant.miWhite}, {
