@@ -101,8 +101,8 @@ android {
         applicationId "com.gsygithubapp"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 9
-        versionName "1.6"
+        versionCode 10
+        versionName "1.7"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
