@@ -32,7 +32,7 @@ class CodeDetailPage extends Component {
         InteractionManager.runAfterInteractions(() => {
             if (this.props.needRequest) {
                 reposActions.getReposFileDir(this.props.ownerName,
-                    this.props.repositoryName, this.props.path, this.props.branch).then((res) => {
+                    this.props.repositoryName, this.props.path, this.props.branch, true).then((res) => {
                         if (res && res.result) {
                             let startTag = `<div class="announce instapaper_body `;
                             let startLang = res.data.indexOf(startTag);

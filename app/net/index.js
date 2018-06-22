@@ -42,9 +42,10 @@ class HttpManager {
      * @param params 请求参数
      * @param json 是否需要json格式的参数请求
      * @param header 外加头
+     * @param text 是否text返回
      * @return {Promise.<*>}
      */
-    async netFetch(url, method = 'GET', params, json, header) {
+    async netFetch(url, method = 'GET', params, json, header, text) {
         let isConnected = await NetInfo.isConnected.fetch().done;
 
         if (!isConnected) {
@@ -81,7 +82,7 @@ class HttpManager {
             requestParams = this.formParams(method, params, headers)
         }
 
-        let response = await this.requestWithTimeout(this.optionParams.timeoutMs, fetch(url, requestParams));
+        let response = await this.requestWithTimeout(this.optionParams.timeoutMs, fetch(url, requestParams), text);
 
         if (__DEV__) {
             console.log('请求url: ', url);
@@ -97,18 +98,26 @@ class HttpManager {
             }
         }
         try {
-            let responseJson = await response.json();
-            if (response.status === 201 && responseJson.token) {
-                this.optionParams.authorizationCode = 'token ' + responseJson.token;
-                AsyncStorage.setItem(Constant.TOKEN_KEY, this.optionParams.authorizationCode);
-            }
-
-            if (response.status === 200 || response.status === 201) {
+            if (text) {
                 return {
+                    data: response,
                     result: true,
-                    code: Code.SUCCESS,
-                    data: responseJson,
-                    headers: response.headers
+                    code: Code.SUCCESS
+                }
+            } else {
+                let responseJson = await response.json();
+                if (response.status === 201 && responseJson.token) {
+                    this.optionParams.authorizationCode = 'token ' + responseJson.token;
+                    AsyncStorage.setItem(Constant.TOKEN_KEY, this.optionParams.authorizationCode);
+                }
+
+                if (response.status === 200 || response.status === 201) {
+                    return {
+                        result: true,
+                        code: Code.SUCCESS,
+                        data: responseJson,
+                        headers: response.headers
+                    }
                 }
             }
         } catch (e) {
@@ -200,7 +209,7 @@ class HttpManager {
     /**
      * 超时管理
      */
-    requestWithTimeout(ms, promise) {
+    requestWithTimeout(ms, promise, text) {
         return new Promise((resolve, reject) => {
             const timeoutId = setTimeout(() => {
                 resolve({
@@ -211,7 +220,11 @@ class HttpManager {
             promise.then(
                 (res) => {
                     clearTimeout(timeoutId);
-                    resolve(res);
+                    if(text) {
+                        resolve(res.text());
+                    } else {
+                        resolve(res);
+                    }
                 },
                 (err) => {
                     clearTimeout(timeoutId);

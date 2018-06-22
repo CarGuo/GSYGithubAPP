@@ -288,8 +288,8 @@ const getRepositoryDetailReadmeHtml = async (userName, reposName, branch) => {
 /***
  * 获取仓库的文件列表
  */
-const getReposFileDir = async (userName, reposName, path, branch) => {
-    let res = await RepositoryDao.getReposFileDirDao(userName, reposName, path, branch);
+const getReposFileDir = async (userName, reposName, path, branch, text) => {
+    let res = await RepositoryDao.getReposFileDirDao(userName, reposName, path, branch, text);
     return {
         data: res.data,
         result: res.result

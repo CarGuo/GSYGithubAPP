@@ -128,7 +128,7 @@ const getUserStaredCountNet = async (userName) => {
 const getFollowerListDao = async (userName, page, localNeed) => {
     let nextStep = async () => {
         let url = Address.getUserFollower(userName) + Address.getPageParams("?", page);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allEvent = realm.objects('UserFollower').filtered(`userName="${userName}"`);
@@ -175,7 +175,7 @@ const getFollowerListDao = async (userName, page, localNeed) => {
 const getFollowedListDao = async (userName, page, localNeed) => {
     let nextStep = async () => {
         let url = Address.getUserFollow(userName) + Address.getPageParams("?", page);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allEvent = realm.objects('UserFollowed').filtered(`userName="${userName}"`);
@@ -301,7 +301,7 @@ const checkFollowDao = async (name) => {
 const getMemberDao = async (userName, page, localNeed) => {
     let nextStep = async () => {
         let url = Address.getMember(userName) + Address.getPageParams("?", page);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allEvent = realm.objects('OrgMember').filtered(`org="${userName}"`);
@@ -349,7 +349,7 @@ const getMemberDao = async (userName, page, localNeed) => {
 const getUserOrgsDao = async (userName, page, localNeed) => {
     let nextStep = async () => {
         let url = Address.getUserOrgs(userName) + Address.getPageParams("?", page);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allEvent = realm.objects('UserOrgs').filtered(`userName="${userName}"`);

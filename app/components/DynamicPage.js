@@ -46,7 +46,11 @@ class DynamicPage extends Component {
 
         /*setTimeout(() => {
             if (__DEV__) {
-                Actions.SettingPage()
+                Actions.VersionPage({
+                    ownerName: "CarGuo",
+                    repositoryName:"GSYGithubApp",
+                    title: "CarGuo/GSYGithubApp"
+                })
             }
         }, 1000)*/
 

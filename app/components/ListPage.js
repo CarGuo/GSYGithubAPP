@@ -115,10 +115,11 @@ class ListPage extends Component {
                         }}/>
                 );
             case 'release':
+                console.log(rowData)
                 return (
                     <ReleaseItem
                         actionTime={rowData.published_at}
-                        actionTitle={rowData.name}
+                        actionTitle={rowData.name ? rowData.name : rowData.tag_name}
                         actionTarget={rowData.target_commitish}
                         actionTargetHtml={rowData.body_html}
                         onPressItem={() => {

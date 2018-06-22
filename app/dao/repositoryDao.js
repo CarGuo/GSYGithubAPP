@@ -109,7 +109,7 @@ const getPulseDao = async (owner, repositoryName) => {
  */
 const searchRepositoryDao = async (q, sort, order, type, page, pageSize) => {
     let url = Address.search(q, sort, order, type, page, pageSize);
-    let res = await await Api.netFetch(url);
+    let res = await Api.netFetch(url);
     return {
         data: res.data ? res.data.items : res.data,
         result: res.result
@@ -124,7 +124,7 @@ const searchRepositoryDao = async (q, sort, order, type, page, pageSize) => {
  */
 const searchRepositoryIssueDao = async (q, page) => {
     let url = Address.repositoryIssueSearch(q) + Address.getPageParams("&", page);
-    let res = await await Api.netFetch(url);
+    let res = await Api.netFetch(url);
     return {
         data: res.data ? res.data.items : res.data,
         result: res.result
@@ -138,7 +138,7 @@ const getUserRepositoryDao = async (userName, page, sort, localNeed) => {
     let sortText = sort ? sort : "pushed";
     let nextStep = async () => {
         let url = Address.userRepos(userName, sort) + Address.getPageParams("&", page);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allEvent = realm.objects('UserRepos').filtered(`userName="${userName}" AND sort="${sortText}"`);
@@ -187,7 +187,7 @@ const getStarRepositoryDao = async (userName, page, sort, localNeed) => {
     let sortText = sort ? sort : "created";
     let nextStep = async () => {
         let url = Address.userStar(userName, sort) + Address.getPageParams("&", page);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allEvent = realm.objects('UserStared').filtered(`userName="${userName}" AND sort="${sortText}"`);
@@ -236,7 +236,7 @@ const getRepositoryDetailDao = (userName, reposName) => {
     let fullName = userName + "/" + reposName;
     let nextStep = async () => {
         let url = Address.getReposDetail(userName, reposName);
-        let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.mercy-preview+json'});
+        let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.mercy-preview+json'});
         if (res && res.result && res.data) {
             let issueRes = await getRepositoryIssueStatusDao(userName, reposName);
             let netData = res.data;
@@ -289,7 +289,7 @@ const getRepositoryDetailReadmeHtmlDao = (userName, reposName, branch) => {
     let curBranch = (branch) ? branch : "master";
     let nextStep = async () => {
         let url = Address.readmeFile(userName + '/' + reposName, branch);
-        let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html'});
+        let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html'}, true);
         if (res && res.result && res.data.length > 0) {
             let curData = generateHtml(res.data);
             realm.write(() => {
@@ -371,7 +371,7 @@ const getRepositoryLocalReadDao = (page = 1) => {
  */
 const createForkDao = async (userName, reposName) => {
     let url = Address.createFork(userName, reposName);
-    let res = await await Api.netFetch(url, 'POST');
+    let res =  await Api.netFetch(url, 'POST');
     return {
         data: res.data,
         result: res.result
@@ -385,7 +385,7 @@ const getBranchesDao = (userName, reposName) => {
     let fullName = userName + "/" + reposName;
     let nextStep = async () => {
         let url = Address.getbranches(userName, reposName);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0) {
             realm.write(() => {
                 let allEvent = realm.objects('RepositoryBranch').filtered(`fullName="${fullName}"`);
@@ -432,7 +432,7 @@ const getRepositoryForksDao = (userName, reposName, page, localNeed) => {
     let fullName = userName + "/" + reposName;
     let nextStep = async () => {
         let url = Address.getReposForks(userName, reposName) + Address.getPageParams("?", page);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allEvent = realm.objects('RepositoryFork').filtered(`fullName="${fullName}"`);
@@ -481,7 +481,7 @@ const getRepositoryStarDao = (userName, reposName, page, localNeed) => {
     let fullName = userName + "/" + reposName;
     let nextStep = async () => {
         let url = Address.getReposStar(userName, reposName) + Address.getPageParams("?", page);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allEvent = realm.objects('RepositoryStar').filtered(`fullName="${fullName}"`);
@@ -529,7 +529,7 @@ const getRepositoryWatcherDao = (userName, reposName, page, localNeed) => {
     let fullName = userName + "/" + reposName;
     let nextStep = async () => {
         let url = Address.getReposWatcher(userName, reposName) + Address.getPageParams("?", page);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allEvent = realm.objects('RepositoryWatcher').filtered(`fullName="${fullName}"`);
@@ -576,8 +576,8 @@ const getRepositoryWatcherDao = (userName, reposName, page, localNeed) => {
 const getRepositoryStatusDao = async (userName, reposName) => {
     let urls = Address.resolveStarRepos(userName, reposName);
     let urlw = Address.resolveWatcherRepos(userName, reposName);
-    let ress = await await Api.netFetch(urls);
-    let resw = await await Api.netFetch(urlw);
+    let ress = await Api.netFetch(urls);
+    let resw = await Api.netFetch(urlw);
     return {
         data: {star: ress.result, watch: resw.result},
         result: true
@@ -590,7 +590,7 @@ const getRepositoryStatusDao = async (userName, reposName) => {
  */
 const doRepositoryStarDao = async (userName, reposName, star) => {
     let url = Address.resolveStarRepos(userName, reposName);
-    let res = await await Api.netFetch(url, star ? 'PUT' : 'DELETE');
+    let res = await Api.netFetch(url, star ? 'PUT' : 'DELETE');
     return {
         data: res.result,
         result: res.result
@@ -602,7 +602,7 @@ const doRepositoryStarDao = async (userName, reposName, star) => {
  */
 const doRepositoryWatchDao = async (userName, reposName, watch) => {
     let url = Address.resolveWatcherRepos(userName, reposName);
-    let res = await await Api.netFetch(url, watch ? 'PUT' : 'DELETE');
+    let res = await Api.netFetch(url, watch ? 'PUT' : 'DELETE');
     return {
         data: res.result,
         result: res.result
@@ -614,7 +614,7 @@ const doRepositoryWatchDao = async (userName, reposName, watch) => {
  */
 const getRepositoryReleaseDao = async (userName, reposName, page, needHtml = true) => {
     let url = Address.getReposRelease(userName, reposName) + Address.getPageParams("?", page);
-    let res = await await Api.netFetch(url, 'GET', null, false, {Accept: (needHtml ? 'application/vnd.github.html,application/vnd.github.VERSION.raw' : "")});
+    let res = await Api.netFetch(url, 'GET', null, false, {Accept: (needHtml ? 'application/vnd.github.html,application/vnd.github.VERSION.raw' : "")});
     return {
         data: res.data,
         result: res.result
@@ -626,7 +626,7 @@ const getRepositoryReleaseDao = async (userName, reposName, page, needHtml = tru
  */
 const getRepositoryTagDao = async (userName, reposName, page) => {
     let url = Address.getReposTag(userName, reposName) + Address.getPageParams("?", page);
-    let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
+    let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
     return {
         data: res.data,
         result: res.result
@@ -640,7 +640,7 @@ const getReposCommitsDao = (userName, reposName, page, localNeed) => {
     let fullName = userName + "/" + reposName;
     let nextStep = async () => {
         let url = Address.getReposCommits(userName, reposName) + Address.getPageParams("?", page);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allEvent = realm.objects('RepositoryCommits').filtered(`fullName="${fullName}"`);
@@ -690,7 +690,7 @@ const getReposCommitsInfoDao = (userName, reposName, sha) => {
     let fullName = userName + "/" + reposName;
     let nextStep = async () => {
         let url = Address.getReposCommitsInfo(userName, reposName, sha);
-        let res = await await Api.netFetch(url);
+        let res = await Api.netFetch(url);
         if (res && res.result && res.data) {
             realm.write(() => {
                 let data = realm.objects('RepositoryCommitInfoDetail').filtered(`fullName="${fullName}" AND sha ="${sha}"`);
@@ -727,9 +727,9 @@ const getReposCommitsInfoDao = (userName, reposName, sha) => {
 /***
  * 获取仓库的文件列表
  */
-const getReposFileDirDao = async (userName, reposName, path = '', branch) => {
+const getReposFileDirDao = async (userName, reposName, path = '', branch, text) => {
     let url = Address.reposDataDir(userName, reposName, path, branch);
-    let res = await await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html'});
+    let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html'});
     return {
         data: res.data,
         result: res.result
@@ -741,7 +741,7 @@ const getReposFileDirDao = async (userName, reposName, path = '', branch) => {
  */
 const getRepositoryDetailReadmeDao = async (userName, reposName, branch) => {
     let url = Address.readmeFile(userName + '/' + reposName, branch);
-    let res = await await Api.netFetch(url);
+    let res = await Api.netFetch(url);
     return {
         data: res.data,
         result: res.result
@@ -753,7 +753,7 @@ const getRepositoryDetailReadmeDao = async (userName, reposName, branch) => {
  */
 const searchTopicRepositoryDao = async (searchTopic, page = 0) => {
     let url = Address.searchTopic(searchTopic) + Address.getPageParams("&", page);
-    let res = await await Api.netFetch(url);
+    let res = await Api.netFetch(url);
     return {
         data: res.data ? res.data.items : res.data,
         result: res.result
@@ -802,7 +802,7 @@ const getRepositoryIssueStatusDao = async (userName, repository) => {
  */
 const getUserRepository100StatusDao = async (userName) => {
     let url = Address.userRepos(userName, 'pushed') + "&page=1&per_page=100";
-    let res = await await Api.netFetch(url);
+    let res = await Api.netFetch(url);
     if (res && res.result && res.data.length > 0) {
         let stared = 0;
         res.data.forEach((item) => {
