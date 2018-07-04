@@ -15,7 +15,7 @@ import WebComponent from './widget/CustomWebComponent'
 import CommonBottomBar from './common/CommonBottomBar'
 import IssueListPage from './RepositoryIssueListPage'
 import RepositoryDetailActivity from './RepositoryDetailActivityPage'
-import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
+import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 import ListPage from "./ListPage";
 
 /**
@@ -131,7 +131,7 @@ class NotifyPage extends Component {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
-                <TabViewAnimated
+                <TabView
                     style={{
                         flex: 1,
                     }}
@@ -139,7 +139,7 @@ class NotifyPage extends Component {
                     swipeEnabled={false}
                     navigationState={this.state}
                     renderScene={this._renderScene.bind(this)}
-                    renderHeader={this._renderHeader}
+                    renderTabBar={this._renderHeader}
                     onIndexChange={this._handleIndexChange}
                     initialLayout={{
                         height: 0,
