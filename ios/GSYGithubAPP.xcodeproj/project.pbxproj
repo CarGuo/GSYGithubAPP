@@ -318,6 +318,20 @@
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = LottieReactNative;
 		};
+		4B6746B920ECFF9300CB3C4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EBF21BDC1FC498900052F4D5;
+			remoteInfo = jsinspector;
+		};
+		4B6746BB20ECFF9300CB3C4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EBF21BFA1FC4989A0052F4D5;
+			remoteInfo = "jsinspector-tvOS";
+		};
 		4B8F09371FC18CAF00ADA4AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -669,6 +683,8 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
+				4B6746BA20ECFF9300CB3C4A /* libjsinspector.a */,
+				4B6746BC20ECFF9300CB3C4A /* libjsinspector-tvOS.a */,
 				4B027B291FDAD66800E3B0DB /* libthird-party.a */,
 				4B027B2B1FDAD66800E3B0DB /* libthird-party.a */,
 				4B027B2D1FDAD66800E3B0DB /* libdouble-conversion.a */,
@@ -1328,6 +1344,20 @@
 			fileType = archive.ar;
 			path = libLottieReactNative.a;
 			remoteRef = 4B4FC95420BD787F00E114DE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4B6746BA20ECFF9300CB3C4A /* libjsinspector.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjsinspector.a;
+			remoteRef = 4B6746B920ECFF9300CB3C4A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4B6746BC20ECFF9300CB3C4A /* libjsinspector-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsinspector-tvOS.a";
+			remoteRef = 4B6746BB20ECFF9300CB3C4A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4B8F09381FC18CAF00ADA4AE /* libRCTBlob-tvOS.a */ = {
