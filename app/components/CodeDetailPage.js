@@ -34,7 +34,7 @@ class CodeDetailPage extends Component {
                 reposActions.getReposFileDir(this.props.ownerName,
                     this.props.repositoryName, this.props.path, this.props.branch, this.props.textStyle).then((res) => {
                         if (res && res.result) {
-                            let startTag = `<div class="instapaper_body `;
+                            let startTag = `class="instapaper_body `;
                             let startLang = res.data.indexOf(startTag);
                             let endLang = res.data.indexOf(`" data-path="`);
                             let lang;
