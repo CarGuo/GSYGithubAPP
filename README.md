@@ -51,7 +51,14 @@
 
 #### Apk二维码
 
-<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/download.png" width="220px"/>
+类型 | 二维码
+-------- | ---
+**Apk二维码**|![](https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/download.png)
+**IOS暂无下载**|**残念(╯‵□′)╯︵┻━┻，第三方太贵，没企业证书。**![](https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/ios_wait.png)
+
+
+
+
 
 ```
 
