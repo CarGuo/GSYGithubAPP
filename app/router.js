@@ -57,12 +57,12 @@ const getRouter = () => {
             backAndroidHandler={
                 BackUtils()}>
             <Lightbox>
+                <Scene key="main">
+                    <Scene key="WelcomePage" component={WelcomePage} hideNavBar hideTabBar hide/>
+                </Scene>
                 <Scene key="root"
                        navigationBarStyle={styles.navigationBar}
                        titleStyle={{color: Constant.titleTextColor}}>
-                    <Scene key="main">
-                        <Scene key="WelcomePage" component={WelcomePage} hideNavBar hideTabBar hide/>
-                    </Scene>
                     <Scene key="mainTabPage"
                            tabs
                            lazy

@@ -56,7 +56,7 @@ class WelcomePage extends Component {
     toNext(res) {
         setTimeout(() => {
             if (res && res.result) {
-                Actions.reset("mainTabPage");
+                Actions.reset("root");
             } else {
                 Actions.reset("LoginPage");
             }
