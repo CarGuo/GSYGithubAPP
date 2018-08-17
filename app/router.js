@@ -5,12 +5,11 @@ import React, {Component} from 'react';
 import {
     Scene,
     Router,
-    Lightbox, Drawer, Stack
+    Lightbox, Drawer
 } from 'react-native-router-flux';
 import DynamicPage from './components/DynamicPage'
 import LoginPage from './components/LoginPage'
 import MyPage from './components/MyPage'
-import RecommendPage from './components/RecommendPage'
 import PersonInfoPage from './components/PersonInfoPage'
 import PhotoPage from './components/PhotoPage'
 import AboutPage from './components/AboutPage'
@@ -63,10 +62,10 @@ const getRouter = () => {
                 <Scene key="LoginPage" component={LoginPage}
                        showLabel={false}
                        hideNavBar/>
-                <Stack key="mainTabPage"
+                <Scene key="root"
                        navigationBarStyle={styles.navigationBar}
                        titleStyle={{color: Constant.titleTextColor}}>
-                    <Scene
+                    <Scene key="mainTabPage"
                            tabs
                            lazy
                            wrap={false}
@@ -120,14 +119,14 @@ const getRouter = () => {
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
                     />
-                    <Drawer key="SearchPageDrawer" title={I18n('search')}
+                    <Drawer key="SearchPageDrawer"
                             contentComponent={DrawerFilter}
                             drawerPosition={'right'}
                             hideNavBar
                             drawerWidth={drawerWidth}
                             drawerIcon={<CustomDrawerButton/>}
                             renderLeftButton={() => <CustomBackButton/>}>
-                        <Scene key="SearchPage" component={SearchPage}/>
+                        <Scene key="SearchPage" component={SearchPage} title={I18n('search')}/>
                     </Drawer>
                     <Scene key="RepositoryDetail" component={RepositoryDetail}
                            needRightBtn={true}
@@ -192,7 +191,7 @@ const getRouter = () => {
                     <Scene key="PhotoPage" component={PhotoPage}
                            hideNavBar
                     />
-                </Stack>
+                </Scene>
                 <Scene key="LoadingModal" component={LoadingModal}/>
                 <Scene key="TextInputModal" component={TextInputModal}/>
                 <Scene key="ConfirmModal" component={CommentConfirmModal}/>
