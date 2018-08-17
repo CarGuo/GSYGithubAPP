@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {
     Scene,
     Router,
-    Lightbox, Drawer
+    Lightbox, Drawer, Stack
 } from 'react-native-router-flux';
 import DynamicPage from './components/DynamicPage'
 import LoginPage from './components/LoginPage'
@@ -63,10 +63,10 @@ const getRouter = () => {
                 <Scene key="LoginPage" component={LoginPage}
                        showLabel={false}
                        hideNavBar/>
-                <Scene key="root"
+                <Stack key="mainTabPage"
                        navigationBarStyle={styles.navigationBar}
                        titleStyle={{color: Constant.titleTextColor}}>
-                    <Scene key="mainTabPage"
+                    <Scene
                            tabs
                            lazy
                            wrap={false}
@@ -192,7 +192,7 @@ const getRouter = () => {
                     <Scene key="PhotoPage" component={PhotoPage}
                            hideNavBar
                     />
-                </Scene>
+                </Stack>
                 <Scene key="LoadingModal" component={LoadingModal}/>
                 <Scene key="TextInputModal" component={TextInputModal}/>
                 <Scene key="ConfirmModal" component={CommentConfirmModal}/>

@@ -156,7 +156,7 @@ class LoginPage extends Component {
             if (!res) {
                 Toast(I18n('LoginFailTip'));
             } else {
-                Actions.reset("root")
+                Actions.reset("mainTabPage")
             }
         })
     }
