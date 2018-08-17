@@ -60,6 +60,9 @@ const getRouter = () => {
                 <Scene key="main">
                     <Scene key="WelcomePage" component={WelcomePage} hideNavBar hideTabBar hide/>
                 </Scene>
+                <Scene key="LoginPage" component={LoginPage}
+                       showLabel={false}
+                       hideNavBar/>
                 <Scene key="root"
                        navigationBarStyle={styles.navigationBar}
                        titleStyle={{color: Constant.titleTextColor}}>
@@ -101,9 +104,6 @@ const getRouter = () => {
                             tabIconName={'tabMy'}
                         />
                     </Scene>
-                    <Scene key="LoginPage" component={LoginPage}
-                           showLabel={false}
-                           hideNavBar/>
                     <Scene key="PersonPage" component={PersonPage}
                            needRightBtn={true}
                            rightBtn={'ios-more'}
