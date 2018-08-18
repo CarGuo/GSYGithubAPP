@@ -26,7 +26,7 @@ class BackButton extends Component {
 
 
     render() {
-        if (Actions.state.routes[0].index === 0 || this.props.hideBackButton) {
+        if (this.props.hideBackButton) {
             return <View/>;
         }
         return (
