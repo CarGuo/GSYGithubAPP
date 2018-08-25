@@ -26,6 +26,8 @@ class PullLoadMoreListView extends Component {
             isRefreshing: false,
             showLoadMore: false,
             showRefresh: true,
+            listHeight: 0,
+
         };
     }
 
@@ -107,7 +109,10 @@ class PullLoadMoreListView extends Component {
         };
 
         let emptyView = (!this.props.hasOwnProperty("renderHeader")) ?
-            <View style={[styles.centered, {flex: 1, height: screenHeight}]}>
+            <View style={[styles.centered, {
+                flex: 1,
+                height: this.state.listHeight
+            }]}>
                 <TouchableOpacity style={[styles.centered, {flex: 1}]}
                                   onPress={() => {
                                       this._refresh();
@@ -129,6 +134,7 @@ class PullLoadMoreListView extends Component {
                     () => emptyView
                 }
                 {...refreshProps}
+                onLayout={e => this.setState({listHeight: e.nativeEvent.layout.height})}
                 renderItem={
                     ({item, index}) => this.props.renderRow(item, index)
                 }
