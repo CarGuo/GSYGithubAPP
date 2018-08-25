@@ -111,7 +111,7 @@ class RepositoryIssueListPage extends Component {
         });
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(rowData) {
         let fullName = getFullName(rowData.repository_url);
         return (
             <IssueItem
@@ -304,8 +304,8 @@ class RepositoryIssueListPage extends Component {
                     style={{flex: 1}}
                     ref="pullList"
                     enableRefresh={false}
-                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
-                        this._renderRow(rowData, sectionID, rowID, highlightRow)
+                    renderRow={(rowData, index) =>
+                        this._renderRow(rowData)
                     }
                     refresh={this._refresh}
                     loadMore={this._loadMore}

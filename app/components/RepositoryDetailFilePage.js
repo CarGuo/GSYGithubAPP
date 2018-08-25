@@ -106,7 +106,7 @@ class RepositoryDetailFilePage extends Component {
         )
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(rowData) {
         if (rowData.type === 'file') {
             let {headerList} = this.state;
             return (
@@ -249,8 +249,8 @@ class RepositoryDetailFilePage extends Component {
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
-                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
-                        this._renderRow(rowData, sectionID, rowID, highlightRow)
+                    renderRow={(rowData, index) =>
+                        this._renderRow(rowData)
                     }
                     renderHeader={() => {
                         return header

@@ -57,7 +57,7 @@ class RepositoryDetailActivityPage extends Component {
     componentWillReceiveProps(newProps) {
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(rowData) {
         if (this.state.select === 0) {
             let res = getActionAndDes(rowData);
             let fullName = this.props.ownerName + "/" + this.props.repositoryName;
@@ -323,8 +323,8 @@ class RepositoryDetailActivityPage extends Component {
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
-                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
-                        this._renderRow(rowData, sectionID, rowID, highlightRow)
+                    renderRow={(rowData, index) =>
+                        this._renderRow(rowData)
                     }
                     renderHeader={() => {
                         return header

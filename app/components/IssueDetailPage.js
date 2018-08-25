@@ -58,7 +58,7 @@ class IssueDetailPage extends Component {
     }
 
 
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(rowData, rowID) {
         return (
             <IssueItem
                 markdownBody={true}
@@ -421,8 +421,8 @@ class IssueDetailPage extends Component {
                     style={{flex: 1}}
                     ref="pullList"
                     enableRefresh={false}
-                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
-                        this._renderRow(rowData, sectionID, rowID, highlightRow)
+                    renderRow={(rowData, index) =>
+                        this._renderRow(rowData, index)
                     }
                     renderHeader={() => {
                         return header

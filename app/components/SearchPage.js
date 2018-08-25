@@ -107,7 +107,7 @@ class SearchPage extends Component {
         });
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(rowData) {
         if (this.select === 0) {
             return (
                 <RepositoryItem
@@ -254,8 +254,8 @@ class SearchPage extends Component {
                     style={{flex: 1}}
                     ref="pullList"
                     enableRefresh={false}
-                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
-                        this._renderRow(rowData, sectionID, rowID, highlightRow)
+                    renderRow={(rowData, index) =>
+                        this._renderRow(rowData)
                     }
                     refresh={this._refresh}
                     loadMore={this._loadMore}

@@ -70,7 +70,7 @@ class BasePersonPage extends Component {
         }
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(rowData) {
         if (this.showType === 1) {
             return (<UserItem
                 location={rowData.location}
@@ -297,8 +297,8 @@ class BasePersonPage extends Component {
                         );
                     }}
                     render
-                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
-                        this._renderRow(rowData, sectionID, rowID, highlightRow)
+                    renderRow={(rowData, index) =>
+                        this._renderRow(rowData)
                     }
                     refresh={this._refresh}
                     loadMore={this._loadMore}

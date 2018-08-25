@@ -5,16 +5,11 @@ import React, {
     Component,
 } from 'react'
 import {
-    View, Text, Image, TouchableOpacity
+    View, Text, TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from '../../style'
 import * as Constant from '../../style/constant'
-import {Actions} from 'react-native-router-flux';
-import I18n from '../../style/i18n'
-import loginActions from '../../store/actions/login'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import TimeText from './TimeText'
 import UserImage from './UserImage'
 
@@ -97,8 +92,4 @@ const propTypes = {
 
 EventItem.propTypes = propTypes;
 
-export default connect(state => ({
-    state
-}), dispatch => ({
-    actions: bindActionCreators(loginActions, dispatch)
-}))(EventItem)
+export default EventItem

@@ -75,7 +75,7 @@ class DynamicPage extends Component {
         this.appState = nextAppState;
     };
 
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(rowData) {
         let res = getActionAndDes(rowData);
         return (
             <EventItem
@@ -130,8 +130,8 @@ class DynamicPage extends Component {
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
-                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
-                        this._renderRow(rowData, sectionID, rowID, highlightRow)
+                    renderRow={(rowData, index) =>
+                        this._renderRow(rowData)
                     }
                     refresh={this._refresh}
                     loadMore={this._loadMore}

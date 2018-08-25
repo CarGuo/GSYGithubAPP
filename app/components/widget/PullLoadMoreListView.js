@@ -3,14 +3,12 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import {
-    View, Text, ListView, RefreshControl, ActivityIndicator, Platform, TouchableOpacity, ScrollView, Image
+    View, Text, FlatList, ActivityIndicator, TouchableOpacity, Image
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
-import styles, {screenHeight, screenWidth} from "../../style"
+import styles, {screenHeight} from "../../style"
 import * as Constant from "../../style/constant"
 import I18n from '../../style/i18n'
 import * as Config from '../../config'
-import Icon from 'react-native-vector-icons/Ionicons'
 
 /**
  * 上下拉列表控件
@@ -29,7 +27,6 @@ class PullLoadMoreListView extends Component {
             showLoadMore: false,
             showRefresh: true,
         };
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     }
 
 
@@ -77,7 +74,6 @@ class PullLoadMoreListView extends Component {
             showLoadMore: false,
             isRefresh: true,
         });
-        let {eventAction} = this.props;
         this.props.refresh && this.props.refresh();
     }
 
@@ -102,83 +98,50 @@ class PullLoadMoreListView extends Component {
     }
 
     render() {
-        let dataList = this.ds.cloneWithRows(this.props.dataSource);
         let refreshProps = {
-            style: [styles.centered],
-            enable: (this.state.showRefresh && this.props.enableRefresh),
             refreshing: this.state.isRefresh,
             onRefresh: this._refresh,
             tintColor: Constant.primaryColor,
             title: I18n('refreshing'),
             colors: [Constant.primaryColor, Constant.primaryLightColor],
         };
-        if ((!this.props.dataSource || this.props.dataSource.length === 0)) {
-            if (!this.props.hasOwnProperty("renderHeader")) {
-                if (Platform.OS === 'android') {
-                    return (
-                        <RefreshControl
-                            {...refreshProps}
-                            style={[styles.centered, styles.flex]}>
-                            <TouchableOpacity style={[styles.centered, styles.absoluteFull]}
-                                              onPress={() => {
-                                                  this._refresh();
-                                                  this.showRefreshState();
-                                              }}>
-                                <Image source={require("../../img/logo.png")}
-                                       resizeMode={"contain"}
-                                       style={{width: 80, height: 80}}/>
-                                <Text style={[styles.normalText]}>
-                                    {I18n("listEmpty")}
-                                </Text>
-                            </TouchableOpacity>
-                        </RefreshControl>);
-                } else {
-                    return (
-                        <View style={[styles.centered, styles.flex]}>
-                            <TouchableOpacity style={[styles.centered, styles.absoluteFull, {zIndex: -999}]}
-                                              onPress={() => {
-                                                  this._refresh();
-                                                  this.showRefreshState();
-                                              }}>
-                                <Image source={require("../../img/logo.png")}
-                                       resizeMode={"contain"}
-                                       style={{width: 80, height: 80}}/>
-                                <Text style={[styles.normalText]}>
-                                    {I18n("listEmpty")}
-                                </Text>
-                            </TouchableOpacity>
-                            <ScrollView
-                                style={{width: screenWidth, height: 10}}
-                                refreshControl={
-                                    <RefreshControl
-                                        style={[styles.centered]}
-                                        {...refreshProps}
-                                    />
-                                }>
-                            </ScrollView>
-                        </View>
 
-                    );
-                }
-            }
-        }
+        let emptyView = (!this.props.hasOwnProperty("renderHeader")) ?
+            <View style={[styles.centered, {flex: 1, height: screenHeight}]}>
+                <TouchableOpacity style={[styles.centered, {flex: 1}]}
+                                  onPress={() => {
+                                      this._refresh();
+                                      this.showRefreshState();
+                                  }}>
+                    <Image source={require("../../img/logo.png")}
+                           resizeMode={"contain"}
+                           style={{width: 80, height: 80}}/>
+                    <Text style={[styles.normalText]}>
+                        {I18n("listEmpty")}
+                    </Text>
+                </TouchableOpacity>
+            </View> : <View/>;
         return (
-            <ListView
-                {...this.props}
+            <FlatList
                 style={{flex: 1}}
-                removeClippedSubviews={false}
                 ref="list"
+                ListEmptyComponent={
+                    () => emptyView
+                }
+                {...refreshProps}
+                renderItem={
+                    ({item, index}) => this.props.renderRow(item, index)
+                }
+                ListHeaderComponent={this.props.renderHeader}
                 enableEmptySections
                 initialListSize={this.props.pageSize}
                 pageSize={this.props.pageSize}
+                initialNumToRender={Config.PAGE_SIZE}
                 onEndReachedThreshold={50}
-                refreshControl={
-                    <RefreshControl
-                        style={[styles.centered]}
-                        {...refreshProps}/>}
+                keyExtractor={(item, index) => index.toString()}
                 onEndReached={this._loadMore}
-                renderFooter={this._renderFooter}
-                dataSource={dataList}
+                ListFooterComponent={this._renderFooter}
+                data={this.props.dataSource}
             />
         )
     }
@@ -190,8 +153,11 @@ class PullLoadMoreListView extends Component {
     }
 
     scrollToTop() {
+        if (this.props.dataSource <= 0) {
+            return;
+        }
         if (this.refs.list)
-            this.refs.list.scrollTo({y: 0, animate: false});
+            this.refs.list.scrollToIndex({index: 0, animate: false});
     }
 
     refreshComplete(showLoadMore = false, scrollToTop = false) {

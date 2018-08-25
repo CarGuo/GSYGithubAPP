@@ -50,7 +50,7 @@ class TrendPage extends Component {
         this._refresh();
     }
 
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(rowData) {
         return (
             <RepositoryItem
                 ownerName={rowData.name}
@@ -135,8 +135,8 @@ class TrendPage extends Component {
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
-                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
-                        this._renderRow(rowData, sectionID, rowID, highlightRow)
+                    renderRow={(rowData, index) =>
+                        this._renderRow(rowData, index)
                     }
                     refresh={this._refresh}
                     loadMore={this._loadMore}
