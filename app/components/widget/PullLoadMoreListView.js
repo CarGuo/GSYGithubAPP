@@ -143,7 +143,7 @@ class PullLoadMoreListView extends Component {
                 initialListSize={this.props.pageSize}
                 pageSize={this.props.pageSize}
                 initialNumToRender={Config.PAGE_SIZE}
-                onEndReachedThreshold={50}
+                onEndReachedThreshold={0.1}
                 keyExtractor={(item, index) => index.toString()}
                 onEndReached={this._loadMore}
                 ListFooterComponent={this._renderFooter}
