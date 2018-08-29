@@ -234,6 +234,8 @@ class LoginPage extends Component {
                             }]}
                                               onPress={() => {
                                                   this.setState({
+                                                      saveUserName: this.params.userName,
+                                                      savePassword: this.params.password,
                                                       secureIcon: (this.state.secureTextEntry) ? "eye" : "eye-with-line",
                                                       secureTextEntry: !this.state.secureTextEntry,
                                                   });
