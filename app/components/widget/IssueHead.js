@@ -50,6 +50,7 @@ class IssueItem extends Component {
                     marginRight: Constant.normalMarginEdge,
                     paddingHorizontal: Constant.normalMarginEdge,
                     paddingTop: Constant.normalMarginEdge,
+                    borderRadius: 3,
                 }, styles.shadowCard, {backgroundColor: Constant.primaryColor}]}
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem();

@@ -139,6 +139,7 @@ class PullLoadMoreListView extends Component {
                     ({item, index}) => this.props.renderRow(item, index)
                 }
                 ListHeaderComponent={this.props.renderHeader}
+                ItemSeparatorComponent={({highlighted}) => <View/>}
                 enableEmptySections
                 initialListSize={this.props.pageSize}
                 pageSize={this.props.pageSize}

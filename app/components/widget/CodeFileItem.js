@@ -47,7 +47,8 @@ class CodeFileItem extends Component {
             : <View/>;
         let title = (needTitle) ?
             <View style={[styles.flexDirectionRow, styles.centerH, {
-                marginTop: Constant.normalMarginEdge
+                marginTop: Constant.normalMarginEdge,
+                marginHorizontal: Constant.normalMarginEdge,
             }]}>
                 <Text style={[{flex: 1}, ...titleStyle]}>{itemTextTitle}</Text>
             </View> : <View/>;
@@ -57,13 +58,13 @@ class CodeFileItem extends Component {
                     onClickFun && onClickFun()
                 }}
                 style={[{
-                    marginHorizontal: Constant.normalMarginEdge,
                 }, ...this.props.viewStyle]}>
                 {title}
                 <View
                     style={[styles.flexDirectionRow, styles.centerH, styles.shadowCard, {
                         padding: Constant.normalMarginEdge,
-                        marginTop: Constant.normalMarginEdge,
+                        marginVertical: Constant.normalMarginEdge / 2,
+                        marginHorizontal: Constant.normalMarginEdge,
                         borderRadius: 3,
                     }]}>
                     {leftIcon}

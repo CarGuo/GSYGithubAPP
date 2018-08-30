@@ -53,7 +53,7 @@ class ReleaseItem extends Component {
         return (
             <TouchableOpacity
                 style={[{
-                    marginTop: Constant.normalMarginEdge,
+                    marginVertical: Constant.normalMarginEdge / 2,
                     marginLeft: Constant.normalMarginEdge,
                     marginRight: Constant.normalMarginEdge,
                     padding: Constant.normalMarginEdge,

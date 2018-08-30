@@ -80,11 +80,12 @@ class IssueItem extends Component {
         return (
             <TouchableOpacity
                 style={[{
-                    marginTop: Constant.normalMarginEdge,
+                    marginVertical: Constant.normalMarginEdge / 2,
                     marginLeft: Constant.normalMarginEdge,
                     marginRight: Constant.normalMarginEdge,
                     paddingHorizontal: Constant.normalMarginEdge,
                     paddingTop: Constant.normalMarginEdge,
+                    borderRadius: 3,
                 }, styles.shadowCard]}
                 onPress={() => {
                     this.props.onPressItem && this.props.onPressItem();

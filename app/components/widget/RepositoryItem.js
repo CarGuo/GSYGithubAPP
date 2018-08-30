@@ -65,7 +65,7 @@ class RepositoryItem extends Component {
             <TouchableOpacity
                 style={[{
                     backgroundColor: Constant.white,
-                    marginTop: Constant.normalMarginEdge,
+                    marginVertical: Constant.normalMarginEdge / 2,
                     marginHorizontal: Constant.normalMarginEdge,
                     paddingHorizontal: Constant.normalMarginEdge,
                     paddingTop: Constant.normalMarginEdge,

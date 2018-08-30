@@ -102,6 +102,7 @@ class UserHeadItem extends Component {
                 width: screenWidth - 2 * Constant.normalMarginEdge,
                 marginHorizontal: Constant.normalMarginEdge,
                 marginTop: Constant.normalMarginEdge,
+                marginBottom: Constant.normalMarginEdge / 2,
                 paddingHorizontal: Constant.normalMarginEdge,
                 paddingTop: Constant.normalMarginEdge,
                 borderRadius: 4,

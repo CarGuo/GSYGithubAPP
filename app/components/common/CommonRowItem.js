@@ -61,6 +61,7 @@ class CommonRowItem extends Component {
                 }}
                 style={[{
                     minHeight: 50, marginLeft: Constant.normalMarginEdge, marginRight: Constant.normalMarginEdge,
+                    marginVertical: Constant.normalMarginEdge / 2,
                 }, ...this.props.viewStyle]}>
                 <View style={[styles.flexDirectionRow, styles.centerH,
                     {borderTopWidth: tl, borderTopColor: Constant.lineColor},

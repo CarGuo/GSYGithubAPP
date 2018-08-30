@@ -48,9 +48,10 @@ class EventItem extends Component {
         return (
             <TouchableOpacity
                 style={[{
-                    marginTop: Constant.normalMarginEdge,
+                    marginTop: Constant.normalMarginEdge / 2,
                     marginLeft: Constant.normalMarginEdge,
                     marginRight: Constant.normalMarginEdge,
+                    marginBottom: Constant.normalMarginEdge / 2,
                     padding: Constant.normalMarginEdge,
                     borderRadius: 4,
                 }, styles.shadowCard]}
