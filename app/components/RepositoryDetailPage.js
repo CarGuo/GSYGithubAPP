@@ -168,6 +168,7 @@ class RepositoryDetailPage extends Component {
 
     _renderHeader = props =>
         <TabBar {...props}
+                useNativeDrivers
                 style={{backgroundColor: Constant.primaryColor}}
                 labelStyle={{color: Constant.white}}
                 indicatorStyle={{backgroundColor: Constant.miWhite}}
@@ -178,6 +179,7 @@ class RepositoryDetailPage extends Component {
             case '1':
                 return (
                     <WebComponent
+                        focused={this.state.index === 0}
                         source={{html: this.state.dataDetailReadme}}
                         userName={this.props.ownerName}
                         reposName={this.props.repositoryName}
@@ -196,6 +198,7 @@ class RepositoryDetailPage extends Component {
             case '2':
                 return (
                     <RepositoryDetailActivity
+                        focused={this.state.index === 1}
                         dataDetail={this.state.dataDetail}
                         ownerName={this.props.ownerName}
                         repositoryName={this.props.repositoryName}
@@ -204,6 +207,7 @@ class RepositoryDetailPage extends Component {
             case '3':
                 return (
                     <RepositoryDetailFile
+                        focused={this.state.index === 2}
                         ref={(ref) => {
                             this.detailFile = ref;
                         }}
@@ -215,6 +219,7 @@ class RepositoryDetailPage extends Component {
             case '4':
                 return (
                     <IssueListPage
+                        focused={this.state.index === 3}
                         userName={this.props.ownerName}
                         repositoryName={this.props.repositoryName}
                     />
@@ -344,7 +349,7 @@ class RepositoryDetailPage extends Component {
                         flex: 1,
                     }}
                     lazy={true}
-                    swipeEnabled={false}
+                    swipeEnabled={true}
                     navigationState={this.state}
                     renderScene={this._renderScene.bind(this)}
                     renderTabBar={this._renderHeader}

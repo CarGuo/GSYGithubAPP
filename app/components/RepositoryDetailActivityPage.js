@@ -34,6 +34,7 @@ class RepositoryDetailActivityPage extends Component {
         this._renderRow = this._renderRow.bind(this);
         this._getBottomItem = this._getBottomItem.bind(this);
         this.page = 2;
+        this.hadInit = false;
         this.state = {
             select: 0,
             pulseData: null,
@@ -42,13 +43,29 @@ class RepositoryDetailActivityPage extends Component {
         };
     }
 
+
     componentDidMount() {
-        InteractionManager.runAfterInteractions(() => {
+        ///为了配合tab view 的懒加载
+        if (this.props.focused) {
             if (this.refs.pullList)
                 this.refs.pullList.showRefreshState();
             this._refresh(this.state.select);
-        })
+        }
     }
+
+    componentDidUpdate(prevProps) {
+        ///为了配合tab view 的懒加载
+        if (prevProps.focused !== this.props.focused && this.props.focused) {
+            if (!this.hadInit) {
+                this.hadInit = true;
+                if (this.refs.pullList)
+                    this.refs.pullList.showRefreshState();
+                this._refresh(this.state.select);
+            }
+        }
+    }
+
+
 
     componentWillUnmount() {
 
