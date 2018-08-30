@@ -353,6 +353,7 @@ class RepositoryDetailPage extends Component {
                         height: 0,
                         width: Dimensions.get('window').width,
                     }}
+                    useNativeDriver
                 />
                 {bottom}
             </View>

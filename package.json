@@ -27,7 +27,7 @@
     "react-native-root-toast": "^2.2.0",
     "react-native-router-flux": "^4.0.1",
     "react-native-spinkit": "^1.1.1",
-    "react-native-tab-view": "^1.0.0",
+    "react-native-tab-view": "^1.0.2",
     "react-native-textinput-effects": "^0.4.1",
     "react-native-vector-icons": "^4.4.2",
     "react-native-version-number": "^0.3.4",
