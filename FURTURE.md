@@ -2,6 +2,9 @@
 * 升级RN版本
 * 替换为FlatList
 
+error for es7 in release
+https://github.com/facebook/react-native/issues/20882
+
 
 更新为 FlatList 后 Header 闪动，可能与文档中的 extraData 有关
 https://reactnative.cn/docs/flatlist/
