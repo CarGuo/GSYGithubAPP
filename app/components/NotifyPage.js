@@ -11,12 +11,9 @@ import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import userActions from '../store/actions/user'
-import WebComponent from './widget/CustomWebComponent'
-import CommonBottomBar from './common/CommonBottomBar'
-import IssueListPage from './RepositoryIssueListPage'
-import RepositoryDetailActivity from './RepositoryDetailActivityPage'
-import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 import ListPage from "./ListPage";
+import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
+import {launchUrl} from "../utils/htmlUtils";
 
 /**
  * 通知页面
@@ -28,15 +25,7 @@ class NotifyPage extends Component {
         this.page = 2;
         this._refresh = this._refresh.bind(this);
         this._asRead = this._asRead.bind(this);
-        this._renderScene = this._renderScene.bind(this);
-        this.state = {
-            index: 0,
-            routes: [
-                {key: '1', title: I18n('notifyUnread')},
-                {key: '2', title: I18n('notifyParticipating')},
-                {key: '3', title: I18n('notifyAll')},
-            ],
-        }
+        this.index = 0;
     }
 
     componentDidMount() {
@@ -71,18 +60,28 @@ class NotifyPage extends Component {
         })
     }
 
-    _renderHeader = props =>
-        <TabBar {...props}
-                style={{backgroundColor: Constant.primaryColor}}
-                labelStyle={{color: Constant.white}}
-                indicatorStyle={{backgroundColor: Constant.miWhite}}
-        />;
 
-    _renderScene = ({route}) => {
-        switch (route.key) {
-            case '1':
-                return (
+    render() {
+        return (
+            <View style={styles.mainBox}>
+                <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
+                <ScrollableTabView
+                    onChangeTab={(params) => {
+                        this.index = params.i;
+                    }}
+                    tabBarUnderlineStyle={{
+                        backgroundColor: Constant.white,
+                        height: 3
+                    }}
+                    renderTabBar={(props) => {
+                        return <DefaultTabBar {...props} style={{paddingTop: 5}}/>;
+                    }}
+                    tabBarBackgroundColor={Constant.primaryColor}
+                    tabBarActiveTextColor={Constant.white}
+                    tabBarInactiveTextColor={Constant.subTextColor}
+                    tabBarTextStyle={{fontSize: 16}}>
                     <ListPage
+                        tabLabel={I18n('notifyUnread')}
                         ref={(ref) => {
                             this.unReadList = ref;
                         }}
@@ -92,24 +91,21 @@ class NotifyPage extends Component {
                         currentUser={this.props.ownerName}
                         currentRepository={this.props.repositoryName}
                     />
-                );
-            case '2':
-                return (
+
                     <ListPage
+                        tabLabel={I18n('notifyParticipating')}
                         ref={(ref) => {
-                            this.partList = ref;
+                            this.unReadList = ref;
                         }}
                         dataType={'notify'}
                         showType={'notify'}
                         onItemClickEx={this._asRead}
-                        participating={true}
                         currentUser={this.props.ownerName}
                         currentRepository={this.props.repositoryName}
                     />
-                );
-            case '3':
-                return (
+
                     <ListPage
+                        tabLabel={I18n('notifyAll')}
                         ref={(ref) => {
                             this.allList = ref;
                         }}
@@ -120,32 +116,7 @@ class NotifyPage extends Component {
                         currentUser={this.props.ownerName}
                         currentRepository={this.props.repositoryName}
                     />
-                );
-            default:
-                return null;
-        }
-    };
-
-
-    render() {
-        return (
-            <View style={styles.mainBox}>
-                <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
-                <TabView
-                    style={{
-                        flex: 1,
-                    }}
-                    lazy={true}
-                    swipeEnabled={false}
-                    navigationState={this.state}
-                    renderScene={this._renderScene.bind(this)}
-                    renderTabBar={this._renderHeader}
-                    onIndexChange={this._handleIndexChange}
-                    initialLayout={{
-                        height: 0,
-                        width: Dimensions.get('window').width,
-                    }}
-                />
+                </ScrollableTabView>
             </View>
         )
     }

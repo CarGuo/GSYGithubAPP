@@ -97,7 +97,7 @@ class RepositoryDetailPage extends Component {
     }
 
     _backHandler() {
-        if (this.state.index === 2) {
+        if (this.index === 2) {
             if (!this.detailFile || !this.detailFile.backHandler()) {
                 Actions.pop();
             }
