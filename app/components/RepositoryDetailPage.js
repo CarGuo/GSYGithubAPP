@@ -16,10 +16,10 @@ import CommonBottomBar from './common/CommonBottomBar'
 import IssueListPage from './RepositoryIssueListPage'
 import RepositoryDetailActivity from './RepositoryDetailActivityPage'
 import RepositoryDetailFile from './RepositoryDetailFilePage'
-import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 import Toast from './common/ToastProxy'
 import PopmenuItem from './widget/BottomPopmenuItem'
 import {launchUrl} from "../utils/htmlUtils";
+import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 
 /**
  * 仓库详情
@@ -33,20 +33,13 @@ class RepositoryDetailPage extends Component {
         this._refresh = this._refresh.bind(this);
         this._refreshChangeBranch = this._refreshChangeBranch.bind(this);
         this._forked = this._forked.bind(this);
-        this._renderScene = this._renderScene.bind(this);
         this._backHandler = this._backHandler.bind(this);
         this.curBranch = null;
+        this.index = 0;
         this.state = {
             dataDetail: this.props.defaultProps,
             dataDetailReadme: '',
-            index: 0,
             showBottom: false,
-            routes: [
-                {key: '1', title: I18n('reposReadme')},
-                {key: '2', title: I18n('reposActivity')},
-                {key: '3', title: I18n('reposFile')},
-                {key: '4', title: I18n('reposIssue')},
-            ],
         }
     }
 
@@ -161,68 +154,6 @@ class RepositoryDetailPage extends Component {
             }
         })
     }
-
-    _handleIndexChange = index => {
-        this.setState({index})
-    };
-
-    _renderHeader = props =>
-        <TabBar {...props}
-                style={{backgroundColor: Constant.primaryColor}}
-                labelStyle={{color: Constant.white}}
-                indicatorStyle={{backgroundColor: Constant.miWhite}}
-        />;
-
-    _renderScene = ({route}) => {
-        switch (route.key) {
-            case '1':
-                return (
-                    <WebComponent
-                        source={{html: this.state.dataDetailReadme}}
-                        userName={this.props.ownerName}
-                        reposName={this.props.repositoryName}
-                        gsygithubLink={(url) => {
-                            if (url) {
-                                let owner = this.props.ownerName;
-                                let repo = this.props.repositoryName;
-                                let branch = this.curBranch ? this.curBranch : "master";
-                                let currentPath = url.replace("gsygithub://.", "").replace("gsygithub://", "/");
-                                let fixedUrl = "https://github.com/" + owner + "/" + repo + "/blob/" + branch + currentPath;
-                                launchUrl(fixedUrl);
-                            }
-                        }}
-                    />
-                );
-            case '2':
-                return (
-                    <RepositoryDetailActivity
-                        dataDetail={this.state.dataDetail}
-                        ownerName={this.props.ownerName}
-                        repositoryName={this.props.repositoryName}
-                    />
-                );
-            case '3':
-                return (
-                    <RepositoryDetailFile
-                        ref={(ref) => {
-                            this.detailFile = ref;
-                        }}
-                        curBranch={this.curBranch}
-                        ownerName={this.props.ownerName}
-                        repositoryName={this.props.repositoryName}
-                    />
-                );
-            case '4':
-                return (
-                    <IssueListPage
-                        userName={this.props.ownerName}
-                        repositoryName={this.props.repositoryName}
-                    />
-                );
-            default:
-                return null;
-        }
-    };
 
 
     _forked() {
@@ -339,22 +270,60 @@ class RepositoryDetailPage extends Component {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
-                <TabView
-                    style={{
-                        flex: 1,
+                <ScrollableTabView
+                    onChangeTab={(params) => {
+                        this.index = params.i;
                     }}
-                    lazy={true}
-                    swipeEnabled={true}
-                    navigationState={this.state}
-                    renderScene={this._renderScene.bind(this)}
-                    renderTabBar={this._renderHeader}
-                    onIndexChange={this._handleIndexChange}
-                    initialLayout={{
-                        height: 0,
-                        width: Dimensions.get('window').width,
+                    tabBarUnderlineStyle={{
+                        backgroundColor: Constant.white,
+                        height: 3
                     }}
-                    useNativeDriver
-                />
+                    renderTabBar={(props) => {
+                        return <DefaultTabBar {...props} style={{paddingTop: 5}}/>;
+                    }}
+                    tabBarBackgroundColor={Constant.primaryColor}
+                    tabBarActiveTextColor={Constant.white}
+                    tabBarInactiveTextColor={Constant.subTextColor}
+                    tabBarTextStyle={{fontSize: 16}}>
+                    <WebComponent
+                        tabLabel={I18n('reposReadme')}
+                        source={{html: this.state.dataDetailReadme}}
+                        userName={this.props.ownerName}
+                        reposName={this.props.repositoryName}
+                        gsygithubLink={(url) => {
+                            if (url) {
+                                let owner = this.props.ownerName;
+                                let repo = this.props.repositoryName;
+                                let branch = this.curBranch ? this.curBranch : "master";
+                                let currentPath = url.replace("gsygithub://.", "").replace("gsygithub://", "/");
+                                let fixedUrl = "https://github.com/" + owner + "/" + repo + "/blob/" + branch + currentPath;
+                                launchUrl(fixedUrl);
+                            }
+                        }}
+                    />
+                    <RepositoryDetailActivity
+                        tabLabel={I18n('reposActivity')}
+                        dataDetail={this.state.dataDetail}
+                        ownerName={this.props.ownerName}
+                        repositoryName={this.props.repositoryName}
+                    />
+
+                    <RepositoryDetailFile
+                        tabLabel={I18n('reposFile')}
+                        ref={(ref) => {
+                            this.detailFile = ref;
+                        }}
+                        curBranch={this.curBranch}
+                        ownerName={this.props.ownerName}
+                        repositoryName={this.props.repositoryName}
+                    />
+
+                    <IssueListPage
+                        tabLabel={I18n('reposIssue')}
+                        userName={this.props.ownerName}
+                        repositoryName={this.props.repositoryName}
+                    />
+                </ScrollableTabView>
                 {bottom}
             </View>
         )
