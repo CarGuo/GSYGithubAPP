@@ -33,29 +33,16 @@ class RepositoryDetailFilePage extends Component {
             headerList: ["."],
             path: this.props.props
         };
-        this.hadInit = false;
         this.loading = false;
         this.curBranch = this.props.curBranch;
         this.dsHeader = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     }
 
-
     componentDidMount() {
-        ///为了配合tab view 的懒加载
-        if (this.props.focused) {
+        InteractionManager.runAfterInteractions(() => {
             this._refresh(this.state.path);
-        }
+        })
     }
-    componentDidUpdate(prevProps) {
-        ///为了配合tab view 的懒加载
-        if (prevProps.focused !== this.props.focused && this.props.focused) {
-            if (!this.hadInit) {
-                this.hadInit = true;
-                this._refresh(this.state.path);
-            }
-        }
-    }
-
 
     componentWillUnmount() {
 

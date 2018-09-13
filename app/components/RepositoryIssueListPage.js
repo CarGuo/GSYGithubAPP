@@ -37,7 +37,6 @@ class RepositoryIssueListPage extends Component {
         this.searchText = "";
         this.filter = null;
         this.page = 2;
-        this.hadInit = false;
         this.selectTypeData = null;
         this.selectSortData = null;
         this.selectLanguageData = null;
@@ -48,19 +47,9 @@ class RepositoryIssueListPage extends Component {
     }
 
     componentDidMount() {
-        ///为了配合tab view 的懒加载
-        if (this.props.focused) {
+        InteractionManager.runAfterInteractions(() => {
             this._searchText();
-        }
-    }
-    componentDidUpdate(prevProps) {
-        ///为了配合tab view 的懒加载
-        if (prevProps.focused !== this.props.focused && this.props.focused) {
-            if (!this.hadInit) {
-                this.hadInit = true;
-                this._searchText();
-            }
-        }
+        });
     }
 
     componentWillUnmount() {
