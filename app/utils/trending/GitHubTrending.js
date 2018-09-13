@@ -8,7 +8,7 @@ import TrendingUtil from './TrendingUtil';
 import * as Code from '../../net/netwrokCode'
 import I18n from '../../style/i18n'
 
-export default class GitHubTrending {
+export class GitHubTrending {
     GitHubTrending() {//Singleton pattern
         if (typeof GitHubTrending.instance === 'object') {
             return GitHubTrending.instance;
