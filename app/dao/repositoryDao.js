@@ -16,7 +16,7 @@ const getTrendDao = async (page = 0, since, languageType) => {
     let localLanguage = (languageType) ? languageType : "*";
     let nextStep = async () => {
         let url = Address.trending(since, languageType);
-        let res = await new GitHubTrending().fetchTrending(url);
+        let res = await GitHubTrending.fetchTrending(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
                 let allData = realm.objects('TrendRepository').filtered(`since="${since}" AND languageType="${localLanguage}"`);
