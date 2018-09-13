@@ -344,7 +344,7 @@ class RepositoryDetailPage extends Component {
                         flex: 1,
                     }}
                     lazy={true}
-                    swipeEnabled={false}
+                    swipeEnabled={true}
                     navigationState={this.state}
                     renderScene={this._renderScene.bind(this)}
                     renderTabBar={this._renderHeader}
