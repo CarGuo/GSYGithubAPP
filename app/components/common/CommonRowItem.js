@@ -35,11 +35,6 @@ class CommonRowItem extends Component {
 
     }
 
-    render() {
-        return (
-            <View/>
-        )
-    }
 
     render() {
         let {onClickFun, itemText, showIconNext, textStyle, nameStyle, topLine, bottomLine, itemIcon, iconSize, nameText} = this.props;

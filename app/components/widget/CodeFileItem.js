@@ -41,7 +41,7 @@ class CodeFileItem extends Component {
     }
 
     render() {
-        let {onClickFun, itemText, titleStyle, textStyle, itemIcon, itemTextTitle, needTitle} = this.props;
+        let {onClickFun, itemText, titleStyle, itemIcon, itemTextTitle, needTitle} = this.props;
         let leftIcon = (itemIcon) ?
             <Icon name={itemIcon} size={14} color={Constant.subTextColor}/>
             : <View/>;
@@ -68,7 +68,7 @@ class CodeFileItem extends Component {
                         borderRadius: 3,
                     }]}>
                     {leftIcon}
-                    <Text style={[{flex: 1, marginLeft: Constant.normalMarginEdge}, ...textStyle]}>{itemText}</Text>
+                    <Text style={[{flex: 1, marginLeft: Constant.normalMarginEdge}]}>{itemText}</Text>
                 </View>
             </TouchableOpacity>
         );
