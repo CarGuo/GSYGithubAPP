@@ -31,6 +31,7 @@ class BasePersonPage extends Component {
         this._getOrgsList = this._getOrgsList.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this._getMoreInfo = this._getMoreInfo.bind(this);
+        this._renderHeader = this._renderHeader.bind(this);
         this.getBackNotifyCall = this.getBackNotifyCall.bind(this);
         this.doFollowLogic = this.doFollowLogic.bind(this);
         this.state = {
@@ -229,6 +230,38 @@ class BasePersonPage extends Component {
             })
     }
 
+    _renderHeader(userInfo) {
+        return (
+            <View>
+                <UserHeadItem
+                    needFollow={this.getNeedFollow()}
+                    doFollowLogic={this.doFollowLogic}
+                    hadFollowed={this.getHanFollow()}
+                    userDisPlayName={userInfo.login}
+                    userName={userInfo.name}
+                    userType={userInfo.type}
+                    orgsList={this.state.orgsList}
+                    isOrganizations={"Organization" === userInfo.type || !userInfo.type}
+                    userPic={userInfo.avatar_url}
+                    groupName={userInfo.company}
+                    location={userInfo.location}
+                    link={userInfo.blog}
+                    beStared={this.state.beStaredCount}
+                    beStaredList={this.state.beStaredList}
+                    settingNeed={this.getSettingNeed()}
+                    des={(userInfo.bio ? (userInfo.bio + "\n") : "") + I18n("userCreate") + resolveTime(userInfo.created_at)}
+                    backNotifyCall={this.getBackNotifyCall}
+                    unRead={this.state.unRead}
+                    star={(userInfo.starred) ? userInfo.starred : "---"}
+                    repos={userInfo.public_repos + ""}
+                    follower={userInfo.followers + ""}
+                    followed={userInfo.following + ""}
+                    setting={this.getSetting()}
+                />
+            </View>
+        )
+    }
+
     getUserInfo() {
         return {}
     }
@@ -265,37 +298,7 @@ class BasePersonPage extends Component {
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"
-                    renderHeader={() => {
-                        return (
-                            <View>
-                                <UserHeadItem
-                                    needFollow={this.getNeedFollow()}
-                                    doFollowLogic={this.doFollowLogic}
-                                    hadFollowed={this.getHanFollow()}
-                                    userDisPlayName={userInfo.login}
-                                    userName={userInfo.name}
-                                    userType={userInfo.type}
-                                    orgsList={this.state.orgsList}
-                                    isOrganizations={"Organization" === userInfo.type || !userInfo.type}
-                                    userPic={userInfo.avatar_url}
-                                    groupName={userInfo.company}
-                                    location={userInfo.location}
-                                    link={userInfo.blog}
-                                    beStared={this.state.beStaredCount}
-                                    beStaredList={this.state.beStaredList}
-                                    settingNeed={this.getSettingNeed()}
-                                    des={(userInfo.bio ? (userInfo.bio + "\n") : "") + I18n("userCreate") + resolveTime(userInfo.created_at)}
-                                    backNotifyCall={this.getBackNotifyCall}
-                                    unRead={this.state.unRead}
-                                    star={(userInfo.starred) ? userInfo.starred : "---"}
-                                    repos={userInfo.public_repos + ""}
-                                    follower={userInfo.followers + ""}
-                                    followed={userInfo.following + ""}
-                                    setting={this.getSetting()}
-                                />
-                            </View>
-                        );
-                    }}
+                    renderHeader={this._renderHeader(userInfo)}
                     render
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
