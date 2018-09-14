@@ -28,6 +28,7 @@ class RepositoryDetailFilePage extends Component {
         this._loadMore = this._loadMore.bind(this);
         this._renderHeaderRow = this._renderHeaderRow.bind(this);
         this._renderRow = this._renderRow.bind(this);
+        this._renderHeader = this._renderHeader.bind(this);
         this.state = {
             dataSource: [],
             headerList: ["."],
@@ -225,10 +226,9 @@ class RepositoryDetailFilePage extends Component {
         this._refresh("")
     }
 
-    render() {
+    _renderHeader() {
         let headerList = this.dsHeader.cloneWithRows(this.state.headerList);
-        let header =
-            <View style={[{height: 40, flex: 1, marginHorizontal: Constant.normalMarginEdge}]}>
+       return <View style={[{height: 40, flex: 1, marginHorizontal: Constant.normalMarginEdge}]}>
                 <ListView
                     renderRow={(rowData, sectionID, rowID, highlightRow) =>
                         this._renderHeaderRow(rowData, sectionID, rowID, highlightRow)
@@ -243,6 +243,9 @@ class RepositoryDetailFilePage extends Component {
                     dataSource={headerList}
                 />
             </View>;
+    }
+
+    render() {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -252,9 +255,7 @@ class RepositoryDetailFilePage extends Component {
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }
-                    renderHeader={() => {
-                        return header
-                    }}
+                    renderHeader={this._renderHeader()}
                     refresh={this._refresh}
                     loadMore={this._loadMore}
                     dataSource={this.state.dataSource}

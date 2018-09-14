@@ -32,6 +32,7 @@ class RepositoryDetailActivityPage extends Component {
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this._renderRow = this._renderRow.bind(this);
+        this._renderHeader = this._renderHeader.bind(this);
         this._getBottomItem = this._getBottomItem.bind(this);
         this.page = 2;
         this.state = {
@@ -272,15 +273,13 @@ class RepositoryDetailActivityPage extends Component {
         },]
     }
 
-    render() {
+    _renderHeader() {
         let {
             forks_count, fork, open_issues_count, size, watchers_count, owner,
             subscribers_count, description, language, created_at, pushed_at, parent,
             topics, license, all_issues_count, closed_issues_count
         } = this.props.dataDetail;
-        let data = this.state.select === 0 ? this.state.dataSource : this.state.dataSourceCommits;
-        let header =
-            <View>
+        return <View>
                 <RepositoryHeader
                     ownerName={this.props.ownerName}
                     ownerPic={owner ? owner.avatar_url : ""}
@@ -310,6 +309,11 @@ class RepositoryDetailActivityPage extends Component {
                     }}
                     dataList={this._getBottomItem()}/>
             </View>;
+    }
+
+    render() {
+        let data = this.state.select === 0 ? this.state.dataSource : this.state.dataSourceCommits;
+
 
         if (this.state.select === 2) {
             data = [];
@@ -326,9 +330,7 @@ class RepositoryDetailActivityPage extends Component {
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }
-                    renderHeader={() => {
-                        return header
-                    }}
+                    renderHeader={this._renderHeader()}
                     refresh={this._refresh}
                     loadMore={this._loadMore}
                     dataSource={data}

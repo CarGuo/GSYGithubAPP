@@ -27,6 +27,7 @@ class PushDetailPage extends Component {
         super(props);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
+        this._renderHeader = this._renderHeader.bind(this);
         this.page = 2;
         this.state = {
             dataSource: [],
@@ -113,8 +114,7 @@ class PushDetailPage extends Component {
 
     }
 
-
-    render() {
+    _renderHeader() {
         let {pushDetail} = this.state;
         let name = "";
         let pic = "";
@@ -128,7 +128,7 @@ class PushDetailPage extends Component {
                 pic = pushDetail.committer.avatar_url;
             }
         }
-        let header = (pushDetail) ?
+        return (pushDetail) ?
             <PushDetailHeader
                 actionUser={name}
                 actionUserPic={pic}
@@ -137,6 +137,10 @@ class PushDetailPage extends Component {
                 editCount={pushDetail.files.length + ""}
                 addCount={pushDetail.stats.additions + ""}
                 deleteCount={pushDetail.stats.deletions + ""}/> : <View/>;
+
+    }
+
+    render() {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -148,9 +152,7 @@ class PushDetailPage extends Component {
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }
-                    renderHeader={() => {
-                        return header
-                    }}
+                    renderHeader={this._renderHeader()}
                     refresh={this._refresh}
                     loadMore={this._loadMore}
                     dataSource={this.state.dataSource}

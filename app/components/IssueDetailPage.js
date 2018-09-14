@@ -30,6 +30,7 @@ class IssueDetailPage extends Component {
         this._getBottomItem = this._getBottomItem.bind(this);
         this._getOptionItem = this._getOptionItem.bind(this);
         this._refresh = this._refresh.bind(this);
+        this._renderHeader = this._renderHeader.bind(this);
         this._loadMore = this._loadMore.bind(this);
         this.sendIssueComment = this.sendIssueComment.bind(this);
         this.editIssue = this.editIssue.bind(this);
@@ -395,24 +396,27 @@ class IssueDetailPage extends Component {
         return owner ? ownerAction : copy;
     }
 
+    _renderHeader() {
+        let {issue} = this.state;
+        return <IssueHead
+            actionTime={issue.created_at}
+            actionUser={issue.user.login}
+            actionUserPic={issue.user.avatar_url}
+            closed_by={issue.closed_by}
+            locked={issue.locked}
+            issueComment={issue.title}
+            issueDesHtml={issue.body_html ? issue.body_html : ""}
+            commentCount={issue.comments + ""}
+            state={issue.state}
+            issueDes={(issue.body) ? ((I18n('issueInfo') + ": \n" + issue.body)) : ''}
+            issueTag={"#" + issue.number}/>;
+    }
+
     render() {
         let {issue} = this.state;
         let bottomBar = (issue) ?
             <CommonBottomBar dataList={this._getBottomItem()}/> :
             <View/>;
-        let header =
-            <IssueHead
-                actionTime={issue.created_at}
-                actionUser={issue.user.login}
-                actionUserPic={issue.user.avatar_url}
-                closed_by={issue.closed_by}
-                locked={issue.locked}
-                issueComment={issue.title}
-                issueDesHtml={issue.body_html ? issue.body_html : ""}
-                commentCount={issue.comments + ""}
-                state={issue.state}
-                issueDes={(issue.body) ? ((I18n('issueInfo') + ": \n" + issue.body)) : ''}
-                issueTag={"#" + issue.number}/>;
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
@@ -424,9 +428,7 @@ class IssueDetailPage extends Component {
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData, index)
                     }
-                    renderHeader={() => {
-                        return header
-                    }}
+                    renderHeader={this._renderHeader()}
                     refresh={this._refresh}
                     loadMore={this._loadMore}
                     dataSource={this.state.dataSource}

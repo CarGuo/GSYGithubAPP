@@ -20,6 +20,7 @@ class PullLoadMoreListView extends Component {
         this._renderFooter = this._renderFooter.bind(this);
         this._refresh = this._refresh.bind(this);
         this._loadMore = this._loadMore.bind(this);
+        this._renderEmpty = this._renderEmpty.bind(this);
         //设置state
         this.state = {
             isRefresh: false,
@@ -99,16 +100,8 @@ class PullLoadMoreListView extends Component {
         this.props.loadMore && this.props.loadMore();
     }
 
-    render() {
-        let refreshProps = {
-            refreshing: this.state.isRefresh,
-            onRefresh: this._refresh,
-            tintColor: Constant.primaryColor,
-            title: I18n('refreshing'),
-            colors: [Constant.primaryColor, Constant.primaryLightColor],
-        };
-
-        let emptyView = (!this.props.hasOwnProperty("renderHeader")) ?
+    _renderEmpty() {
+        return (!this.props.hasOwnProperty("renderHeader")) ?
             <View style={[styles.centered, {
                 flex: 1,
                 height: this.state.listHeight
@@ -126,13 +119,22 @@ class PullLoadMoreListView extends Component {
                     </Text>
                 </TouchableOpacity>
             </View> : <View/>;
+    }
+
+    render() {
+        let refreshProps = {
+            refreshing: this.state.isRefresh,
+            onRefresh: this._refresh,
+            tintColor: Constant.primaryColor,
+            title: I18n('refreshing'),
+            colors: [Constant.primaryColor, Constant.primaryLightColor],
+        };
+
         return (
             <FlatList
                 style={{flex: 1}}
                 ref="list"
-                ListEmptyComponent={
-                    () => emptyView
-                }
+                ListEmptyComponent={this._renderEmpty()}
                 removeClippedSubviews={true}
                 {...refreshProps}
                 onLayout={e => this.setState({listHeight: e.nativeEvent.layout.height})}
