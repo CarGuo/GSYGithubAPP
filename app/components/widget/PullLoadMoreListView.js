@@ -133,6 +133,7 @@ class PullLoadMoreListView extends Component {
                 ListEmptyComponent={
                     () => emptyView
                 }
+                removeClippedSubviews={true}
                 {...refreshProps}
                 onLayout={e => this.setState({listHeight: e.nativeEvent.layout.height})}
                 renderItem={
