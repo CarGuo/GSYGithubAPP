@@ -19,7 +19,7 @@ import RepositoryDetailFile from './RepositoryDetailFilePage'
 import Toast from './common/ToastProxy'
 import PopmenuItem from './widget/BottomPopmenuItem'
 import {launchUrl} from "../utils/htmlUtils";
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view-fix-guo';
 
 /**
  * 仓库详情

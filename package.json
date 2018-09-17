@@ -26,7 +26,7 @@
     "react-native-modalbox": "^1.4.2",
     "react-native-root-toast": "^2.2.0",
     "react-native-router-flux": "^4.0.1",
-    "react-native-scrollable-tab-view": "^0.8.0",
+    "react-native-scrollable-tab-view-fix-guo": "^0.8.1",
     "react-native-spinkit": "^1.1.1",
     "react-native-tab-view": "^1.0.2",
     "react-native-textinput-effects": "^0.4.1",

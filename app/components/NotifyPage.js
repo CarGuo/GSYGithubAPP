@@ -12,7 +12,7 @@ import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import userActions from '../store/actions/user'
 import ListPage from "./ListPage";
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view-fix-guo';
 import {launchUrl} from "../utils/htmlUtils";
 
 /**
