@@ -15,7 +15,7 @@
     "marked": "^0.3.6",
     "moment": "^2.19.1",
     "react": "^16.5.0",
-    "react-native": "0.57.0",
+    "react-native": "0.57.1",
     "react-native-autolink": "^1.4.0",
     "react-native-gesture-handler": "^1.0.0-alpha.33",
     "react-native-htmlview": "^0.13.0",
@@ -43,6 +43,7 @@
     "babel-jest": "21.2.0",
     "babel-preset-react-native": "4.0.0",
     "jest": "21.2.1",
+    "metro-react-native-babel-preset": "^0.45.6",
     "react-test-renderer": "16.0.0"
   },
   "jest": {
