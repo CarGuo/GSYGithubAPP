@@ -30,7 +30,7 @@
 >### 3、重点：你需要自己在app/config目录下 创建一个ignoreConfig.js文件，然后输入你申请的Github client_id 和 client_secret。
 
      export const CLIENT_ID = "xxxx";
- 
+
      export const CLIENT_SECRET = "xxxx";
 
 
@@ -39,8 +39,13 @@
      export const SECRET_KEY = "xxx";
      export const QN_HOST = "xxxx";
      export const SCOPE = "xxxx";
-     
+
    [      注册 Github APP 传送门](https://github.com/settings/applications/new)，当然，前提是你现有一个github账号(～￣▽￣)～ 。
+   
+ <div>
+<img src="https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/register0.jpg" width="426px"/>
+<img src="https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/register1.jpg" width="426px"/>
+</div>
 
 4、打开xcode运行或执行`react-native run-android`
 
@@ -51,10 +56,10 @@
 
 #### Apk二维码
 
-类型 | 二维码
--------- | ---
-**Apk二维码**|![](https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/download.png)
-**IOS暂无下载**|**残念(╯‵□′)╯︵┻━┻，第三方太贵，没企业证书。**![](https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/ios_wait.png)
+| 类型          | 二维码                                      |
+| ----------- | ---------------------------------------- |
+| **Apk二维码**  | ![](https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/download.png) |
+| **IOS暂无下载** | **残念(╯‵□′)╯︵┻━┻，第三方太贵，没企业证书。**![](https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/ios_wait.png) |
 
 
 
