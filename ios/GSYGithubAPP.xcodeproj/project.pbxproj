@@ -38,6 +38,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* GSYGithubAPPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GSYGithubAPPTests.m */; };
 		3ED498A573784806999FD35F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 34DB6BAE67554CCCBFBB0DA3 /* libz.tbd */; };
 		4B57315121A3952C002122BD /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B4FC94C20BD787F00E114DE /* Lottie.framework */; };
+		4BE8080C21A3DBB700D0FE28 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		4BEB22AB2001F7E80033BBA6 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEB22AD2001F7E80033BBA6 /* QBImagePicker.framework */; };
 		4BEB22AC2001F7E80033BBA6 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEB22AE2001F7E80033BBA6 /* RSKImageCropper.framework */; };
 		4BEB22AF2001FA870033BBA6 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEB22AD2001F7E80033BBA6 /* QBImagePicker.framework */; };
@@ -993,7 +994,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = B29J9885S3;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1481,6 +1482,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BE8080C21A3DBB700D0FE28 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				14BD7FB2E2CB424A97869080 /* Entypo.ttf in Resources */,
 				67A39EAEBC4C4D1F8F682620 /* EvilIcons.ttf in Resources */,
@@ -1684,7 +1686,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = B29J9885S3;
@@ -1708,8 +1710,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shuyu.GSYGithubApp;
 				PRODUCT_NAME = GSYGithubAPP;
-				PROVISIONING_PROFILE = "94651124-bd7e-4bea-8ff1-40ebea0e4d03";
-				PROVISIONING_PROFILE_SPECIFIER = GSYGithubApp;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1720,7 +1721,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B29J9885S3;
 				HEADER_SEARCH_PATHS = (
@@ -1743,8 +1744,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shuyu.GSYGithubApp;
 				PRODUCT_NAME = GSYGithubAPP;
-				PROVISIONING_PROFILE = "94651124-bd7e-4bea-8ff1-40ebea0e4d03";
-				PROVISIONING_PROFILE_SPECIFIER = GSYGithubApp;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1936,6 +1936,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1989,6 +1990,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
