@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
     "base-64": "^0.1.0",
@@ -44,7 +45,7 @@
     "babel-preset-react-native": "4.0.0",
     "jest": "21.2.1",
     "metro-react-native-babel-preset": "^0.45.6",
-    "react-test-renderer": "16.0.0"
+    "react-test-renderer": "^16.6.1"
   },
   "jest": {
     "preset": "react-native"
