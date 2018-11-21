@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
+    "ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
     "base-64": "^0.1.0",
@@ -26,13 +26,14 @@
     "react-native-modal-dropdown": "^0.5.0",
     "react-native-modalbox": "^1.4.2",
     "react-native-root-toast": "^2.2.0",
-    "react-native-router-flux": "^4.0.1",
+    "react-native-router-flux": "^4.0.6",
     "react-native-scrollable-tab-view-fix-guo": "^0.8.1",
     "react-native-spinkit": "^1.1.1",
     "react-native-tab-view": "^1.0.2",
     "react-native-textinput-effects": "^0.4.1",
     "react-native-vector-icons": "^4.4.2",
     "react-native-version-number": "^0.3.4",
+    "react-navigation": "^2.18.2",
     "react-redux": "^5.0.7",
     "realm": "^2.10.0",
     "redux": "^4.0.0",

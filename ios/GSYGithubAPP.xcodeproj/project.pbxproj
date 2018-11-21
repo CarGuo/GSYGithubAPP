@@ -37,6 +37,8 @@
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* GSYGithubAPPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GSYGithubAPPTests.m */; };
 		3ED498A573784806999FD35F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 34DB6BAE67554CCCBFBB0DA3 /* libz.tbd */; };
+		4B005A0B21A4E31500E16DC9 /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B4FC94C20BD787F00E114DE /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4B005A7221A4E87900E16DC9 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 4B005A7121A4E87800E16DC9 /* assets */; };
 		4B57315121A3952C002122BD /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B4FC94C20BD787F00E114DE /* Lottie.framework */; };
 		4BE8080C21A3DBB700D0FE28 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		4BEB22AB2001F7E80033BBA6 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEB22AD2001F7E80033BBA6 /* QBImagePicker.framework */; };
@@ -448,6 +450,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4B005A0B21A4E31500E16DC9 /* Lottie.framework in Embed Frameworks */,
 				4BEB22B02001FA870033BBA6 /* QBImagePicker.framework in Embed Frameworks */,
 				4BEB22B32001FABF0033BBA6 /* RSKImageCropper.framework in Embed Frameworks */,
 			);
@@ -485,6 +488,7 @@
 		34DB6BAE67554CCCBFBB0DA3 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4083AB50E44E42FE95D76D4F /* libc++.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		446E4F0EEFEF49CBA949E535 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		4B005A7121A4E87800E16DC9 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		4BEB22AD2001F7E80033BBA6 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BEB22AE2001F7E80033BBA6 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C24AD59E844F2A9431BEBA /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
@@ -869,6 +873,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				4B005A7121A4E87800E16DC9 /* assets */,
 				13B07FAE1A68108700A75B9A /* GSYGithubAPP */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* GSYGithubAPPTests */,
@@ -1482,6 +1487,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B005A7221A4E87900E16DC9 /* assets in Resources */,
 				4BE8080C21A3DBB700D0FE28 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				14BD7FB2E2CB424A97869080 /* Entypo.ttf in Resources */,
