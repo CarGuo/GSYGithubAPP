@@ -11,7 +11,7 @@ import styles from "../style"
 import I18n from '../style/i18n'
 import CommonRowItem from "./common/CommonRowItem";
 import * as Constant from "../style/constant";
-import VersionNumber from 'react-native-version-number';
+import VersionNumber from 'react-native-version-number-fix-new';
 import issueActions from "../store/actions/issue";
 import repositoryActions from "../store/actions/repository";
 import Toast from './common/ToastProxy'

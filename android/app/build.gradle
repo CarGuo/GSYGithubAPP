@@ -165,9 +165,9 @@ android {
 
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(':react-native-version-number')
+    implementation project(':react-native-version-number-fix-new')
     implementation project(':react-native-vector-icons')
-    implementation project(':react-native-spinkit')
+    implementation project(':react-native-spinkit-fix-new')
     implementation project(':react-native-i18n')
     implementation project(':react-native-image-crop-picker')
     implementation project(':realm')
