@@ -135,7 +135,8 @@ class PullLoadMoreListView extends Component {
                 style={{flex: 1}}
                 ref="list"
                 ListEmptyComponent={this._renderEmpty()}
-                removeClippedSubviews={true}
+                //true的时候目前会在ios上，首页tab切换时导致空白
+                removeClippedSubviews={false}
                 {...refreshProps}
                 onLayout={e => this.setState({listHeight: e.nativeEvent.layout.height})}
                 renderItem={
