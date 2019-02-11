@@ -770,11 +770,11 @@ const getRepositoryIssueStatusDao = async (userName, repository) => {
     if (res && res.result && res.headers && res.headers.map) {
         try {
             let link = res.headers.map['link'];
-            if (link && (typeof link) === 'object') {
-                let indexStart = link[0].lastIndexOf("page=") + 5;
-                let indexEnd = link[0].lastIndexOf(">");
+            if (link && (typeof link) === 'string') {
+                let indexStart = link.lastIndexOf("page=") + 5;
+                let indexEnd = link.lastIndexOf(">");
                 if (indexStart >= 0 && indexEnd >= 0) {
-                    let count = link[0].substring(indexStart, indexEnd);
+                    let count = link.substring(indexStart, indexEnd);
                     return {
                         result: true,
                         data: count
