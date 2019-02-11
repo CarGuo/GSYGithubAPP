@@ -97,9 +97,8 @@ class RepositoryDetailFilePage extends Component {
                 style={[{marginRight: Constant.normalMarginEdge,}]}>
                 <View
                     style={[styles.flexDirectionRow, styles.centerH, {
-                        paddingVertical: Constant.normalMarginEdge,
                         marginTop: Constant.normalMarginEdge,
-                        borderRadius: 3,
+                        height: 40,
                     }]}>
                     <Text style={[{flex: 1, marginRight: Constant.normalMarginEdge}]}>{rowData + " >"}</Text>
                 </View>

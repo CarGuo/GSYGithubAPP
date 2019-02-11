@@ -43,7 +43,7 @@ class TagGroup extends Component {
                                     borderRadius: 4,
                                     height: 24,
                                     overflow: 'hidden',
-                                    padding: Constant.normalMarginEdge,
+                                    paddingHorizontal: Constant.normalMarginEdge,
                                     backgroundColor: Constant.white,
                                     marginVertical: Constant.normalMarginEdge / 2,
                                     marginRight: Constant.normalMarginEdge,
