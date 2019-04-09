@@ -82,7 +82,7 @@ With the use and feedback of the project, will user experience and function opti
 
 ### Third-party framework
 
-* [react-native(0.57.8)](http://reactnative.cn/docs/0.51/getting-started.html)
+* [react-native(0.59.4)](http://reactnative.cn/docs/0.51/getting-started.html)
 * [react-native-router-flux](https://github.com/aksonov/react-native-router-flux)
 * [react-native-vector-icons ](https://github.com/oblador/react-native-vector-icons)
 * [react-redux redux](https://github.com/reactjs/react-redux)

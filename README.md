@@ -53,6 +53,8 @@
 
 4、打开xcode运行或执行`react-native run-android`
 
+### 5、重点：请使用github用户名登录，不是邮箱。
+
 
 ### 下载
 
@@ -89,7 +91,7 @@
 
 ### 第三方框架
 
-* [react-native(0.57.8)](http://reactnative.cn/docs/0.51/getting-started.html)
+* [react-native(0.59.4)](http://reactnative.cn/docs/0.51/getting-started.html)
 * [react-native-router-flux 路由框架](https://github.com/aksonov/react-native-router-flux)
 * [react-native-vector-icons 矢量字体库图标 ](https://github.com/oblador/react-native-vector-icons)
 * [react-redux redux](https://github.com/reactjs/react-redux)
