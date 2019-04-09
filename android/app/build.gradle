@@ -97,6 +97,11 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.gsygithubapp"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -164,7 +169,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-version-number-fix-new')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-spinkit-fix-new')
