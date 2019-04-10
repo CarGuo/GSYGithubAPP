@@ -30,12 +30,14 @@ class SearchDrawerFilter extends React.Component {
                 <SelectList
                     listStyle={{flex: 1, backgroundColor: Constant.white, marginTop: Constant.normalMarginEdge * 2}}
                     selectIndex={{'filerType': 0, 'filterSort': 0, "filterLanguage": 0}}
-                    selectMap={{
-                        'filerType': SearchFilterType,
-                        'filterSort': SortType,
-                        'filterLanguage': SearchLanguageType,
-                    }}
+                    selectMap={[
+                        {title: 'filerType', data: SearchFilterType},
+                        {title: 'filterSort', data: SortType},
+                        {title: 'filterLanguage', data: SearchLanguageType},
+                    ]}
                     onSelect={(selection, data) => {
+                        alert(selection)
+                        //alert(data)
                         switch (selection) {
                             case "filerType":
                                 Actions.pop({refresh: {selectTypeData: data}});

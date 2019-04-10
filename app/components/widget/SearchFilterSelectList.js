@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {
     View,
     Text,
-    ListView,
-    StyleSheet,
+    SectionList,
     TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -16,14 +15,8 @@ class SearchFilterSelectList extends Component {
 
     constructor(props: any) {
         super(props);
-
-        this.ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => (r1 !== r2),
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-        });
-
         this.state = {
-            dataSource: this.ds.cloneWithRowsAndSections(this.props.selectMap),
+            dataSource: this.props.selectMap,
             selectIndex: this.props.selectIndex
         };
 
@@ -31,7 +24,7 @@ class SearchFilterSelectList extends Component {
         this._renderSectionHeader = this._renderSectionHeader.bind(this);
     }
 
-    _renderRow(data, sectionID, rowID) {
+    _renderRow({ item, index, section: { title, data } }) {
         return (
             <TouchableOpacity
                 style={[{
@@ -39,30 +32,31 @@ class SearchFilterSelectList extends Component {
                     flex: 1,
                     paddingHorizontal: Constant.normalMarginEdge,
                     marginTop: Constant.normalMarginEdge,
-                    backgroundColor: (data.select) ? Constant.miWhite : Constant.transparentColor,
+                    backgroundColor: (item.select) ? Constant.miWhite : Constant.transparentColor,
                     borderRadius: 4,
                     flexDirection: 'row',
                 }, styles.centered]}
                 onPress={() => {
                     let selectMap = this.props.selectMap;
-                    let dataList = selectMap[sectionID];
+                    let dataList = data;
                     dataList.forEach((data) => {
                         data.select = false;
                     });
-                    dataList[rowID].select = true;
+                    dataList[data.indexOf(item)].select = true;
+
                     this.setState({
-                        dataSource: this.ds.cloneWithRowsAndSections(selectMap),
+                        dataSource: selectMap,
                     });
-                    this.props.onSelect && this.props.onSelect(sectionID, data.value);
+                    this.props.onSelect && this.props.onSelect(title, dataList[index].value);
                 }}
             >
-                <Text style={[(data.select)
-                    ? styles.normalText : styles.subSmallText, {textAlign: 'center'}]}>{I18n(data.name)}</Text>
+                <Text style={[(item.select)
+                    ? styles.normalText : styles.subSmallText, {textAlign: 'center'}]}>{I18n(item.name)}</Text>
             </TouchableOpacity>
         );
     }
 
-    _renderSectionHeader(data, sectionID) {
+    _renderSectionHeader({section: {title}}) {
         return (
             <View style={{
                 marginTop: Constant.normalMarginEdge,
@@ -74,18 +68,19 @@ class SearchFilterSelectList extends Component {
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
-                <Text style={styles.smallTextWhite}>{I18n(sectionID)}</Text>
+                <Text style={styles.smallTextWhite}>{I18n(title)}</Text>
             </View>
         )
     }
 
     render() {
         return (
-            <ListView
+            <SectionList
                 style={this.props.listStyle}
-                dataSource={this.state.dataSource}
-                renderRow={this._renderRow}
+                sections={this.state.dataSource}
+                renderItem={this._renderRow}
                 renderSectionHeader={this._renderSectionHeader}
+                keyExtractor={(item, index) => item + index}
             />
         );
     }

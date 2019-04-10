@@ -4,7 +4,7 @@
 
 import React, {Component, PureComponent} from 'react';
 import {
-    View, Text, StatusBar, InteractionManager, TouchableOpacity, ListView
+    View, Text, StatusBar, InteractionManager, TouchableOpacity, FlatList
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
@@ -16,6 +16,7 @@ import CommonRowItem from './common/CommonRowItem'
 import CodeFileItem from './widget/CodeFileItem'
 import {isImageEnd} from '../utils/htmlUtils'
 import {hostWeb} from '../net/address'
+import * as Config from "../config";
 
 /**
  * 仓库文件列表
@@ -36,7 +37,6 @@ class RepositoryDetailFilePage extends Component {
         };
         this.loading = false;
         this.curBranch = this.props.curBranch;
-        this.dsHeader = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     }
 
     componentDidMount() {
@@ -68,7 +68,7 @@ class RepositoryDetailFilePage extends Component {
 
     }
 
-    _renderHeaderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderHeaderRow(rowData, rowID) {
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -226,11 +226,10 @@ class RepositoryDetailFilePage extends Component {
     }
 
     _renderHeader() {
-        let headerList = this.dsHeader.cloneWithRows(this.state.headerList);
        return <View style={[{height: 40, flex: 1, marginHorizontal: Constant.normalMarginEdge}]}>
-                <ListView
-                    renderRow={(rowData, sectionID, rowID, highlightRow) =>
-                        this._renderHeaderRow(rowData, sectionID, rowID, highlightRow)
+                <FlatList
+                    renderItem={
+                        ({item, index}) => this._renderHeaderRow(item, index)
                     }
                     horizontal={true}
                     style={{height: 40, flex: 1}}
@@ -239,7 +238,7 @@ class RepositoryDetailFilePage extends Component {
                     enableEmptySections
                     initialListSize={10}
                     pageSize={10}
-                    dataSource={headerList}
+                    data={this.state.headerList}
                 />
             </View>;
     }
