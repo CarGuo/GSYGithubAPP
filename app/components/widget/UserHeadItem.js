@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {
-    View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, WebView, ActivityIndicator
+    View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator
 } from 'react-native';
 import styles, {screenWidth} from "../../style"
 import PropTypes from 'prop-types';
 import * as Constant from '../../style/constant'
 import IconTextItem from './IconTextItem'
 import IconTextAutoLinkItem from './IconTextAutoLinkItem'
-import Icon from 'react-native-vector-icons/Ionicons'
+import { WebView } from 'react-native-webview';
 import IconF from 'react-native-vector-icons/FontAwesome'
 import {Actions} from "react-native-router-flux";
 import I18n from '../../style/i18n'

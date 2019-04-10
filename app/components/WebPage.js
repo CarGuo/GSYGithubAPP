@@ -2,12 +2,11 @@ import React, {Component} from 'react';
 import {
     View,
     BackHandler,
-    WebView,
     TextInput,
     Text,
     TouchableOpacity
 } from 'react-native';
-import I18n from '../style/i18n'
+import { WebView } from 'react-native-webview';
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Constant from '../style/constant'
 import {screenWidth} from '../style'
