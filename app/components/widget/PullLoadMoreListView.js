@@ -1,5 +1,5 @@
 import React, {
-    Component,
+    useState, useRef, useImperativeHandle, forwardRef
 } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -13,32 +13,22 @@ import * as Config from '../../config'
 /**
  * 上下拉列表控件
  */
-class PullLoadMoreListView extends Component {
 
-    constructor(props) {
-        super(props);
-        this._renderFooter = this._renderFooter.bind(this);
-        this._refresh = this._refresh.bind(this);
-        this._loadMore = this._loadMore.bind(this);
-        this._renderEmpty = this._renderEmpty.bind(this);
-        //设置state
-        this.state = {
-            isRefresh: false,
-            isRefreshing: false,
-            showLoadMore: false,
-            showRefresh: true,
-            listHeight: 0,
+function PullLoadMoreListView(props, ref) {
 
-        };
-    }
-
+    const [isRefresh, setRefresh] = useState(false);
+    const [isRefreshing, setRefreshing] = useState(false);
+    const [showLoadMore, setLoadMore] = useState(false);
+    const [showRefresh, setShowRefresh] = useState(true);
+    const [listHeight, setListHeight] = useState(0);
+    const list = useRef(null);
 
     /**
      * 绘制load more footer
      * */
-    _renderFooter() {
+    function _renderFooter() {
 
-        let footer = (this.state.showLoadMore) ?
+        let footer = (showLoadMore) ?
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
@@ -58,58 +48,89 @@ class PullLoadMoreListView extends Component {
                 alignItems: 'center'
             }}>
                 <Text style={{fontSize: 15, color: 'black', margin: Constant.normalMarginEdge}}>
-                    {this.props.dataSource.length > 0 ? I18n('loadMoreEnd') : " "}
+                    {props.dataSource != null && props.dataSource.length > 0 ? I18n('loadMoreEnd') : " "}
                 </Text>
             </View>;
 
-        return (footer);
+        return footer;
     }
 
     /**
      * 刷新
      * */
-    _refresh() {
-        if (this.state.isRefreshing) {
+    function _refresh() {
+        if (isRefreshing) {
             return
         }
-        this.setState({
-            isRefreshing: true,
-            showLoadMore: false,
-            isRefresh: true,
-        });
-        this.props.refresh && this.props.refresh();
+        setRefreshing(true)
+        setLoadMore(false)
+        setRefresh(true)
+        props.refresh && props.refresh();
     }
 
     /**
      * 加载更多
      * */
-    _loadMore() {
-        if (this.state.isRefreshing) {
+    function _loadMore() {
+        if (isRefreshing) {
             return
         }
-        if (!this.state.showLoadMore) {
+        if (!showLoadMore) {
             return
         }
-        if (this.props.dataSource.length === 0) {
+        if (props.dataSource.length === 0) {
             return
         }
-        this.setState({
-            isRefreshing: true,
-            showRefresh: false,
-        });
-        this.props.loadMore && this.props.loadMore();
+        setRefreshing(true)
+        setShowRefresh(false)
+        props.loadMore && props.loadMore();
     }
 
-    _renderEmpty() {
-        return (!this.props.hasOwnProperty("renderHeader")) ?
+    function scrollToTop() {
+        if (props.dataSource <= 0) {
+            return;
+        }
+        if (list)
+            list.current.scrollToIndex({index: 0, animate: false});
+    }
+    let openMethods = {
+        refreshComplete: (showLoadMore = false, _scrollToTop = false) => {
+            setRefreshing(false)
+            setRefresh(false)
+            setLoadMore(showLoadMore)
+            if (_scrollToTop)
+                scrollToTop();
+        },
+        loadMoreComplete: (showLoadMore = false) => {
+            setRefreshing(false)
+            setShowRefresh(true)
+            setLoadMore(showLoadMore)
+        },
+        showRefreshState: () => {
+            setRefresh(true)
+        },
+        scrollToTop: () => {
+            scrollToTop();
+        }
+    }
+    useImperativeHandle(ref, () => ({
+        refreshComplete: openMethods.refreshComplete,
+        loadMoreComplete: openMethods.loadMoreComplete,
+        showRefreshState: openMethods.showRefreshState,
+        scrollToTop: openMethods.scrollToTop
+    }));
+
+
+    function _renderEmpty() {
+        return (!props.hasOwnProperty("renderHeader")) ?
             <View style={[styles.centered, {
                 flex: 1,
-                height: this.state.listHeight
+                height: listHeight
             }]}>
                 <TouchableOpacity style={[styles.centered, {flex: 1}]}
                                   onPress={() => {
-                                      this._refresh();
-                                      this.showRefreshState();
+                                      _refresh();
+                                      openMethods.showRefreshState();
                                   }}>
                     <Image source={require("../../img/logo.png")}
                            resizeMode={"contain"}
@@ -121,78 +142,44 @@ class PullLoadMoreListView extends Component {
             </View> : <View/>;
     }
 
-    render() {
-        let refreshProps = {
-            refreshing: this.state.isRefresh,
-            onRefresh: this._refresh,
-            tintColor: Constant.primaryColor,
-            title: I18n('refreshing'),
-            colors: [Constant.primaryColor, Constant.primaryLightColor],
-        };
 
-        return (
-            <FlatList
-                style={{flex: 1}}
-                ref="list"
-                ListEmptyComponent={this._renderEmpty()}
-                //true的时候目前会在ios上，首页tab切换时导致空白
-                removeClippedSubviews={false}
-                {...refreshProps}
-                onLayout={(e) => {
-                    if (this.state.listHeight === 0 && e.nativeEvent.layout.height !== 0) {
-                        this.setState({listHeight: e.nativeEvent.layout.height})
-                    }
-                }}
-                renderItem={
-                    ({item, index}) => this.props.renderRow(item, index)
+    let refreshProps = {
+        refreshing: isRefresh,
+        onRefresh: _refresh,
+        tintColor: Constant.primaryColor,
+        title: I18n('refreshing'),
+        colors: [Constant.primaryColor, Constant.primaryLightColor],
+    };
+
+    return (
+        <FlatList
+            style={{flex: 1}}
+            ref={list}
+            ListEmptyComponent={_renderEmpty()}
+            //true的时候目前会在ios上，首页tab切换时导致空白
+            removeClippedSubviews={false}
+            {...refreshProps}
+            onLayout={(e) => {
+                if (listHeight === 0 && e.nativeEvent.layout.height !== 0) {
+                    setListHeight(e.nativeEvent.layout.height)
                 }
-                ListHeaderComponent={this.props.renderHeader}
-                ItemSeparatorComponent={({highlighted}) => <View/>}
-                enableEmptySections
-                initialListSize={this.props.pageSize}
-                pageSize={this.props.pageSize}
-                initialNumToRender={Config.PAGE_SIZE}
-                onEndReachedThreshold={0.1}
-                keyExtractor={(item, index) => index.toString()}
-                onEndReached={this._loadMore}
-                ListFooterComponent={this._renderFooter}
-                data={this.props.dataSource}
-            />
-        )
-    }
-
-    showRefreshState() {
-        this.setState({
-            isRefresh: true,
-        });
-    }
-
-    scrollToTop() {
-        if (this.props.dataSource <= 0) {
-            return;
-        }
-        if (this.refs.list)
-            this.refs.list.scrollToIndex({index: 0, animate: false});
-    }
-
-    refreshComplete(showLoadMore = false, scrollToTop = false) {
-        this.setState({
-            isRefreshing: false,
-            isRefresh: false,
-            showLoadMore: showLoadMore,
-        });
-        if (scrollToTop)
-            this.scrollToTop();
-    }
-
-    loadMoreComplete(showLoadMore = false) {
-        this.setState({
-            isRefreshing: false,
-            showRefresh: true,
-            showLoadMore: showLoadMore,
-        });
-    }
-
+            }}
+            renderItem={
+                ({item, index}) => props.renderRow(item, index)
+            }
+            ListHeaderComponent={props.renderHeader}
+            ItemSeparatorComponent={({highlighted}) => <View/>}
+            enableEmptySections
+            initialListSize={props.pageSize}
+            pageSize={props.pageSize}
+            initialNumToRender={Config.PAGE_SIZE}
+            onEndReachedThreshold={0.1}
+            keyExtractor={(item, index) => index.toString()}
+            onEndReached={_loadMore}
+            ListFooterComponent={_renderFooter}
+            data={props.dataSource}
+        />
+    )
 }
 
 PullLoadMoreListView.propTypes = {
@@ -208,4 +195,6 @@ PullLoadMoreListView.defaultProps = {
     enableRefresh: true,
 };
 
-export default PullLoadMoreListView;
+PullLoadMoreListView = forwardRef(PullLoadMoreListView);
+
+export default PullLoadMoreListView

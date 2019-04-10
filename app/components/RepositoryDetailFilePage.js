@@ -238,6 +238,7 @@ class RepositoryDetailFilePage extends Component {
                     enableEmptySections
                     initialListSize={10}
                     pageSize={10}
+                    keyExtractor={(item, index) => index.toString()}
                     data={this.state.headerList}
                 />
             </View>;
