@@ -36,7 +36,7 @@ class SearchDrawerFilter extends React.Component {
                         {title: 'filterLanguage', data: SearchLanguageType},
                     ]}
                     onSelect={(selection, data) => {
-                        alert(selection)
+                        //alert(selection)
                         //alert(data)
                         switch (selection) {
                             case "filerType":
