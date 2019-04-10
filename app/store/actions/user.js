@@ -6,10 +6,8 @@ import {USER} from '../type'
 import UserDao from '../../dao/userDao'
 import * as Constant from '../../style/constant'
 import store from '../'
-import {AsyncStorage} from 'react-native'
-import RepositoryDao from "../../dao/repositoryDao";
-import Api from "../../net";
-import Address from "../../net/address";
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 const {dispatch, getState} = store;
 

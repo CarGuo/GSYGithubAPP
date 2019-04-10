@@ -2,7 +2,6 @@
  * Created by guoshuyu on 2017/11/7.
  */
 
-import {AsyncStorage} from 'react-native'
 import Api from '../../net'
 import Address from '../../net/address'
 import {LOGIN} from '../type'
@@ -11,6 +10,7 @@ import * as Constant from '../../style/constant'
 import {Buffer} from 'buffer'
 import {clear} from '../reducers'
 import {CLIENT_ID, CLIENT_SECRET} from '../../config/ignoreConfig'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const toLogin = () => async (dispatch, getState) => {
 

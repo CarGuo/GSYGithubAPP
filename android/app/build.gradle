@@ -169,6 +169,8 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-community_netinfo')
+    implementation project(':@react-native-community_async-storage')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-version-number-fix-new')
     implementation project(':react-native-vector-icons')

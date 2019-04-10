@@ -3,12 +3,13 @@
  */
 
 
-import {NetInfo, Platform, AsyncStorage} from 'react-native';
 import I18n from '../style/i18n'
 import * as Constant from '../style/constant'
 import * as Code from './netwrokCode'
 import handlerError from './netwrokCode'
 import {NativeModules, DeviceEventEmitter} from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export const CONTENT_TYPE_JSON = "application/json";
