@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import {
-    View, Text, FlatList, ActivityIndicator, TouchableOpacity, Image
+    View, Text, FlatList, ActivityIndicator, TouchableOpacity, Image, RefreshControl
 } from 'react-native';
 import styles, {screenHeight} from "../../style"
 import * as Constant from "../../style/constant"
@@ -138,7 +138,11 @@ class PullLoadMoreListView extends Component {
                 //true的时候目前会在ios上，首页tab切换时导致空白
                 removeClippedSubviews={false}
                 {...refreshProps}
-                onLayout={e => this.setState({listHeight: e.nativeEvent.layout.height})}
+                onLayout={(e) => {
+                    if (this.state.listHeight === 0 && e.nativeEvent.layout.height !== 0) {
+                        this.setState({listHeight: e.nativeEvent.layout.height})
+                    }
+                }}
                 renderItem={
                     ({item, index}) => this.props.renderRow(item, index)
                 }
