@@ -93,6 +93,7 @@ function PullLoadMoreListView(props, ref) {
         if (list)
             list.current.scrollToIndex({index: 0, animate: false});
     }
+
     let openMethods = {
         refreshComplete: (showLoadMore = false, _scrollToTop = false) => {
             setRefreshing(false)
@@ -195,6 +196,7 @@ PullLoadMoreListView.defaultProps = {
     enableRefresh: true,
 };
 
-PullLoadMoreListView = forwardRef(PullLoadMoreListView);
 
-export default PullLoadMoreListView
+export default forwardRef(
+    (props, ref) => PullLoadMoreListView(props, ref)
+);
