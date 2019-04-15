@@ -77,6 +77,18 @@
 
 ```
 
+## 相关文章
+
+- ### [1、从Android到React Native开发（一、入门）](https://juejin.im/post/58ac5b4c8ac2474faab25d1c)
+
+- ### [[2、从Android到React Native开发（二、通信与模块实现）](https://juejin.im/post/58bc07c5ac502e006b07f434)
+
+- ### [[3、从Android到React Native开发（三、自定义原生控件支持）](https://juejin.im/post/5946253561ff4b006cee4d65)
+
+- ### [[4、从Android到React Native开发（四、打包流程和发布为Maven库）](https://juejin.im/post/5b2116466fb9a01e3128359f)
+
+- ### [[5、React Native 的未来与React Hooks](https://juejin.im/post/5cb34404f265da0384127fcd)
+
 
 ### 示例图片
 
@@ -113,18 +125,6 @@
 
 <img src="https://github.com/CarGuo/GSYGithubApp/blob/master/thanks.jpg" width="426px"/>
 
-
-### 相关文章
-
-**[1、从Android到React Native开发（一、入门）](https://juejin.im/post/58ac5b4c8ac2474faab25d1c)**
-
-**[2、从Android到React Native开发（二、通信与模块实现）](https://juejin.im/post/58bc07c5ac502e006b07f434)**
-
-**[3、从Android到React Native开发（三、自定义原生控件支持）](https://juejin.im/post/5946253561ff4b006cee4d65)**
-
-**[4、从Android到React Native开发（四、打包流程和发布为Maven库）](https://juejin.im/post/5b2116466fb9a01e3128359f)**
-
-**[5、React Native 的未来与React Hooks](https://juejin.im/post/5cb34404f265da0384127fcd)**
 
 ### LICENSE
 ```
