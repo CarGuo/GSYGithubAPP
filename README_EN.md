@@ -68,6 +68,18 @@ With the use and feedback of the project, will user experience and function opti
 | **IOS Null | |
 
 
+## Chinese Articles
+
+- ### [1、从Android到React Native开发（一、入门）](https://juejin.im/post/58ac5b4c8ac2474faab25d1c)
+
+- ### [2、从Android到React Native开发（二、通信与模块实现）](https://juejin.im/post/58bc07c5ac502e006b07f434)
+
+- ### [3、从Android到React Native开发（三、自定义原生控件支持）](https://juejin.im/post/5946253561ff4b006cee4d65)
+
+- ### [4、从Android到React Native开发（四、打包流程和发布为Maven库）](https://juejin.im/post/5b2116466fb9a01e3128359f)
+
+- ### [5、React Native 的未来与React Hooks](https://juejin.im/post/5cb34404f265da0384127fcd)
+
 
 ### Demo
 
@@ -98,16 +110,6 @@ With the use and feedback of the project, will user experience and function opti
 
 <img src="https://github.com/CarGuo/GSYGithubApp/blob/master/thanks.jpg" width="426px"/>
 
-
-### Chinese Articles
-
-**[1、从Android到React Native开发（一、入门）](http://www.jianshu.com/p/97692b1c451d)**
-
-**[2、从Android到React Native开发（二、通信与模块实现）](http://www.jianshu.com/p/bec040926db8)**
-
-**[3、从Android到React Native开发（三、自定义原生控件支持）](http://www.jianshu.com/p/a488674d55b3)**
-
-**[4、从Android到React Native开发（四、打包流程和发布为Maven库）](https://www.jianshu.com/p/f0aeaccc07a7)**
 
 ### LICENSE
 ```
