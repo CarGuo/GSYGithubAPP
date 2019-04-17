@@ -25,7 +25,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/issues)
 [![GitHub license](https://img.shields.io/github/license/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/blob/master/LICENSE)
 
-### 目前正在逐步替换为 0.59.4 版本。
+### 目前正在逐步替换更新新特心功能，如 React Hooks。
 
 ### 编译运行流程
 
