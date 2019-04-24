@@ -22,7 +22,7 @@ var TAGS = {
     },
     forkCount: {
         start: '<a class="muted-link d-inline-block mr-3"',
-        flag: '/network">',
+        flag: '/network',
         end: '</a>'
     }
 
