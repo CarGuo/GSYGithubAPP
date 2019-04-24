@@ -4,7 +4,7 @@
 
 import React, {Component, PureComponent} from 'react';
 import {
-    View, InteractionManager, StatusBar, Dimensions, StyleSheet, BackHandler
+    View, InteractionManager, StatusBar, SafeAreaView, StyleSheet, BackHandler
 } from 'react-native';
 import {Actions, Tabs} from 'react-native-router-flux';
 import styles, {screenHeight} from "../style"
@@ -235,40 +235,41 @@ class RepositoryDetailPage extends Component {
         let itemHeight = 30;
         let popHeight = (this.state.dataDetailBranches) ? (itemHeight * this.state.dataDetailBranches.length + 20) : 100;
         let bottom = this.state.showBottom ?
-            <View style={[styles.flexDirectionRowNotFlex, styles.centerH, styles.shadowCard]}>
-                <CommonBottomBar dataList={this._getBottomItem()}
-                                 rootStyles={{
-                                     flex: 1,
-                                     shadowOffset: {
-                                         width: 0,
-                                         height: 0
-                                     },
-                                     shadowOpacity: 0,
-                                     shadowRadius: 0,
-                                     elevation: 0,
-                                 }}/>
-                <View style={{backgroundColor: Constant.primaryLightColor, width: 1, height: 20}}/>
-                <PopmenuItem
-                    defaultIndex={0}
-                    adjustFrame={(styless) => {
-                        if (this.state.dataDetailBranches) {
-                            let top = screenHeight - popHeight - 60;
-                            if (top < 0) {
-                                top = 10;
+            <SafeAreaView style={{backgroundColor:"#FFFFFF"}}>
+                <View style={[styles.flexDirectionRowNotFlex, styles.centerH]}>
+                    <CommonBottomBar dataList={this._getBottomItem()}
+                                     rootStyles={{
+                                         flex: 1,
+                                         shadowOffset: {
+                                             width: 0,
+                                             height: 0
+                                         },
+                                         shadowOpacity: 0,
+                                         shadowRadius: 0,
+                                         elevation: 0,
+                                     }}/>
+                    <View style={{backgroundColor: Constant.primaryLightColor, width: 1, height: 20}}/>
+                    <PopmenuItem
+                        defaultIndex={0}
+                        adjustFrame={(styless) => {
+                            if (this.state.dataDetailBranches) {
+                                let top = screenHeight - popHeight - 60;
+                                if (top < 0) {
+                                    top = 10;
+                                }
+                                styless.top = top
                             }
-                            styless.top = top
-                        }
-                    }}
-                    onSelect={(id, rowData) => {
-                        this.curBranch = rowData.value;
-                        this._refreshChangeBranch(this.curBranch);
-                    }}
-                    itemHeight={itemHeight}
-                    options={this.state.dataDetailBranches}
-                    dropdownStyle={{height: popHeight}}
-                    defaultValue={"master"}
-                />
-            </View> :
+                        }}
+                        onSelect={(id, rowData) => {
+                            this.curBranch = rowData.value;
+                            this._refreshChangeBranch(this.curBranch);
+                        }}
+                        itemHeight={itemHeight}
+                        options={this.state.dataDetailBranches}
+                        dropdownStyle={{height: popHeight}}
+                        defaultValue={"master"}
+                    />
+                </View></SafeAreaView> :
             <View/>;
         return (
             <View style={styles.mainBox}>

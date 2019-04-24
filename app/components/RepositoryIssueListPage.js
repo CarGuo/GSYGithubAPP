@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, InteractionManager, StatusBar, TextInput, TouchableOpacity, Keyboard, StyleSheet, Platform
+    View, SafeAreaView, InteractionManager, StatusBar, TextInput, TouchableOpacity, Keyboard, StyleSheet, Platform
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
@@ -315,7 +315,7 @@ class RepositoryIssueListPage extends Component {
                     style={[{
                         position: "absolute",
                         left: screenWidth - 60,
-                        top: screenHeight - 230,
+                        top: screenHeight - screenHeight / 2,
                         right: 0,
                         bottom: 0,
                         zIndex: 222,

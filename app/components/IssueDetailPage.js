@@ -4,7 +4,16 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, TextInput, InteractionManager, Keyboard, TouchableOpacity, StyleSheet, Clipboard
+    View,
+    Text,
+    StatusBar,
+    TextInput,
+    InteractionManager,
+    Keyboard,
+    TouchableOpacity,
+    StyleSheet,
+    Clipboard,
+    SafeAreaView
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {Actions} from 'react-native-router-flux';
@@ -415,7 +424,17 @@ class IssueDetailPage extends Component {
     render() {
         let {issue} = this.state;
         let bottomBar = (issue) ?
-            <CommonBottomBar dataList={this._getBottomItem()}/> :
+            <SafeAreaView style={{backgroundColor: "#FFFFFF"}}><CommonBottomBar
+                rootStyles={{
+                    shadowOffset: {
+                        width: 0,
+                        height: 0
+                    },
+                    shadowOpacity: 0,
+                    shadowRadius: 0,
+                    elevation: 0,
+                }}
+                dataList={this._getBottomItem()}/></SafeAreaView> :
             <View/>;
         return (
             <View style={styles.mainBox}>
