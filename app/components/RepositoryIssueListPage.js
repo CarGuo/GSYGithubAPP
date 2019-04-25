@@ -315,7 +315,7 @@ class RepositoryIssueListPage extends Component {
                     style={[{
                         position: "absolute",
                         left: screenWidth - 60,
-                        top: screenHeight - screenHeight / 2,
+                        top: screenHeight - screenHeight / 2.5,
                         right: 0,
                         bottom: 0,
                         zIndex: 222,
