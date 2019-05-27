@@ -159,7 +159,6 @@ class UserHeadItem extends Component {
             beStaredList
         } = this.props;
         return ( <View style={[styles.flexDirectionRowNotFlex,
-            {borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Constant.primaryLightColor},
             {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.primaryLightColor},
         ]}>
             <NameValueItem
@@ -296,8 +295,8 @@ class UserHeadItem extends Component {
                     },
                     shadowOpacity: 0.7,
                     shadowRadius: 5,
-                    borderBottomRightRadius: 2,
-                    borderBottomLeftRadius: 2,
+                    borderBottomRightRadius: 5,
+                    borderBottomLeftRadius: 5,
                     elevation: 2,
                 }]}>
                     <View style={[{
@@ -386,6 +385,7 @@ class UserHeadItem extends Component {
                                   textstyle={[{marginVertical: Constant.normalMarginEdge},
                                       styles.subLightSmallText,]}/>
                     {this.getBottomItem()}
+                    <View style={{height: 5}}/>
                 </View>
                 <View style={styles.flex}>
                     <Text style={[styles.normalText, {

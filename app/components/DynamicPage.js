@@ -6,9 +6,7 @@ import React, {Component} from 'react';
 import {
     View, AppState, StatusBar, InteractionManager
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
 import styles from "../style"
-import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import eventActions from '../store/actions/event'
@@ -24,7 +22,19 @@ import {getNewsVersion} from './AboutPage'
 /**
  * 动态 -> 我的关注，我的仓库
  */
-class DynamicPage extends Component {
+@connect(
+    state => ({
+        userState: state.user,
+        loginState: state.login,
+        eventState: state.event,
+    }),
+    dispatch => ({
+        loginAction: bindActionCreators(loginActions, dispatch),
+        userAction: bindActionCreators(userActions, dispatch),
+        eventAction: bindActionCreators(eventActions, dispatch)
+    })
+)
+export default class DynamicPage extends Component {
 
     constructor(props) {
         super(props);
@@ -142,12 +152,3 @@ class DynamicPage extends Component {
     }
 }
 
-export default connect(state => ({
-    userState: state.user,
-    loginState: state.login,
-    eventState: state.event,
-}), dispatch => ({
-    loginAction: bindActionCreators(loginActions, dispatch),
-    userAction: bindActionCreators(userActions, dispatch),
-    eventAction: bindActionCreators(eventActions, dispatch)
-}))(DynamicPage)

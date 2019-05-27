@@ -21,7 +21,13 @@ import {clearCache} from "../dao/db";
 /**
  * 设置
  */
-class SettingPage extends Component {
+
+@connect(
+    state => ({state}),dispatch => ({
+        loginActions: bindActionCreators(loginActions, dispatch)
+    })
+)
+export default class SettingPage extends Component {
 
     constructor(props) {
         super(props);
@@ -178,9 +184,3 @@ class SettingPage extends Component {
         )
     }
 }
-
-
-export default connect(state => ({state}), dispatch => ({
-        loginActions: bindActionCreators(loginActions, dispatch)
-    })
-)(SettingPage)

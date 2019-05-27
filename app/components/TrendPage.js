@@ -5,16 +5,13 @@ import {
 import {Actions} from 'react-native-router-flux';
 import styles, {screenWidth, navBarHeight} from "../style"
 import * as Constant from "../style/constant"
-import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import reposAction from '../store/actions/repository'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {getActionAndDes} from '../utils/eventUtils'
 import RepositoryItem from './widget/RepositoryItem'
 import PullListView from './widget/PullLoadMoreListView'
-import * as Config from '../config'
 import PickerItem from './widget/TrendPickerItem';
 import {TrendTime, TrendType} from '../utils/filterUtils';
 import {filterItemHeight, pickerViewStyle, pickerTextStyle, dropDownStyle, adjustFrame} from '../utils/filterUtils';
@@ -22,7 +19,18 @@ import {filterItemHeight, pickerViewStyle, pickerTextStyle, dropDownStyle, adjus
 /**
  * 趋势数据列表
  */
-class TrendPage extends Component {
+@connect(
+    state => ({
+        userState: state.user,
+        loginState: state.login,
+        reposState: state.repository,
+    }), dispatch => ({
+        loginAction: bindActionCreators(loginActions, dispatch),
+        userAction: bindActionCreators(userActions, dispatch),
+        reposAction: bindActionCreators(reposAction, dispatch)
+    })
+)
+export default class TrendPage extends Component {
 
     constructor(props) {
         super(props);
@@ -148,12 +156,3 @@ class TrendPage extends Component {
 
 }
 
-export default connect(state => ({
-    userState: state.user,
-    loginState: state.login,
-    reposState: state.repository,
-}), dispatch => ({
-    loginAction: bindActionCreators(loginActions, dispatch),
-    userAction: bindActionCreators(userActions, dispatch),
-    reposAction: bindActionCreators(reposAction, dispatch)
-}))(TrendPage)

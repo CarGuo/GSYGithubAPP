@@ -16,12 +16,10 @@ import {
 } from 'react-native';
 import styles, {screenHeight, screenWidth} from "../style"
 import * as Constant from "../style/constant"
-import PropTypes from 'prop-types';
 import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import Modal from 'react-native-modalbox';
 import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Entypo'
@@ -34,7 +32,14 @@ const animaTime = 600;
 /**
  * 登陆Modal
  */
-class LoginPage extends Component {
+
+@connect(
+    state => ({state}),
+    dispatch => ({
+        login: bindActionCreators(loginActions, dispatch)
+    })
+)
+export default class LoginPage extends Component {
 
     constructor(props) {
         super(props);
@@ -277,8 +282,3 @@ class LoginPage extends Component {
         )
     }
 }
-
-export default connect(state => ({state}), dispatch => ({
-        login: bindActionCreators(loginActions, dispatch)
-    })
-)(LoginPage)

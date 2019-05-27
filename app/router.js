@@ -59,9 +59,11 @@ const getRouter = () => {
                 <Scene key="main">
                     <Scene key="WelcomePage" component={WelcomePage} hideNavBar hideTabBar hide/>
                 </Scene>
-                <Scene key="LoginPage" component={LoginPage}
-                       showLabel={false}
-                       hideNavBar/>
+                <Scene key="LoginPage">
+                    <Scene component={LoginPage}
+                           showLabel={false}
+                           hideNavBar/>
+                </Scene>
                 <Scene key="root"
                        navigationBarStyle={styles.navigationBar}
                        titleStyle={{color: Constant.titleTextColor}}>

@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import styles, {screenWidth, screenHeight} from "../../style/index"
-import * as Constant from "../../style/constant"
 import I18n from '../../style/i18n'
 import Modal from 'react-native-modalbox';
 import Spinner from 'react-native-spinkit-fix-new';
@@ -27,8 +26,9 @@ class LoadingModal extends Component {
     }
 
     componentDidMount() {
-        if (this.refs.loginModal)
+        if (this.refs.loginModal) {
             this.refs.loginModal.open();
+        }
         this.handle = BackHandler.addEventListener('loaddingBack', this.onClose)
     }
 

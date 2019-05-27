@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles, {screenHeight, screenWidth} from "../style"
-import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
 import {connect} from 'react-redux'
@@ -20,7 +19,15 @@ import LottieView from 'lottie-react-native';
 /**
  * 欢迎页
  */
-class WelcomePage extends Component {
+
+@connect(
+    state => ({
+        state
+    }), dispatch => ({
+        actions: bindActionCreators(loginActions, dispatch),
+    })
+)
+export default class WelcomePage extends Component {
 
     constructor(props) {
         super(props);
@@ -90,8 +97,3 @@ class WelcomePage extends Component {
     }
 }
 
-export default connect(state => ({
-    state
-}), dispatch => ({
-    actions: bindActionCreators(loginActions, dispatch),
-}))(WelcomePage)

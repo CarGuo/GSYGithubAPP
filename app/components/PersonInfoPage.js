@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, ScrollView
+    View, ScrollView
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
@@ -15,13 +15,20 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
-import issueActions from "../store/actions/issue";
-import Toast from "./common/ToastProxy";
 
 /**
  * 用户信息修改页面
  */
-class PersonInfoPage extends Component {
+
+@connect(
+    state => ({
+        userState: state.user,
+    }),dispatch => ({
+        loginAction: bindActionCreators(loginActions, dispatch),
+        userAction: bindActionCreators(userActions, dispatch)
+    })
+)
+export default class PersonInfoPage extends Component {
 
     constructor(props) {
         super(props);
@@ -222,9 +229,3 @@ class PersonInfoPage extends Component {
     }
 }
 
-export default connect(state => ({
-    userState: state.user,
-}), dispatch => ({
-    loginAction: bindActionCreators(loginActions, dispatch),
-    userAction: bindActionCreators(userActions, dispatch)
-}))(PersonInfoPage)

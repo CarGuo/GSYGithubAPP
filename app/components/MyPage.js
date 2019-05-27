@@ -13,7 +13,16 @@ import BasePersonPage from "./widget/BasePersonPage";
 /**
  * 我的
  */
-class MyPage extends BasePersonPage {
+
+@connect(
+    state => ({
+        userState: state.user,
+    }),dispatch => ({
+        loginAction: bindActionCreators(loginActions, dispatch),
+        userAction: bindActionCreators(userActions, dispatch)
+    })
+)
+export default class MyPage extends BasePersonPage {
 
     constructor(props) {
         super(props);
@@ -70,10 +79,3 @@ class MyPage extends BasePersonPage {
         return true
     }
 }
-
-export default connect(state => ({
-    userState: state.user,
-}), dispatch => ({
-    loginAction: bindActionCreators(loginActions, dispatch),
-    userAction: bindActionCreators(userActions, dispatch)
-}))(MyPage)
