@@ -124,9 +124,7 @@
 
 * 2、win下在npm出现问题时，再次npm时可以删除.lock文件先（如果是mac就简单很多了）。
 
-
-<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/thanks.jpg" width="426px"/>
-
+![](https://github.com/CarGuo/GSYGithubApp/blob/master/thanks.jpg)
 
 ### LICENSE
 ```
