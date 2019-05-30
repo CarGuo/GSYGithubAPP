@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, ScrollView
+    View, ScrollView, StatusBar
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styles from "../style"
