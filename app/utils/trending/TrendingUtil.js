@@ -12,7 +12,7 @@ import StringUtil from './StringUtil';
 
 var TAGS = {
     meta: {
-        start: '<span class="d-inline-block float-sm-right">',
+        start: '<span class="d-inline-block float-sm-right"',
         end: '</span>'
     },
     starCount: {
@@ -29,9 +29,9 @@ var TAGS = {
 }
 export default class TrendingUtil {
     static htmlToRepo(responseData) {
-        responseData = responseData.substring(responseData.indexOf('<li class="repo-list-item'), responseData.indexOf('</ol>')).replace(/\n/, '');
+        responseData = responseData.replace(/\n/, '');
         var repos = [];
-        var splitWithH3 = responseData.split('<h3');
+        var splitWithH3 = responseData.split('<article');
         splitWithH3.shift();
         for (var i = 0; i < splitWithH3.length; i++) {
             var repo = new TrendingRepoModel();
@@ -39,7 +39,7 @@ export default class TrendingUtil {
 
             this.parseRepoBaseInfo(repo, html);
 
-            var metaNoteContent = this.parseContentWithNote(html, 'class="f6 text-gray mt-2">', '</li>');
+            var metaNoteContent = this.parseContentWithNote(html, 'class="f6 text-gray mt-2">', '</div>');
             repo.meta = this.parseRepoLabelWithTag(repo, metaNoteContent, TAGS.meta);
             repo.starCount = this.parseRepoLabelWithTag(repo, metaNoteContent, TAGS.starCount);
             repo.forkCount = this.parseRepoLabelWithTag(repo, metaNoteContent, TAGS.forkCount);
@@ -74,7 +74,7 @@ export default class TrendingUtil {
             repo.reposName = repo.fullName.split('/')[1];
         }
 
-        var description = this.parseContentWithNote(htmlBaseInfo, '<p class="col-9 d-inline-block text-gray m-0 pr-4">', '</p>');
+        var description = this.parseContentWithNote(htmlBaseInfo, '<p class="col-9 text-gray my-1 pr-4">', '</p>');
         repo.description = description;
     }
 
