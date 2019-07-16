@@ -45,7 +45,8 @@ export default class SettingPage extends Component {
 
     }
 
-    componentWillReceiveProps(newProps) {
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
         this.initLanguage();
     }
 

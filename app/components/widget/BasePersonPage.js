@@ -52,24 +52,22 @@ class BasePersonPage extends Component {
         })
     }
 
-    componentWillUnmount() {
-
-    }
-
-
-    componentWillReceiveProps(newProps) {
-        if (newProps.showType && newProps.showType !== this.props.showType) {
-            if (newProps.showType === "Organization") {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.showType !== this.props.showType) {
+            if (this.props.showType === "Organization") {
                 this.showType = 1;
                 this._refresh();
+                console.log("******************1 " + this.props.showType)
             } else {
                 this.showType = 0;
                 this._getOrgsList();
                 this._refresh();
+                console.log("******************2 " + this.props.showType)
             }
-            newProps.showType = "";
         }
     }
+
+
 
     _renderRow(rowData) {
         if (this.showType === 1) {

@@ -49,9 +49,6 @@ class ListPage extends Component {
         })
     }
 
-    componentWillUnmount() {
-
-    }
 
     componentWillReceiveProps(newProps) {
         if (this.props.filterSelect !== newProps.filterSelect) {

@@ -25,7 +25,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/issues)
 [![GitHub license](https://img.shields.io/github/license/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/blob/master/LICENSE)
 
-### 目前正在逐步替换更新新特心功能，如 React Hooks。
+### 因升级到RN 0.60.3 版本，整个工程模板被重构。
 
 ### 编译运行流程
 
