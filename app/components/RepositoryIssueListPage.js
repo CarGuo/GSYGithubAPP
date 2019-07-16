@@ -52,10 +52,6 @@ class RepositoryIssueListPage extends Component {
         });
     }
 
-    componentWillUnmount() {
-
-    }
-
     _searchTextChange(text) {
         this.searchText = text;
     }

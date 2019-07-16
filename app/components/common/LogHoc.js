@@ -15,12 +15,9 @@ export function logHoc(WrappedComponent) {
 
     return class extends Component {
 
-        componentWillMount() {
+        componentDidMount() {
             this.start = Date.now();
             this.displayName = this.getDisplayName(this);
-        }
-
-        componentDidMount() {
             this.end = Date.now();
             if (__DEV__) {
                 console.log(this.props)

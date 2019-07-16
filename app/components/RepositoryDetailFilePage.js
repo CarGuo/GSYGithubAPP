@@ -45,13 +45,6 @@ class RepositoryDetailFilePage extends Component {
         })
     }
 
-    componentWillUnmount() {
-
-    }
-
-    componentWillReceiveProps(newProps) {
-    }
-
     backHandler() {
         if (this.state.headerList.length <= 1) {
             return false

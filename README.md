@@ -109,7 +109,7 @@
 
 ### 第三方框架
 
-* [react-native(0.59.9)](http://reactnative.cn/docs/0.51/getting-started.html)
+* [react-native(0.60.3)](http://reactnative.cn/docs/0.51/getting-started.html)
 * [react-native-router-flux 路由框架](https://github.com/aksonov/react-native-router-flux)
 * [react-native-vector-icons 矢量字体库图标 ](https://github.com/oblador/react-native-vector-icons)
 * [react-redux redux](https://github.com/reactjs/react-redux)

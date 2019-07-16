@@ -51,12 +51,6 @@ class RepositoryDetailActivityPage extends Component {
         })
     }
 
-    componentWillUnmount() {
-
-    }
-
-    componentWillReceiveProps(newProps) {
-    }
 
     _renderRow(rowData) {
         if (this.state.select === 0) {

@@ -96,8 +96,6 @@ class RepositoryDetailPage extends Component {
         }
     }
 
-    componentWillReceiveProps(newProps) {
-    }
 
     _backHandler() {
         if (this.index === 2) {
