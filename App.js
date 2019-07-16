@@ -6,8 +6,8 @@
 
 import React, {Component} from 'react';
 import {View} from 'react-native';
-import getRouter from './app/router';
 import {Provider} from 'react-redux';
+import getRouter from './app/router';
 import store from './app/store/'
 import {getLanguageCurrent} from './app/utils/actionUtils'
 import {changeLocale} from './app/style/i18n'
