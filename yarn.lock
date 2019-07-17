@@ -953,6 +953,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-2.0.10.tgz#d28a446352e75754b78509557988359133cdbcca"
   integrity sha512-NrIzyLe0eSbhgMnHl2QdSEhaA7yXh6p9jzMomfUa//hoTXE+xbObGDdiWWSQm2bnXnZJg8XCU3AB9qzvqcuLnA==
 
+"@react-native-community/viewpager@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@react-native-community/viewpager/-/viewpager-1.1.7.tgz#7d3b1631f1ec91145db92a8e25c80d53027e96ba"
+  integrity sha512-k9v2KJtAprNPq7IZmedD2VLMePvPW+ohX3uDnkpoKritBji+/RtRmTKrdtPi3Uvp0toq/KtPttAds1dr7AZNpw==
+
 "@react-navigation/core@~3.4.1":
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.4.2.tgz#bec563e94fde40fbab3730cdc97f22afbb2a1498"
@@ -5827,10 +5832,10 @@ react-native-safe-module@^1.1.0:
   dependencies:
     debounce "^1.2.0"
 
-react-native-scrollable-tab-view-fix-guo@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/react-native-scrollable-tab-view-fix-guo/-/react-native-scrollable-tab-view-fix-guo-0.8.1.tgz#0b206583ec395e406dd84e5dfcd662c48dac45fa"
-  integrity sha512-wDRqQoX0tUivLzuD7x6KVeNjEPocZUPJNE0DzAhtc2Sdo/vNSxTDrNd2E6BEnUXWKhYdlz6jv5drNbh+vgsHeQ==
+react-native-scrollable-tab-view-fix-guo@^0.99.0:
+  version "0.99.0"
+  resolved "https://registry.yarnpkg.com/react-native-scrollable-tab-view-fix-guo/-/react-native-scrollable-tab-view-fix-guo-0.99.0.tgz#926da6956338dfdfa81b88352f8ae4096e4f3fb4"
+  integrity sha512-F6r8OjYXkI9Yqjg0SRdP9nNcJvWhZRcx0yjt7Yrr2CIuItO03V882lQ27X+tSit2/4OpWkZWXYtG1dE2j5UfqQ==
   dependencies:
     create-react-class "^15.6.2"
     prop-types "^15.6.0"
