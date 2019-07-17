@@ -5739,10 +5739,10 @@ react-native-gesture-handler@^1.1.0:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-htmlview@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/react-native-htmlview/-/react-native-htmlview-0.13.0.tgz#2c34646c35bbe94386db9aaebbb3930ec58c8bcf"
-  integrity sha512-gVEggLcAi5Gfi88LX9uaACiAGIcEuzg9i/gs8ymIQuV/xQ0IpeKpVMpBZwiAOSHBrJJhGUCoCihV2bgz5TruVw==
+react-native-htmlview@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-htmlview/-/react-native-htmlview-0.14.0.tgz#be1be4d1608369e2d9d367731dd3aef70f018d89"
+  integrity sha512-y51QJtz/nDRX/6P6eikizyma5eHWN/BTGLyzI2JpUUM+8JSg7VN4MMb54wQHGVotAwnb5FJjDQcZ9qd3T0PMKw==
   dependencies:
     entities "^1.1.1"
     htmlparser2-without-node-native "^3.9.2"
@@ -5771,10 +5771,12 @@ react-native-image-zoom-viewer@^2.0.14:
   dependencies:
     react-native-image-pan-zoom "^2.1.9"
 
-react-native-modal-dropdown@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-modal-dropdown/-/react-native-modal-dropdown-0.5.0.tgz#f6c4cd4d077792e56902b43b14d83959f5f40f46"
-  integrity sha512-tHN8dUQ3DR2EKAFcWm1FyI/RhWTtZWKdfjaI3A1CBQIANseX04d8C9Z20xwkI0iJ7v0GfsTz/GMAmm64fOM5ig==
+react-native-modal-dropdown@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-modal-dropdown/-/react-native-modal-dropdown-0.6.2.tgz#da6027b3546d2031fbce46242bffc95561e13599"
+  integrity sha512-1jzByA+ME+q0mZJ2rZrLsf6jVwJhNxNHdg7I50xYZ9oYJsmmKwF9r/ks95tZxxks4Zvd7/FnaveNtyd+uevXAw==
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-modalbox@^1.7.1:
   version "1.7.1"
