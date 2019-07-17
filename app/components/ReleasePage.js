@@ -2,15 +2,14 @@
  * Created by guoshuyu on 2017/11/10.
  */
 
-import React, {Component, PureComponent} from 'react';
+import React, {Component,} from 'react';
 import {
-    View, InteractionManager, StatusBar, Dimensions, StyleSheet
+    View, InteractionManager, StatusBar, Dimensions,
 } from 'react-native';
-import {Actions, Tabs} from 'react-native-router-flux';
 import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
-import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
+import {TabView, TabBar,} from 'react-native-tab-view';
 import ListPage from "./ListPage";
 
 /**
