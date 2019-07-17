@@ -5764,19 +5764,12 @@ react-native-image-pan-zoom@^2.1.9:
   resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.11.tgz#61bcb69219d95e76a9797d23e4a2e8e0bd654ae9"
   integrity sha512-ZCisGUFpPchHXsjT7ZI0anlSLPgcTmjRKXqpVnPu3RDWFXfKjuL4zpY57DX4Y8YgGZCpbf9fApN7KjVYody2Mw==
 
-react-native-image-zoom-viewer@^2.0.14:
+react-native-image-zoom-viewer@^2.2.26:
   version "2.2.26"
   resolved "https://registry.yarnpkg.com/react-native-image-zoom-viewer/-/react-native-image-zoom-viewer-2.2.26.tgz#c6f070abb094cfbe1b3b7d8a38ad979a5facbdc5"
   integrity sha512-Mh4+CJQCDcAumLFXLlDk8nQ5iMxNnupc9HwktsZ3I/v4HULcFPmTLDQ0HGAxjLa5foZRPnKDN06iKGsEb9raoA==
   dependencies:
     react-native-image-pan-zoom "^2.1.9"
-
-react-native-modal-dropdown@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/react-native-modal-dropdown/-/react-native-modal-dropdown-0.6.2.tgz#da6027b3546d2031fbce46242bffc95561e13599"
-  integrity sha512-1jzByA+ME+q0mZJ2rZrLsf6jVwJhNxNHdg7I50xYZ9oYJsmmKwF9r/ks95tZxxks4Zvd7/FnaveNtyd+uevXAw==
-  dependencies:
-    prop-types "^15.6.0"
 
 react-native-modalbox@^1.7.1:
   version "1.7.1"

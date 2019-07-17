@@ -88,26 +88,6 @@ export default class ModalDropdown extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    let {buttonText, selectedIndex} = this.state;
-    const {defaultIndex, defaultValue, options} = nextProps;
-    buttonText = this._nextValue == null ? buttonText : this._nextValue;
-    selectedIndex = this._nextIndex == null ? selectedIndex : this._nextIndex;
-    if (selectedIndex < 0) {
-      selectedIndex = defaultIndex;
-      if (selectedIndex < 0) {
-        buttonText = defaultValue;
-      }
-    }
-    this._nextValue = null;
-    this._nextIndex = null;
-
-    this.setState({
-      loading: !options,
-      buttonText,
-      selectedIndex
-    });
-  }
 
   render() {
     return (
