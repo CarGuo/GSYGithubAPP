@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, Text, View, ViewPropTypes,} from 'react-native';
+import {DeviceEventEmitter, Text, View, ViewPropTypes,} from 'react-native';
 import {Router, Actions, Scene} from 'react-native-router-flux';
 import styles, {statusHeight, drawerWidth} from "../../style"
 import * as Constant from '../../style/constant'
@@ -36,17 +36,18 @@ class SearchDrawerFilter extends React.Component {
                         {title: 'filterLanguage', data: SearchLanguageType},
                     ]}
                     onSelect={(selection, data) => {
-                        //alert(selection)
-                        //alert(data)
                         switch (selection) {
                             case "filerType":
                                 Actions.pop({refresh: {selectTypeData: data}});
+                                DeviceEventEmitter.emit("SearchPage", {selectTypeData: data})
                                 break;
                             case "filterLanguage":
                                 Actions.pop({refresh: {selectLanguageData: data}});
+                                DeviceEventEmitter.emit("SearchPage", {selectLanguageData: data})
                                 break;
                             case "filterSort":
                                 Actions.pop({refresh: {selectSortData: data}});
+                                DeviceEventEmitter.emit("SearchPage", {selectSortData: data})
                                 break;
                         }
 

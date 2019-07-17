@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, StyleSheet, StatusBar, TextInput, TouchableOpacity, Keyboard
+    View, StyleSheet, StatusBar, TextInput, TouchableOpacity, Keyboard, DeviceEventEmitter,
 } from 'react-native';
 import styles from "../style"
 import * as Constant from "../style/constant"
@@ -43,29 +43,30 @@ class SearchPage extends Component {
     }
 
     componentDidMount() {
+        this.subscription = DeviceEventEmitter.addListener(
+            `SearchPage`,
+            (params) => {
+                let changed = false;
+                if (params.selectTypeData != null && params.selectTypeData !== this.selectTypeData) {
+                    this.selectTypeData = params.selectTypeData;
+                    changed = true;
+                }
+                if (params.selectSortData != null && params.selectSortData !== this.selectSortData) {
+                    this.selectSortData = params.selectSortData;
+                    changed = true;
+                }
+                if (params.selectLanguageData != null && params.selectLanguageData !== this.selectLanguageData) {
+                    this.selectLanguageData = params.selectLanguageData;
+                    changed = true;
+                }
+                if (changed) {
+                    this._refresh();
+                }
+            });
     }
 
     componentWillUnmount() {
-
-    }
-
-    componentWillReceiveProps(newProps) {
-        let changed = false;
-        if (newProps.selectTypeData !== this.selectTypeData) {
-            this.selectTypeData = newProps.selectTypeData;
-            changed = true;
-        }
-        if (newProps.selectSortData !== this.selectSortData) {
-            this.selectSortData = newProps.selectSortData;
-            changed = true;
-        }
-        if (newProps.selectLanguageData !== this.selectLanguageData) {
-            this.selectLanguageData = newProps.selectLanguageData;
-            changed = true;
-        }
-        if (changed) {
-            this._refresh();
-        }
+        this.subscription.remove();
     }
 
     _searchTextChange(text) {
