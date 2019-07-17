@@ -4,7 +4,7 @@
 
 import React, {Component, PureComponent} from 'react';
 import {
-    View, InteractionManager, StatusBar, Dimensions, StyleSheet
+    View, InteractionManager, StatusBar, Dimensions, StyleSheet, DeviceEventEmitter,
 } from 'react-native';
 import {Actions, Tabs} from 'react-native-router-flux';
 import styles from "../style"
@@ -29,17 +29,19 @@ class NotifyPage extends Component {
     }
 
     componentDidMount() {
+        this.subscription = DeviceEventEmitter.addListener(
+            `NotifyPage`,
+            (params) => {
+                if (params && params.type === "allRead") {
+                    params.type = "";
+                    this._refresh();
+                }
+            });
     }
 
     componentWillUnmount() {
+        this.subscription.remove();
         this.props.backNotifyCall && this.props.backNotifyCall()
-    }
-
-    componentWillReceiveProps(newProps) {
-        if (newProps && newProps.type === "allRead") {
-            newProps.type = "";
-            this._refresh();
-        }
     }
 
     _refresh() {
