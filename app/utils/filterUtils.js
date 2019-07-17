@@ -6,6 +6,7 @@ import * as Constant from '../style/constant'
 import {
     Platform, StatusBar
 } from 'react-native';
+import  {DeviceEventEmitter} from 'react-native';
 
 export const filterItemHeight = 40;
 
@@ -160,12 +161,12 @@ export const IssueSortType = [
     {name: "issue_comments", value: 'comments', select: false},
 ];
 
-export const RepositoryFilter = () => {
+export const RepositoryFilter = (emitString) => {
     return [{
         itemName: I18n("filterPushed"),
         itemValue: 'pushed',
         itemClick: () => {
-            Actions.refresh({filterSelect: 'pushed'});
+            DeviceEventEmitter.emit(emitString,{filterSelect: 'pushed'});
         }, itemStyle: {
             borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
         }
@@ -173,13 +174,13 @@ export const RepositoryFilter = () => {
         itemName: I18n("filterCreated"),
         itemValue: 'created',
         itemClick: () => {
-            Actions.refresh({filterSelect: 'created'});
+            DeviceEventEmitter.emit(emitString,{filterSelect: 'created'});
         }, itemStyle: {}
     }, {
         itemName: I18n("filterUpdated"),
         itemValue: 'updated',
         itemClick: () => {
-            Actions.refresh({filterSelect: 'updated'});
+            DeviceEventEmitter.emit(emitString,{filterSelect: 'updated'});
         }, itemStyle: {
             borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
         }
@@ -187,7 +188,7 @@ export const RepositoryFilter = () => {
         itemName: I18n("filterFullName"),
         itemValue: 'full_name',
         itemClick: () => {
-            Actions.refresh({filterSelect: 'full_name'});
+            DeviceEventEmitter.emit(emitString,{filterSelect: 'full_name'});
         }, itemStyle: {
             borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
         }

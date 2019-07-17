@@ -175,7 +175,7 @@ class UserHeadItem extends Component {
                         rightBtn: 'filter',
                         filterSelect: RepositoryFilter()[0].itemValue,
                         rightBtnPress: () => {
-                            Actions.OptionModal({dataList: RepositoryFilter()});
+                            Actions.OptionModal({dataList: RepositoryFilter("user_repos+repository")});
                         }
                     })
                 }}/>
@@ -226,7 +226,7 @@ class UserHeadItem extends Component {
                         rightBtn: 'filter',
                         filterSelect: RepositoryFilter()[1].itemValue,
                         rightBtnPress: () => {
-                            Actions.OptionModal({dataList: RepositoryFilter()});
+                            Actions.OptionModal({dataList: RepositoryFilter('user_star+repository')});
                         }
                     })
                 }}/>
