@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import styles, {screenWidth, screenHeight} from "../../style/index"
 import * as Constant from "../../style/constant"
 import I18n from '../../style/i18n'
-import Modal from 'react-native-modalbox';
+import Modal from './ModalBox';
 import {Actions} from "react-native-router-flux";
 
 

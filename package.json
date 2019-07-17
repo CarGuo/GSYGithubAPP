@@ -27,7 +27,6 @@
     "react-native-i18n": "^2.0.15",
     "react-native-image-crop-picker": "^0.25.0",
     "react-native-image-zoom-viewer": "^2.2.26",
-    "react-native-modalbox": "^1.7.1",
     "react-native-root-toast": "^2.2.0",
     "react-native-router-flux": "^4.1.0-beta.5",
     "react-native-scrollable-tab-view-fix-guo": "^0.99.0",
