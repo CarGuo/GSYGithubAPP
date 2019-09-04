@@ -13,16 +13,16 @@ import StringUtil from './StringUtil';
 var TAGS = {
     meta: {
         start: '<span class="d-inline-block float-sm-right"',
-        end: '</span>'
+        end: '</span>end'
     },
     starCount: {
-        start: '<a class="muted-link d-inline-block mr-3"',
-        flag: '/stargazers">',
+        start: '<span aria-label="star">',
+        flag: '/span>',
         end: '</a>'
     },
     forkCount: {
-        start: '<a class="muted-link d-inline-block mr-3"',
-        flag: '/network',
+        start: '<span aria-label="fork">',
+        flag: '/span>',
         end: '</a>'
     }
 
@@ -39,7 +39,7 @@ export default class TrendingUtil {
 
             this.parseRepoBaseInfo(repo, html);
 
-            var metaNoteContent = this.parseContentWithNote(html, 'class="f6 text-gray mt-2">', '</div>');
+            var metaNoteContent = this.parseContentWithNote(html, 'class="f6 text-gray mt-2">', '</div>') + "end";
             repo.meta = this.parseRepoLabelWithTag(repo, metaNoteContent, TAGS.meta);
             repo.starCount = this.parseRepoLabelWithTag(repo, metaNoteContent, TAGS.starCount);
             repo.forkCount = this.parseRepoLabelWithTag(repo, metaNoteContent, TAGS.forkCount);
@@ -81,12 +81,13 @@ export default class TrendingUtil {
     static parseRepoLabelWithTag(repo, noteContent, tag) {
         let startFlag;
         if (TAGS.starCount === tag || TAGS.forkCount === tag) {
-            startFlag = tag.start + ' href="/' + repo.fullName + tag.flag;
+            //startFlag = tag.start + ' href="/' + repo.fullName + tag.flag;
+            startFlag = tag.start;
         } else {
             startFlag = tag.start;
         }
         let content = this.parseContentWithNote(noteContent, startFlag, tag.end);
-        let metaContent = content.substring(content.indexOf('</svg>') + '</svg>'.length, content.length);
+        let metaContent = content.substring(content.indexOf('</span>') + '</span>'.length, content.length);
         return StringUtil.trim(metaContent);
     }
 
