@@ -13,16 +13,17 @@ import StringUtil from './StringUtil';
 var TAGS = {
     meta: {
         start: '<span class="d-inline-block float-sm-right"',
+        flag: '/svg>',
         end: '</span>end'
     },
     starCount: {
-        start: '<span aria-label="star">',
-        flag: '/span>',
+        start: '<svg aria-label="star">',
+        flag: '/svg>',
         end: '</a>'
     },
     forkCount: {
-        start: '<span aria-label="fork">',
-        flag: '/span>',
+        start: '<svg aria-label="repo-forked">',
+        flag: '/svg>',
         end: '</a>'
     }
 
@@ -87,7 +88,7 @@ export default class TrendingUtil {
             startFlag = tag.start;
         }
         let content = this.parseContentWithNote(noteContent, startFlag, tag.end);
-        let metaContent = content.substring(content.indexOf('</span>') + '</span>'.length, content.length);
+        let metaContent = content.substring(content.indexOf(tag["flag"]) + tag["flag"].length, content.length);
         return StringUtil.trim(metaContent);
     }
 
