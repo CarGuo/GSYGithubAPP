@@ -17,12 +17,12 @@ var TAGS = {
         end: '</span>end'
     },
     starCount: {
-        start: '<svg aria-label="star">',
+        start: '<svg aria-label="star"',
         flag: '/svg>',
         end: '</a>'
     },
     forkCount: {
-        start: '<svg aria-label="repo-forked">',
+        start: '<svg aria-label="repo-forked"',
         flag: '/svg>',
         end: '</a>'
     }
