@@ -13,29 +13,33 @@ import getPulse from "../utils/pulse/PulseUtils";
  * @param languageType 语言
  */
 const getTrendDao = async (page = 0, since, languageType) => {
-    let localLanguage = (languageType) ? languageType : "*";
+    let localLanguage = (languageType) ? languageType : '*';
     let nextStep = async () => {
-        let url = Address.trending(since, languageType);
-        let res = await GitHubTrending.fetchTrending(url);
+        let url = Address.trendingApi(since, languageType);
+
+        let res = await Api.netFetch(url, 'GET', null, true,
+            {
+                'api-token': '4d65e2a5626103f92a71867d7b49fea0',
+            });
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
-                let allData = realm.objects('TrendRepository').filtered(`since="${since}" AND languageType="${localLanguage}"`);
+                let allData = realm.objects('TrendRepositoryV2').filtered(`since="${since}" AND languageType="${localLanguage}"`);
                 realm.delete(allData);
                 res.data.forEach((item) => {
-                    realm.create('TrendRepository', {
+                    realm.create('TrendRepositoryV2', {
                         since: since,
                         languageType: localLanguage,
-                        data: JSON.stringify(item)
+                        data: JSON.stringify(item),
                     });
-                })
+                });
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
-    let allData = realm.objects('TrendRepository').filtered(`since="${since}" AND languageType="${localLanguage}"`);
+    let allData = realm.objects('TrendRepositoryV2').filtered(`since="${since}" AND languageType="${localLanguage}"`);
     if (allData) {
         let data = [];
         allData.forEach((item) => {
@@ -44,13 +48,13 @@ const getTrendDao = async (page = 0, since, languageType) => {
         return {
             data: data,
             next: nextStep,
-            result: true
+            result: true,
         };
     } else {
         return {
             data: [],
             next: nextStep,
-            result: false
+            result: false,
         };
     }
 
@@ -61,7 +65,7 @@ const getTrendDao = async (page = 0, since, languageType) => {
  * Pulse
  */
 const getPulseDao = async (owner, repositoryName) => {
-    let fullName = owner + "/" + repositoryName;
+    let fullName = owner + '/' + repositoryName;
     let nextStep = async () => {
         let res = await getPulse(owner, repositoryName);
         if (res && res.result && res.data) {
@@ -70,14 +74,14 @@ const getPulseDao = async (owner, repositoryName) => {
                 realm.delete(allData);
                 realm.create('RepositoryPulse', {
                     fullName: fullName,
-                    data: JSON.stringify(res.data)
+                    data: JSON.stringify(res.data),
                 });
 
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
     let allData = realm.objects('RepositoryPulse').filtered(`fullName="${fullName}"`);
@@ -85,13 +89,13 @@ const getPulseDao = async (owner, repositoryName) => {
         return {
             data: JSON.parse(allData[0].data),
             next: nextStep,
-            result: true
+            result: true,
         };
     } else {
         return {
             data: [],
             next: nextStep,
-            result: false
+            result: false,
         };
     }
 
@@ -112,7 +116,7 @@ const searchRepositoryDao = async (q, sort, order, type, page, pageSize) => {
     let res = await Api.netFetch(url);
     return {
         data: res.data ? res.data.items : res.data,
-        result: res.result
+        result: res.result,
     };
 };
 
@@ -123,11 +127,11 @@ const searchRepositoryDao = async (q, sort, order, type, page, pageSize) => {
  * @returns {Promise.<{result, data}>}
  */
 const searchRepositoryIssueDao = async (q, page) => {
-    let url = Address.repositoryIssueSearch(q) + Address.getPageParams("&", page);
+    let url = Address.repositoryIssueSearch(q) + Address.getPageParams('&', page);
     let res = await Api.netFetch(url);
     return {
         data: res.data ? res.data.items : res.data,
-        result: res.result
+        result: res.result,
     };
 };
 
@@ -135,9 +139,9 @@ const searchRepositoryIssueDao = async (q, page) => {
  * 用户的仓库
  */
 const getUserRepositoryDao = async (userName, page, sort, localNeed) => {
-    let sortText = sort ? sort : "pushed";
+    let sortText = sort ? sort : 'pushed';
     let nextStep = async () => {
-        let url = Address.userRepos(userName, sort) + Address.getPageParams("&", page);
+        let url = Address.userRepos(userName, sort) + Address.getPageParams('&', page);
         let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
@@ -147,14 +151,14 @@ const getUserRepositoryDao = async (userName, page, sort, localNeed) => {
                     realm.create('UserRepos', {
                         sort: sortText,
                         userName: userName,
-                        data: JSON.stringify(item)
+                        data: JSON.stringify(item),
                     });
-                })
+                });
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
     let local = async () => {
@@ -167,13 +171,13 @@ const getUserRepositoryDao = async (userName, page, sort, localNeed) => {
             return {
                 data: data,
                 next: nextStep,
-                result: true
+                result: true,
             };
         } else {
             return {
                 data: [],
                 next: nextStep,
-                result: false
+                result: false,
             };
         }
     };
@@ -184,9 +188,9 @@ const getUserRepositoryDao = async (userName, page, sort, localNeed) => {
  * 获取当前仓库所有star用户
  */
 const getStarRepositoryDao = async (userName, page, sort, localNeed) => {
-    let sortText = sort ? sort : "created";
+    let sortText = sort ? sort : 'created';
     let nextStep = async () => {
-        let url = Address.userStar(userName, sort) + Address.getPageParams("&", page);
+        let url = Address.userStar(userName, sort) + Address.getPageParams('&', page);
         let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
@@ -196,14 +200,14 @@ const getStarRepositoryDao = async (userName, page, sort, localNeed) => {
                     realm.create('UserStared', {
                         sort: sortText,
                         userName: userName,
-                        data: JSON.stringify(item)
+                        data: JSON.stringify(item),
                     });
-                })
+                });
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
     let local = async () => {
@@ -216,13 +220,13 @@ const getStarRepositoryDao = async (userName, page, sort, localNeed) => {
             return {
                 data: data,
                 next: nextStep,
-                result: true
+                result: true,
             };
         } else {
             return {
                 data: [],
                 next: nextStep,
-                result: false
+                result: false,
             };
         }
     };
@@ -233,7 +237,7 @@ const getStarRepositoryDao = async (userName, page, sort, localNeed) => {
  * 仓库的详情数据
  */
 const getRepositoryDetailDao = (userName, reposName) => {
-    let fullName = userName + "/" + reposName;
+    let fullName = userName + '/' + reposName;
     let nextStep = async () => {
         let url = Address.getReposDetail(userName, reposName);
         let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.mercy-preview+json'});
@@ -246,21 +250,21 @@ const getRepositoryDetailDao = (userName, reposName) => {
                     netData.closed_issues_count = netData.all_issues_count - netData.open_issues_count;
                 }
             } catch (e) {
-                console.log(e)
+                console.log(e);
             }
             realm.write(() => {
                 let data = realm.objects('RepositoryDetail').filtered(`fullName="${fullName}" AND branch="master"`);
                 realm.delete(data);
                 realm.create('RepositoryDetail', {
-                    branch: "master",
+                    branch: 'master',
                     fullName: fullName,
-                    data: JSON.stringify(netData)
+                    data: JSON.stringify(netData),
                 });
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
 
@@ -269,13 +273,13 @@ const getRepositoryDetailDao = (userName, reposName) => {
         return {
             data: JSON.parse(AllData[0].data),
             result: true,
-            next: nextStep
+            next: nextStep,
         };
     } else {
         return {
             data: {},
             result: false,
-            next: nextStep
+            next: nextStep,
         };
     }
 
@@ -285,8 +289,8 @@ const getRepositoryDetailDao = (userName, reposName) => {
  * 详情的remde数据Html模式数据
  */
 const getRepositoryDetailReadmeHtmlDao = (userName, reposName, branch) => {
-    let fullName = userName + "/" + reposName;
-    let curBranch = (branch) ? branch : "master";
+    let fullName = userName + '/' + reposName;
+    let curBranch = (branch) ? branch : 'master';
     let nextStep = async () => {
         let url = Address.readmeFile(userName + '/' + reposName, branch);
         let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html'}, true);
@@ -296,19 +300,19 @@ const getRepositoryDetailReadmeHtmlDao = (userName, reposName, branch) => {
                 let data = realm.objects('RepositoryDetailReadme').filtered(`fullName="${fullName}" AND branch="${curBranch}"`);
                 realm.delete(data);
                 realm.create('RepositoryDetailReadme', {
-                    branch: "master",
+                    branch: 'master',
                     fullName: fullName,
                     data: curData,
                 });
             });
             return {
                 data: curData,
-                result: true
+                result: true,
             };
         } else {
             return {
-                data: "",
-                result: false
+                data: '',
+                result: false,
             };
         }
     };
@@ -317,13 +321,13 @@ const getRepositoryDetailReadmeHtmlDao = (userName, reposName, branch) => {
         return {
             data: AllData[0].data,
             result: true,
-            next: nextStep
+            next: nextStep,
         };
     } else {
         return {
             data: {},
             result: false,
-            next: nextStep
+            next: nextStep,
         };
     }
 };
@@ -332,16 +336,16 @@ const getRepositoryDetailReadmeHtmlDao = (userName, reposName, branch) => {
  * 添加到本地已读数据列表
  */
 const addRepositoryLocalReadDao = (userName, reposName, data) => {
-    let fullName = userName + "/" + reposName;
+    let fullName = userName + '/' + reposName;
     let allEvent = realm.objects('ReadHistory').filtered(`fullName="${fullName}"`);
     realm.write(() => {
         realm.delete(allEvent);
         realm.create('ReadHistory', {
             fullName: fullName,
             readDate: new Date(),
-            data: JSON.stringify(data)
+            data: JSON.stringify(data),
         });
-    })
+    });
 };
 
 
@@ -350,18 +354,18 @@ const addRepositoryLocalReadDao = (userName, reposName, data) => {
  */
 const getRepositoryLocalReadDao = (page = 1) => {
     let size = (page - 1) * Config.PAGE_SIZE;
-    let allEvent = realm.objects('ReadHistory').sorted("readDate", true).slice(size, size + Config.PAGE_SIZE);
+    let allEvent = realm.objects('ReadHistory').sorted('readDate', true).slice(size, size + Config.PAGE_SIZE);
     let data = [];
     allEvent.forEach((item) => {
         let showItem = {
-            data: JSON.parse(item.data)
+            data: JSON.parse(item.data),
         };
         data.push(showItem);
     });
     return {
         data: data,
-        result: true
-    }
+        result: true,
+    };
 
 };
 
@@ -371,10 +375,10 @@ const getRepositoryLocalReadDao = (page = 1) => {
  */
 const createForkDao = async (userName, reposName) => {
     let url = Address.createFork(userName, reposName);
-    let res =  await Api.netFetch(url, 'POST');
+    let res = await Api.netFetch(url, 'POST');
     return {
         data: res.data,
-        result: res.result
+        result: res.result,
     };
 };
 
@@ -382,7 +386,7 @@ const createForkDao = async (userName, reposName) => {
  * 获取当前仓库所有分支
  */
 const getBranchesDao = (userName, reposName) => {
-    let fullName = userName + "/" + reposName;
+    let fullName = userName + '/' + reposName;
     let nextStep = async () => {
         let url = Address.getbranches(userName, reposName);
         let res = await Api.netFetch(url);
@@ -393,14 +397,14 @@ const getBranchesDao = (userName, reposName) => {
                 res.data.forEach((item) => {
                     realm.create('RepositoryBranch', {
                         fullName: fullName,
-                        data: JSON.stringify(item)
+                        data: JSON.stringify(item),
                     });
-                })
+                });
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
     let allData = realm.objects('RepositoryBranch').filtered(`fullName="${fullName}"`);
@@ -412,13 +416,13 @@ const getBranchesDao = (userName, reposName) => {
         return {
             data: data,
             next: nextStep,
-            result: true
+            result: true,
         };
     } else {
         return {
             data: [],
             next: nextStep,
-            result: false
+            result: false,
         };
     }
 
@@ -429,9 +433,9 @@ const getBranchesDao = (userName, reposName) => {
  * 获取仓库的fork分支
  */
 const getRepositoryForksDao = (userName, reposName, page, localNeed) => {
-    let fullName = userName + "/" + reposName;
+    let fullName = userName + '/' + reposName;
     let nextStep = async () => {
-        let url = Address.getReposForks(userName, reposName) + Address.getPageParams("?", page);
+        let url = Address.getReposForks(userName, reposName) + Address.getPageParams('?', page);
         let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
@@ -440,14 +444,14 @@ const getRepositoryForksDao = (userName, reposName, page, localNeed) => {
                 res.data.forEach((item) => {
                     realm.create('RepositoryFork', {
                         fullName: fullName,
-                        data: JSON.stringify(item)
+                        data: JSON.stringify(item),
                     });
-                })
+                });
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
     let local = async () => {
@@ -460,13 +464,13 @@ const getRepositoryForksDao = (userName, reposName, page, localNeed) => {
             return {
                 data: data,
                 next: nextStep,
-                result: true
+                result: true,
             };
         } else {
             return {
                 data: [],
                 next: nextStep,
-                result: false
+                result: false,
             };
         }
     };
@@ -478,9 +482,9 @@ const getRepositoryForksDao = (userName, reposName, page, localNeed) => {
  * 获取当前仓库所有star用户
  */
 const getRepositoryStarDao = (userName, reposName, page, localNeed) => {
-    let fullName = userName + "/" + reposName;
+    let fullName = userName + '/' + reposName;
     let nextStep = async () => {
-        let url = Address.getReposStar(userName, reposName) + Address.getPageParams("?", page);
+        let url = Address.getReposStar(userName, reposName) + Address.getPageParams('?', page);
         let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
@@ -489,14 +493,14 @@ const getRepositoryStarDao = (userName, reposName, page, localNeed) => {
                 res.data.forEach((item) => {
                     realm.create('RepositoryStar', {
                         fullName: fullName,
-                        data: JSON.stringify(item)
+                        data: JSON.stringify(item),
                     });
-                })
+                });
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
     let local = async () => {
@@ -509,13 +513,13 @@ const getRepositoryStarDao = (userName, reposName, page, localNeed) => {
             return {
                 data: data,
                 next: nextStep,
-                result: true
+                result: true,
             };
         } else {
             return {
                 data: [],
                 next: nextStep,
-                result: false
+                result: false,
             };
         }
     };
@@ -526,9 +530,9 @@ const getRepositoryStarDao = (userName, reposName, page, localNeed) => {
  * 获取当前仓库所有订阅用户
  */
 const getRepositoryWatcherDao = (userName, reposName, page, localNeed) => {
-    let fullName = userName + "/" + reposName;
+    let fullName = userName + '/' + reposName;
     let nextStep = async () => {
-        let url = Address.getReposWatcher(userName, reposName) + Address.getPageParams("?", page);
+        let url = Address.getReposWatcher(userName, reposName) + Address.getPageParams('?', page);
         let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
@@ -537,14 +541,14 @@ const getRepositoryWatcherDao = (userName, reposName, page, localNeed) => {
                 res.data.forEach((item) => {
                     realm.create('RepositoryWatcher', {
                         fullName: fullName,
-                        data: JSON.stringify(item)
+                        data: JSON.stringify(item),
                     });
-                })
+                });
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
     let local = async () => {
@@ -557,13 +561,13 @@ const getRepositoryWatcherDao = (userName, reposName, page, localNeed) => {
             return {
                 data: data,
                 next: nextStep,
-                result: true
+                result: true,
             };
         } else {
             return {
                 data: [],
                 next: nextStep,
-                result: false
+                result: false,
             };
         }
     };
@@ -580,7 +584,7 @@ const getRepositoryStatusDao = async (userName, reposName) => {
     let resw = await Api.netFetch(urlw);
     return {
         data: {star: ress.result, watch: resw.result},
-        result: true
+        result: true,
     };
 };
 
@@ -593,7 +597,7 @@ const doRepositoryStarDao = async (userName, reposName, star) => {
     let res = await Api.netFetch(url, star ? 'PUT' : 'DELETE');
     return {
         data: res.result,
-        result: res.result
+        result: res.result,
     };
 };
 
@@ -605,7 +609,7 @@ const doRepositoryWatchDao = async (userName, reposName, watch) => {
     let res = await Api.netFetch(url, watch ? 'PUT' : 'DELETE');
     return {
         data: res.result,
-        result: res.result
+        result: res.result,
     };
 };
 
@@ -613,11 +617,11 @@ const doRepositoryWatchDao = async (userName, reposName, watch) => {
  * 获取仓库的release列表
  */
 const getRepositoryReleaseDao = async (userName, reposName, page, needHtml = true) => {
-    let url = Address.getReposRelease(userName, reposName) + Address.getPageParams("?", page);
-    let res = await Api.netFetch(url, 'GET', null, false, {Accept: (needHtml ? 'application/vnd.github.html,application/vnd.github.VERSION.raw' : "")});
+    let url = Address.getReposRelease(userName, reposName) + Address.getPageParams('?', page);
+    let res = await Api.netFetch(url, 'GET', null, false, {Accept: (needHtml ? 'application/vnd.github.html,application/vnd.github.VERSION.raw' : '')});
     return {
         data: res.data,
-        result: res.result
+        result: res.result,
     };
 };
 
@@ -625,11 +629,11 @@ const getRepositoryReleaseDao = async (userName, reposName, page, needHtml = tru
  * 获取仓库的tag列表
  */
 const getRepositoryTagDao = async (userName, reposName, page) => {
-    let url = Address.getReposTag(userName, reposName) + Address.getPageParams("?", page);
+    let url = Address.getReposTag(userName, reposName) + Address.getPageParams('?', page);
     let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
     return {
         data: res.data,
-        result: res.result
+        result: res.result,
     };
 };
 
@@ -637,9 +641,9 @@ const getRepositoryTagDao = async (userName, reposName, page) => {
  * 获取仓库的提交列表
  */
 const getReposCommitsDao = (userName, reposName, page, localNeed) => {
-    let fullName = userName + "/" + reposName;
+    let fullName = userName + '/' + reposName;
     let nextStep = async () => {
-        let url = Address.getReposCommits(userName, reposName) + Address.getPageParams("?", page);
+        let url = Address.getReposCommits(userName, reposName) + Address.getPageParams('?', page);
         let res = await Api.netFetch(url);
         if (res && res.result && res.data.length > 0 && page <= 1) {
             realm.write(() => {
@@ -648,14 +652,14 @@ const getReposCommitsDao = (userName, reposName, page, localNeed) => {
                 res.data.forEach((item) => {
                     realm.create('RepositoryCommits', {
                         fullName: fullName,
-                        data: JSON.stringify(item)
+                        data: JSON.stringify(item),
                     });
-                })
+                });
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
     let local = async () => {
@@ -668,13 +672,13 @@ const getReposCommitsDao = (userName, reposName, page, localNeed) => {
             return {
                 data: data,
                 next: nextStep,
-                result: true
+                result: true,
             };
         } else {
             return {
                 data: [],
                 next: nextStep,
-                result: false
+                result: false,
             };
         }
     };
@@ -687,7 +691,7 @@ const getReposCommitsDao = (userName, reposName, page, localNeed) => {
  * 获取仓库的单个提交详情
  */
 const getReposCommitsInfoDao = (userName, reposName, sha) => {
-    let fullName = userName + "/" + reposName;
+    let fullName = userName + '/' + reposName;
     let nextStep = async () => {
         let url = Address.getReposCommitsInfo(userName, reposName, sha);
         let res = await Api.netFetch(url);
@@ -698,13 +702,13 @@ const getReposCommitsInfoDao = (userName, reposName, sha) => {
                 realm.create('RepositoryCommitInfoDetail', {
                     sha: sha,
                     fullName: fullName,
-                    data: JSON.stringify(res.data)
+                    data: JSON.stringify(res.data),
                 });
             });
         }
         return {
             data: res.data,
-            result: res.result
+            result: res.result,
         };
     };
     let AllData = realm.objects('RepositoryCommitInfoDetail').filtered(`fullName="${fullName}" AND sha ="${sha}"`);
@@ -712,13 +716,13 @@ const getReposCommitsInfoDao = (userName, reposName, sha) => {
         return {
             data: JSON.parse(AllData[0].data),
             result: true,
-            next: nextStep
+            next: nextStep,
         };
     } else {
         return {
             data: {},
             result: false,
-            next: nextStep
+            next: nextStep,
         };
     }
 
@@ -732,7 +736,7 @@ const getReposFileDirDao = async (userName, reposName, path = '', branch, text) 
     let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html'}, text);
     return {
         data: res.data,
-        result: res.result
+        result: res.result,
     };
 };
 
@@ -744,7 +748,7 @@ const getRepositoryDetailReadmeDao = async (userName, reposName, branch) => {
     let res = await Api.netFetch(url);
     return {
         data: res.data,
-        result: res.result
+        result: res.result,
     };
 };
 
@@ -752,11 +756,11 @@ const getRepositoryDetailReadmeDao = async (userName, reposName, branch) => {
  * 搜索话题
  */
 const searchTopicRepositoryDao = async (searchTopic, page = 0) => {
-    let url = Address.searchTopic(searchTopic) + Address.getPageParams("&", page);
+    let url = Address.searchTopic(searchTopic) + Address.getPageParams('&', page);
     let res = await Api.netFetch(url);
     return {
         data: res.data ? res.data.items : res.data,
-        result: res.result
+        result: res.result,
     };
 };
 
@@ -765,35 +769,35 @@ const searchTopicRepositoryDao = async (searchTopic, page = 0) => {
  * 获取issue总数
  */
 const getRepositoryIssueStatusDao = async (userName, repository) => {
-    let url = Address.getReposIssue(userName, repository) + "&per_page=1";
+    let url = Address.getReposIssue(userName, repository) + '&per_page=1';
     let res = await Api.netFetch(url, 'GET', null, false, {Accept: 'application/vnd.github.html,application/vnd.github.VERSION.raw'});
     if (res && res.result && res.headers && res.headers.map) {
         try {
             let link = res.headers.map['link'];
             if (link && (typeof link) === 'string') {
-                let indexStart = link.lastIndexOf("page=") + 5;
-                let indexEnd = link.lastIndexOf(">");
+                let indexStart = link.lastIndexOf('page=') + 5;
+                let indexEnd = link.lastIndexOf('>');
                 if (indexStart >= 0 && indexEnd >= 0) {
                     let count = link.substring(indexStart, indexEnd);
                     return {
                         result: true,
-                        data: count
-                    }
+                        data: count,
+                    };
                 }
             }
             return {
                 result: true,
-            }
+            };
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
         return {
             result: false,
-        }
+        };
     } else {
         return {
             result: false,
-        }
+        };
     }
 };
 
@@ -801,16 +805,16 @@ const getRepositoryIssueStatusDao = async (userName, repository) => {
  * 用户的前100仓库
  */
 const getUserRepository100StatusDao = async (userName) => {
-    let url = Address.userRepos(userName, 'pushed') + "&page=1&per_page=100";
+    let url = Address.userRepos(userName, 'pushed') + '&page=1&per_page=100';
     let res = await Api.netFetch(url);
     if (res && res.result && res.data.length > 0) {
         let stared = 0;
         res.data.forEach((item) => {
-            stared += item.watchers_count
+            stared += item.watchers_count;
         });
 
         function sortNumber(a, b) {
-            return b.watchers_count - a.watchers_count
+            return b.watchers_count - a.watchers_count;
         }
 
         res.data.sort(sortNumber);
@@ -819,12 +823,12 @@ const getUserRepository100StatusDao = async (userName) => {
                 list: res.data,
                 stared: stared,
             },
-            result: true
+            result: true,
         };
     } else {
         return {
             data: 0,
-            result: false
+            result: false,
         };
     }
 };
@@ -856,5 +860,5 @@ export default {
     searchTopicRepositoryDao,
     getRepositoryIssueStatusDao,
     getUserRepository100StatusDao,
-    getPulseDao
+    getPulseDao,
 }
