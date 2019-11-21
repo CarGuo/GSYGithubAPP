@@ -369,6 +369,16 @@ export default AddressLocal = {
         return `https://github.com/trending?since=${since}`
     },
     /**
+     * 趋势 get
+     * @param since daily，weekly， monthly
+     */
+    trendingApi: (since, languageType) => {
+        if (languageType != null) {
+            return `https://guoshuyu.cn/github/trend/list?languageType=${languageType}&since=${since}`;
+        }
+        return `https://guoshuyu.cn/github/trend/list?since=${since}`;
+    },
+    /**
      * 处理分页参数
      * @param tab 表示是 ? 或者 &
      * @param page 页数

@@ -141,7 +141,7 @@ const RepositoryCommitInfoDetail = {
  * 趋势表
  */
 const TrendRepository = {
-    name: 'TrendRepository',
+    name: 'TrendRepositoryV2',
     properties: {
         since: 'string?',
         languageType: 'string?',
