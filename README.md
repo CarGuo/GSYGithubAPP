@@ -27,6 +27,10 @@
 
 ### 因升级到RN 0.61.3 版本，整个工程模板被重构。
 
+### 公众号 GSYTech
+![公众号](http://img.cdn.guoshuyu.cn/10F364A6-69F5-40C2-AB2A-124EEC1AD8CC.png)
+
+
 ### 编译运行流程
 
 1、配置好react native开发环境，可参阅 [【搭建环境】](http://reactnative.cn/docs/0.51/getting-started.html) | [【React Native开发（一、入门）】](http://www.jianshu.com/p/97692b1c451d)
