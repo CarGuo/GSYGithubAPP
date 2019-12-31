@@ -27,7 +27,7 @@
 
 ### 因升级到RN 0.61.3 版本，整个工程模板被重构。
 
-![公众号](http://img.cdn.guoshuyu.cn/WechatIMG3024.jpeg)
+![公众号](http://img.cdn.guoshuyu.cn/WeChat-Code)
 
 ### 编译运行流程
 
