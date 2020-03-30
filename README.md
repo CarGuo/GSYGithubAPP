@@ -27,6 +27,12 @@
 
 ### 因升级到RN 0.61.3 版本，整个工程模板被重构。
 
+
+| 公众号   | 掘金     |  知乎    |  CSDN   |   简书   
+|---------|---------|--------- |---------|---------|
+| GSYTech  |  [点我](https://juejin.im/user/582aca2ba22b9d006b59ae68/posts)    |   [点我](https://www.zhihu.com/people/carguo)       |   [点我](https://blog.csdn.net/ZuoYueLiang)  |   [点我](https://www.jianshu.com/u/6e613846e1ea)  
+
+
 ![公众号](http://img.cdn.guoshuyu.cn/WeChat-Code)
 
 ### 编译运行流程
