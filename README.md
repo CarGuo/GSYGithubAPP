@@ -1,4 +1,4 @@
-![](https://github.com/CarGuo/GSYGithubApp/blob/master/logo.png)
+![](./logo.png)
 
 
 ### [English Readme](https://github.com/CarGuo/GSYGithubApp/blob/master/README_EN.md)
@@ -57,8 +57,8 @@
    [      注册 Github APP 传送门](https://github.com/settings/applications/new)，当然，前提是你现有一个github账号(～￣▽￣)～ 。
   
  <div>
-<img src="https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/register0.jpg" width="426px"/>
-<img src="https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/register1.jpg" width="426px"/>
+<img src="./register0.jpg" width="426px"/>
+<img src="./register1.jpg" width="426px"/>
 </div>
 
 4、打开xcode运行或执行`react-native run-android`
@@ -74,8 +74,8 @@
 
 | 类型          | 二维码                                      |
 | ----------- | ---------------------------------------- |
-| **Apk二维码**  | ![](https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/download.png) |
-| **IOS暂无下载** | **残念(╯‵□′)╯︵┻━┻，第三方太贵，没企业证书。**![](https://raw.githubusercontent.com/CarGuo/GSYGithubApp/master/ios_wait.png) |
+| **Apk二维码**  | ![](./download.png) |
+| **IOS暂无下载** | **残念(╯‵□′)╯︵┻━┻，第三方太贵，没企业证书。**![](./ios_wait.png) |
 
 
 
@@ -106,13 +106,13 @@
 
 ### 示例图片
 
-![](https://github.com/CarGuo/GSYGithubApp/blob/master/1.gif)
+![](./1.gif)
 
-<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/1.jpg" width="426px"/>
+<img src="./1.jpg" width="426px"/>
 
-<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/2.jpg" width="426px"/>
+<img src="./2.jpg" width="426px"/>
 
-<img src="https://github.com/CarGuo/GSYGithubApp/blob/master/3.jpg" width="426px"/>
+<img src="./3.jpg" width="426px"/>
 
 
 ### 第三方框架
@@ -136,7 +136,7 @@
 
 * 2、win下在npm出现问题时，再次npm时可以删除.lock文件先（如果是mac就简单很多了）。
 
-![](https://github.com/CarGuo/GSYGithubApp/blob/master/thanks.jpg)
+![](./thanks.jpg)
 
 ### LICENSE
 ```
