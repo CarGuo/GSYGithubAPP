@@ -54,11 +54,14 @@
      export const QN_HOST = "xxxx";
      export const SCOPE = "xxxx";
 
+
    [      注册 Github APP 传送门](https://github.com/settings/applications/new)，当然，前提是你现有一个github账号(～￣▽￣)～ 。
-  
- <div>
-<img src="./register0.jpg" width="426px"/>
-<img src="./register1.jpg" width="426px"/>
+ 
+### 3、如果使用安全登录（授权登录），那么在上述注册 Github App 的 Authorization callback URL 一栏必须填入 `gsygithubapp://authed`
+
+<div>
+<img src="http://img.cdn.guoshuyu.cn/register0.png" width="426px"/>
+<img src="http://img.cdn.guoshuyu.cn/register1.jpg" width="426px"/>
 </div>
 
 4、打开xcode运行或执行`react-native run-android`
@@ -136,7 +139,7 @@
 
 * 2、win下在npm出现问题时，再次npm时可以删除.lock文件先（如果是mac就简单很多了）。
 
-![](./thanks.jpg)
+![](http://img.cdn.guoshuyu.cn/thanks.jpg)
 
 ### LICENSE
 ```
