@@ -5,6 +5,8 @@
 
 ## 一款跨平台的开源Github客户端App，提供更丰富的功能，更好体验，旨在更好的日常管理和维护个人Github，提供更好更方便的驾车体验～～Σ(￣。￣ﾉ)ﾉ。在开发学习过程中，提供丰富的同款对比：
 
+> ### [如果克隆太慢或者图片看不到，可尝试从码云地址下载](https://gitee.com/CarGuo/GSYGithubAPP)
+
 * ### 同款Weex版本 （ https://github.com/CarGuo/GSYGithubAppWeex ）
 * ### 同款Flutter版本 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
 * ### 同款Android Kotlin版本（ https://github.com/CarGuo/GSYGithubAppKotlin ）
