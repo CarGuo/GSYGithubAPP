@@ -110,9 +110,12 @@
 ### 示例图片
 
 ![](./1.gif)
-![](http://img.cdn.guoshuyu.cn/showapp1.jpg)
-![](http://img.cdn.guoshuyu.cn/showapp2.jpg)
-![](http://img.cdn.guoshuyu.cn/showapp3.jpg)
+
+<img src="http://img.cdn.guoshuyu.cn/showapp1.png" width="426px"/>
+
+<img src="http://img.cdn.guoshuyu.cn/showapp2.jpg" width="426px"/>
+
+<img src="http://img.cdn.guoshuyu.cn/showapp3.jpg" width="426px"/>
 
 ### 第三方框架
 
