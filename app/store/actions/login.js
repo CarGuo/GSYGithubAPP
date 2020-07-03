@@ -19,20 +19,17 @@ const toLogin = () => async (dispatch, getState) => {
 /**
  * 登陆请求
  */
-const doLogin = (userName, password, callback) => async (dispatch, getState) => {
-    let base64Str = Buffer(userName + ":" + password).toString('base64');
-    AsyncStorage.setItem(Constant.USER_NAME_KEY, userName);
-    AsyncStorage.setItem(Constant.USER_BASIC_CODE, base64Str);
-    let requestParams = {
-        scopes: ['user', 'repo', 'gist', 'notifications'],
-        note: "admin_script",
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET
-    };
+const doLogin = (code, callback) => async (dispatch, getState) => {
     Api.clearAuthorization();
-    let res = await Api.netFetch(Address.getAuthorization(), 'POST', requestParams, true);
+
+    let url = `https://github.com/login/oauth/access_token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${code}`
+    let res = await Api.netFetch(url, 'GET', null, false, null, true);
     if (res && res.result) {
-        AsyncStorage.setItem(Constant.PW_KEY, password);
+        let data = res.data;
+        let key = "access_token=";
+        let token = data.substring((data.indexOf(key) + key.length), data.indexOf("&"))
+        let authorizationCode = 'token ' + token;
+        await AsyncStorage.setItem(Constant.TOKEN_KEY, authorizationCode);
         let current = await userAction.getUserInfo();
         dispatch({
             type: LOGIN.IN,

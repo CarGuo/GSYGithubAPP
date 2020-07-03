@@ -5,44 +5,45 @@ import React, {Component} from 'react';
 import {
     Scene,
     Router,
-    Lightbox, Drawer
+    Lightbox, Drawer,
 } from 'react-native-router-flux';
-import DynamicPage from './components/DynamicPage'
-import LoginPage from './components/LoginPage'
-import MyPage from './components/MyPage'
-import PersonInfoPage from './components/PersonInfoPage'
-import PhotoPage from './components/PhotoPage'
-import AboutPage from './components/AboutPage'
-import NotifyPage from './components/NotifyPage'
-import IssueDetail from './components/IssueDetailPage'
-import VersionPage from './components/ReleasePage'
-import PersonPage from './components/PersonPage'
-import CodeDetailPage from './components/CodeDetailPage'
-import SettingPage from './components/SettingPage'
-import RepositoryDetail from './components/RepositoryDetailPage'
-import PushDetailPage from './components/PushDetailPage'
-import TrendPage from './components/TrendPage'
-import WebPage from './components/WebPage'
-import SearchPage from './components/SearchPage'
-import ListPage from './components/ListPage'
-import TabIcon from './components/widget/TabIcon'
-import TextInputModal from './components/common/CommonTextInputModal'
-import CommentConfirmModal from './components/common/CommonConfirmModal'
-import LoadingModal from './components/common/LoadingModal'
-import CommonOptionModal from './components/common/CommonOptionModal'
-import DrawerFilter from './components/widget/SearchDrawerFilter'
-import CustomBackButton from './components/widget/CustomBackButton'
-import CustomDrawerButton from './components/widget/CustomDrawerButton'
-import SearchButton from './components/widget/CustomSearchButton'
-import CommonIconButton from './components/common/CommonIconButton'
-import styles from './style'
-import I18n, {changeLocale} from './style/i18n'
-import * as Constant from './style/constant'
-import BackUtils from './utils/backUtils'
-import {CommonMoreRightBtnPress, RepositoryDetailRightBtnPress} from './utils/actionUtils'
+import DynamicPage from './components/DynamicPage';
+import LoginPage from './components/LoginPage';
+import LoginWebPage from './components/LoginWebPage';
+import MyPage from './components/MyPage';
+import PersonInfoPage from './components/PersonInfoPage';
+import PhotoPage from './components/PhotoPage';
+import AboutPage from './components/AboutPage';
+import NotifyPage from './components/NotifyPage';
+import IssueDetail from './components/IssueDetailPage';
+import VersionPage from './components/ReleasePage';
+import PersonPage from './components/PersonPage';
+import CodeDetailPage from './components/CodeDetailPage';
+import SettingPage from './components/SettingPage';
+import RepositoryDetail from './components/RepositoryDetailPage';
+import PushDetailPage from './components/PushDetailPage';
+import TrendPage from './components/TrendPage';
+import WebPage from './components/WebPage';
+import SearchPage from './components/SearchPage';
+import ListPage from './components/ListPage';
+import TabIcon from './components/widget/TabIcon';
+import TextInputModal from './components/common/CommonTextInputModal';
+import CommentConfirmModal from './components/common/CommonConfirmModal';
+import LoadingModal from './components/common/LoadingModal';
+import CommonOptionModal from './components/common/CommonOptionModal';
+import DrawerFilter from './components/widget/SearchDrawerFilter';
+import CustomBackButton from './components/widget/CustomBackButton';
+import CustomDrawerButton from './components/widget/CustomDrawerButton';
+import SearchButton from './components/widget/CustomSearchButton';
+import CommonIconButton from './components/common/CommonIconButton';
+import styles from './style';
+import I18n, {changeLocale} from './style/i18n';
+import * as Constant from './style/constant';
+import BackUtils from './utils/backUtils';
+import {CommonMoreRightBtnPress, RepositoryDetailRightBtnPress} from './utils/actionUtils';
 
-import WelcomePage from "./components/WelcomePage"
-import {screenWidth, drawerWidth} from "./style/index";
+import WelcomePage from './components/WelcomePage';
+import {screenWidth, drawerWidth} from './style/index';
 
 /**
  * 全局路由
@@ -51,7 +52,7 @@ const getRouter = () => {
     return (
         <Router
             getSceneStyle={() => {
-                return styles.routerStyle
+                return styles.routerStyle;
             }}
             backAndroidHandler={
                 BackUtils()}>
@@ -59,10 +60,17 @@ const getRouter = () => {
                 <Scene key="main">
                     <Scene key="WelcomePage" component={WelcomePage} hideNavBar hideTabBar hide/>
                 </Scene>
-                <Scene key="LoginPage">
+                <Scene key="LoginPage"
+                       navigationBarStyle={styles.navigationBar}
+                       titleStyle={{color: Constant.titleTextColor}}>
                     <Scene component={LoginPage}
                            showLabel={false}
                            hideNavBar/>
+                    <Scene key="LoginWebPage"
+                           renderLeftButton={() => <CustomBackButton/>}
+                           component={LoginWebPage}
+                           title={I18n('Login')}
+                           showLabel={false}/>
                 </Scene>
                 <Scene key="root"
                        navigationBarStyle={styles.navigationBar}
@@ -72,7 +80,7 @@ const getRouter = () => {
                            lazy
                            wrap={false}
                            showLabel={false}
-                           tabBarPosition={"bottom"}
+                           tabBarPosition={'bottom'}
                            title={I18n('appName')}
                            renderRightButton={
                                () => <SearchButton/>
@@ -81,7 +89,7 @@ const getRouter = () => {
                                height: Constant.tabBarHeight,
                                alignItems: 'center',
                                justifyContent: 'center',
-                               backgroundColor: Constant.tabBackgroundColor
+                               backgroundColor: Constant.tabBackgroundColor,
                            }}>
                         <Scene
                             key="DynamicPage"
@@ -110,7 +118,7 @@ const getRouter = () => {
                            rightBtn={'ios-more'}
                            iconType={2}
                            rightBtnPress={(params) => {
-                               return CommonMoreRightBtnPress(params)
+                               return CommonMoreRightBtnPress(params);
                            }}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}/>
@@ -135,7 +143,7 @@ const getRouter = () => {
                            rightBtn={'ios-more'}
                            iconType={2}
                            rightBtnPress={(params) => {
-                               return RepositoryDetailRightBtnPress(params)
+                               return RepositoryDetailRightBtnPress(params);
                            }}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
@@ -144,7 +152,7 @@ const getRouter = () => {
                            rightBtn={'ios-more'}
                            iconType={2}
                            rightBtnPress={(params) => {
-                               return CommonMoreRightBtnPress(params)
+                               return CommonMoreRightBtnPress(params);
                            }}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
@@ -154,7 +162,7 @@ const getRouter = () => {
                            rightBtn={'ios-more'}
                            iconType={2}
                            rightBtnPress={(params) => {
-                               return CommonMoreRightBtnPress(params)
+                               return CommonMoreRightBtnPress(params);
                            }}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
@@ -174,7 +182,7 @@ const getRouter = () => {
                            rightBtn={'ios-more'}
                            iconType={2}
                            rightBtnPress={(params) => {
-                               return CommonMoreRightBtnPress(params)
+                               return CommonMoreRightBtnPress(params);
                            }}
                            renderRightButton={(params) => <CommonIconButton data={params}/>}
                            renderLeftButton={() => <CustomBackButton/>}
@@ -201,7 +209,7 @@ const getRouter = () => {
                 <Scene key="PhotoPage" component={PhotoPage}/>
             </Lightbox>
         </Router>
-    )
+    );
 };
 
 

@@ -12,7 +12,7 @@ import {
     BackHandler,
     Keyboard,
     Linking,
-    Easing
+    Easing, DeviceEventEmitter,
 } from 'react-native';
 import styles, {screenHeight, screenWidth} from "../style"
 import * as Constant from "../style/constant"
@@ -26,6 +26,7 @@ import IconC from 'react-native-vector-icons/Entypo'
 import {Fumi} from 'react-native-textinput-effects';
 import Toast from './common/ToastProxy'
 import LottieView from 'lottie-react-native';
+import AddressLocal from '../net/address';
 
 const animaTime = 600;
 
@@ -71,6 +72,23 @@ export default class LoginPage extends Component {
             toValue: 1,
         }).start();
         this.startAnimation();
+
+        this.subscription = DeviceEventEmitter.addListener(
+            `LoginPage`,
+            (params) => {
+                let code = params["code"]
+                Actions.LoadingModal({backExit: false});
+                Keyboard.dismiss();
+                let {login} = this.props;
+                login.doLogin(code, (res) => {
+                    this.exitLoading();
+                    if (!res) {
+                        Toast(I18n('LoginFailTip'));
+                    } else {
+                        Actions.reset("root")
+                    }
+                })
+            });
     }
 
     componentWillUnmount() {
@@ -81,7 +99,9 @@ export default class LoginPage extends Component {
         if (this.refs.lottieView) {
             this.refs.lottieView.reset();
         }
+        this.subscription.remove();
     }
+
 
     startAnimation() {
         if (this.thisUnmount) {
@@ -142,7 +162,12 @@ export default class LoginPage extends Component {
 
     toLogin() {
         let {login} = this.props;
-        if (!this.params.userName || this.params.userName.length === 0) {
+
+        Actions.LoginWebPage({uri: AddressLocal.getAuthorizationWeb()})
+
+        return;
+
+        /*if (!this.params.userName || this.params.userName.length === 0) {
             Toast(I18n('LoginNameTip'));
             return
         }
@@ -163,7 +188,7 @@ export default class LoginPage extends Component {
             } else {
                 Actions.reset("root")
             }
-        })
+        })*/
     }
 
     render() {

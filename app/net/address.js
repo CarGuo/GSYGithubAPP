@@ -2,42 +2,46 @@
  * Created by guoshuyu on 2017/11/8.
  */
 
-import * as Config from '../config'
+import * as Config from '../config';
+import {CLIENT_ID} from '../config/ignoreConfig';
 
-let host = "https://api.github.com/";
-export const hostWeb = "https://github.com/";
+let host = 'https://api.github.com/';
+export const hostWeb = 'https://github.com/';
 export const downloadUrl = 'https://www.pgyer.com/GSYGithubApp';
-export const graphicHost= 'https://ghchart.rshah.org/';
+export const graphicHost = 'https://ghchart.rshah.org/';
 
 export default AddressLocal = {
     /**
      * 获取授权  post
      */
     getAuthorization: () => {
-        return `${host}authorizations`
+        return `${host}authorizations`;
+    },
+    getAuthorizationWeb: () => {
+        return `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&state=app&redirect_uri=gsygithubapp://authed`
     },
     /**
      * 搜索 get
      */
     search: (q, sort, order, type, page, pageSize = Config.PAGE_SIZE) => {
         if (type === 'user') {
-            return `${host}search/users?q=${q}&page=${page}&per_page=${pageSize}`
+            return `${host}search/users?q=${q}&page=${page}&per_page=${pageSize}`;
 
         }
         if (!sort) {
-            sort = "best%20match"
+            sort = 'best%20match';
         }
         if (!order) {
-            order = "desc"
+            order = 'desc';
         }
         if (!page) {
-            page = 1
+            page = 1;
         }
         if (!pageSize) {
-            pageSize = Config.PAGE_SIZE
+            pageSize = Config.PAGE_SIZE;
         }
 
-        return `${host}search/repositories?q=${q}&sort=${sort}&order=${order}&page=${page}&per_page=${pageSize}`
+        return `${host}search/repositories?q=${q}&sort=${sort}&order=${order}&page=${page}&per_page=${pageSize}`;
     },
     /**
      * 搜索topic tag
@@ -50,7 +54,7 @@ export default AddressLocal = {
      */
     userRepos: (userName, sort) => {
         if (!sort) {
-            sort = 'pushed'
+            sort = 'pushed';
         }
         return `${host}users/${userName}/repos?sort=${sort}`;
     },
@@ -58,48 +62,48 @@ export default AddressLocal = {
      * 仓库详情 get
      */
     getReposDetail: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}`
+        return `${host}repos/${reposOwner}/${reposName}`;
     },
     /**
      * 仓库活动 get
      */
     getReposEvent: (reposOwner, reposName) => {
-        return `${host}networks/${reposOwner}/${reposName}/events`
+        return `${host}networks/${reposOwner}/${reposName}/events`;
 
     },
     /**
      * 仓库Fork get
      */
     getReposForks: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}/forks`
+        return `${host}repos/${reposOwner}/${reposName}/forks`;
 
     },
     /**
      * 仓库Star get
      */
     getReposStar: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}/stargazers`
+        return `${host}repos/${reposOwner}/${reposName}/stargazers`;
 
     },
     /**
      * 仓库Watch get
      */
     getReposWatcher: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}/subscribers`
+        return `${host}repos/${reposOwner}/${reposName}/subscribers`;
 
     },
     /**
      * 仓库提交 get
      */
     getReposCommits: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}/commits`
+        return `${host}repos/${reposOwner}/${reposName}/commits`;
 
     },
     /**
      * 仓库提交详情 get
      */
     getReposCommitsInfo: (reposOwner, reposName, sha) => {
-        return `${host}repos/${reposOwner}/${reposName}/commits/${sha}`
+        return `${host}repos/${reposOwner}/${reposName}/commits/${sha}`;
 
     },
     /**
@@ -107,33 +111,33 @@ export default AddressLocal = {
      */
     getReposIssue: (reposOwner, reposName, state, sort, direction) => {
         if (!state) {
-            state = 'all'
+            state = 'all';
         }
         if (!sort) {
-            sort = 'created'
+            sort = 'created';
         }
         if (!direction) {
-            direction = 'desc'
+            direction = 'desc';
         }
-        return `${host}repos/${reposOwner}/${reposName}/issues?state=${state}&sort=${sort}&direction=${direction}`
+        return `${host}repos/${reposOwner}/${reposName}/issues?state=${state}&sort=${sort}&direction=${direction}`;
     },
     /**
      * 仓release get
      */
     getReposRelease: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}/releases`
+        return `${host}repos/${reposOwner}/${reposName}/releases`;
     },
     /**
      * 仓Tag get
      */
     getReposTag: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}/tags`
+        return `${host}repos/${reposOwner}/${reposName}/tags`;
     },
     /**
      * 仓Contributors get
      */
-    getReposContributors: (reposOwner, reposName)=>{
-        return `${host}repos/${reposOwner}/${reposName}/contributors`
+    getReposContributors: (reposOwner, reposName) => {
+        return `${host}repos/${reposOwner}/${reposName}/contributors`;
     },
     /**
      * 仓库Issue评论 get
@@ -152,45 +156,45 @@ export default AddressLocal = {
      * 增加issue评论 post
      */
     addIssueComment: (reposOwner, reposName, issueNumber) => {
-        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}/comments`
+        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}/comments`;
     },
     /**
      * 编辑issue put
      */
     editIssue: (reposOwner, reposName, issueNumber) => {
-        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}`
+        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}`;
     },
     /**
      * 锁定issue put
      * 解锁issue delete
      */
     lockIssue: (reposOwner, reposName, issueNumber) => {
-        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}/lock`
+        return `${host}repos/${reposOwner}/${reposName}/issues/${issueNumber}/lock`;
     },
     /**
      * 创建issue post
      */
     createIssue: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}/issues`
+        return `${host}repos/${reposOwner}/${reposName}/issues`;
     },
     /**
      * 搜索issue
      */
     repositoryIssueSearch: (q) => {
-        return `${host}search/issues?q=${q}`
+        return `${host}search/issues?q=${q}`;
     },
     /**
      * 编辑评论 patch, delete
      */
     editComment: (reposOwner, reposName, commentId) => {
-        return `${host}repos/${reposOwner}/${reposName}/issues/comments/${commentId}`
+        return `${host}repos/${reposOwner}/${reposName}/issues/comments/${commentId}`;
     },
     /**
      * 自己的star get
      */
     myStar: (sort) => {
         if (!sort) {
-            sort = 'updated'
+            sort = 'updated';
         }
         return `${host}users/starred?sort=${sort}`;
     },
@@ -199,9 +203,9 @@ export default AddressLocal = {
      */
     userStar: (userName, sort) => {
         if (!sort) {
-            sort = 'updated'
+            sort = 'updated';
         }
-        return `${host}users/${userName}/starred?sort=${sort}`
+        return `${host}users/${userName}/starred?sort=${sort}`;
     },
     /**
      * 关注仓库 put
@@ -211,7 +215,7 @@ export default AddressLocal = {
      * 是否关注 get
      */
     resolveStarRepos: (reposOwner, repos) => {
-        return `${host}user/starred/${reposOwner}/${repos}`
+        return `${host}user/starred/${reposOwner}/${repos}`;
     },
 
     /**
@@ -222,25 +226,25 @@ export default AddressLocal = {
      * 是否订阅 get
      */
     resolveWatcherRepos: (reposOwner, repos) => {
-        return `${host}user/subscriptions/${reposOwner}/${repos}`
+        return `${host}user/subscriptions/${reposOwner}/${repos}`;
     },
     /**
      * 仓库内容数据 get
      */
     reposData: (reposOwner, repos) => {
-        return `${host}repos/${reposOwner}/{$repo}/contents`
+        return `${host}repos/${reposOwner}/{$repo}/contents`;
     },
     /**
      * 仓库路径下的内容 get
      */
     reposDataDir: (reposOwner, repos, path, branch = 'master') => {
-        return `${host}repos/${reposOwner}/${repos}/contents/${path}` + ((!branch) ? "" : ("?ref=" + branch));
+        return `${host}repos/${reposOwner}/${repos}/contents/${path}` + ((!branch) ? '' : ('?ref=' + branch));
     },
     /**
      * README 文件地址 get
      */
     readmeFile: (reposNameFullName, curBranch) => {
-        return host + "repos/" + reposNameFullName + "/" + "readme" + ((!curBranch) ? "" : ("?ref=" + curBranch));
+        return host + 'repos/' + reposNameFullName + '/' + 'readme' + ((!curBranch) ? '' : ('?ref=' + curBranch));
     },
     /**
      * 我的用户信息 GET
@@ -284,51 +288,51 @@ export default AddressLocal = {
      * create fork post
      */
     createFork: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}/forks`
+        return `${host}repos/${reposOwner}/${reposName}/forks`;
     },
     /**
      * branch get
      */
     getbranches: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}/branches`
+        return `${host}repos/${reposOwner}/${reposName}/branches`;
     },
     /**
      * fork get
      */
     getForker: (reposOwner, reposName, sort) => {
         if (!sort) {
-            sort = 'newest'
+            sort = 'newest';
         }
-        return `${host}repos/${reposOwner}/${reposName}/forks?sort=${sort}`
+        return `${host}repos/${reposOwner}/${reposName}/forks?sort=${sort}`;
     },
     /**
      * readme get
      */
     getReadme: (reposOwner, reposName) => {
-        return `${host}repos/${reposOwner}/${reposName}/readme`
+        return `${host}repos/${reposOwner}/${reposName}/readme`;
     },
     /**
      * 用户收到的事件信息 get
      */
     getEventReceived: (userName) => {
-        return `${host}users/${userName}/received_events`
+        return `${host}users/${userName}/received_events`;
     },
     /**
      * 用户相关的事件信息 get
      */
     getEvent: (userName) => {
-        return `${host}users/${userName}/events`
+        return `${host}users/${userName}/events`;
     },
     /**
      * 组织成员
      */
-    getMember:(orgs)=>{
+    getMember: (orgs) => {
         return `${host}orgs/${orgs}/members`;
     },
     /**
      * 获取用户组织
      */
-    getUserOrgs:(userName)=>{
+    getUserOrgs: (userName) => {
         return `${host}users/${userName}/orgs`;
     },
     /**
@@ -336,27 +340,27 @@ export default AddressLocal = {
      */
     getNotifation: (all, participating) => {
         if (!all && !participating) {
-            return `${host}notifications`
+            return `${host}notifications`;
         }
         if (!all) {
-            all = false
+            all = false;
         }
         if (!participating) {
-            participating = false
+            participating = false;
         }
-        return `${host}notifications?all=${all}&participating=${participating}`
+        return `${host}notifications?all=${all}&participating=${participating}`;
     },
     /**
      * patch
      */
     setNotificationAsRead: (threadId) => {
-        return `${host}notifications/threads/${threadId}`
+        return `${host}notifications/threads/${threadId}`;
     },
     /**
      * put
      */
     setAllNotificationAsRead: () => {
-        return `${host}notifications`
+        return `${host}notifications`;
     },
     /**
      * 趋势 get
@@ -364,9 +368,9 @@ export default AddressLocal = {
      */
     trending: (since, languageType) => {
         if (languageType) {
-            return `https://github.com/trending/${languageType}?since=${since}`
+            return `https://github.com/trending/${languageType}?since=${since}`;
         }
-        return `https://github.com/trending?since=${since}`
+        return `https://github.com/trending?since=${since}`;
     },
     /**
      * 趋势 get
@@ -387,12 +391,12 @@ export default AddressLocal = {
     getPageParams: (tab, page, pageSize = Config.PAGE_SIZE) => {
         if (page !== null) {
             if (pageSize !== null) {
-                return `${tab}page=${page}&per_page=${pageSize}`
+                return `${tab}page=${page}&per_page=${pageSize}`;
             } else {
-                return `${tab}page=${page}`
+                return `${tab}page=${page}`;
             }
         } else {
-            return ""
+            return '';
         }
     },
 
