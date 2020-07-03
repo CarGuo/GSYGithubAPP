@@ -24,8 +24,6 @@ export default class LoginWebPage extends Component {
             uri: this.resolveUrl(this.props.uri),
             showCurUri: this.resolveUrl(this.props.uri)
         };
-
-        console.log("######### " +  this.state.uri)
         this.inputText = this.resolveUrl(this.props.uri);
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
         this.handleTextInputChange = this.handleTextInputChange.bind(this);
