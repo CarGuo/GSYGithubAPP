@@ -58,3 +58,4 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 app/config/ignoreConfig.js
+app/config/ignoreConfig.js
