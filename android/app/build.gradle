@@ -31,7 +31,7 @@ react {
     // nodeExecutableAndArgs = ["node"]
 
     //   The entry file for bundle generation. Default is 'index.android.js' or 'index.js'
-    entryFile = "index.js"
+    entryFile = file("index.js")
 
     //   A list of extra flags to pass to the 'bundle' commands.
     //   See https://github.com/react-native-community/cli/blob/main/docs/commands.md#bundle
@@ -81,13 +81,12 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 /**
  * Whether to enable the Hermes VM.
  *
- * This should be set on project.ext.react and mirrored here.  If it is not set
- * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
- * and the benefits of using Hermes will therefore be sharply reduced.
+ * This should be set in the react {} block above and mirrored here.
  */
-def enableHermes = project.ext.react.get("enableHermes", false);
+def enableHermes = true // This should match react.enableHermes
 
 android {
+    namespace "com.gsygithubapp"
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
