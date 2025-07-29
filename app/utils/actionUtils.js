@@ -5,7 +5,7 @@ import I18n from '../style/i18n'
 import Toast from '../components/common/ToastProxy'
 import {FSModule} from '../net'
 import {changeLocale} from '../style/i18n'
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const RepositoryDetailRightBtnPress = (props) => {
