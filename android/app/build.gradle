@@ -43,11 +43,8 @@ react {
     //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
     // hermesFlags = ["-O", "-output-source-map"]
 
-    /* Autolinking */
-    enableAutolinking = true
-
     /* Enable Hermes */
-    enableHermes = true  // clean and rebuild if changing
+    hermesEnabled = true  // clean and rebuild if changing
 }
 
 /**
@@ -83,7 +80,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  *
  * This should be set in the react {} block above and mirrored here.
  */
-def enableHermes = true // This should match react.enableHermes
+def enableHermes = true // This should match react.hermesEnabled
 
 android {
     namespace "com.gsygithubapp"
