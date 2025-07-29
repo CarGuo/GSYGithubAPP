@@ -1,17 +1,22 @@
 /**
  * Created by guoshuyu on 2017/11/7.
  */
-import {NativeModules} from 'react-native';
-import I18n from 'react-native-i18n'
+import {getLocales} from 'react-native-localize';
 
-const {RNI18n} = NativeModules;
+// Simple i18n replacement using react-native-localize
+let currentLocale = 'zh-CN'; // default
 
-I18n.fallbacks = true;
+const locales = getLocales();
+if (locales && locales.length > 0) {
+    const systemLocale = locales[0].languageTag;
+    if (systemLocale.indexOf('zh') !== -1) {
+        currentLocale = 'zh-CN';
+    } else if (systemLocale.indexOf('en') !== -1) {
+        currentLocale = 'en';
+    }
+}
 
-I18n.defaultLocale = "zh-CN";
-
-
-I18n.translations = {
+const translations = {
     'en': {
         appName: 'GSYGitHubApp',
         netError: 'network error',
@@ -342,25 +347,37 @@ I18n.translations = {
 
 export const changeLocale = function (multilingual) {
     if (multilingual === 'local' || !multilingual) {
-        if (__DEV__) {
-            if (RNI18n !== undefined && typeof RNI18n !== 'undefined') {
-                console.log("language system", RNI18n.languages[0])
+        const locales = getLocales();
+        if (locales && locales.length > 0) {
+            const systemLocale = locales[0].languageTag;
+            if (systemLocale.indexOf('zh') !== -1) {
+                currentLocale = 'zh-CN';
+            } else if (systemLocale.indexOf('en') !== -1) {
+                currentLocale = 'en';
             }
         }
-        I18n.locale = (RNI18n !== undefined && typeof RNI18n !== 'undefined') ? RNI18n.languages[0].replace(/_/, '-') : ''
     } else {
-        I18n.locale = multilingual
+        currentLocale = multilingual;
     }
-    // for ios
-    if (I18n.locale.indexOf('zh-Hans') !== -1) {
-        I18n.locale = 'zh-CN'
-    } else if (I18n.locale.indexOf('zh-Hant') !== -1 || I18n.locale === 'zh-HK' || I18n.locale === 'zh-MO') {
-        I18n.locale = 'zh-CN'
+    
+    // for ios compatibility
+    if (currentLocale.indexOf('zh-Hans') !== -1) {
+        currentLocale = 'zh-CN';
+    } else if (currentLocale.indexOf('zh-Hant') !== -1 || currentLocale === 'zh-HK' || currentLocale === 'zh-MO') {
+        currentLocale = 'zh-CN';
     }
-
-
 };
 
 export default function (name, option1, option2) {
-    return I18n.t(name, option1, option2)
+    const translation = translations[currentLocale] || translations['zh-CN'];
+    let text = translation[name] || name;
+    
+    // Simple interpolation
+    if (option1 && typeof option1 === 'object') {
+        Object.keys(option1).forEach(key => {
+            text = text.replace(`%{${key}}`, option1[key] || '');
+        });
+    }
+    
+    return text;
 }
