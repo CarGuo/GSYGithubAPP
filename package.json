@@ -20,12 +20,14 @@
     "base-64": "^1.0.0",
     "buffer": "^6.0.3",
     "crypto-js": "^4.2.0",
+    "deprecated-react-native-prop-types": "^5.0.0",
     "highlight.js": "^11.9.0",
     "i18next": "^25.3.2",
     "lottie-react-native": "^6.7.0",
     "marked": "^12.0.1",
     "moment": "^2.30.1",
     "prettier": "^3.6.2",
+    "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-i18next": "^15.6.1",
     "react-native": "0.74.0",
@@ -70,6 +72,9 @@
     "react-test-renderer": "18.2.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|@react-native|react-redux|@react-navigation)/)"
+    ]
   }
 }
