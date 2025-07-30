@@ -47,6 +47,7 @@ export default class WelcomePage extends Component {
             toValue: 1,
             duration: 2000,
             easing: Easing.linear,
+            useNativeDriver: false,
         }).start();
     }
 

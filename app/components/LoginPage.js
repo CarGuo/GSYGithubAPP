@@ -50,6 +50,8 @@ export default class LoginPage extends Component {
         this.passwordChange = this.passwordChange.bind(this);
         this.toLogin = this.toLogin.bind(this);
         this.lottieViewRef = createRef();
+        this.userNameInputRef = createRef();
+        this.passwordInputRef = createRef();
         this.params = {
             userName: '',
             password: ''
@@ -71,6 +73,7 @@ export default class LoginPage extends Component {
         Animated.timing(this.state.opacity, {
             duration: animaTime,
             toValue: 1,
+            useNativeDriver: false,
         }).start();
         this.startAnimation();
 
@@ -111,7 +114,8 @@ export default class LoginPage extends Component {
         Animated.timing(this.state.progress, {
             toValue: 1,
             duration: 2000,
-            easing: Easing.linear
+            easing: Easing.linear,
+            useNativeDriver: false,
         }).start(({finished}) => {
             /*if (!finished) {
                 return;
@@ -142,6 +146,7 @@ export default class LoginPage extends Component {
         Animated.timing(this.state.opacity, {
             duration: animaTime,
             toValue: 0,
+            useNativeDriver: false,
         }).start(Actions.pop());
         return true;
 
@@ -233,7 +238,7 @@ export default class LoginPage extends Component {
                     </View>
                     <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
                         <Fumi
-                            ref={"userNameInput"}
+                            ref={this.userNameInputRef}
                             {...textInputProps}
                             label={I18n('UserName')}
                             iconName={'user-circle-o'}
@@ -243,7 +248,7 @@ export default class LoginPage extends Component {
                     </View>
                     <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
                         <Fumi
-                            ref={"passwordInput"}
+                            ref={this.passwordInputRef}
                             {...textInputProps}
                             label={I18n('Password')}
                             returnKeyType={'send'}

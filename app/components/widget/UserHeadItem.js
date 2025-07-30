@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import {
     View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator
 } from 'react-native';
@@ -34,6 +34,7 @@ class UserHeadItem extends Component {
         this.getActivity = this.getActivity.bind(this);
         this.getOrgItemBar = this.getOrgItemBar.bind(this);
         this.getBottomItem = this.getBottomItem.bind(this);
+        this.activityRef = createRef();
     }
 
     /**
@@ -83,8 +84,8 @@ class UserHeadItem extends Component {
                                       chartError: false,
                                       chartLoading: true
                                   });
-                                  if (this.refs.activity) {
-                                      this.refs.activity.reload();
+                                  if (this.activityRef.current) {
+                                      this.activityRef.current.reload();
                                   }
                               }}>
                 <Image source={require("../../img/logo.png")}
@@ -114,7 +115,7 @@ class UserHeadItem extends Component {
                     width: screenWidth - 4 * Constant.normalMarginEdge
                 }]}>
                 <WebView
-                    ref={"activity"}
+                    ref={this.activityRef}
                     //source={{html: generateImageHtml(userDisPlayName, Constant.primaryColor.replace("#", ""))}}
                     source={{uri: graphicHost + "/" + Constant.primaryColor.replace("#", "") + "/" + userDisPlayName}}
                     javaScriptEnabled={true}

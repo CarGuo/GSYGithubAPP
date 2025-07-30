@@ -1,7 +1,7 @@
 /**
  * Created by guoshuyu on 2017/11/12.
  */
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import {
     Text,
     View,
@@ -42,6 +42,9 @@ class CommonTextInputModal extends Component {
         this.getLoading = this.getLoading.bind(this);
         this.text = this.props.text;
         this.title = this.props.titleValue;
+        this.loginModalRef = createRef();
+        this.titleInputRef = createRef();
+        this.contentInputRef = createRef();
         this.state = {
             showList: false,
             showLoading: false,
@@ -49,8 +52,8 @@ class CommonTextInputModal extends Component {
     }
 
     componentDidMount() {
-        if (this.refs.loginModal)
-            this.refs.loginModal.open();
+        if (this.loginModalRef.current)
+            this.loginModalRef.current.open();
 
     }
 
@@ -63,11 +66,11 @@ class CommonTextInputModal extends Component {
     }
 
     _onOpened() {
-        if (this.refs.titleInput) {
-            this.refs.titleInput.setNativeProps({text: this.title});
+        if (this.titleInputRef.current) {
+            this.titleInputRef.current.setNativeProps({text: this.title});
         }
-        if (this.refs.contentInput) {
-            this.refs.contentInput.setNativeProps({text: this.text});
+        if (this.contentInputRef.current) {
+            this.contentInputRef.current.setNativeProps({text: this.text});
         }
     };
 
@@ -87,8 +90,8 @@ class CommonTextInputModal extends Component {
             iconSize: iconSize,
             itemClick: () => {
                 let curText = this.text + "\n# ";
-                if (this.refs.contentInput) {
-                    this.refs.contentInput.setNativeProps({text: curText});
+                if (this.contentInputRef.current) {
+                    this.contentInputRef.current.setNativeProps({text: curText});
                 }
             }
         }, {
@@ -98,8 +101,8 @@ class CommonTextInputModal extends Component {
             itemClick: () => {
                 let curText = this.text + "\n## ";
                 this._searchTextChange(curText);
-                if (this.refs.contentInput) {
-                    this.refs.contentInput.setNativeProps({text: curText});
+                if (this.contentInputRef.current) {
+                    this.contentInputRef.current.setNativeProps({text: curText});
                 }
             }
         }, {
@@ -109,8 +112,8 @@ class CommonTextInputModal extends Component {
             itemClick: () => {
                 let curText = this.text + "\n### ";
                 this._searchTextChange(curText);
-                if (this.refs.contentInput) {
-                    this.refs.contentInput.setNativeProps({text: curText});
+                if (this.contentInputRef.current) {
+                    this.contentInputRef.current.setNativeProps({text: curText});
                 }
             }
         }, {
@@ -120,8 +123,8 @@ class CommonTextInputModal extends Component {
             itemClick: () => {
                 let curText = this.text + "****";
                 this._searchTextChange(curText);
-                if (this.refs.contentInput) {
-                    this.refs.contentInput.setNativeProps({text: curText});
+                if (this.contentInputRef.current) {
+                    this.contentInputRef.current.setNativeProps({text: curText});
                 }
             }
         }, {
@@ -131,8 +134,8 @@ class CommonTextInputModal extends Component {
             itemClick: () => {
                 let curText = this.text + "__";
                 this._searchTextChange(curText);
-                if (this.refs.contentInput) {
-                    this.refs.contentInput.setNativeProps({text: curText});
+                if (this.contentInputRef.current) {
+                    this.contentInputRef.current.setNativeProps({text: curText});
                 }
             }
         }, {
@@ -142,8 +145,8 @@ class CommonTextInputModal extends Component {
             itemClick: () => {
                 let curText = this.text + "``";
                 this._searchTextChange(curText);
-                if (this.refs.contentInput) {
-                    this.refs.contentInput.setNativeProps({text: curText});
+                if (this.contentInputRef.current) {
+                    this.contentInputRef.current.setNativeProps({text: curText});
                 }
             }
         }, {
@@ -153,8 +156,8 @@ class CommonTextInputModal extends Component {
             itemClick: () => {
                 let curText = this.text + " \n``` \n\n``` \n";
                 this._searchTextChange(curText);
-                if (this.refs.contentInput) {
-                    this.refs.contentInput.setNativeProps({text: curText});
+                if (this.contentInputRef.current) {
+                    this.contentInputRef.current.setNativeProps({text: curText});
                 }
             }
         }, {
@@ -164,8 +167,8 @@ class CommonTextInputModal extends Component {
             itemClick: () => {
                 let curText = this.text + "[](url)";
                 this._searchTextChange(curText);
-                if (this.refs.contentInput) {
-                    this.refs.contentInput.setNativeProps({text: curText});
+                if (this.contentInputRef.current) {
+                    this.contentInputRef.current.setNativeProps({text: curText});
                 }
             }
         }, {
@@ -175,8 +178,8 @@ class CommonTextInputModal extends Component {
             itemClick: () => {
                 let curText = this.text + "\n- ";
                 this._searchTextChange(curText);
-                if (this.refs.contentInput) {
-                    this.refs.contentInput.setNativeProps({text: curText});
+                if (this.contentInputRef.current) {
+                    this.contentInputRef.current.setNativeProps({text: curText});
                 }
             }
         }, {
@@ -192,8 +195,8 @@ class CommonTextInputModal extends Component {
                 } else {
                     let curText = this.text + " @";
                     this._searchTextChange(curText);
-                    if (this.refs.contentInput) {
-                        this.refs.contentInput.setNativeProps({text: curText});
+                    if (this.contentInputRef.current) {
+                        this.contentInputRef.current.setNativeProps({text: curText});
                     }
                 }
             }
@@ -220,8 +223,8 @@ class CommonTextInputModal extends Component {
                     });
                     let curText = this.text + " @" + item + " ";
                     this._searchTextChange(curText);
-                    if (this.refs.contentInput) {
-                        this.refs.contentInput.setNativeProps({text: curText});
+                    if (this.contentInputRef.current) {
+                        this.contentInputRef.current.setNativeProps({text: curText});
                     }
                 }, itemStyle: {
                     borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Constant.lineColor,
@@ -311,8 +314,8 @@ class CommonTextInputModal extends Component {
                     if (res) {
                         let curText = this.text + ` ![](${res.data}) `;
                         this._searchTextChange(curText);
-                        if (this.refs.contentInput) {
-                            this.refs.contentInput.setNativeProps({text: curText});
+                        if (this.contentInputRef.current) {
+                            this.contentInputRef.current.setNativeProps({text: curText});
                         }
                     }
                     this.setState({
@@ -333,7 +336,7 @@ class CommonTextInputModal extends Component {
             marginBottom: Constant.normalMarginEdge,
         }]}>
             <TextInput
-                ref={"titleInput"}
+                ref={this.titleInputRef}
                 onChangeText={(text) => {
                     this._searchTextTitleChange(text)
                 }}
@@ -349,7 +352,7 @@ class CommonTextInputModal extends Component {
                     textAlignVertical: 'top'
                 }]}/></View> : <View/>;
         return (
-            <Modal ref={"loginModal"}
+            <Modal ref={this.loginModalRef}
                    onOpened={this._onOpened}
                    onClosed={this.onClose}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
@@ -373,7 +376,7 @@ class CommonTextInputModal extends Component {
                             marginHorizontal: Constant.normalMarginEdge,
                         }]}>
                             <TextInput
-                                ref={"contentInput"}
+                                ref={this.contentInputRef}
                                 onChangeText={(text) => {
                                     this._searchTextChange(text)
                                 }}

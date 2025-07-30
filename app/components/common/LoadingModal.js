@@ -1,7 +1,7 @@
 /**
  * Created by guoshuyu on 2017/11/12.
  */
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import {
     Text,
     View,
@@ -23,11 +23,12 @@ class LoadingModal extends Component {
     constructor(props) {
         super(props);
         this.onClose = this.onClose.bind(this);
+        this.loginModalRef = createRef();
     }
 
     componentDidMount() {
-        if (this.refs.loginModal) {
-            this.refs.loginModal.open();
+        if (this.loginModalRef.current) {
+            this.loginModalRef.current.open();
         }
         this.handle = BackHandler.addEventListener('loaddingBack', this.onClose)
     }
@@ -45,7 +46,7 @@ class LoadingModal extends Component {
 
     render() {
         return (
-            <Modal ref={"loginModal"}
+            <Modal ref={this.loginModalRef}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
                    backButtonClose={false}
