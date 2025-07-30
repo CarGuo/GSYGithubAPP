@@ -213,7 +213,7 @@ export default class LoginPage extends Component {
                             ref={this.lottieViewRef}
                             style={{width: screenWidth, height: screenHeight / 2}}
                             source={require('../style/lottie/animation-login.json')}
-                            progress={this.state.progress}
+                            animatedProgress={this.state.progress}
                         />
                     </View>
                 </View>

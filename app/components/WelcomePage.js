@@ -83,7 +83,7 @@ export default class WelcomePage extends Component {
                                     height: 150,
                                 }}
                                 source={require('../style/lottie/animation-w800-h800.json')}
-                                progress={this.state.progress}
+                                animatedProgress={this.state.progress}
                             />
                         </View>
                     </View>
