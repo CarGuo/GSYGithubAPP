@@ -34,7 +34,7 @@
     "react-native-autolink": "^4.1.0",
     "react-native-gesture-handler": "^2.16.1",
     "react-native-htmlview": "^0.16.0",
-    "react-native-i18n": "^2.0.15",
+    "react-native-i18n": "git+https://github.com/CarSmallGuo/react-native-i18n.git",
     "react-native-image-crop-picker": "^0.41.2",
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-localize": "^3.0.6",
