@@ -156,8 +156,27 @@ android {
 }
 
 dependencies {
+    constraints {
+        implementation("androidx.core:core") {
+            version {
+                strictly "[1.10.0, 1.14.0)"
+            }
+            because "androidx.core 1.16.0+ requires API 35"
+        }
+        implementation("androidx.core:core-ktx") {
+            version {
+                strictly "[1.10.0, 1.14.0)"
+            }
+            because "androidx.core:core-ktx 1.16.0+ requires API 35"
+        }
+    }
+    
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-android"
+
+    // Force compatible androidx.core versions for API 34
+    implementation "androidx.core:core:1.13.1"
+    implementation "androidx.core:core-ktx:1.13.1"
 
     if (enableHermes) {
         implementation("com.facebook.react:hermes-android")
