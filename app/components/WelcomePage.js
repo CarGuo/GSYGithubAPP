@@ -2,7 +2,7 @@
  * Created by guoshuyu on 2017/11/7.
  */
 
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import {
     View, Image, StatusBar, Platform, Animated, Easing
 } from 'react-native';
@@ -31,6 +31,7 @@ export default class WelcomePage extends Component {
     constructor(props) {
         super(props);
         this.toNext = this.toNext.bind(this);
+        this.lottieViewRef = createRef();
         this.state = {
             progress: new Animated.Value(0),
         };
@@ -50,8 +51,8 @@ export default class WelcomePage extends Component {
     }
 
     componentWillUnmount() {
-        if (this.refs.lottieView) {
-            this.refs.lottieView.reset();
+        if (this.lottieViewRef.current) {
+            this.lottieViewRef.current.reset();
         }
     }
 
@@ -76,7 +77,7 @@ export default class WelcomePage extends Component {
                     <View style={[styles.absoluteFull, styles.centered, {justifyContent: "flex-end"}]}>
                         <View style={[styles.centered, {width: 150, height:150}]}>
                             <LottieView
-                                ref="lottieView"
+                                ref={this.lottieViewRef}
                                 style={{
                                     width: 150,
                                     height: 150,

@@ -1,7 +1,7 @@
 /**
  * Created by guoshuyu on 2017/11/12.
  */
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import {
     Text,
     View,
@@ -49,6 +49,7 @@ export default class LoginPage extends Component {
         this.userInputChange = this.userInputChange.bind(this);
         this.passwordChange = this.passwordChange.bind(this);
         this.toLogin = this.toLogin.bind(this);
+        this.lottieViewRef = createRef();
         this.params = {
             userName: '',
             password: ''
@@ -96,8 +97,8 @@ export default class LoginPage extends Component {
         if (this.handle) {
             this.handle.remove();
         }
-        if (this.refs.lottieView) {
-            this.refs.lottieView.reset();
+        if (this.lottieViewRef.current) {
+            this.lottieViewRef.current.reset();
         }
         this.subscription.remove();
     }
@@ -209,7 +210,7 @@ export default class LoginPage extends Component {
                 <View style={[styles.absoluteFull, {zIndex: -999, justifyContent: 'flex-end'}]}>
                     <View style={{width: screenWidth, height: screenHeight / 2}}>
                         <LottieView
-                            ref="lottieView"
+                            ref={this.lottieViewRef}
                             style={{width: screenWidth, height: screenHeight / 2}}
                             source={require('../style/lottie/animation-login.json')}
                             progress={this.state.progress}
