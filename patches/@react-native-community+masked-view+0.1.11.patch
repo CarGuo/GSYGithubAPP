@@ -1,0 +1,12 @@
+diff --git a/node_modules/@react-native-community/masked-view/js/MaskedViewTypes.js b/node_modules/@react-native-community/masked-view/js/MaskedViewTypes.js
+index c72eb77..a1b84a4 100644
+--- a/node_modules/@react-native-community/masked-view/js/MaskedViewTypes.js
++++ b/node_modules/@react-native-community/masked-view/js/MaskedViewTypes.js
+@@ -1,6 +1,6 @@
+ // @flow
+ import { type Node, type Element } from 'react';
+-import { ViewPropTypes } from 'react-native';
++import { ViewPropTypes } from 'deprecated-react-native-prop-types';
+ 
+ export type MaskedViewProps = typeof ViewPropTypes &
+   $ReadOnly<{|

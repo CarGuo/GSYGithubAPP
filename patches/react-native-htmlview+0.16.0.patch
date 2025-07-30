@@ -1,0 +1,14 @@
+diff --git a/node_modules/react-native-htmlview/HTMLView.js b/node_modules/react-native-htmlview/HTMLView.js
+index 43f8b7e..26d52e5 100644
+--- a/node_modules/react-native-htmlview/HTMLView.js
++++ b/node_modules/react-native-htmlview/HTMLView.js
+@@ -1,7 +1,8 @@
+ import React, {PureComponent} from 'react';
+ import PropTypes from 'prop-types';
+ import htmlToElement from './htmlToElement';
+-import {Linking, Platform, StyleSheet, View, ViewPropTypes} from 'react-native';
++import {Linking, Platform, StyleSheet, View} from 'react-native';
++import {ViewPropTypes} from 'deprecated-react-native-prop-types';
+ 
+ const boldStyle = {fontWeight: 'bold'};
+ const italicStyle = {fontStyle: 'italic'};
