@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {DeviceEventEmitter, Text, View} from 'react-native';
-import {ViewPropTypes} from 'deprecated-react-native-prop-types';
+//import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import {Router, Actions, Scene} from 'react-native-router-flux';
 import styles, {statusHeight, drawerWidth} from "../../style"
 import * as Constant from '../../style/constant'
@@ -11,7 +11,7 @@ import SelectList from './SearchFilterSelectList'
 class SearchDrawerFilter extends React.Component {
     static propTypes = {
         name: PropTypes.string,
-        sceneStyle: ViewPropTypes.style,
+        //sceneStyle: ViewPropTypes.style,
         title: PropTypes.string,
     };
 

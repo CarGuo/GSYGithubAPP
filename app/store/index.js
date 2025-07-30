@@ -2,7 +2,7 @@
  * Created by guoshuyu on 2017/11/7.
  */
 import {applyMiddleware, createStore} from 'redux';
-import thunk from 'redux-thunk';
+import {thunk} from 'redux-thunk';
 import reducers from './reducers';
 
 export function createReducer(initialState, handlers) {
@@ -15,6 +15,5 @@ export function createReducer(initialState, handlers) {
     }
 }
 
-const createStoreWithMW = applyMiddleware(thunk)(createStore);
-const store = createStoreWithMW(reducers);
+const store = createStore(reducers, applyMiddleware(thunk));
 export default store
