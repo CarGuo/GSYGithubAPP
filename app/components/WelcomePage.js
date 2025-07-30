@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {
     View, Image, StatusBar, Platform, Animated, Easing
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles, {screenHeight, screenWidth} from "../style"
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'

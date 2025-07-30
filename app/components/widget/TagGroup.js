@@ -9,7 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import styles from "../../style/index"
 import * as Constant from "../../style/constant"
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../../navigation/Actions';
 
 /**
  * 标签控件

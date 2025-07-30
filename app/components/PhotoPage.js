@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {
     View, ActivityIndicator, StatusBar
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import {screenWidth, screenHeight} from "../style"
 import ImageViewer from 'react-native-image-zoom-viewer'
 import styles from "../style/index";

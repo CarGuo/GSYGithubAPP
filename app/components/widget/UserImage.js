@@ -5,7 +5,7 @@ import {
     View, Text, Image, TouchableWithoutFeedback
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../../navigation/Actions';
 
 /**
  * 用户头像

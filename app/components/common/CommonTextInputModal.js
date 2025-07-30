@@ -18,7 +18,7 @@ import I18n from '../../style/i18n'
 import {uploadQiNiu} from '../../net/qiniu'
 import Modal from './ModalBox';
 import Spinner from 'react-native-spinkit-fix-new';
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../../navigation/Actions';
 import CommonInputBar from "./CommonInputBar";
 import ImagePicker from 'react-native-image-crop-picker';
 

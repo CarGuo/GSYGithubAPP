@@ -1,6 +1,6 @@
 import BasePersonPage from "./widget/BasePersonPage";
 import userAction from "../store/actions/user";
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../navigation/Actions';
 import store from "../store";
 
 const {dispatch, getState} = store;

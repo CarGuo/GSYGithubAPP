@@ -7,7 +7,7 @@ import {
     View, Text, StatusBar, InteractionManager, TouchableOpacity, FlatList
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles from "../style"
 import * as Constant from "../style/constant"
 import reposActions from '../store/actions/repository'

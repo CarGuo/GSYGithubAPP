@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {
     View, Linking, StatusBar, InteractionManager, TouchableOpacity, Keyboard,
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles from '../style/index';
 import * as Constant from '../style/constant';
 import userActions from '../store/actions/user';

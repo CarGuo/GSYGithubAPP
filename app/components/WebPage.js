@@ -10,7 +10,7 @@ import { WebView } from 'react-native-webview';
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Constant from '../style/constant'
 import {screenWidth} from '../style'
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../navigation/Actions';
 import styles from "../style"
 
 /**

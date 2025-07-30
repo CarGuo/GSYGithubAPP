@@ -7,7 +7,7 @@ import {
     View, SafeAreaView, InteractionManager, StatusBar, TextInput, TouchableOpacity, Keyboard, StyleSheet, Platform
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles, {screenWidth, screenHeight} from "../style"
 import * as Constant from "../style/constant"
 import repositoryActions from "../store/actions/repository"

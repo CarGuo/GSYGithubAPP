@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     View, Text, StatusBar, Platform, InteractionManager
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles, {screenWidth, navBarHeight} from "../style"
 import * as Constant from "../style/constant"
 import loginActions from '../store/actions/login'

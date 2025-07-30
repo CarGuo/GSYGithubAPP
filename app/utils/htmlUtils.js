@@ -2,7 +2,7 @@ import marked from 'marked'
 import {highlightAuto, configure} from 'highlight.js'
 import * as Constant from '../style/constant'
 import {Platform} from 'react-native'
-import {Actions} from 'react-native-router-flux'
+import {Actions} from '../navigation/Actions'
 import URL from 'url-parse';
 import {graphicHost} from "../net/address";
 

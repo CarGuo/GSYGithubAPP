@@ -12,7 +12,7 @@ import styles, {screenWidth, screenHeight} from "../../style/index"
 import I18n from '../../style/i18n'
 import Modal from './ModalBox';
 import Spinner from 'react-native-spinkit-fix-new';
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../../navigation/Actions';
 
 
 /**

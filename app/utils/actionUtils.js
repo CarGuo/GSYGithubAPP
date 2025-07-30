@@ -1,6 +1,6 @@
 import * as Constant from "../style/constant"
 import {StyleSheet, Linking, Clipboard, Platform, Share} from "react-native";
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import I18n from '../style/i18n'
 import Toast from '../components/common/ToastProxy'
 import {FSModule} from '../net'

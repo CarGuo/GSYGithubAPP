@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import {screenWidth} from '../style'
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../navigation/Actions';
 import styles from "../style"
 import URL from 'url-parse';
 

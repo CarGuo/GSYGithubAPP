@@ -9,7 +9,7 @@ import IconTextItem from './IconTextItem'
 import IconTextAutoLinkItem from './IconTextAutoLinkItem'
 import { WebView } from 'react-native-webview';
 import IconF from 'react-native-vector-icons/FontAwesome'
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../../navigation/Actions';
 import I18n from '../../style/i18n'
 import NameValueItem from '../common/CommonNameValueItem'
 import OrgItemBar from '../widget/OrgItemBar'

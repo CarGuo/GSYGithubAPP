@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Clipboard, Linking, Image, TouchableWithoutFeedback, Platform, View, ImageBackground} from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import Toast from './ToastProxy'
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../../navigation/Actions';
 import I18n from '../../style/i18n'
 import {launchUrl} from '../../utils/htmlUtils'
 import styles, {screenWidth} from "../../style/index"

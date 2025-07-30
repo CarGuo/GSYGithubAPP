@@ -6,7 +6,7 @@ import React, {Component, PureComponent} from 'react';
 import {
     View, InteractionManager, StatusBar, Dimensions, StyleSheet, DeviceEventEmitter,
 } from 'react-native';
-import {Actions, Tabs} from 'react-native-router-flux';
+import {Actions, Tabs} from '../navigation/Actions';
 import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'

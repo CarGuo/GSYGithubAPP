@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {
     View, Platform, StatusBar, ScrollView, Linking
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles from "../style"
 import I18n from '../style/i18n'
 import CommonRowItem from "./common/CommonRowItem";

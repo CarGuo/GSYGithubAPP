@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import styles, {screenWidth, screenHeight} from "../../style/index"
 import * as Constant from "../../style/constant"
 import Modal from './ModalBox';
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../../navigation/Actions';
 
 const width = screenWidth - 100;
 const itemHeight = 50;

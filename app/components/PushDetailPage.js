@@ -7,7 +7,7 @@ import {
     View, Text, StatusBar, TextInput, InteractionManager, Keyboard, TouchableOpacity, StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'

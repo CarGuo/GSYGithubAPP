@@ -6,7 +6,7 @@ import {
 import I18n from '../style/i18n'
 import Toast from '../components/common/ToastProxy'
 
-import {Router, Actions, Scene} from 'react-native-router-flux';
+import {Router, Actions, Scene} from '../navigation/Actions';
 
 export default function BackUtils() {
     let hasTip = false;

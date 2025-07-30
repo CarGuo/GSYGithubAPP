@@ -1,6 +1,6 @@
 import I18n from '../style/i18n'
 import {StyleSheet} from 'react-native'
-import {Actions} from 'react-native-router-flux'
+import {Actions} from '../navigation/Actions'
 import styles, {navBarHeight, screenWidth} from "../style"
 import * as Constant from '../style/constant'
 import {

@@ -20,7 +20,7 @@ import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Entypo'
 import {Fumi} from 'react-native-textinput-effects';
