@@ -33,10 +33,10 @@ class RepositoryDetailFilePage extends Component {
         this.state = {
             dataSource: [],
             headerList: ["."],
-            path: this.props.route.params.props.route.params
+            path: this.props.props
         };
         this.loading = false;
-        this.curBranch = this.props.route.params.curBranch;
+        this.curBranch = this.props.curBranch;
     }
 
     componentDidMount() {
@@ -110,8 +110,8 @@ class RepositoryDetailFilePage extends Component {
                     itemText={rowData.name}
                     onClickFun={() => {
                         let path = headerList.slice(1, headerList.length).join("/") + "/" + rowData.name;
-                        let repositoryName = this.props.route.params.repositoryName;
-                        let ownerName = this.props.route.params.ownerName;
+                        let repositoryName = this.props.repositoryName;
+                        let ownerName = this.props.ownerName;
                         let curBranch = this.curBranch ? this.curBranch : 'master';
                         if (isImageEnd(rowData.name)) {
                             let urlLink = hostWeb + ownerName + "/" + repositoryName + "/" + "raw/" + curBranch + "/" + path;
@@ -173,7 +173,7 @@ class RepositoryDetailFilePage extends Component {
     _refresh(path) {
         if (this.refs.pullList)
             this.refs.pullList.showRefreshState();
-        reposActions.getReposFileDir(this.props.route.params.ownerName, this.props.route.params.repositoryName, path, this.curBranch).then((res) => {
+        reposActions.getReposFileDir(this.props.ownerName, this.props.repositoryName, path, this.curBranch).then((res) => {
                 if (res && res.result) {
                     let dir = [];
                     let file = [];

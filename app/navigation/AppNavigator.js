@@ -224,7 +224,7 @@ function MainStack() {
       <Stack.Screen
         name="SearchPage"
         component={SearchDrawer}
-        options={{ headerShown: false }}
+        options={{ title: I18n('search') }}
       />
 
       <Stack.Screen

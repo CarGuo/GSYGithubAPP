@@ -37,6 +37,7 @@
     "react-native-autolink": "^4.1.0",
     "react-native-drawer-layout": "^4.1.12",
     "react-native-gesture-handler": "2.21.0",
+    "create-react-class": "15.7.0",
     "react-native-htmlview": "^0.16.0",
     "react-native-i18n": "git+https://github.com/CarSmallGuo/react-native-i18n.git",
     "react-native-image-crop-picker": "^0.41.2",

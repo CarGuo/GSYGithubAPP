@@ -286,7 +286,7 @@ class RepositoryDetailPage extends Component {
                             paddingTop: 5,
                         },
                         tabBarLabelStyle: {
-                            fontSize: 16,
+                            fontSize: 14,
                         },
                         tabBarIndicatorStyle: {
                             backgroundColor: Constant.white,
