@@ -47,7 +47,6 @@
     "react-native-root-toast": "^3.6.0",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screens": "^4.13.1",
-    "react-native-scrollable-tab-view-fix-guo": "^0.99.0",
     "react-native-spinkit-fix-new": "git+https://github.com/CarSmallGuo/react-native-spinkit.git",
     "react-native-tab-view": "^3.5.2",
     "react-native-textinput-effects": "^0.6.2",

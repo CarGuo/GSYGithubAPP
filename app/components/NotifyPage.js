@@ -12,8 +12,11 @@ import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
 import userActions from '../store/actions/user'
 import ListPage from "./ListPage";
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view-fix-guo';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 import {launchUrl} from "../utils/htmlUtils";
+
+const Tab = createMaterialTopTabNavigator();
 
 /**
  * 通知页面
@@ -67,58 +70,78 @@ class NotifyPage extends Component {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
-                <ScrollableTabView
-                    onChangeTab={(params) => {
-                        this.index = params.i;
+                <Tab.Navigator
+                    screenOptions={{
+                        tabBarActiveTintColor: Constant.white,
+                        tabBarInactiveTintColor: Constant.subTextColor,
+                        tabBarStyle: {
+                            backgroundColor: Constant.primaryColor,
+                            paddingTop: 5,
+                        },
+                        tabBarLabelStyle: {
+                            fontSize: 16,
+                        },
+                        tabBarIndicatorStyle: {
+                            backgroundColor: Constant.white,
+                            height: 3,
+                        },
                     }}
-                    tabBarUnderlineStyle={{
-                        backgroundColor: Constant.white,
-                        height: 3
+                    screenListeners={{
+                        tabPress: (e) => {
+                            // Handle tab change if needed
+                        },
                     }}
-                    renderTabBar={(props) => {
-                        return <DefaultTabBar {...props} style={{paddingTop: 5}}/>;
-                    }}
-                    tabBarBackgroundColor={Constant.primaryColor}
-                    tabBarActiveTextColor={Constant.white}
-                    tabBarInactiveTextColor={Constant.subTextColor}
-                    tabBarTextStyle={{fontSize: 16}}>
-                    <ListPage
-                        tabLabel={I18n('notifyUnread')}
-                        ref={(ref) => {
-                            this.unReadList = ref;
-                        }}
-                        dataType={'notify'}
-                        showType={'notify'}
-                        onItemClickEx={this._asRead}
-                        currentUser={this.props.route.params.ownerName}
-                        currentRepository={this.props.route.params.repositoryName}
+                >
+                    <Tab.Screen 
+                        name="Unread" 
+                        children={() => (
+                            <ListPage
+                                ref={(ref) => {
+                                    this.unReadList = ref;
+                                }}
+                                dataType={'notify'}
+                                showType={'notify'}
+                                onItemClickEx={this._asRead}
+                                currentUser={this.props.route.params.ownerName}
+                                currentRepository={this.props.route.params.repositoryName}
+                            />
+                        )}
+                        options={{ tabBarLabel: I18n('notifyUnread') }}
                     />
-
-                    <ListPage
-                        tabLabel={I18n('notifyParticipating')}
-                        ref={(ref) => {
-                            this.unReadList = ref;
-                        }}
-                        dataType={'notify'}
-                        showType={'notify'}
-                        onItemClickEx={this._asRead}
-                        currentUser={this.props.route.params.ownerName}
-                        currentRepository={this.props.route.params.repositoryName}
+                    <Tab.Screen 
+                        name="Participating" 
+                        children={() => (
+                            <ListPage
+                                ref={(ref) => {
+                                    this.partList = ref;
+                                }}
+                                dataType={'notify'}
+                                showType={'notify'}
+                                onItemClickEx={this._asRead}
+                                currentUser={this.props.route.params.ownerName}
+                                currentRepository={this.props.route.params.repositoryName}
+                            />
+                        )}
+                        options={{ tabBarLabel: I18n('notifyParticipating') }}
                     />
-
-                    <ListPage
-                        tabLabel={I18n('notifyAll')}
-                        ref={(ref) => {
-                            this.allList = ref;
-                        }}
-                        dataType={'notify'}
-                        showType={'notify'}
-                        onItemClickEx={this._asRead}
-                        all={true}
-                        currentUser={this.props.route.params.ownerName}
-                        currentRepository={this.props.route.params.repositoryName}
+                    <Tab.Screen 
+                        name="All" 
+                        children={() => (
+                            <ListPage
+                                ref={(ref) => {
+                                    this.allList = ref;
+                                }}
+                                dataType={'notify'}
+                                showType={'notify'}
+                                onItemClickEx={this._asRead}
+                                all={true}
+                                currentUser={this.props.route.params.ownerName}
+                                currentRepository={this.props.route.params.repositoryName}
+                            />
+                        )}
+                        options={{ tabBarLabel: I18n('notifyAll') }}
                     />
-                </ScrollableTabView>
+                </Tab.Navigator>
             </View>
         )
     }
