@@ -328,7 +328,7 @@ class RepositoryIssueListPage extends Component {
                     }}>
                     <View
                         style={[styles.centered, ...btnStyle]}>
-                        <Icon name={'md-add-circle'}
+                        <Icon name={'add-outline'}
                               style={{backgroundColor: Constant.transparentColor}}
                               backgroundColor={Constant.transparentColor}
                               size={50} color={Constant.primaryColor}/>

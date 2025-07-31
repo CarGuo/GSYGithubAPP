@@ -124,7 +124,7 @@ export default class WebPage extends Component {
                             marginLeft: Constant.normalMarginEdge - 3
                         }]}
                         onPress={this.goBack}>
-                        <Icon name={'md-arrow-round-back'} size={18} color={Constant.miWhite}/>
+                        <Icon name={'chevron-back-outline'} size={18} color={Constant.miWhite}/>
                     </TouchableOpacity>
                     <TextInput
                         ref='textInput'
@@ -147,7 +147,7 @@ export default class WebPage extends Component {
                             paddingLeft: 20
                         }]}
                         onPress={this.pressGoButton}>
-                        <Icon name={'md-search'} size={19} color={Constant.miWhite}/>
+                        <Icon name={'search-circle-outline'} size={19} color={Constant.miWhite}/>
                     </TouchableOpacity>
                 </View>
                 <WebView

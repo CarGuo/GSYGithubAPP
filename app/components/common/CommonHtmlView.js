@@ -77,7 +77,7 @@ class CommonHtmlView extends Component {
                                                     width: screenWidth - 105,
                                                     height: 300,
                                                 }]}>
-                                                    <Icon name={'ios-image'} size={80} color={Constant.miWhite}/>
+                                                    <Icon name={'images-outline'} size={80} color={Constant.miWhite}/>
                                                 </View>
                                                 <Image source={{uri: node.attribs.src}}
                                                        resizeMethod="scale"

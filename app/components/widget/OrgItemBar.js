@@ -85,7 +85,7 @@ class OrgItemBar extends Component {
                         title: this.props.ownerName + " - " + I18n("userOrg")
                     })
                 }}>
-                <IconC name={"ios-more"}
+                <IconC name={"ellipsis-horizontal-outline"}
                        backgroundColor={Constant.transparentColor}
                        color={Constant.primaryColor}
                        size={16}/>
