@@ -45,6 +45,7 @@ export default class DynamicPage extends Component {
         this.startRefresh = this.startRefresh.bind(this);
         this.page = 1;
         this.appState = 'active';
+        this.appStateSubscription = null;
     }
 
     componentDidMount() {
@@ -52,7 +53,7 @@ export default class DynamicPage extends Component {
             this.startRefresh();
             getNewsVersion();
         });
-        AppState.addEventListener('change', this._handleAppStateChange);
+        this.appStateSubscription = AppState.addEventListener('change', this._handleAppStateChange);
 
         /*setTimeout(() => {
             if (__DEV__) {
@@ -67,7 +68,9 @@ export default class DynamicPage extends Component {
     }
 
     componentWillUnmount() {
-        AppState.removeEventListener('change', this._handleAppStateChange);
+        if (this.appStateSubscription) {
+            this.appStateSubscription.remove();
+        }
     }
 
     startRefresh() {
