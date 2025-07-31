@@ -53,7 +53,8 @@ class BasePersonPage extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.route.params.showType !== this.props.route.params.showType) {
+        if (prevProps.route.params != null &&
+            prevProps.route.params.showType !== this.props.route.params.showType) {
             if (this.props.route.params.showType === "Organization") {
                 this.showType = 1;
                 this._refresh();
@@ -121,9 +122,7 @@ class BasePersonPage extends Component {
                 }, 500);
             })
         } else if (this.showType === 0) {
-            console.log("****************** getEvent ")
             eventActions.getEvent(1, userInfo.login).then((res) => {
-                console.log("****************** getEvent " + res)
                 if (res && res.result) {
                     this.setState({
                         dataSource: res.data

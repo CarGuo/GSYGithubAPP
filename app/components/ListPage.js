@@ -36,7 +36,9 @@ class ListPage extends Component {
         this._loadMore = this._loadMore.bind(this);
         this._doRefresh = this._doRefresh.bind(this);
         this.page = 2;
-        this.filterSelect = this.props.route.params.filterSelect;
+        if(this.props.route.params.filterSelect != null) {
+         this.filterSelect = this.props.route.params.filterSelect;
+        }
         this.state = {
             dataSource: [],
         };

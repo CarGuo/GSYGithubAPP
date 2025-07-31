@@ -108,7 +108,7 @@ export default class SettingPage extends Component {
                     showIconNext={true}
                     topLine={false}
                     bottomLine={false}
-                    itemIcon={"octoface"}
+                    itemIcon={"book"}
                     textStyle={[styles.centered, styles.normalText, {
                         textAlignVertical: 'center',
                         marginHorizontal: Constant.normalMarginEdge
