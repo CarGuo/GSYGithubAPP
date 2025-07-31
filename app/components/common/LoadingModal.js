@@ -50,7 +50,7 @@ class LoadingModal extends Component {
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
                    backButtonClose={false}
-                   swipeToClose={this.props.backExit}
+                   swipeToClose={this.props.route.params.backExit}
                    backdropOpacity={0.8}>
                 <View style={[styles.centered, {flex: 1}]}>
                     <View>
@@ -58,7 +58,7 @@ class LoadingModal extends Component {
                                  isVisible={true}
                                  size={50} type="9CubeGrid"
                                  color="#FFFFFF"/>
-                        <Text style={styles.normalTextWhite}>{this.props.text}</Text>
+                        <Text style={styles.normalTextWhite}>{this.props.route.params.text}</Text>
                     </View>
                 </View>
             </Modal>

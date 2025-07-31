@@ -23,16 +23,16 @@ class CodeDetailPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            detail: this.props.detail
+            detail: this.props.route.params.detail
         };
         this._BackHandler = this._BackHandler.bind(this)
     }
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            if (this.props.needRequest) {
-                reposActions.getReposFileDir(this.props.ownerName,
-                    this.props.repositoryName, this.props.path, this.props.branch, this.props.textStyle).then((res) => {
+            if (this.props.route.params.needRequest) {
+                reposActions.getReposFileDir(this.props.route.params.ownerName,
+                    this.props.route.params.repositoryName, this.props.route.params.path, this.props.route.params.branch, this.props.route.params.textStyle).then((res) => {
                         if (res && res.result) {
                             let startTag = `class="instapaper_body `;
                             let startLang = res.data.indexOf(startTag);
@@ -48,7 +48,7 @@ class CodeDetailPage extends Component {
                                 console.log("Code Lang ", lang)
                             }
                             if (!lang) {
-                                lang = this.props.lang
+                                lang = this.props.route.params.lang
                             }
                             if ('markdown' === lang) {
                                 this.setState({
@@ -73,7 +73,7 @@ class CodeDetailPage extends Component {
                     }
                 )
             }
-            Actions.refresh({titleData: {html_url: this.props.html_url}})
+            Actions.refresh({titleData: {html_url: this.props.route.params.html_url}})
         });
         this.handle = BackHandler.addEventListener('CodeDetailPage-hardwareBackPress', this._BackHandler)
     }
@@ -98,9 +98,9 @@ class CodeDetailPage extends Component {
                 <WebComponent
                     gsygithubLink={(url) => {
                         if (url) {
-                            let owner = this.props.ownerName;
-                            let repo = this.props.repositoryName;
-                            let branch = this.props.branch ? this.props.branch : "master";
+                            let owner = this.props.route.params.ownerName;
+                            let repo = this.props.route.params.repositoryName;
+                            let branch = this.props.route.params.branch ? this.props.route.params.branch : "master";
                             let currentPath = url.replace("gsygithub://.", "").replace("gsygithub://", "/");
                             let fixedUrl = "https://github.com/" + owner + "/" + repo + "/blob/" + branch + currentPath;
                             launchUrl(fixedUrl);

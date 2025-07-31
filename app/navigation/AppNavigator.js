@@ -331,11 +331,37 @@ function RootNavigator() {
     <ModalStack.Navigator
       screenOptions={{ presentation: 'modal', headerShown: false }}
     >
-      <ModalStack.Screen name="Main" component={MainStack} />
-      <ModalStack.Screen name="LoadingModal" component={LoadingModal} />
-      <ModalStack.Screen name="TextInputModal" component={TextInputModal} />
-      <ModalStack.Screen name="ConfirmModal" component={CommentConfirmModal} />
-      <ModalStack.Screen name="OptionModal" component={CommonOptionModal} />
+      <ModalStack.Screen name="Main" component={MainStack}
+        options={{
+          presentation: 'transparentModal', // 设置为透明模态
+          cardStyle: { backgroundColor: 'transparent' }, // 确保卡片背景透明
+        }}
+
+      />
+      <ModalStack.Screen name="LoadingModal" component={LoadingModal}
+        options={{
+          presentation: 'transparentModal', // 设置为透明模态
+          cardStyle: { backgroundColor: 'transparent' }, // 确保卡片背景透明
+        }}
+      />
+      <ModalStack.Screen name="TextInputModal" component={TextInputModal}
+        options={{
+          presentation: 'transparentModal', // 设置为透明模态
+          cardStyle: { backgroundColor: 'transparent' }, // 确保卡片背景透明
+        }}
+      />
+      <ModalStack.Screen name="ConfirmModal" component={CommentConfirmModal}
+        options={{
+          presentation: 'transparentModal', // 设置为透明模态
+          cardStyle: { backgroundColor: 'transparent' }, // 确保卡片背景透明
+        }}
+      />
+      <ModalStack.Screen name="OptionModal" component={CommonOptionModal}
+        options={{
+          presentation: 'transparentModal', // 设置为透明模态
+          cardStyle: { backgroundColor: 'transparent' }, // 确保卡片背景透明
+        }}
+      />
     </ModalStack.Navigator>
   );
 }

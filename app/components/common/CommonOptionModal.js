@@ -57,7 +57,7 @@ class CommonOptionModal extends Component {
     }
 
     render() {
-        let {dataList} = this.props;
+        let {dataList} = this.props.route.params;
         let items = [];
         dataList.forEach((data) => {
             items.push(this._renderItem(data))

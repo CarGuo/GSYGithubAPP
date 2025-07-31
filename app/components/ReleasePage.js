@@ -60,8 +60,8 @@ class ReleasePage extends Component {
                     <ListPage
                         dataType={'repo_release'}
                         showType={'release'}
-                        currentUser={this.props.ownerName}
-                        currentRepository={this.props.repositoryName}
+                        currentUser={this.props.route.params.ownerName}
+                        currentRepository={this.props.route.params.repositoryName}
                     />
                 );
             case '2':
@@ -69,8 +69,8 @@ class ReleasePage extends Component {
                     <ListPage
                         dataType={'repo_tag'}
                         showType={'release'}
-                        currentUser={this.props.ownerName}
-                        currentRepository={this.props.repositoryName}
+                        currentUser={this.props.route.params.ownerName}
+                        currentRepository={this.props.route.params.repositoryName}
                     />
                 );
             default:

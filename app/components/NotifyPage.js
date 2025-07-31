@@ -41,7 +41,7 @@ class NotifyPage extends Component {
 
     componentWillUnmount() {
         this.subscription.remove();
-        this.props.backNotifyCall && this.props.backNotifyCall()
+        this.props.route.params.backNotifyCall && this.props.route.params.backNotifyCall()
     }
 
     _refresh() {
@@ -90,8 +90,8 @@ class NotifyPage extends Component {
                         dataType={'notify'}
                         showType={'notify'}
                         onItemClickEx={this._asRead}
-                        currentUser={this.props.ownerName}
-                        currentRepository={this.props.repositoryName}
+                        currentUser={this.props.route.params.ownerName}
+                        currentRepository={this.props.route.params.repositoryName}
                     />
 
                     <ListPage
@@ -102,8 +102,8 @@ class NotifyPage extends Component {
                         dataType={'notify'}
                         showType={'notify'}
                         onItemClickEx={this._asRead}
-                        currentUser={this.props.ownerName}
-                        currentRepository={this.props.repositoryName}
+                        currentUser={this.props.route.params.ownerName}
+                        currentRepository={this.props.route.params.repositoryName}
                     />
 
                     <ListPage
@@ -115,8 +115,8 @@ class NotifyPage extends Component {
                         showType={'notify'}
                         onItemClickEx={this._asRead}
                         all={true}
-                        currentUser={this.props.ownerName}
-                        currentRepository={this.props.repositoryName}
+                        currentUser={this.props.route.params.ownerName}
+                        currentRepository={this.props.route.params.repositoryName}
                     />
                 </ScrollableTabView>
             </View>

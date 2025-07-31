@@ -21,7 +21,7 @@ class PhotoPage extends Component {
         super(props);
         this.images = [];
         this.exit = false;
-        this.images.push({url: this.props.uri});
+        this.images.push({url: this.props.route.params.uri});
     }
 
     componentDidMount() {

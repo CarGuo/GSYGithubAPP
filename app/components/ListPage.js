@@ -36,7 +36,7 @@ class ListPage extends Component {
         this._loadMore = this._loadMore.bind(this);
         this._doRefresh = this._doRefresh.bind(this);
         this.page = 2;
-        this.filterSelect = this.props.filterSelect;
+        this.filterSelect = this.props.route.params.filterSelect;
         this.state = {
             dataSource: [],
         };
@@ -44,9 +44,9 @@ class ListPage extends Component {
 
     componentDidMount() {
         this.subscription = DeviceEventEmitter.addListener(
-            `${this.props.dataType}+${this.props.showType}`,
+            `${this.props.route.params.dataType}+${this.props.route.params.showType}`,
             (params) => {
-                if (this.props.filterSelect !== params.filterSelect) {
+                if (this.props.route.params.filterSelect !== params.filterSelect) {
                     this.filterSelect = params.filterSelect;
                     this._doRefresh();
                 }
@@ -72,9 +72,9 @@ class ListPage extends Component {
 
 
     _renderRow(rowData) {
-        switch (this.props.showType) {
+        switch (this.props.route.params.showType) {
             case 'repository':
-                if (this.props.dataType === 'history') {
+                if (this.props.route.params.dataType === 'history') {
                     rowData = rowData.data;
                 }
                 return (<RepositoryItem
@@ -113,8 +113,8 @@ class ListPage extends Component {
                         onPressItem={() => {
                             Actions.IssueDetail({
                                 issue: rowData, title: fullName,
-                                repositoryName: this.props.repositoryName,
-                                userName: this.props.userName,
+                                repositoryName: this.props.route.params.repositoryName,
+                                userName: this.props.route.params.userName,
                             });
                         }}/>
                 );
@@ -157,7 +157,7 @@ class ListPage extends Component {
                         actionTarget={rowData.subject.title}
                         onPressItem={() => {
                             if (rowData.unread) {
-                                this.props.onItemClickEx && this.props.onItemClickEx(rowData.id);
+                                this.props.route.params.onItemClickEx && this.props.route.params.onItemClickEx(rowData.id);
                             }
                             if (rowData.subject.type === 'Issue') {
                                 let tmp = rowData.subject.url.split('/');
@@ -193,9 +193,9 @@ class ListPage extends Component {
      * 刷新
      * */
     _refresh() {
-        switch (this.props.dataType) {
+        switch (this.props.route.params.dataType) {
             case 'follower':
-                userActions.getFollowerList(this.props.currentUser, 0)
+                userActions.getFollowerList(this.props.route.params.currentUser, 0)
                     .then((res) => {
                         this.setState({
                             dataSource: res.data,
@@ -207,7 +207,7 @@ class ListPage extends Component {
                     });
                 break;
             case 'followed':
-                userActions.getFollowedList(this.props.currentUser, 0)
+                userActions.getFollowedList(this.props.route.params.currentUser, 0)
                     .then((res) => {
                         this.setState({
                             dataSource: res.data,
@@ -219,7 +219,7 @@ class ListPage extends Component {
                     });
                 break;
             case 'user_repos':
-                repositoryActions.getUserRepository(this.props.currentUser, 0, this.filterSelect)
+                repositoryActions.getUserRepository(this.props.route.params.currentUser, 0, this.filterSelect)
                     .then((res) => {
                         this.setState({
                             dataSource: res.data,
@@ -231,7 +231,7 @@ class ListPage extends Component {
                     });
                 break;
             case 'user_star':
-                repositoryActions.getStarRepository(this.props.currentUser, 0, this.filterSelect)
+                repositoryActions.getStarRepository(this.props.route.params.currentUser, 0, this.filterSelect)
                     .then((res) => {
                         this.setState({
                             dataSource: res.data,
@@ -243,7 +243,7 @@ class ListPage extends Component {
                     });
                 break;
             case 'repo_star':
-                repositoryActions.getRepositoryStar(this.props.currentUser, this.props.currentRepository, 0)
+                repositoryActions.getRepositoryStar(this.props.route.params.currentUser, this.props.route.params.currentRepository, 0)
                     .then((res) => {
                         this.setState({
                             dataSource: res.data,
@@ -255,7 +255,7 @@ class ListPage extends Component {
                     });
                 break;
             case 'repo_watcher':
-                repositoryActions.getRepositoryWatcher(this.props.currentUser, this.props.currentRepository, 0)
+                repositoryActions.getRepositoryWatcher(this.props.route.params.currentUser, this.props.route.params.currentRepository, 0)
                     .then((res) => {
                         this.setState({
                             dataSource: res.data,
@@ -267,7 +267,7 @@ class ListPage extends Component {
                     });
                 break;
             case 'repo_fork':
-                repositoryActions.getRepositoryForks(this.props.currentUser, this.props.currentRepository, 0)
+                repositoryActions.getRepositoryForks(this.props.route.params.currentUser, this.props.route.params.currentRepository, 0)
                     .then((res) => {
                         this.setState({
                             dataSource: res.data,
@@ -279,17 +279,17 @@ class ListPage extends Component {
                     });
                 break;
             case 'repo_release':
-                repositoryActions.getRepositoryRelease(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
+                repositoryActions.getRepositoryRelease(this.props.route.params.currentUser, this.props.route.params.currentRepository, 0).then((res) => {
                     this._refreshRes(res);
                 });
                 break;
             case 'repo_tag':
-                repositoryActions.getRepositoryTag(this.props.currentUser, this.props.currentRepository, 0).then((res) => {
+                repositoryActions.getRepositoryTag(this.props.route.params.currentUser, this.props.route.params.currentRepository, 0).then((res) => {
                     this._refreshRes(res);
                 });
                 break;
             case 'notify':
-                userActions.getNotifation(this.props.all, this.props.participating, 0).then((res) => {
+                userActions.getNotifation(this.props.route.params.all, this.props.route.params.participating, 0).then((res) => {
                     this._refreshRes(res);
                 });
                 break;
@@ -299,15 +299,15 @@ class ListPage extends Component {
                 });
                 break;
             case 'topics':
-                repositoryActions.searchTopicRepository(this.props.topic, 0).then((res) => {
+                repositoryActions.searchTopicRepository(this.props.route.params.topic, 0).then((res) => {
                     this._refreshRes(res);
                 });
                 break;
             case 'user_be_stared':
-                this._refreshRes({result: true, data: this.props.localData});
+                this._refreshRes({result: true, data: this.props.route.params.localData});
                 break;
             case 'user_orgs':
-                userActions.getUserOrgs(0, this.props.currentUser)
+                userActions.getUserOrgs(0, this.props.route.params.currentUser)
                     .then((res) => {
                         this.setState({
                             dataSource: res.data,
@@ -329,54 +329,54 @@ class ListPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        switch (this.props.dataType) {
+        switch (this.props.route.params.dataType) {
             case 'follower':
-                userActions.getFollowerList(this.props.currentUser, this.page).then((res) => {
+                userActions.getFollowerList(this.props.route.params.currentUser, this.page).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
             case 'followed':
-                userActions.getFollowedList(this.props.currentUser, this.page).then((res) => {
+                userActions.getFollowedList(this.props.route.params.currentUser, this.page).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
             case 'user_repos':
-                repositoryActions.getUserRepository(this.props.currentUser, this.page, this.filterSelect).then((res) => {
+                repositoryActions.getUserRepository(this.props.route.params.currentUser, this.page, this.filterSelect).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
             case 'user_star':
-                repositoryActions.getStarRepository(this.props.currentUser, this.page, this.filterSelect).then((res) => {
+                repositoryActions.getStarRepository(this.props.route.params.currentUser, this.page, this.filterSelect).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
             case 'repo_star':
-                repositoryActions.getRepositoryStar(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
+                repositoryActions.getRepositoryStar(this.props.route.params.currentUser, this.props.route.params.currentRepository, this.page).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
             case 'repo_watcher':
-                repositoryActions.getRepositoryWatcher(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
+                repositoryActions.getRepositoryWatcher(this.props.route.params.currentUser, this.props.route.params.currentRepository, this.page).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
             case 'repo_fork':
-                repositoryActions.getRepositoryForks(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
+                repositoryActions.getRepositoryForks(this.props.route.params.currentUser, this.props.route.params.currentRepository, this.page).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
             case 'repo_release':
-                repositoryActions.getRepositoryRelease(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
+                repositoryActions.getRepositoryRelease(this.props.route.params.currentUser, this.props.route.params.currentRepository, this.page).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
             case 'repo_tag':
-                repositoryActions.getRepositoryTag(this.props.currentUser, this.props.currentRepository, this.page).then((res) => {
+                repositoryActions.getRepositoryTag(this.props.route.params.currentUser, this.props.route.params.currentRepository, this.page).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
             case 'notify':
-                userActions.getNotifation(this.props.all, this.props.participating, this.page).then((res) => {
+                userActions.getNotifation(this.props.route.params.all, this.props.route.params.participating, this.page).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
@@ -386,7 +386,7 @@ class ListPage extends Component {
                 });
                 break;
             case 'topics':
-                repositoryActions.searchTopicRepository(this.props.topic, this.page).then((res) => {
+                repositoryActions.searchTopicRepository(this.props.route.params.topic, this.page).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;
@@ -394,7 +394,7 @@ class ListPage extends Component {
                 this._loadMoreRes({result: false});
                 break;
             case 'user_orgs':
-                userActions.getUserOrgs(this.page, this.props.currentUser).then((res) => {
+                userActions.getUserOrgs(this.page, this.props.route.params.currentUser).then((res) => {
                     this._loadMoreRes(res);
                 });
                 break;

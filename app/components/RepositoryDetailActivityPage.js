@@ -55,7 +55,7 @@ class RepositoryDetailActivityPage extends Component {
     _renderRow(rowData) {
         if (this.state.select === 0) {
             let res = getActionAndDes(rowData);
-            let fullName = this.props.ownerName + "/" + this.props.repositoryName;
+            let fullName = this.props.route.params.ownerName + "/" + this.props.route.params.repositoryName;
             return (
                 <EventItem
                     actionTime={rowData.created_at}
@@ -76,8 +76,8 @@ class RepositoryDetailActivityPage extends Component {
                     des={"sha:" + rowData.sha}
                     onPressItem={() => {
                         Actions.PushDetailPage({
-                            repositoryName: this.props.repositoryName, userName: this.props.ownerName
-                            , title: this.props.ownerName + "/" + this.props.repositoryName,
+                            repositoryName: this.props.route.params.repositoryName, userName: this.props.route.params.ownerName
+                            , title: this.props.route.params.ownerName + "/" + this.props.route.params.repositoryName,
                             sha: rowData.sha,
                         });
                     }}
@@ -106,7 +106,7 @@ class RepositoryDetailActivityPage extends Component {
             select = this.state.select;
         }
         if (select === 0) {
-            eventActions.getRepositoryEvent(0, this.props.ownerName, this.props.repositoryName)
+            eventActions.getRepositoryEvent(0, this.props.route.params.ownerName, this.props.route.params.repositoryName)
                 .then((res) => {
                     if (res && res.result) {
                         let dataList = res.data;
@@ -131,7 +131,7 @@ class RepositoryDetailActivityPage extends Component {
                     }
                 })
         } else if (select === 1) {
-            reposActions.getReposCommits(0, this.props.ownerName, this.props.repositoryName)
+            reposActions.getReposCommits(0, this.props.route.params.ownerName, this.props.route.params.repositoryName)
                 .then((res) => {
                     if (res && res.result) {
                         let dataList = res.data;
@@ -163,7 +163,7 @@ class RepositoryDetailActivityPage extends Component {
                 }
                 return
             }
-            reposActions.getPulse(this.props.ownerName, this.props.repositoryName).then((res) => {
+            reposActions.getPulse(this.props.route.params.ownerName, this.props.route.params.repositoryName).then((res) => {
                 if (res && res.result) {
                     this.setState({
                         pulseData: res.data
@@ -188,7 +188,7 @@ class RepositoryDetailActivityPage extends Component {
      * */
     _loadMore() {
         if (this.state.select === 0) {
-            eventActions.getRepositoryEvent(this.page, this.props.ownerName, this.props.repositoryName).then((res) => {
+            eventActions.getRepositoryEvent(this.page, this.props.route.params.ownerName, this.props.route.params.repositoryName).then((res) => {
                 let size = 0;
                 if (res && res.result) {
                     this.page++;
@@ -203,7 +203,7 @@ class RepositoryDetailActivityPage extends Component {
                 }
             })
         } else if (this.state.select === 1) {
-            reposActions.getReposCommits(this.page, this.props.ownerName, this.props.repositoryName).then((res) => {
+            reposActions.getReposCommits(this.page, this.props.route.params.ownerName, this.props.route.params.repositoryName).then((res) => {
                 let size = 0;
                 if (res && res.result) {
                     this.page++;
@@ -272,12 +272,12 @@ class RepositoryDetailActivityPage extends Component {
             forks_count, fork, open_issues_count, size, watchers_count, owner,
             subscribers_count, description, language, created_at, pushed_at, parent,
             topics, license, all_issues_count, closed_issues_count
-        } = this.props.dataDetail;
+        } = this.props.route.params.dataDetail;
         return <View>
                 <RepositoryHeader
-                    ownerName={this.props.ownerName}
+                    ownerName={this.props.route.params.ownerName}
                     ownerPic={owner ? owner.avatar_url : ""}
-                    repositoryName={this.props.repositoryName}
+                    repositoryName={this.props.route.params.repositoryName}
                     repositoryStar={watchers_count + ""}
                     repositoryFork={forks_count + ""}
                     repositoryWatch={subscribers_count + ""}

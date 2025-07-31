@@ -65,7 +65,7 @@ class RepositoryIssueListPage extends Component {
             this.refs.pullList.showRefreshState();
         }
         if (this.searchText === null || this.searchText.trim().length === 0) {
-            issueActions.getRepositoryIssue(0, this.props.userName, this.props.repositoryName, this.filter)
+            issueActions.getRepositoryIssue(0, this.props.route.params.userName, this.props.route.params.repositoryName, this.filter)
                 .then((res) => {
                     if (res && res.result) {
                         let dataList = res.data;
@@ -90,7 +90,7 @@ class RepositoryIssueListPage extends Component {
             });
             return
         }
-        repositoryActions.searchRepositoryIssue(this.searchText, this.props.userName, this.props.repositoryName, 1, this.filter).then((res) => {
+        repositoryActions.searchRepositoryIssue(this.searchText, this.props.route.params.userName, this.props.route.params.repositoryName, 1, this.filter).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page = 2;
@@ -124,8 +124,8 @@ class RepositoryIssueListPage extends Component {
                         rightBtn: 'ios-more',
                         needRightBtn: true,
                         issue: rowData, title: fullName,
-                        repositoryName: this.props.repositoryName,
-                        userName: this.props.userName,
+                        repositoryName: this.props.route.params.repositoryName,
+                        userName: this.props.route.params.userName,
                         rightBtnPress: (params) => {
                             return CommonMoreRightBtnPress(params)
                         }
@@ -146,7 +146,7 @@ class RepositoryIssueListPage extends Component {
      * */
     _loadMore() {
         if (this.searchText === null || this.searchText.trim().length === 0) {
-            issueActions.getRepositoryIssue(this.page, this.props.userName, this.props.repositoryName, this.filter).then((res) => {
+            issueActions.getRepositoryIssue(this.page, this.props.route.params.userName, this.props.route.params.repositoryName, this.filter).then((res) => {
                 let size = 0;
                 if (res && res.result) {
                     this.page++;
@@ -162,7 +162,7 @@ class RepositoryIssueListPage extends Component {
             });
             return
         }
-        repositoryActions.searchRepositoryIssue(this.searchText, this.props.userName, this.props.repositoryName, this.page, this.filter).then((res) => {
+        repositoryActions.searchRepositoryIssue(this.searchText, this.props.route.params.userName, this.props.route.params.repositoryName, this.page, this.filter).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page++;
@@ -227,7 +227,7 @@ class RepositoryIssueListPage extends Component {
     }
 
     _createIssue(text, title) {
-        let {repositoryName, userName} = this.props;
+        let {repositoryName, userName} = this.props.route.params;
         Actions.LoadingModal({backExit: false});
         issueActions.createIssue(userName, repositoryName,
             {title: title, body: text}).then((res) => {

@@ -40,8 +40,8 @@ class CommonTextInputModal extends Component {
         this.getUserList = this.getUserList.bind(this);
         this.openImagePicker = this.openImagePicker.bind(this);
         this.getLoading = this.getLoading.bind(this);
-        this.text = this.props.text;
-        this.title = this.props.titleValue;
+        this.text = this.props.route.params.text;
+        this.title = this.props.route.params.titleValue;
         this.loginModalRef = createRef();
         this.titleInputRef = createRef();
         this.contentInputRef = createRef();
@@ -187,7 +187,7 @@ class CommonTextInputModal extends Component {
             iconType: 2,
             iconSize: iconSize,
             itemClick: () => {
-                let {userList} = this.props;
+                let {userList} = this.props.route.params;
                 if (userList && userList.length > 0) {
                     this.setState({
                         showList: true
@@ -212,7 +212,7 @@ class CommonTextInputModal extends Component {
 
 
     _getOptionItem() {
-        let {userList} = this.props;
+        let {userList} = this.props.route.params;
         let optionList = [];
         userList.forEach((item) => {
             let optionItem = {
@@ -328,8 +328,8 @@ class CommonTextInputModal extends Component {
 
     render() {
         let width = screenWidth - 100;
-        let {bottomBar} = this.props;
-        let editTitle = this.props.needEditTitle ? <View style={[{
+        let {bottomBar} = this.props.route.params;
+        let editTitle = this.props.route.params.needEditTitle ? <View style={[{
             borderBottomWidth: 1,
             borderColor: Constant.subLightTextColor,
             marginHorizontal: Constant.normalMarginEdge,
@@ -340,7 +340,7 @@ class CommonTextInputModal extends Component {
                 onChangeText={(text) => {
                     this._searchTextTitleChange(text)
                 }}
-                placeholder={this.props.placeHolderTitle ? this.props.placeHolderTitle : I18n('issueInputTipTitle')}
+                placeholder={this.props.route.params.placeHolderTitle ? this.props.route.params.placeHolderTitle : I18n('issueInputTipTitle')}
                 underlineColorAndroid="transparent"
                 clearButtonMode="always"
                 multiline={true}
@@ -357,16 +357,16 @@ class CommonTextInputModal extends Component {
                    onClosed={this.onClose}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
-                   backdrop={this.props.backExit}
+                   backdrop={this.props.route.params.backExit}
                    backButtonClose={false}
-                   swipeToClose={this.props.backExit}
+                   swipeToClose={this.props.route.params.backExit}
                    backdropOpacity={0.8}>
                 <View style={[styles.centered, {flex: 1,}]}>
                     <View style={[{borderRadius: 3, backgroundColor: Constant.white}, styles.centered]}>
                         <View style={[styles.flexDirectionRowNotFlex, {marginTop: 10, paddingBottom: 10},
                             {backgroundColor: Constant.white, width: width}, styles.centered]}>
                             <Text
-                                style={[styles.normalText, {fontWeight: 'bold'}]}>{this.props.titleText}</Text>
+                                style={[styles.normalText, {fontWeight: 'bold'}]}>{this.props.route.params.titleText}</Text>
                         </View>
                         {editTitle}
                         <View style={[{
@@ -385,7 +385,7 @@ class CommonTextInputModal extends Component {
                                         this.selection = event.nativeEvent.selection.end;
                                     }
                                 }}
-                                placeholder={this.props.placeHolder ? this.props.placeHolder : I18n('issueInputTip')}
+                                placeholder={this.props.route.params.placeHolder ? this.props.route.params.placeHolder : I18n('issueInputTip')}
                                 underlineColorAndroid="transparent"
                                 clearButtonMode="always"
                                 multiline={true}
@@ -422,7 +422,7 @@ class CommonTextInputModal extends Component {
                                 onPress={() => {
                                     if (this.text && this.text.trim().length > 0) {
                                         Actions.pop();
-                                        this.props.textConfirm && this.props.textConfirm(this.text, this.title);
+                                        this.props.route.params.textConfirm && this.props.route.params.textConfirm(this.text, this.title);
                                     }
                                 }}>
                                 <Text style={[styles.normalText, {fontWeight: 'bold'}]}>{I18n("ok")}</Text>

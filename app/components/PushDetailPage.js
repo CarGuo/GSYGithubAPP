@@ -62,8 +62,8 @@ class PushDetailPage extends Component {
                     }
                     Actions.CodeDetailPage({
                         title: nameSplit[nameSplit.length - 1],
-                        ownerName: this.props.userName,
-                        repositoryName: this.props.repositoryName,
+                        ownerName: this.props.route.params.userName,
+                        repositoryName: this.props.route.params.repositoryName,
                         branch: 'master',
                         lang: '',
                         needRequest: false,
@@ -79,8 +79,8 @@ class PushDetailPage extends Component {
      * 刷新
      * */
     _refresh() {
-        let {sha} = this.props;
-        reposActions.getReposCommitsInfo(this.props.userName, this.props.repositoryName, sha)
+        let {sha} = this.props.route.params;
+        reposActions.getReposCommitsInfo(this.props.route.params.userName, this.props.route.params.repositoryName, sha)
             .then((res) => {
                 if (res && res.result) {
                     this.setState({
