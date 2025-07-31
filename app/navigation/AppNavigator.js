@@ -252,6 +252,7 @@ function MainStack() {
           headerRight: () => (
             <CommonIconButton
               data={{
+                needRightBtn: true,
                 rightBtn: 'ellipsis-horizontal-outline',
                 iconType: 2,
                 rightBtnPress: (params) => CommonMoreRightBtnPress(params),
