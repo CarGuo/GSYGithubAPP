@@ -24,7 +24,7 @@ import Icon from 'react-native-vector-icons/Feather'
 const config = {
     ["tabRecommended"]: 'activity',
     ["tabDynamic"]: 'aperture',
-    ["tabMy"]: 'users',
+    ["tabMy"]: 'user',
 };
 
 const propTypes = {
@@ -46,7 +46,7 @@ class TabIcon extends Component {
     render() {
 
         let iconPath = config[this.props.tabIconName];
-
+        console.log("################ " + iconPath)
         let color = this.props.focused ? Constant.tabSelectedColor : Constant.tabUnSelectColor;
 
         return (

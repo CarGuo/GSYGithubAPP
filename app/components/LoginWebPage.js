@@ -21,10 +21,10 @@ export default class LoginWebPage extends Component {
         super(props);
         this.canGoBack = false;
         this.state = {
-            uri: this.resolveUrl(this.props.uri),
-            showCurUri: this.resolveUrl(this.props.uri)
+            uri: this.resolveUrl(props.route.params.uri),
+            showCurUri: this.resolveUrl(props.route.params.uri)
         };
-        this.inputText = this.resolveUrl(this.props.uri);
+        this.inputText = this.resolveUrl(props.route.params.uri);
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
         this.handleTextInputChange = this.handleTextInputChange.bind(this);
         this.reload = this.reload.bind(this);
@@ -115,11 +115,13 @@ export default class LoginWebPage extends Component {
                     ref={(ref) => {
                         this.webview = ref;
                     }}
-                    {...this.props}
+                    {...this.props.route.params}
                     cacheEnabled={false}
                     source={{uri: this.state.uri}}
                     onNavigationStateChange={this.onNavigationStateChange}
+                    originWhitelist={['http://*', 'https://*', 'gsygithubapp://*']}
                     onShouldStartLoadWithRequest={event => {
+                        console.log("### onShouldStartLoadWithRequest URL:", event.url);
                         if (event.url.indexOf('gsygithubapp://authed') === 0) {
                             let parseUrl = URL(event.url)
                             let code = parseUrl.query.substring((parseUrl.query.indexOf("code=") + 5), parseUrl.query.indexOf("&"))

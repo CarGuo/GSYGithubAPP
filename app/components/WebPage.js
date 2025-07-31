@@ -18,14 +18,14 @@ import styles from "../style"
  */
 export default class WebPage extends Component {
 
-    constructor(props: Object) {
+    constructor(props) {
         super(props);
         this.canGoBack = false;
         this.state = {
-            uri: this.resolveUrl(this.props.uri),
-            showCurUri: this.resolveUrl(this.props.uri)
+            uri: this.resolveUrl(props.route.params.uri),
+            showCurUri: this.resolveUrl(props.route.params.uri)
         };
-        this.inputText = this.resolveUrl(this.props.uri);
+        this.inputText = this.resolveUrl(props.route.params.uri);
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
         this.handleTextInputChange = this.handleTextInputChange.bind(this);
         this.reload = this.reload.bind(this);
@@ -154,7 +154,7 @@ export default class WebPage extends Component {
                     ref={(ref) => {
                         this.webview = ref;
                     }}
-                    {...this.props}
+                    {...this.props.route.params}
                     source={{uri: this.state.uri}}
                     onNavigationStateChange={this.onNavigationStateChange}
                     javaScriptEnabled={true}

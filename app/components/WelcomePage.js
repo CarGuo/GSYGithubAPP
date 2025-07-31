@@ -32,9 +32,6 @@ export default class WelcomePage extends Component {
         super(props);
         this.toNext = this.toNext.bind(this);
         this.lottieViewRef = createRef();
-        this.state = {
-            progress: new Animated.Value(0),
-        };
     }
 
 
@@ -43,12 +40,6 @@ export default class WelcomePage extends Component {
         userActions.initUserInfo().then((res) => {
             this.toNext(res)
         });
-        Animated.timing(this.state.progress, {
-            toValue: 1,
-            duration: 2000,
-            easing: Easing.linear,
-            useNativeDriver: false,
-        }).start();
     }
 
     componentWillUnmount() {
@@ -60,11 +51,11 @@ export default class WelcomePage extends Component {
     toNext(res) {
         setTimeout(() => {
             if (res && res.result) {
-                Actions.reset("root");
+                Actions.reset("MainTabs");
             } else {
                 Actions.reset("LoginPage");
             }
-        }, 2100);
+        }, 3000);
     }
 
     render() {
@@ -84,7 +75,8 @@ export default class WelcomePage extends Component {
                                     height: 150,
                                 }}
                                 source={require('../style/lottie/animation-w800-h800.json')}
-                                animatedProgress={this.state.progress}
+                                autoPlay={true}
+                                loop={false}
                             />
                         </View>
                     </View>

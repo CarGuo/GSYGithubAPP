@@ -62,7 +62,6 @@ export default class LoginPage extends Component {
             secureTextEntry: true,
             secureIcon: "eye-with-line",
             opacity: new Animated.Value(0),
-            progress: new Animated.Value(0),
         }
         this.thisUnmount = false;
     }
@@ -89,7 +88,7 @@ export default class LoginPage extends Component {
                     if (!res) {
                         Toast(I18n('LoginFailTip'));
                     } else {
-                        Actions.reset("root")
+                        Actions.reset("MainTabs")
                     }
                 })
             });
@@ -111,21 +110,6 @@ export default class LoginPage extends Component {
         if (this.thisUnmount) {
             return;
         }
-        Animated.timing(this.state.progress, {
-            toValue: 1,
-            duration: 2000,
-            easing: Easing.linear,
-            useNativeDriver: false,
-        }).start(({finished}) => {
-            /*if (!finished) {
-                return;
-            }
-            //重复播放
-            this.setState({
-                progress: new Animated.Value(0),
-            });
-            this.startAnimation()*/
-        });
     }
 
     onOpen() {
@@ -192,7 +176,7 @@ export default class LoginPage extends Component {
             if (!res) {
                 Toast(I18n('LoginFailTip'));
             } else {
-                Actions.reset("root")
+                Actions.reset("MainTabs")
             }
         })*/
     }
@@ -217,8 +201,9 @@ export default class LoginPage extends Component {
                         <LottieView
                             ref={this.lottieViewRef}
                             style={{width: screenWidth, height: screenHeight / 2}}
-                            source={require('../style/lottie/animation-login.json')}
-                            animatedProgress={this.state.progress}
+                            source={require('../style/lottie/animation-login.json')}              
+                            autoPlay={true}
+                            loop={false}
                         />
                     </View>
                 </View>
