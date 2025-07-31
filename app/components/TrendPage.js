@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, Text, StatusBar, Platform, InteractionManager
+    View, Text, Platform, InteractionManager
 } from 'react-native';
 import {Actions} from '../navigation/Actions';
 import styles, {screenWidth, navBarHeight} from "../style"
@@ -103,7 +103,6 @@ export default class TrendPage extends Component {
         let dataSource = (reposState.trend_repos_data_list);
         return (
             <View style={styles.mainBox}>
-                <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
                 <View style={[styles.shadowCard, styles.flexDirectionRowNotFlex, {
                     height: filterItemHeight,
                     backgroundColor: Constant.white,

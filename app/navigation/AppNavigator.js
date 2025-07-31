@@ -7,6 +7,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { StatusBar, Platform } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Import all screen components
 import DynamicPage from '../components/DynamicPage';
@@ -59,15 +62,22 @@ const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const ModalStack = createStackNavigator();
 
-// Default screen options
-const defaultScreenOptions = {
-  headerStyle: styles.navigationBar,
+// Default screen options with safe area handling
+const getDefaultScreenOptions = (insets) => ({
+  headerStyle: [
+    styles.navigationBar,
+    {
+      paddingTop: insets.top,
+      height: 50 + insets.top, // base header height + status bar
+    }
+  ],
   headerTitleStyle: { color: Constant.titleTextColor },
   headerLeft: () => <CustomBackButton />,
-};
+});
 
 // Tab Screen Component
 function MainTabScreen() {
+  const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -78,7 +88,13 @@ function MainTabScreen() {
           backgroundColor: Constant.tabBackgroundColor,
         },
         tabBarShowLabel: false,
-        headerStyle: styles.navigationBar,
+        headerStyle: [
+          styles.navigationBar,
+          {
+            paddingTop: insets.top,
+            height: 50 + insets.top, // base header height + status bar
+          }
+        ],
         headerTitleStyle: { color: Constant.titleTextColor },
         headerRight: () => <SearchButton />,
       }}
@@ -137,6 +153,8 @@ function SearchDrawer() {
 
 // Main Stack Navigator
 function MainStack() {
+  const insets = useSafeAreaInsets();
+  const defaultScreenOptions = getDefaultScreenOptions(insets);
   return (
     <Stack.Navigator
       initialRouteName="WelcomePage"
@@ -380,11 +398,19 @@ export default function AppNavigator() {
   };
 
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      onStateChange={onStateChange}
-    >
-      <RootNavigator />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <StatusBar 
+        hidden={false} 
+        backgroundColor={'transparent'} 
+        translucent 
+        barStyle={'light-content'}
+      />
+      <NavigationContainer
+        ref={navigationRef}
+        onStateChange={onStateChange}
+      >
+        <RootNavigator />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

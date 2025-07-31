@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, AppState, StatusBar, InteractionManager
+    View, AppState, InteractionManager
 } from 'react-native';
 import styles from "../style"
 import loginActions from '../store/actions/login'
@@ -136,7 +136,6 @@ export default class DynamicPage extends Component {
         let dataSource = (eventState.received_events_data_list);
         return (
             <View style={styles.mainBox}>
-                <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
                 <PullListView
                     style={{flex: 1}}
                     ref="pullList"

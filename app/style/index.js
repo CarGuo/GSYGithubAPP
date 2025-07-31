@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     },
     navigationBar: {
         backgroundColor: constant.primaryColor,
-        paddingTop: StatusBar.currentHeight,
         height: navBarHeight,
     },
     titleTextStyle: {
