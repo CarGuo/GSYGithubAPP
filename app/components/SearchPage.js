@@ -235,7 +235,7 @@ class SearchPage extends Component {
                         onPress={() => {
                             this._refresh()
                         }}>
-                        <Icon name={'md-search'} size={28} color={Constant.subLightTextColor}/>
+                        <Icon name={'search-outline'} size={28} color={Constant.subLightTextColor}/>
                     </TouchableOpacity>
                 </View>
                 <CommonBottomBar

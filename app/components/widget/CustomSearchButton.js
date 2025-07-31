@@ -33,7 +33,7 @@ class SearchButton extends Component {
             }]} onPress={() => {
                 Actions.SearchPage();
             }}>
-                <Icon name={'md-search'} size={25} color={Constant.miWhite}/>
+                <Icon name={'search-outline'} size={25} color={Constant.miWhite}/>
             </TouchableOpacity>
         )
     }

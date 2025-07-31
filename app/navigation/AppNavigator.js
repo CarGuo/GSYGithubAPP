@@ -179,7 +179,7 @@ function MainStack() {
             <CommonIconButton
               data={{
                 needRightBtn: true,
-                rightBtn: 'ios-more',
+                rightBtn: 'ellipsis-horizontal-outline',
                 iconType: 2,
                 rightBtnPress: (params) => CommonMoreRightBtnPress(params),
                 ...route.params,
@@ -217,7 +217,7 @@ function MainStack() {
             <CommonIconButton
               data={{
                 needRightBtn: true,
-                rightBtn: 'ios-more',
+                rightBtn: 'ellipsis-horizontal-outline',
                 iconType: 2,
                 rightBtnPress: (params) => RepositoryDetailRightBtnPress(params),
                 ...route.params,
@@ -234,7 +234,7 @@ function MainStack() {
           headerRight: () => (
             <CommonIconButton
               data={{
-                rightBtn: 'ios-more',
+                rightBtn: 'ellipsis-horizontal-outline',
                 iconType: 2,
                 rightBtnPress: (params) => CommonMoreRightBtnPress(params),
                 ...route.params,
@@ -252,7 +252,7 @@ function MainStack() {
             <CommonIconButton
               data={{
                 needRightBtn: true,
-                rightBtn: 'ios-more',
+                rightBtn: 'ellipsis-horizontal-outline',
                 iconType: 2,
                 rightBtnPress: (params) => CommonMoreRightBtnPress(params),
                 ...route.params,
@@ -288,7 +288,7 @@ function MainStack() {
             <CommonIconButton
               data={{
                 needRightBtn: true,
-                rightBtn: 'ios-more',
+                rightBtn: 'ellipsis-horizontal-outline',
                 iconType: 2,
                 rightBtnPress: (params) => CommonMoreRightBtnPress(params),
                 ...route.params,

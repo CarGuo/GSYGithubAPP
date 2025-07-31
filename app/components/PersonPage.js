@@ -15,7 +15,7 @@ class PersonPage extends BasePersonPage {
         this._refreshInfo = this._refreshInfo.bind(this);
         this.state = {
             userInfo: {
-                login: this.props.currentUser,
+                login: this.props.route.params.currentUser,
                 followers: '---',
                 star: '---',
                 following: '---',
@@ -45,7 +45,7 @@ class PersonPage extends BasePersonPage {
 
     getNeedFollow() {
         let login = getState()['user'].userInfo.login;
-        return this.state.needFollow && (this.props.currentUser !== login);
+        return this.state.needFollow && (this.props.route.params.currentUser !== login);
     }
 
     getHanFollow() {
@@ -53,7 +53,7 @@ class PersonPage extends BasePersonPage {
     }
 
     _refreshInfo() {
-        userAction.getPersonUserInfo(this.props.currentUser).then((res) => {
+        userAction.getPersonUserInfo(this.props.route.params.currentUser).then((res) => {
             if (res && res.result) {
                 this.setState({
                     userInfo: res.data
@@ -77,7 +77,7 @@ class PersonPage extends BasePersonPage {
                 }
             }
         });
-        userAction.checkFollow(this.props.currentUser).then((res) => {
+        userAction.checkFollow(this.props.route.params.currentUser).then((res) => {
             this.setState({
                 hadFollowed: res.result,
                 needFollow: true
@@ -87,7 +87,7 @@ class PersonPage extends BasePersonPage {
 
     doFollowLogic() {
         Actions.LoadingModal({backExit: false});
-        userAction.doFollow(this.props.currentUser, !this.state.hadFollowed).then(() => {
+        userAction.doFollow(this.props.route.params.currentUser, !this.state.hadFollowed).then(() => {
             this._refreshInfo();
             setTimeout(() => {
                 Actions.pop();

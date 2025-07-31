@@ -40,22 +40,23 @@ class RepositoryDetailPage extends Component {
         this.curBranch = null;
         this.index = 0;
         this.state = {
-            dataDetail: this.props.defaultProps,
+            dataDetail: props.route.params.defaultProps,
             dataDetailReadme: '',
             showBottom: false,
         }
     }
 
     componentDidMount() {
+        const { ownerName, repositoryName } = this.props.route.params;
         InteractionManager.runAfterInteractions(() => {
-            repositoryActions.getRepositoryDetail(this.props.ownerName, this.props.repositoryName)
+            repositoryActions.getRepositoryDetail(ownerName, repositoryName)
                 .then((res) => {
                     if (res && res.result) {
                         this.setState({
                             dataDetail: res.data
                         });
                         Actions.refresh({titleData: res.data});
-                        repositoryActions.addRepositoryLocalRead(this.props.ownerName, this.props.repositoryName, res.data);
+                        repositoryActions.addRepositoryLocalRead(ownerName, repositoryName, res.data);
 
                     }
                     return res.next();
@@ -66,11 +67,11 @@ class RepositoryDetailPage extends Component {
                             dataDetail: res.data
                         });
                         Actions.refresh({titleData: res.data});
-                        repositoryActions.addRepositoryLocalRead(this.props.ownerName, this.props.repositoryName, res.data);
+                        repositoryActions.addRepositoryLocalRead(ownerName, repositoryName, res.data);
                     }
                 });
             this._refresh();
-            repositoryActions.getBranches(this.props.ownerName, this.props.repositoryName)
+            repositoryActions.getBranches(ownerName, repositoryName)
                 .then((res) => {
                     if (res && res.result) {
                         this.setState({
@@ -129,7 +130,8 @@ class RepositoryDetailPage extends Component {
     }
 
     _refresh() {
-        repositoryActions.getRepositoryDetailReadmeHtml(this.props.ownerName, this.props.repositoryName, this.curBranch)
+        const { ownerName, repositoryName } = this.props.route.params;
+        repositoryActions.getRepositoryDetailReadmeHtml(ownerName, repositoryName, this.curBranch)
             .then((res) => {
                 if (res && res.result) {
                     this.setState({
@@ -145,7 +147,7 @@ class RepositoryDetailPage extends Component {
                     })
                 }
             });
-        repositoryActions.getRepositoryStatus(this.props.ownerName, this.props.repositoryName).then((res) => {
+        repositoryActions.getRepositoryStatus(ownerName, repositoryName).then((res) => {
             if (res && res.result) {
                 this.setState({
                     showBottom: true,
@@ -158,7 +160,7 @@ class RepositoryDetailPage extends Component {
 
 
     _forked() {
-        let {ownerName, repositoryName} = this.props;
+        let {ownerName, repositoryName} = this.props.route.params;
         Actions.LoadingModal({backExit: false});
         repositoryActions.createRepositoryForks(ownerName, repositoryName).then((res) => {
             Toast((res && res.result) ? I18n('forkSuccess') : I18n('forkFail'));
@@ -182,7 +184,7 @@ class RepositoryDetailPage extends Component {
 
     _getBottomItem() {
         let {stared, watched, dataDetail} = this.state;
-        let {ownerName, repositoryName} = this.props;
+        let {ownerName, repositoryName} = this.props.route.params;
         return [{
             itemName: stared ? I18n("reposUnStar") : I18n("reposStar"),
             icon: "star",
@@ -290,12 +292,12 @@ class RepositoryDetailPage extends Component {
                     <WebComponent
                         tabLabel={I18n('reposReadme')}
                         source={{html: this.state.dataDetailReadme}}
-                        userName={this.props.ownerName}
-                        reposName={this.props.repositoryName}
+                        userName={this.props.route.params.ownerName}
+                        reposName={this.props.route.params.repositoryName}
                         gsygithubLink={(url) => {
                             if (url) {
-                                let owner = this.props.ownerName;
-                                let repo = this.props.repositoryName;
+                                let owner = this.props.route.params.ownerName;
+                                let repo = this.props.route.params.repositoryName;
                                 let branch = this.curBranch ? this.curBranch : "master";
                                 let currentPath = url.replace("gsygithub://.", "").replace("gsygithub://", "/");
                                 let fixedUrl = "https://github.com/" + owner + "/" + repo + "/blob/" + branch + currentPath;
@@ -306,8 +308,8 @@ class RepositoryDetailPage extends Component {
                     <RepositoryDetailActivity
                         tabLabel={I18n('reposActivity')}
                         dataDetail={this.state.dataDetail}
-                        ownerName={this.props.ownerName}
-                        repositoryName={this.props.repositoryName}
+                        ownerName={this.props.route.params.ownerName}
+                        repositoryName={this.props.route.params.repositoryName}
                     />
 
                     <RepositoryDetailFile
@@ -316,14 +318,14 @@ class RepositoryDetailPage extends Component {
                             this.detailFile = ref;
                         }}
                         curBranch={this.curBranch}
-                        ownerName={this.props.ownerName}
-                        repositoryName={this.props.repositoryName}
+                        ownerName={this.props.route.params.ownerName}
+                        repositoryName={this.props.route.params.repositoryName}
                     />
 
                     <IssueListPage
                         tabLabel={I18n('reposIssue')}
-                        userName={this.props.ownerName}
-                        repositoryName={this.props.repositoryName}
+                        userName={this.props.route.params.ownerName}
+                        repositoryName={this.props.route.params.repositoryName}
                     />
                 </ScrollableTabView>
                 {bottom}

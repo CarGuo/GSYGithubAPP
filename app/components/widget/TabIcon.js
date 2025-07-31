@@ -46,7 +46,6 @@ class TabIcon extends Component {
     render() {
 
         let iconPath = config[this.props.tabIconName];
-        console.log("################ " + iconPath)
         let color = this.props.focused ? Constant.tabSelectedColor : Constant.tabUnSelectColor;
 
         return (
