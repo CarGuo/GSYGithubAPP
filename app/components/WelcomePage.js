@@ -4,7 +4,7 @@
 
 import React, {Component, createRef} from 'react';
 import {
-    View, Image, StatusBar, Platform, Animated, Easing
+    View, Image, Platform, Animated, Easing
 } from 'react-native';
 import {Actions} from '../navigation/Actions';
 import styles, {screenHeight, screenWidth} from "../style"
@@ -61,7 +61,6 @@ export default class WelcomePage extends Component {
     render() {
         return (
             <View style={[styles.mainBox, {backgroundColor: Constant.white}]}>
-                <StatusBar hidden={true}/>
                 <View style={[styles.centered, {flex: 1}]}>
                     <Image source={require("../img/welcome.png")}
                            resizeMode={"contain"}

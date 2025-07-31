@@ -388,9 +388,9 @@ function RootNavigator() {
 export default function AppNavigator() {
   const navigationRef = React.useRef(null);
 
-  React.useEffect(() => {
+  const onReady = () => {
     NavigationService.setNavigatorRef(navigationRef.current);
-  }, []);
+  };
 
   const onStateChange = (state) => {
     const currentRouteName = state?.routes[state.index]?.name;
@@ -407,6 +407,7 @@ export default function AppNavigator() {
       />
       <NavigationContainer
         ref={navigationRef}
+        onReady={onReady}
         onStateChange={onStateChange}
       >
         <RootNavigator />

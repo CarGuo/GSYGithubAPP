@@ -8,7 +8,6 @@ import {
     TouchableOpacity,
     Animated,
     Image,
-    StatusBar,
     BackHandler,
     Keyboard,
     Linking,
@@ -194,8 +193,6 @@ export default class LoginPage extends Component {
         return (
             <Animated.View
                 style={[styles.centered, styles.absoluteFull, {backgroundColor: Constant.primaryColor}, {opacity: this.state.opacity}]}>
-                <StatusBar hidden={false} backgroundColor={Constant.primaryColor} translucent
-                           barStyle={'light-content'}/>
                 <View style={[styles.absoluteFull, {zIndex: -999, justifyContent: 'flex-end'}]}>
                     <View style={{width: screenWidth, height: screenHeight / 2}}>
                         <LottieView
