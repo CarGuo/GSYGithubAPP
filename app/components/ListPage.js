@@ -36,6 +36,7 @@ class ListPage extends Component {
         this._loadMore = this._loadMore.bind(this);
         this._doRefresh = this._doRefresh.bind(this);
         this.page = 2;
+        this.pullListRef = React.createRef();
         if(this.props.route.params.filterSelect != null) {
          this.filterSelect = this.props.route.params.filterSelect;
         }
@@ -54,8 +55,8 @@ class ListPage extends Component {
                 }
             });
         InteractionManager.runAfterInteractions(() => {
-            if (this.refs.pullList) {
-                this.refs.pullList.showRefreshState();
+            if (this.pullListRef.current) {
+                this.pullListRef.current.showRefreshState();
             }
             this._refresh();
         });
@@ -66,8 +67,8 @@ class ListPage extends Component {
     }
 
     _doRefresh() {
-        if (this.refs.pullList) {
-            this.refs.pullList.showRefreshState();
+        if (this.pullListRef.current) {
+            this.pullListRef.current.showRefreshState();
         }
         this._refresh();
     }
@@ -417,8 +418,8 @@ class ListPage extends Component {
             size = res.data.length;
         }
         setTimeout(() => {
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
+            if (this.pullListRef.current) {
+                this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE), true);
             }
         }, 500);
 
@@ -438,8 +439,8 @@ class ListPage extends Component {
             size = res.data.length;
         }
         setTimeout(() => {
-            if (this.refs.pullList) {
-                this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+            if (this.pullListRef.current) {
+                this.pullListRef.current.loadMoreComplete((size >= Config.PAGE_SIZE));
             }
         }, 500);
     }
@@ -450,7 +451,7 @@ class ListPage extends Component {
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     enableRefresh={false}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)

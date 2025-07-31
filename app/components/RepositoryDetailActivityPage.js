@@ -35,6 +35,7 @@ class RepositoryDetailActivityPage extends Component {
         this._renderHeader = this._renderHeader.bind(this);
         this._getBottomItem = this._getBottomItem.bind(this);
         this.page = 2;
+        this.pullListRef = React.createRef();
         this.state = {
             select: 0,
             pulseData: null,
@@ -45,8 +46,8 @@ class RepositoryDetailActivityPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            if (this.refs.pullList)
-                this.refs.pullList.showRefreshState();
+            if (this.pullListRef.current)
+                this.pullListRef.current.showRefreshState();
             this._refresh(this.state.select);
         })
     }
@@ -126,8 +127,8 @@ class RepositoryDetailActivityPage extends Component {
                         });
                         size = res.data.length;
                     }
-                    if (this.refs.pullList) {
-                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
+                    if (this.pullListRef.current) {
+                        this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE), true);
                     }
                 })
         } else if (select === 1) {
@@ -151,15 +152,15 @@ class RepositoryDetailActivityPage extends Component {
                         });
                         size = res.data.length;
                     }
-                    if (this.refs.pullList) {
-                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
+                    if (this.pullListRef.current) {
+                        this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE), true);
                     }
                 })
 
         } else if (select === 2) {
             if (this.state.pulseData) {
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete(false);
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete(false);
                 }
                 return
             }
@@ -176,8 +177,8 @@ class RepositoryDetailActivityPage extends Component {
                         pulseData: res.data
                     })
                 }
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete(false);
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete(false);
                 }
             });
         }
@@ -198,8 +199,8 @@ class RepositoryDetailActivityPage extends Component {
                     });
                     size = res.data.length;
                 }
-                if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.loadMoreComplete((size >= Config.PAGE_SIZE));
                 }
             })
         } else if (this.state.select === 1) {
@@ -213,14 +214,14 @@ class RepositoryDetailActivityPage extends Component {
                     });
                     size = res.data.length;
                 }
-                if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.loadMoreComplete((size >= Config.PAGE_SIZE));
                 }
             })
 
         } else if (this.state.select === 2) {
-            if (this.refs.pullList) {
-                this.refs.pullList.loadMoreComplete(false);
+            if (this.pullListRef.current) {
+                this.pullListRef.current.loadMoreComplete(false);
             }
         }
     }
@@ -320,7 +321,7 @@ class RepositoryDetailActivityPage extends Component {
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }

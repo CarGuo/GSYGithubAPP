@@ -30,6 +30,8 @@ class RepositoryDetailFilePage extends Component {
         this._renderHeaderRow = this._renderHeaderRow.bind(this);
         this._renderRow = this._renderRow.bind(this);
         this._renderHeader = this._renderHeader.bind(this);
+        this.pullListRef = React.createRef();
+        this.listHeaderRef = React.createRef();
         this.state = {
             dataSource: [],
             headerList: ["."],
@@ -171,8 +173,8 @@ class RepositoryDetailFilePage extends Component {
      * 刷新
      * */
     _refresh(path) {
-        if (this.refs.pullList)
-            this.refs.pullList.showRefreshState();
+        if (this.pullListRef.current)
+            this.pullListRef.current.showRefreshState();
         reposActions.getReposFileDir(this.props.ownerName, this.props.repositoryName, path, this.curBranch).then((res) => {
                 if (res && res.result) {
                     let dir = [];
@@ -190,8 +192,8 @@ class RepositoryDetailFilePage extends Component {
                     })
                 }
                 setTimeout(() => {
-                    if (this.refs.pullList) {
-                        this.refs.pullList.refreshComplete(false, true);
+                    if (this.pullListRef.current) {
+                        this.pullListRef.current.refreshComplete(false, true);
                     }
                 }, 500);
                 this.loading = false;
@@ -227,7 +229,7 @@ class RepositoryDetailFilePage extends Component {
                     horizontal={true}
                     style={{height: 40, flex: 1}}
                     removeClippedSubviews={false}
-                    ref="listHeader"
+                    ref={this.listHeaderRef}
                     enableEmptySections
                     initialListSize={10}
                     pageSize={10}
@@ -243,7 +245,7 @@ class RepositoryDetailFilePage extends Component {
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }

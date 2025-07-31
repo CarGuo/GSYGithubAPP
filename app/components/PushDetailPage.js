@@ -29,6 +29,7 @@ class PushDetailPage extends Component {
         this._loadMore = this._loadMore.bind(this);
         this._renderHeader = this._renderHeader.bind(this);
         this.page = 2;
+        this.pullListRef = React.createRef();
         this.state = {
             dataSource: [],
         }
@@ -36,8 +37,8 @@ class PushDetailPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            if (this.refs.pullList)
-                this.refs.pullList.showRefreshState();
+            if (this.pullListRef.current)
+                this.pullListRef.current.showRefreshState();
             this._refresh();
         })
     }
@@ -101,8 +102,8 @@ class PushDetailPage extends Component {
                     });
                     size = res.data.length;
                 }
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), false);
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE), false);
                 }
             });
     }
@@ -147,7 +148,7 @@ class PushDetailPage extends Component {
                 <View style={{height: 2, opacity: 0.3}}/>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     enableRefresh={false}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)

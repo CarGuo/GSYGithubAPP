@@ -22,6 +22,7 @@ class CodeDetailPage extends Component {
 
     constructor(props) {
         super(props);
+        this.pullListRef = React.createRef();
         this.state = {
             detail: this.props.route.params.detail
         };
@@ -65,8 +66,8 @@ class CodeDetailPage extends Component {
                             })
                         }
                         setTimeout(() => {
-                            if (this.refs.pullList) {
-                                this.refs.pullList.refreshComplete(false);
+                            if (this.pullListRef.current) {
+                                this.pullListRef.current.refreshComplete(false);
                             }
                         }, 500);
 

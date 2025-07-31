@@ -49,6 +49,7 @@ class IssueDetailPage extends Component {
         this.lockedIssue = this.lockedIssue.bind(this);
         this.page = 2;
         this.actionUser = new Map();
+        this.pullListRef = React.createRef();
         this.state = {
             dataSource: [],
             issue: this.props.route.params.issue
@@ -57,8 +58,8 @@ class IssueDetailPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            if (this.refs.pullList)
-                this.refs.pullList.showRefreshState();
+            if (this.pullListRef.current)
+                this.pullListRef.current.showRefreshState();
             this._refresh();
         })
     }
@@ -263,8 +264,8 @@ class IssueDetailPage extends Component {
                     }
 
                 }
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE));
                 }
             });
         issueActions.getIssueInfo(this.props.route.params.userName, this.props.route.params.repositoryName, issue.number)
@@ -308,8 +309,8 @@ class IssueDetailPage extends Component {
                     })
                 }
             }
-            if (this.refs.pullList) {
-                this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+            if (this.pullListRef.current) {
+                this.pullListRef.current.loadMoreComplete((size >= Config.PAGE_SIZE));
             }
         });
     }
@@ -442,7 +443,7 @@ class IssueDetailPage extends Component {
                 <View style={{height: 2, opacity: 0.3}}/>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     enableRefresh={false}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData, index)
