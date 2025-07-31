@@ -1,4 +1,4 @@
-import marked from 'marked'
+import {Renderer, setOptions, parse} from 'marked'
 import {highlightAuto, configure} from 'highlight.js'
 import * as Constant from '../style/constant'
 import {Platform} from 'react-native'
@@ -20,7 +20,7 @@ export const changeServiceResult = (data) => {
         }
         return newStr;
     });
-    let renderer = new marked.Renderer();
+    let renderer = new Renderer();
     renderer.image = function (href, title, text) {
         if (href.indexOf('https://github.com/') === 0) {
             href = href.replace(new RegExp("/blob/", "gm"), "/raw/");
@@ -32,7 +32,7 @@ export const changeServiceResult = (data) => {
         out += '/>';
         return out;
     };
-    marked.setOptions({
+    setOptions({
         renderer: renderer,
         gfm: true,
         tables: true,
@@ -43,7 +43,7 @@ export const changeServiceResult = (data) => {
         smartypants: false,
 
     });
-    return marked.parse(dataPre);
+    return parse(dataPre);
 };
 
 
@@ -144,7 +144,7 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
             return match;
         }
     });
-    let renderer = new marked.Renderer();
+    let renderer = new Renderer();
     renderer.image = function (href, title, text) {
         if (href.indexOf('https://github.com/') === 0) {
             href = href.replace(new RegExp("/blob/", "gm"), "/raw/");
@@ -161,7 +161,7 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
         'useBR': true
     });
 
-    marked.setOptions({
+    setOptions({
         renderer: renderer,
         gfm: true,
         tables: true,
@@ -180,7 +180,7 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
             return newCode;
         }
     });
-    let source = (needMd) ? marked.parse(data) : data;
+    let source = (needMd) ? parse(data) : data;
     return generateCodeHtml(source, false);
 };
 
