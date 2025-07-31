@@ -40,6 +40,7 @@ export default class TrendPage extends Component {
         this._refreshData = this._refreshData.bind(this);
         this.timeLine = 'daily';
         this.languageType = null;
+        this.pullListRef = React.createRef();
 
     }
 
@@ -53,8 +54,8 @@ export default class TrendPage extends Component {
     }
 
     _refreshData() {
-        if (this.refs.pullList)
-            this.refs.pullList.showRefreshState();
+        if (this.pullListRef.current)
+            this.pullListRef.current.showRefreshState();
         this._refresh();
     }
 
@@ -82,8 +83,8 @@ export default class TrendPage extends Component {
         reposAction.getTrend(0, this.timeLine, this.languageType, () => {
             this.page = 2;
             setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete(false, true);
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete(false, true);
                 }
             }, 500);
         })
@@ -93,8 +94,8 @@ export default class TrendPage extends Component {
      * 加载更多
      * */
     _loadMore() {
-        if (this.refs.pullList) {
-            this.refs.pullList.loadMoreComplete(false);
+        if (this.pullListRef.current) {
+            this.pullListRef.current.loadMoreComplete(false);
         }
     }
 
@@ -141,7 +142,7 @@ export default class TrendPage extends Component {
                 <View style={{height: 2, opacity: 0.3}}/>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData, index)
                     }

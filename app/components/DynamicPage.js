@@ -46,6 +46,7 @@ export default class DynamicPage extends Component {
         this.page = 1;
         this.appState = 'active';
         this.appStateSubscription = null;
+        this.pullListRef = React.createRef();
     }
 
     componentDidMount() {
@@ -74,15 +75,15 @@ export default class DynamicPage extends Component {
     }
 
     startRefresh() {
-        if (this.refs.pullList)
-            this.refs.pullList.showRefreshState();
+        if (this.pullListRef.current)
+            this.pullListRef.current.showRefreshState();
         this._refresh();
     }
 
     _handleAppStateChange = (nextAppState) => {
         if (this.appState.match(/inactive|background/) && nextAppState === 'active') {
-            if (this.refs.pullList)
-                this.refs.pullList.scrollToTop();
+            if (this.pullListRef.current)
+                this.pullListRef.current.scrollToTop();
             this.startRefresh();
         }
         this.appState = nextAppState;
@@ -111,8 +112,8 @@ export default class DynamicPage extends Component {
         eventAction.getEventReceived(0, (res) => {
             this.page = 2;
             setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((res && res.length >= Config.PAGE_SIZE));
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete((res && res.length >= Config.PAGE_SIZE));
                 }
             }, 500);
         })
@@ -126,8 +127,8 @@ export default class DynamicPage extends Component {
         eventAction.getEventReceived(this.page, (res) => {
             this.page++;
             setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
                 }
             }, 300);
         });
@@ -141,7 +142,7 @@ export default class DynamicPage extends Component {
             <View style={styles.mainBox}>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }
