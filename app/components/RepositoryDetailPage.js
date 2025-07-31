@@ -20,7 +20,8 @@ import Toast from './common/ToastProxy'
 import PopmenuItem from './widget/BottomPopmenuItem'
 import {launchUrl} from "../utils/htmlUtils";
 import {logHoc} from "../components/common/LogHoc";
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view-fix-guo';
+import ScrollableTabView from 'react-native-scrollable-tab-view-fix-guo';
+const DefaultTabBar = ScrollableTabView.DefaultTabBar;
 
 /**
  * 仓库详情
