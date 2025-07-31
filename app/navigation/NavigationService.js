@@ -70,6 +70,25 @@ class NavigationService {
     }
   };
 
+  refresh = (params) => {
+    if (this._navigator) {
+      if (params) {
+        // Update current screen's params - this is the most common usage
+        this._navigator.dispatch(
+          CommonActions.setParams(params)
+        );
+      } else {
+        // Force refresh without params - typically used for language changes
+        // We can dispatch a custom action or use setParams with a refresh flag
+        this._navigator.dispatch(
+          CommonActions.setParams({
+            _refreshTimestamp: Date.now()
+          })
+        );
+      }
+    }
+  };
+
   getCurrentRoute = () => {
     return this._currentRoute;
   };
