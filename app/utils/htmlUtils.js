@@ -43,7 +43,7 @@ export const changeServiceResult = (data) => {
         smartypants: false,
 
     });
-    return marked(dataPre);
+    return marked.parse(dataPre);
 };
 
 
@@ -180,7 +180,7 @@ export const generateMd2Html = (mdData, userName, reposName, branch = 'master', 
             return newCode;
         }
     });
-    let source = (needMd) ? marked(data) : data;
+    let source = (needMd) ? marked.parse(data) : data;
     return generateCodeHtml(source, false);
 };
 
