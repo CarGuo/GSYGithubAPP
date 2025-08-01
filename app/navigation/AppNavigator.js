@@ -129,6 +129,7 @@ function MainTabScreen() {
 
 // Search Drawer Component
 function SearchDrawer() {
+  const insets = useSafeAreaInsets();
   return (
     <Drawer.Navigator
       drawerContent={(props) => <DrawerFilter {...props} />}
@@ -137,6 +138,7 @@ function SearchDrawer() {
         drawerStyle: {
           width: drawerWidth,
         },
+        headerLeft: () => <CustomBackButton />,
         headerShown: true,
       }}
     >
@@ -145,6 +147,14 @@ function SearchDrawer() {
         component={SearchPage}
         options={{
           title: I18n('search'),
+          headerStyle: [
+            styles.navigationBar,
+            {
+              paddingTop: insets.top,
+              height: 50 + insets.top, // base header height + status bar
+            }
+          ],
+          headerTitleStyle: { color: Constant.titleTextColor },
           headerRight: () => <CustomDrawerButton />,
         }}
       />
@@ -225,7 +235,7 @@ function MainStack() {
       <Stack.Screen
         name="SearchPage"
         component={SearchDrawer}
-        options={{ 
+        options={{
           headerShown: false,
         }}
       />
@@ -403,10 +413,10 @@ export default function AppNavigator() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar 
-        hidden={false} 
-        backgroundColor={'transparent'} 
-        translucent 
+      <StatusBar
+        hidden={false}
+        backgroundColor={'transparent'}
+        translucent
         barStyle={'light-content'}
       />
       <NavigationContainer
