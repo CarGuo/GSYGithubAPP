@@ -300,6 +300,17 @@ class RepositoryDetailPage extends Component {
                     }}
                 >
                     <Tab.Screen 
+                        name="Activity" 
+                        children={() => (
+                            <RepositoryDetailActivity
+                                dataDetail={this.state.dataDetail}
+                                ownerName={this.props.route.params.ownerName}
+                                repositoryName={this.props.route.params.repositoryName}
+                            />
+                        )}
+                        options={{ tabBarLabel: I18n('reposActivity') }}
+                    />
+                    <Tab.Screen 
                         name="Readme" 
                         children={() => (
                             <WebComponent
@@ -319,17 +330,6 @@ class RepositoryDetailPage extends Component {
                             />
                         )}
                         options={{ tabBarLabel: I18n('reposReadme') }}
-                    />
-                    <Tab.Screen 
-                        name="Activity" 
-                        children={() => (
-                            <RepositoryDetailActivity
-                                dataDetail={this.state.dataDetail}
-                                ownerName={this.props.route.params.ownerName}
-                                repositoryName={this.props.route.params.repositoryName}
-                            />
-                        )}
-                        options={{ tabBarLabel: I18n('reposActivity') }}
                     />
                     <Tab.Screen 
                         name="Files" 
