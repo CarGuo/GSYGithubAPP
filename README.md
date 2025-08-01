@@ -27,7 +27,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/issues)
 [![GitHub license](https://img.shields.io/github/license/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/blob/master/LICENSE)
 
-### 因升级到RN 0.61.3 版本，整个工程模板被重构。
+### RN 0.74.0 版本。
 
 
 | 公众号   | 掘金     |  知乎    |  CSDN   |   简书   
@@ -121,8 +121,7 @@
 
 ### 第三方框架
 
-* [react-native(0.61.3)](http://reactnative.cn/docs/0.51/getting-started.html)
-* [react-native-router-flux 路由框架](https://github.com/aksonov/react-native-router-flux)
+* [react-native(0.74.0)](http://reactnative.cn/docs/0.74/getting-started.html)
 * [react-native-vector-icons 矢量字体库图标 ](https://github.com/oblador/react-native-vector-icons)
 * [react-redux redux](https://github.com/reactjs/react-redux)
 * [realm-js realm 数据库](https://github.com/realm/realm-js)
