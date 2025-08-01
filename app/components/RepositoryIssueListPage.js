@@ -122,7 +122,6 @@ class RepositoryIssueListPage extends Component {
                 onPressItem={() => {
                     Actions.IssueDetail({
                         iconType:2,
-                        rightBtn: 'ios-more',
                         needRightBtn: true,
                         issue: rowData, title: fullName,
                         repositoryName: this.props.repositoryName,
