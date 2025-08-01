@@ -137,7 +137,7 @@ function SearchDrawer() {
         drawerStyle: {
           width: drawerWidth,
         },
-        headerShown: false,
+        headerShown: true,
       }}
     >
       <Drawer.Screen
@@ -145,6 +145,7 @@ function SearchDrawer() {
         component={SearchPage}
         options={{
           title: I18n('search'),
+          headerRight: () => <CustomDrawerButton />,
         }}
       />
     </Drawer.Navigator>
@@ -225,8 +226,7 @@ function MainStack() {
         name="SearchPage"
         component={SearchDrawer}
         options={{ 
-          title: I18n('search'),
-          headerRight: () => <CustomDrawerButton />,
+          headerShown: false,
         }}
       />
 
