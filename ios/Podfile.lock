@@ -987,8 +987,6 @@ PODS:
     - React
   - react-native-version-number (0.3.6):
     - React
-  - react-native-viewpager (5.0.11):
-    - React-Core
   - react-native-webview (13.15.0):
     - DoubleConversion
     - glog
@@ -1385,7 +1383,6 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-spinkit (from `../node_modules/react-native-spinkit-fix-new`)
   - react-native-version-number (from `../node_modules/react-native-version-number-fix-new`)
-  - "react-native-viewpager (from `../node_modules/@react-native-community/viewpager`)"
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
@@ -1502,8 +1499,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-spinkit-fix-new"
   react-native-version-number:
     :path: "../node_modules/react-native-version-number-fix-new"
-  react-native-viewpager:
-    :path: "../node_modules/@react-native-community/viewpager"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-nativeconfig:
@@ -1613,7 +1608,6 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 63c9a6def15e6f6377e59cea51566148a2774d62
   react-native-spinkit: 9a5d2f95aa975d5660fd3e76b7eac38e7329e46c
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
-  react-native-viewpager: b99b53127d830885917ef84809c5065edd614a78
   react-native-webview: 03e0a9068140f85c74ca072c6ce70301ef818520
   React-nativeconfig: 951ec32f632e81cbd7d40aebb3211313251c092e
   React-NativeModulesApple: 0b3a42ca90069119ef79d8b2327d01441d71abd4
