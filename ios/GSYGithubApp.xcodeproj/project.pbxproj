@@ -21,7 +21,6 @@
 		4BFD70E122DDB41900F7AB18 /* tmp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD70E022DDB41900F7AB18 /* tmp.swift */; };
 		63757D765751E1C32495FDB2 /* libPods-GSYGithubApp-GSYGithubAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B04412D0890B31300B416421 /* libPods-GSYGithubApp-GSYGithubAppTests.a */; };
 		95C1C8EA21414790AA1EF733 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5583AD0C7CD744CD979E0952 /* libc++.tbd */; };
-
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +38,6 @@
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "GSYGithubApp-tvOS";
 		};
-
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -82,13 +80,11 @@
 		C095A87AD71B4BC69B051E8B /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		C0DD0A0D549C44E1A2E26B77 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		C5F1C5799C86400595C8A737 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-
 		D30942750AED01BF2FBAAFA5 /* libPods-GSYGithubApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GSYGithubApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D40FBF59656D4EDAB03716C8 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		E19F122E67614804AD8DCC6D /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,7 +200,6 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -376,8 +371,6 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* GSYGithubApp */,
@@ -387,9 +380,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -438,7 +428,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		1EB26F027738E05F5B9AC84E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -893,6 +883,41 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/yoga\"",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 				);
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-fmodule-map-file=\"${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios/Lottie.modulemap\"",
+					"-fmodule-map-file=\"${PODS_CONFIGURATION_BUILD_DIR}/lottie-react-native/lottie_react_native.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/DoubleConversion/DoubleConversion.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/RCTDeprecation/RCTDeprecation.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/RCTFabric/React-RCTFabric.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/RCTTypeSafety/RCTTypeSafety.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/RNReanimated/RNReanimated.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/React/React-Core.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/ReactCommon/ReactCommon.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/React_Codegen/React-Codegen.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/React_Fabric/React-Fabric.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/React_NativeModulesApple/React-NativeModulesApple.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/React_RCTAppDelegate/React-RCTAppDelegate.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/folly/RCT-Folly.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/glog/glog.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/jsi/React-jsi.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/react_debug/React-debug.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/react_featureflags/React-featureflags.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/react_renderer_debug/React-rendererdebug.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/react_renderer_graphics/React-graphics.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/react_renderer_imagemanager/React-ImageManager.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/react_utils/React-utils.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/yoga/Yoga.modulemap\"",
+					"$(inherited)",
+					"$(inherited)",
+					"-DFOLLY_NO_CONFIG",
+					"-DFOLLY_MOBILE=1",
+					"-DFOLLY_USE_LIBCPP=1",
+					"-Wno-comma",
+					"-Wno-shorten-64-to-32",
+					"-DREACT_NATIVE_MINOR_VERSION=74",
+					"-DREANIMATED_VERSION=3.10.0",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1170,10 +1195,7 @@
 				LDPLUSPLUS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -1225,10 +1247,7 @@
 				LD = "";
 				LDPLUSPLUS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
