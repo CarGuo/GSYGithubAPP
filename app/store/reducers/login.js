@@ -2,7 +2,7 @@
  * Created by guoshuyu on 2017/11/7.
  */
 import  {LOGIN} from '../type';
-import {createReducer} from '../'
+import {createReducer} from '../reducerUtils';
 
 const initialState = {
     type: LOGIN.CLEAR,

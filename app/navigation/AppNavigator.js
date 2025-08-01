@@ -9,7 +9,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StatusBar, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Import all screen components
 import DynamicPage from '../components/DynamicPage';
@@ -62,22 +61,15 @@ const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const ModalStack = createStackNavigator();
 
-// Default screen options with safe area handling
-const getDefaultScreenOptions = (insets) => ({
-  headerStyle: [
-    styles.navigationBar,
-    {
-      paddingTop: insets.top,
-      height: 50 + insets.top, // base header height + status bar
-    }
-  ],
+// Default screen options 
+const getDefaultScreenOptions = () => ({
+  headerStyle: styles.navigationBar,
   headerTitleStyle: { color: Constant.titleTextColor },
   headerLeft: () => <CustomBackButton />,
 });
 
 // Tab Screen Component
 function MainTabScreen() {
-  const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -88,13 +80,7 @@ function MainTabScreen() {
           backgroundColor: Constant.tabBackgroundColor,
         },
         tabBarShowLabel: false,
-        headerStyle: [
-          styles.navigationBar,
-          {
-            paddingTop: insets.top,
-            height: 50 + insets.top, // base header height + status bar
-          }
-        ],
+        headerStyle: styles.navigationBar,
         headerTitleStyle: { color: Constant.titleTextColor },
         headerRight: () => <SearchButton />,
       }}
@@ -129,7 +115,6 @@ function MainTabScreen() {
 
 // Search Drawer Component
 function SearchDrawer() {
-  const insets = useSafeAreaInsets();
   return (
     <Drawer.Navigator
       drawerContent={(props) => <DrawerFilter {...props} />}
@@ -147,13 +132,7 @@ function SearchDrawer() {
         component={SearchPage}
         options={{
           title: I18n('search'),
-          headerStyle: [
-            styles.navigationBar,
-            {
-              paddingTop: insets.top,
-              height: 50 + insets.top, // base header height + status bar
-            }
-          ],
+          headerStyle: styles.navigationBar,
           headerTitleStyle: { color: Constant.titleTextColor },
           headerRight: () => <CustomDrawerButton />,
         }}
@@ -164,8 +143,7 @@ function SearchDrawer() {
 
 // Main Stack Navigator
 function MainStack() {
-  const insets = useSafeAreaInsets();
-  const defaultScreenOptions = getDefaultScreenOptions(insets);
+  const defaultScreenOptions = getDefaultScreenOptions();
   return (
     <Stack.Navigator
       initialRouteName="WelcomePage"

@@ -3,7 +3,7 @@
  */
 
 import {EVENT} from '../type';
-import {createReducer} from '../'
+import {createReducer} from '../reducerUtils';
 
 const initialState = {
     //当前用户事件列表

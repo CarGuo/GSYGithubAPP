@@ -4,16 +4,9 @@
 import {applyMiddleware, createStore} from 'redux';
 import {thunk} from 'redux-thunk';
 import reducers from './reducers';
+import {createReducer} from './reducerUtils';
 
-export function createReducer(initialState, handlers) {
-    return function reducer(state = initialState, action) {
-        if (handlers.hasOwnProperty(action.type)) {
-            return handlers[action.type](state, action);
-        } else {
-            return state;
-        }
-    }
-}
+export {createReducer};
 
 const store = createStore(reducers, applyMiddleware(thunk));
 export default store
