@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../net'
 import Address from '../net/address'
 import * as Constant from '../style/constant'

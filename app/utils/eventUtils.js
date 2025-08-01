@@ -1,4 +1,4 @@
-import {Actions} from 'react-native-router-flux'
+import {Actions} from '../navigation/Actions'
 import {StyleSheet} from 'react-native'
 import * as Constant from '../style/constant'
 import {launchUrl} from "./htmlUtils";

@@ -10,7 +10,7 @@ import { WebView } from 'react-native-webview';
 import Icon from 'react-native-vector-icons/Ionicons'
 import * as Constant from '../style/constant'
 import {screenWidth} from '../style'
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../navigation/Actions';
 import styles from "../style"
 
 /**
@@ -18,14 +18,14 @@ import styles from "../style"
  */
 export default class WebPage extends Component {
 
-    constructor(props: Object) {
+    constructor(props) {
         super(props);
         this.canGoBack = false;
         this.state = {
-            uri: this.resolveUrl(this.props.uri),
-            showCurUri: this.resolveUrl(this.props.uri)
+            uri: this.resolveUrl(props.route.params.uri),
+            showCurUri: this.resolveUrl(props.route.params.uri)
         };
-        this.inputText = this.resolveUrl(this.props.uri);
+        this.inputText = this.resolveUrl(props.route.params.uri);
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
         this.handleTextInputChange = this.handleTextInputChange.bind(this);
         this.reload = this.reload.bind(this);
@@ -124,7 +124,7 @@ export default class WebPage extends Component {
                             marginLeft: Constant.normalMarginEdge - 3
                         }]}
                         onPress={this.goBack}>
-                        <Icon name={'md-arrow-round-back'} size={18} color={Constant.miWhite}/>
+                        <Icon name={'chevron-back-outline'} size={18} color={Constant.miWhite}/>
                     </TouchableOpacity>
                     <TextInput
                         ref='textInput'
@@ -147,14 +147,14 @@ export default class WebPage extends Component {
                             paddingLeft: 20
                         }]}
                         onPress={this.pressGoButton}>
-                        <Icon name={'md-search'} size={19} color={Constant.miWhite}/>
+                        <Icon name={'search-circle-outline'} size={19} color={Constant.miWhite}/>
                     </TouchableOpacity>
                 </View>
                 <WebView
                     ref={(ref) => {
                         this.webview = ref;
                     }}
-                    {...this.props}
+                    {...this.props.route.params}
                     source={{uri: this.state.uri}}
                     onNavigationStateChange={this.onNavigationStateChange}
                     javaScriptEnabled={true}

@@ -7,7 +7,7 @@
 import React, {Component} from 'react';
 import {View} from 'react-native';
 import {Provider} from 'react-redux';
-import getRouter from './app/router';
+import AppNavigator from './app/navigation/AppNavigator';
 import store from './app/store/'
 import {getLanguageCurrent} from './app/utils/actionUtils'
 import {changeLocale} from './app/style/i18n'
@@ -49,7 +49,7 @@ export default class App extends Component<{}> {
         }
         return (
             <Provider store={this.state.store}>
-                {getRouter()}
+                <AppNavigator />
             </Provider>
         );
     }

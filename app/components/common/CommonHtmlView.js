@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Clipboard, Linking, Image, TouchableWithoutFeedback, Platform, View, ImageBackground} from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import Toast from './ToastProxy'
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../../navigation/Actions';
 import I18n from '../../style/i18n'
 import {launchUrl} from '../../utils/htmlUtils'
 import styles, {screenWidth} from "../../style/index"
@@ -77,7 +77,7 @@ class CommonHtmlView extends Component {
                                                     width: screenWidth - 105,
                                                     height: 300,
                                                 }]}>
-                                                    <Icon name={'ios-image'} size={80} color={Constant.miWhite}/>
+                                                    <Icon name={'images-outline'} size={80} color={Constant.miWhite}/>
                                                 </View>
                                                 <Image source={{uri: node.attribs.src}}
                                                        resizeMethod="scale"

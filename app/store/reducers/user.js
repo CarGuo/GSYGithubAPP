@@ -2,7 +2,7 @@
  * Created by guoshuyu on 2017/11/16.
  */
 import {USER} from '../type';
-import {createReducer} from '../'
+import {createReducer} from '../reducerUtils';
 
 const initialState = {
     //当前登录用户信息

@@ -16,7 +16,7 @@ import {
     SafeAreaView
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
@@ -49,16 +49,17 @@ class IssueDetailPage extends Component {
         this.lockedIssue = this.lockedIssue.bind(this);
         this.page = 2;
         this.actionUser = new Map();
+        this.pullListRef = React.createRef();
         this.state = {
             dataSource: [],
-            issue: this.props.issue
+            issue: this.props.route.params.issue
         }
     }
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            if (this.refs.pullList)
-                this.refs.pullList.showRefreshState();
+            if (this.pullListRef.current)
+                this.pullListRef.current.showRefreshState();
             this._refresh();
         })
     }
@@ -77,7 +78,7 @@ class IssueDetailPage extends Component {
                 actionUserPic={rowData.user.avatar_url}
                 issueComment={rowData.body}
                 onLongPressItem={() => {
-                    if (isCommentOwner(this.props.userName, rowData.user.login)) {
+                    if (isCommentOwner(this.props.route.params.userName, rowData.user.login)) {
                         Actions.OptionModal({dataList: this._getOptionItem(rowData, rowID, true)});
                     } else {
                         Actions.OptionModal({dataList: this._getOptionItem(rowData, rowID, false)});
@@ -88,7 +89,7 @@ class IssueDetailPage extends Component {
     }
 
     sendIssueComment(text) {
-        let {repositoryName, userName} = this.props;
+        let {repositoryName, userName} = this.props.route.params;
         let {issue} = this.state;
         Actions.LoadingModal({backExit: false});
         issueActions.addIssueComment(userName, repositoryName, issue.number, text).then((res) => {
@@ -119,7 +120,7 @@ class IssueDetailPage extends Component {
         if (!title || title.length === 0) {
             return
         }
-        let {repositoryName, userName} = this.props;
+        let {repositoryName, userName} = this.props.route.params;
         let {issue} = this.state;
         Actions.LoadingModal({backExit: false});
         issueActions.editIssue(userName, repositoryName, issue.number,
@@ -146,7 +147,7 @@ class IssueDetailPage extends Component {
     }
 
     editComment(commentId, text, rowID) {
-        let {repositoryName, userName} = this.props;
+        let {repositoryName, userName} = this.props.route.params;
         let {issue} = this.state;
         Actions.LoadingModal({backExit: false});
         issueActions.editComment(userName, repositoryName, issue.number, commentId,
@@ -176,7 +177,7 @@ class IssueDetailPage extends Component {
     }
 
     deleteComment(commentId, rowID) {
-        let {repositoryName, userName} = this.props;
+        let {repositoryName, userName} = this.props.route.params;
         let {number} = this.state.issue;
         Actions.LoadingModal({backExit: false});
         issueActions.editComment(userName, repositoryName, number, commentId, null, 'delete').then((res) => {
@@ -194,7 +195,7 @@ class IssueDetailPage extends Component {
     }
 
     closeIssue() {
-        let {repositoryName, userName} = this.props;
+        let {repositoryName, userName} = this.props.route.params;
         let {issue} = this.state;
         Actions.LoadingModal({backExit: false});
         issueActions.editIssue(userName, repositoryName, issue.number,
@@ -212,7 +213,7 @@ class IssueDetailPage extends Component {
 
 
     lockedIssue() {
-        let {repositoryName, userName} = this.props;
+        let {repositoryName, userName} = this.props.route.params;
         let {issue} = this.state;
         Actions.LoadingModal({backExit: false});
         issueActions.lockIssue(userName, repositoryName, issue.number, issue.locked).then((res) => {
@@ -232,7 +233,7 @@ class IssueDetailPage extends Component {
      * */
     _refresh() {
         let {issue} = this.state;
-        issueActions.getIssueComment(1, this.props.userName, this.props.repositoryName, issue.number)
+        issueActions.getIssueComment(1, this.props.route.params.userName, this.props.route.params.repositoryName, issue.number)
             .then((res) => {
                 if (res && res.result) {
                     let dataList = res.data;
@@ -263,11 +264,11 @@ class IssueDetailPage extends Component {
                     }
 
                 }
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE));
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE));
                 }
             });
-        issueActions.getIssueInfo(this.props.userName, this.props.repositoryName, issue.number)
+        issueActions.getIssueInfo(this.props.route.params.userName, this.props.route.params.repositoryName, issue.number)
             .then((res) => {
                 if (res && res.result) {
                     this.setState({
@@ -291,7 +292,7 @@ class IssueDetailPage extends Component {
      * */
     _loadMore() {
         let {issue} = this.state;
-        issueActions.getIssueComment(this.page, this.props.userName, this.props.repositoryName, issue.number).then((res) => {
+        issueActions.getIssueComment(this.page, this.props.route.params.userName, this.props.route.params.repositoryName, issue.number).then((res) => {
             let size = 0;
             if (res && res.result) {
                 this.page++;
@@ -308,8 +309,8 @@ class IssueDetailPage extends Component {
                     })
                 }
             }
-            if (this.refs.pullList) {
-                this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+            if (this.pullListRef.current) {
+                this.pullListRef.current.loadMoreComplete((size >= Config.PAGE_SIZE));
             }
         });
     }
@@ -442,7 +443,7 @@ class IssueDetailPage extends Component {
                 <View style={{height: 2, opacity: 0.3}}/>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     enableRefresh={false}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData, index)

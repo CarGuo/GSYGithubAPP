@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {
-    View, AppState, StatusBar, InteractionManager
+    View, AppState, InteractionManager
 } from 'react-native';
 import styles from "../style"
 import loginActions from '../store/actions/login'
@@ -45,6 +45,8 @@ export default class DynamicPage extends Component {
         this.startRefresh = this.startRefresh.bind(this);
         this.page = 1;
         this.appState = 'active';
+        this.appStateSubscription = null;
+        this.pullListRef = React.createRef();
     }
 
     componentDidMount() {
@@ -52,7 +54,7 @@ export default class DynamicPage extends Component {
             this.startRefresh();
             getNewsVersion();
         });
-        AppState.addEventListener('change', this._handleAppStateChange);
+        this.appStateSubscription = AppState.addEventListener('change', this._handleAppStateChange);
 
         /*setTimeout(() => {
             if (__DEV__) {
@@ -67,19 +69,21 @@ export default class DynamicPage extends Component {
     }
 
     componentWillUnmount() {
-        AppState.removeEventListener('change', this._handleAppStateChange);
+        if (this.appStateSubscription) {
+            this.appStateSubscription.remove();
+        }
     }
 
     startRefresh() {
-        if (this.refs.pullList)
-            this.refs.pullList.showRefreshState();
+        if (this.pullListRef.current)
+            this.pullListRef.current.showRefreshState();
         this._refresh();
     }
 
     _handleAppStateChange = (nextAppState) => {
         if (this.appState.match(/inactive|background/) && nextAppState === 'active') {
-            if (this.refs.pullList)
-                this.refs.pullList.scrollToTop();
+            if (this.pullListRef.current)
+                this.pullListRef.current.scrollToTop();
             this.startRefresh();
         }
         this.appState = nextAppState;
@@ -108,8 +112,8 @@ export default class DynamicPage extends Component {
         eventAction.getEventReceived(0, (res) => {
             this.page = 2;
             setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((res && res.length >= Config.PAGE_SIZE));
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete((res && res.length >= Config.PAGE_SIZE));
                 }
             }, 500);
         })
@@ -123,8 +127,8 @@ export default class DynamicPage extends Component {
         eventAction.getEventReceived(this.page, (res) => {
             this.page++;
             setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.loadMoreComplete((res && res.length >= Config.PAGE_SIZE));
                 }
             }, 300);
         });
@@ -136,10 +140,9 @@ export default class DynamicPage extends Component {
         let dataSource = (eventState.received_events_data_list);
         return (
             <View style={styles.mainBox}>
-                <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
                     }

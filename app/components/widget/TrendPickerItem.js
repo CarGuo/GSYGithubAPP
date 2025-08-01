@@ -17,7 +17,7 @@ class TrendPickerItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            icon:'md-arrow-dropdown'
+            icon:'caret-down-outline'
         }
     }
 
@@ -45,12 +45,12 @@ class TrendPickerItem extends Component {
                     defaultValue={this.props.defaultValue}
                     onDropdownWillShow={()=>{
                         this.setState({
-                            icon:'md-arrow-dropup'
+                            icon:'caret-up-outline'
                         })
                     }}
                     onDropdownWillHide={()=>{
                         this.setState({
-                            icon:'md-arrow-dropdown'
+                            icon:'caret-down-outline'
                         })
                     }}
                     renderRow={this.renderRow.bind(this)}

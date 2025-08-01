@@ -34,6 +34,7 @@ class BasePersonPage extends Component {
         this._renderHeader = this._renderHeader.bind(this);
         this.getBackNotifyCall = this.getBackNotifyCall.bind(this);
         this.doFollowLogic = this.doFollowLogic.bind(this);
+        this.pullListRef = React.createRef();
         this.state = {
             dataSource: [],
             beStaredCount: "---",
@@ -45,24 +46,23 @@ class BasePersonPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            if (this.refs.pullList)
-                this.refs.pullList.showRefreshState();
+            if (this.pullListRef.current)
+                this.pullListRef.current.showRefreshState();
             this._refresh();
             this._getMoreInfo();
         })
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.showType !== this.props.showType) {
-            if (this.props.showType === "Organization") {
+        if (prevProps.route.params != null &&
+            prevProps.route.params.showType !== this.props.route.params.showType) {
+            if (this.props.route.params.showType === "Organization") {
                 this.showType = 1;
                 this._refresh();
-                console.log("******************1 " + this.props.showType)
             } else {
                 this.showType = 0;
                 this._getOrgsList();
                 this._refresh();
-                console.log("******************2 " + this.props.showType)
             }
         }
     }
@@ -117,8 +117,8 @@ class BasePersonPage extends Component {
                     size = res.data.length;
                 }
                 setTimeout(() => {
-                    if (this.refs.pullList) {
-                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), false);
+                    if (this.pullListRef.current) {
+                        this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE), false);
                     }
                 }, 500);
             })
@@ -140,8 +140,8 @@ class BasePersonPage extends Component {
                     size = res.data.length;
                 }
                 setTimeout(() => {
-                    if (this.refs.pullList) {
-                        this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), false);
+                    if (this.pullListRef.current) {
+                        this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE), false);
                     }
                 }, 500);
             })
@@ -165,8 +165,8 @@ class BasePersonPage extends Component {
                     size = res.data.length;
                 }
                 setTimeout(() => {
-                    if (this.refs.pullList) {
-                        this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+                    if (this.pullListRef.current) {
+                        this.pullListRef.current.loadMoreComplete((size >= Config.PAGE_SIZE));
                     }
                 }, 500);
             });
@@ -182,15 +182,15 @@ class BasePersonPage extends Component {
                     size = res.data.length;
                 }
                 setTimeout(() => {
-                    if (this.refs.pullList) {
-                        this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+                    if (this.pullListRef.current) {
+                        this.pullListRef.current.loadMoreComplete((size >= Config.PAGE_SIZE));
                     }
                 }, 500);
             });
         } else {
             setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete(false);
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.loadMoreComplete(false);
                 }
             }, 500);
         }
@@ -295,7 +295,7 @@ class BasePersonPage extends Component {
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     renderHeader={this._renderHeader(userInfo)}
                     render
                     renderRow={(rowData, index) =>

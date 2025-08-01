@@ -7,35 +7,37 @@ import {
     View, Text, TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Router, Actions, Scene} from 'react-native-router-flux';
+import {Router, Actions, Scene} from '../../navigation/Actions';
 import styles from "../../style"
 import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * 自定义搜索过滤按键
  */
-class CustomDrawerButton extends Component {
-    componentDidMount() {
-    }
+function CustomDrawerButton() {
+    const navigation = useNavigation();
 
-    componentWillUnmount() {
+    const handlePress = () => {
+        if (navigation.openDrawer) {
+            navigation.openDrawer();
+        }
+    };
 
-    }
-
-
-    render() {
-        return (
-            <View style={[styles.centered, {
+    return (
+        <TouchableOpacity 
+            style={[styles.centered, {
                 marginRight: Constant.normalMarginEdge,
                 marginTop: Constant.normalMarginEdge,
                 paddingLeft: 20
-            }]}>
-                <Icon name={'filter'} size={20} color={Constant.miWhite}/>
-            </View>
-        )
-    }
+            }]}
+            onPress={handlePress}
+        >
+            <Icon name={'filter'} size={20} color={Constant.miWhite}/>
+        </TouchableOpacity>
+    );
 }
 
 export default CustomDrawerButton

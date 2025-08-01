@@ -1,14 +1,13 @@
 /**
  * Created by guoshuyu on 2017/11/12.
  */
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import {
     Text,
     View,
     TouchableOpacity,
     Animated,
     Image,
-    StatusBar,
     BackHandler,
     Keyboard,
     Linking,
@@ -20,7 +19,7 @@ import I18n from '../style/i18n'
 import loginActions from '../store/actions/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Entypo'
 import {Fumi} from 'react-native-textinput-effects';
@@ -49,6 +48,9 @@ export default class LoginPage extends Component {
         this.userInputChange = this.userInputChange.bind(this);
         this.passwordChange = this.passwordChange.bind(this);
         this.toLogin = this.toLogin.bind(this);
+        this.lottieViewRef = createRef();
+        this.userNameInputRef = createRef();
+        this.passwordInputRef = createRef();
         this.params = {
             userName: '',
             password: ''
@@ -59,7 +61,6 @@ export default class LoginPage extends Component {
             secureTextEntry: true,
             secureIcon: "eye-with-line",
             opacity: new Animated.Value(0),
-            progress: new Animated.Value(0),
         }
         this.thisUnmount = false;
     }
@@ -70,6 +71,7 @@ export default class LoginPage extends Component {
         Animated.timing(this.state.opacity, {
             duration: animaTime,
             toValue: 1,
+            useNativeDriver: false,
         }).start();
         this.startAnimation();
 
@@ -85,7 +87,7 @@ export default class LoginPage extends Component {
                     if (!res) {
                         Toast(I18n('LoginFailTip'));
                     } else {
-                        Actions.reset("root")
+                        Actions.reset("MainTabs")
                     }
                 })
             });
@@ -96,8 +98,8 @@ export default class LoginPage extends Component {
         if (this.handle) {
             this.handle.remove();
         }
-        if (this.refs.lottieView) {
-            this.refs.lottieView.reset();
+        if (this.lottieViewRef.current) {
+            this.lottieViewRef.current.reset();
         }
         this.subscription.remove();
     }
@@ -107,20 +109,6 @@ export default class LoginPage extends Component {
         if (this.thisUnmount) {
             return;
         }
-        Animated.timing(this.state.progress, {
-            toValue: 1,
-            duration: 2000,
-            easing: Easing.linear
-        }).start(({finished}) => {
-            /*if (!finished) {
-                return;
-            }
-            //重复播放
-            this.setState({
-                progress: new Animated.Value(0),
-            });
-            this.startAnimation()*/
-        });
     }
 
     onOpen() {
@@ -141,6 +129,7 @@ export default class LoginPage extends Component {
         Animated.timing(this.state.opacity, {
             duration: animaTime,
             toValue: 0,
+            useNativeDriver: false,
         }).start(Actions.pop());
         return true;
 
@@ -186,7 +175,7 @@ export default class LoginPage extends Component {
             if (!res) {
                 Toast(I18n('LoginFailTip'));
             } else {
-                Actions.reset("root")
+                Actions.reset("MainTabs")
             }
         })*/
     }
@@ -204,15 +193,14 @@ export default class LoginPage extends Component {
         return (
             <Animated.View
                 style={[styles.centered, styles.absoluteFull, {backgroundColor: Constant.primaryColor}, {opacity: this.state.opacity}]}>
-                <StatusBar hidden={false} backgroundColor={Constant.primaryColor} translucent
-                           barStyle={'light-content'}/>
                 <View style={[styles.absoluteFull, {zIndex: -999, justifyContent: 'flex-end'}]}>
                     <View style={{width: screenWidth, height: screenHeight / 2}}>
                         <LottieView
-                            ref="lottieView"
+                            ref={this.lottieViewRef}
                             style={{width: screenWidth, height: screenHeight / 2}}
-                            source={require('../style/lottie/animation-login.json')}
-                            progress={this.state.progress}
+                            source={require('../style/lottie/animation-login.json')}              
+                            autoPlay={true}
+                            loop={false}
                         />
                     </View>
                 </View>
@@ -232,7 +220,7 @@ export default class LoginPage extends Component {
                     </View>
                     <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
                         <Fumi
-                            ref={"userNameInput"}
+                            ref={this.userNameInputRef}
                             {...textInputProps}
                             label={I18n('UserName')}
                             iconName={'user-circle-o'}
@@ -242,7 +230,7 @@ export default class LoginPage extends Component {
                     </View>
                     <View style={[styles.centered, {marginTop: Constant.normalMarginEdge}]}>
                         <Fumi
-                            ref={"passwordInput"}
+                            ref={this.passwordInputRef}
                             {...textInputProps}
                             label={I18n('Password')}
                             returnKeyType={'send'}

@@ -2,11 +2,11 @@
  * Created by guoshuyu on 2017/11/7.
  */
 
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import {
-    View, Image, StatusBar, Platform, Animated, Easing
+    View, Image, Platform, Animated, Easing
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles, {screenHeight, screenWidth} from "../style"
 import loginActions from '../store/actions/login'
 import userActions from '../store/actions/user'
@@ -31,9 +31,7 @@ export default class WelcomePage extends Component {
     constructor(props) {
         super(props);
         this.toNext = this.toNext.bind(this);
-        this.state = {
-            progress: new Animated.Value(0),
-        };
+        this.lottieViewRef = createRef();
     }
 
 
@@ -42,33 +40,27 @@ export default class WelcomePage extends Component {
         userActions.initUserInfo().then((res) => {
             this.toNext(res)
         });
-        Animated.timing(this.state.progress, {
-            toValue: 1,
-            duration: 2000,
-            easing: Easing.linear,
-        }).start();
     }
 
     componentWillUnmount() {
-        if (this.refs.lottieView) {
-            this.refs.lottieView.reset();
+        if (this.lottieViewRef.current) {
+            this.lottieViewRef.current.reset();
         }
     }
 
     toNext(res) {
         setTimeout(() => {
             if (res && res.result) {
-                Actions.reset("root");
+                Actions.reset("MainTabs");
             } else {
                 Actions.reset("LoginPage");
             }
-        }, 2100);
+        }, 3000);
     }
 
     render() {
         return (
             <View style={[styles.mainBox, {backgroundColor: Constant.white}]}>
-                <StatusBar hidden={true}/>
                 <View style={[styles.centered, {flex: 1}]}>
                     <Image source={require("../img/welcome.png")}
                            resizeMode={"contain"}
@@ -76,13 +68,14 @@ export default class WelcomePage extends Component {
                     <View style={[styles.absoluteFull, styles.centered, {justifyContent: "flex-end"}]}>
                         <View style={[styles.centered, {width: 150, height:150}]}>
                             <LottieView
-                                ref="lottieView"
+                                ref={this.lottieViewRef}
                                 style={{
                                     width: 150,
                                     height: 150,
                                 }}
                                 source={require('../style/lottie/animation-w800-h800.json')}
-                                progress={this.state.progress}
+                                autoPlay={true}
+                                loop={false}
                             />
                         </View>
                     </View>

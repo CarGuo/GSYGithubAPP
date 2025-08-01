@@ -7,7 +7,7 @@ import {
 import PropTypes from 'prop-types';
 import styles from '../../style'
 import * as Constant from '../../style/constant'
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../../navigation/Actions';
 import UserImage from './UserImage'
 
 /**

@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { WebView } from 'react-native-webview';
-import {Actions} from 'react-native-router-flux'
+import {Actions} from '../../navigation/Actions'
 import {launchUrl} from '../../utils/htmlUtils'
 
 let WebCurrent = WebView;

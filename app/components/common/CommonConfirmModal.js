@@ -1,7 +1,7 @@
 /**
  * Created by guoshuyu on 2017/11/12.
  */
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import {
     Text,
     View,
@@ -12,7 +12,7 @@ import styles, {screenWidth, screenHeight} from "../../style/index"
 import * as Constant from "../../style/constant"
 import I18n from '../../style/i18n'
 import Modal from './ModalBox';
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../../navigation/Actions';
 
 
 /**
@@ -23,12 +23,13 @@ class CommonConfirmModal extends Component {
     constructor(props) {
         super(props);
         this.onClose = this.onClose.bind(this);
-        this.text = this.props.text;
+        this.text = this.props.route.params.text;
+        this.loginModalRef = createRef();
     }
 
     componentDidMount() {
-        if (this.refs.loginModal)
-            this.refs.loginModal.open();
+        if (this.loginModalRef.current)
+            this.loginModalRef.current.open();
     }
 
     componentWillUnmount() {
@@ -42,20 +43,20 @@ class CommonConfirmModal extends Component {
     render() {
         let width = screenWidth - 100;
         return (
-            <Modal ref={"loginModal"}
+            <Modal ref={this.loginModalRef}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
                    onClosed={this.onClose}
-                   backdrop={this.props.backExit}
+                   backdrop={this.props.route.params.backExit}
                    backButtonClose={false}
-                   swipeToClose={this.props.backExit}
+                   swipeToClose={this.props.route.params.backExit}
                    backdropOpacity={0.8}>
                 <View style={[styles.centered, {flex: 1,}]}>
                     <View style={[{borderRadius: 3, backgroundColor: Constant.white}, styles.centered]}>
                         <View style={[styles.flexDirectionRowNotFlex, {marginTop: 10, paddingBottom: 10},
                             {backgroundColor: Constant.white, width: width}, styles.centered]}>
                             <Text
-                                style={[styles.normalText, {fontWeight: 'bold'}]}>{this.props.titleText}</Text>
+                                style={[styles.normalText, {fontWeight: 'bold'}]}>{this.props.route.params.titleText}</Text>
                         </View>
                         <View style={[{
                             marginHorizontal: Constant.normalMarginEdge,
@@ -63,7 +64,7 @@ class CommonConfirmModal extends Component {
                             <Text
                                 style={[styles.normalText, {
                                     padding: Constant.normalMarginEdge,
-                                }]}>{this.props.text}</Text>
+                                }]}>{this.props.route.params.text}</Text>
                         </View>
                         <View
                             style={[styles.flexDirectionRowNotFlex, {
@@ -86,7 +87,7 @@ class CommonConfirmModal extends Component {
                                 onPress={() => {
                                     if (this.text && this.text.trim().length > 0) {
                                         Actions.pop();
-                                        this.props.textConfirm && this.props.textConfirm(this.text);
+                                        this.props.route.params.textConfirm && this.props.route.params.textConfirm(this.text);
                                     }
                                 }}>
                                 <Text style={[styles.normalText, {fontWeight: 'bold'}]}>{I18n("ok")}</Text>

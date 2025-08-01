@@ -1,7 +1,7 @@
 /**
  * Created by guoshuyu on 2017/11/12.
  */
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import {
     Text,
     View,
@@ -12,7 +12,7 @@ import styles, {screenWidth, screenHeight} from "../../style/index"
 import I18n from '../../style/i18n'
 import Modal from './ModalBox';
 import Spinner from 'react-native-spinkit-fix-new';
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../../navigation/Actions';
 
 
 /**
@@ -23,11 +23,12 @@ class LoadingModal extends Component {
     constructor(props) {
         super(props);
         this.onClose = this.onClose.bind(this);
+        this.loginModalRef = createRef();
     }
 
     componentDidMount() {
-        if (this.refs.loginModal) {
-            this.refs.loginModal.open();
+        if (this.loginModalRef.current) {
+            this.loginModalRef.current.open();
         }
         this.handle = BackHandler.addEventListener('loaddingBack', this.onClose)
     }
@@ -45,11 +46,11 @@ class LoadingModal extends Component {
 
     render() {
         return (
-            <Modal ref={"loginModal"}
+            <Modal ref={this.loginModalRef}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
                    backButtonClose={false}
-                   swipeToClose={this.props.backExit}
+                   swipeToClose={this.props.route.params.backExit}
                    backdropOpacity={0.8}>
                 <View style={[styles.centered, {flex: 1}]}>
                     <View>
@@ -57,7 +58,7 @@ class LoadingModal extends Component {
                                  isVisible={true}
                                  size={50} type="9CubeGrid"
                                  color="#FFFFFF"/>
-                        <Text style={styles.normalTextWhite}>{this.props.text}</Text>
+                        <Text style={styles.normalTextWhite}>{this.props.route.params.text}</Text>
                     </View>
                 </View>
             </Modal>

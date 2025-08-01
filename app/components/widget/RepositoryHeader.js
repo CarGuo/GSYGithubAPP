@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 
 import * as Constant from '../../style/constant'
-import {Actions} from 'react-native-router-flux'
+import {Actions} from '../../navigation/Actions'
 import styles from '../../style'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IconC from 'react-native-vector-icons/Octicons'

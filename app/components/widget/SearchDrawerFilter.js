@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DeviceEventEmitter, Text, View, ViewPropTypes,} from 'react-native';
-import {Router, Actions, Scene} from 'react-native-router-flux';
+import {DeviceEventEmitter, Text, View} from 'react-native';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
+import {Router, Actions, Scene} from '../../navigation/Actions';
 import styles, {statusHeight, drawerWidth} from "../../style"
 import * as Constant from '../../style/constant'
 import {SortType, SearchFilterType, SearchLanguageType} from '../../utils/filterUtils'

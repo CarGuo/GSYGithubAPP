@@ -9,7 +9,7 @@ import * as Code from './netwrokCode'
 import handlerError from './netwrokCode'
 import {NativeModules, DeviceEventEmitter} from 'react-native';
 import NetInfo from "@react-native-community/netinfo";
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const CONTENT_TYPE_JSON = "application/json";
@@ -47,7 +47,8 @@ class HttpManager {
      * @return {Promise.<*>}
      */
     async netFetch(url, method = 'GET', params, json, header, text) {
-        let isConnected = await NetInfo.isConnected.fetch().done;
+        let netInfo = await NetInfo.fetch();
+        let isConnected = netInfo.isConnected;
 
         if (!isConnected) {
             return {

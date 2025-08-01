@@ -7,7 +7,7 @@ import styles from "../../style/index"
 import * as Constant from "../../style/constant"
 import IconC from 'react-native-vector-icons/Ionicons'
 import UserImage from "./UserImage";
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../../navigation/Actions';
 import I18n from '../../style/i18n'
 
 /**
@@ -85,7 +85,7 @@ class OrgItemBar extends Component {
                         title: this.props.ownerName + " - " + I18n("userOrg")
                     })
                 }}>
-                <IconC name={"ios-more"}
+                <IconC name={"ellipsis-horizontal-outline"}
                        backgroundColor={Constant.transparentColor}
                        color={Constant.primaryColor}
                        size={16}/>

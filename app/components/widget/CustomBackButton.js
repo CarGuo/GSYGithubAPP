@@ -7,7 +7,7 @@ import {
     View, Text, TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Router, Actions, Scene} from 'react-native-router-flux';
+import {Router, Actions, Scene} from '../../navigation/Actions';
 import styles from "../../style"
 import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
@@ -33,7 +33,7 @@ class BackButton extends Component {
             <TouchableOpacity style={[styles.centered, {marginHorizontal: 2 * Constant.normalMarginEdge, marginTop:5}]} onPress={() => {
                 Actions.pop();
             }}>
-                <Icon name={'md-arrow-round-back'} size={20} color={Constant.miWhite}/>
+                <Icon name={'chevron-back-outline'} size={20} color={Constant.miWhite}/>
             </TouchableOpacity>
         )
     }

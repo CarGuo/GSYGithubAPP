@@ -1,7 +1,7 @@
 /**
  * Created by guoshuyu on 2017/11/12.
  */
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import {
     Text,
     View,
@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import styles, {screenWidth, screenHeight} from "../../style/index"
 import * as Constant from "../../style/constant"
 import Modal from './ModalBox';
-import {Actions} from "react-native-router-flux";
+import {Actions} from '../../navigation/Actions';
 
 const width = screenWidth - 100;
 const itemHeight = 50;
@@ -26,11 +26,12 @@ class CommonOptionModal extends Component {
         super(props);
         this.onClose = this.onClose.bind(this);
         this._renderItem = this._renderItem.bind(this);
+        this.modalRef = createRef();
     }
 
     componentDidMount() {
-        if (this.refs.modal)
-            this.refs.modal.open();
+        if (this.modalRef.current)
+            this.modalRef.current.open();
     }
 
     componentWillUnmount() {
@@ -56,7 +57,7 @@ class CommonOptionModal extends Component {
     }
 
     render() {
-        let {dataList} = this.props;
+        let {dataList} = this.props.route.params;
         let items = [];
         dataList.forEach((data) => {
             items.push(this._renderItem(data))
@@ -64,7 +65,7 @@ class CommonOptionModal extends Component {
         let sumHeight = itemHeight * items.length + 2;
         let currentHeight = (sumHeight >= screenHeight) ? screenHeight : sumHeight;
         return (
-            <Modal ref={"modal"}
+            <Modal ref={this.modalRef}
                    style={[{height: screenHeight, width: screenWidth, backgroundColor: "#F0000000"}]}
                    position={"center"}
                    onClosed={this.onClose}

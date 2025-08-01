@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {
     View, Text, StatusBar
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles from "../style"
 import I18n from '../style/i18n'
 import * as Constant from '../style/constant'
@@ -108,7 +108,7 @@ export default class SettingPage extends Component {
                     showIconNext={true}
                     topLine={false}
                     bottomLine={false}
-                    itemIcon={"octoface"}
+                    itemIcon={"book"}
                     textStyle={[styles.centered, styles.normalText, {
                         textAlignVertical: 'center',
                         marginHorizontal: Constant.normalMarginEdge

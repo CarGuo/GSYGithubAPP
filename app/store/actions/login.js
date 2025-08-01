@@ -10,7 +10,7 @@ import * as Constant from '../../style/constant'
 import {Buffer} from 'buffer'
 import {clear} from '../reducers'
 import {CLIENT_ID, CLIENT_SECRET} from '../../config/ignoreConfig'
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const toLogin = () => async (dispatch, getState) => {
 

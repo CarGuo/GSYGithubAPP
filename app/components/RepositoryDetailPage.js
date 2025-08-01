@@ -6,7 +6,7 @@ import React, {Component, PureComponent} from 'react';
 import {
     View, InteractionManager, StatusBar, SafeAreaView, StyleSheet, BackHandler
 } from 'react-native';
-import {Actions, Tabs} from 'react-native-router-flux';
+import {Actions, Tabs} from '../navigation/Actions';
 import styles, {screenHeight} from "../style"
 import * as Constant from "../style/constant"
 import I18n from '../style/i18n'
@@ -20,7 +20,10 @@ import Toast from './common/ToastProxy'
 import PopmenuItem from './widget/BottomPopmenuItem'
 import {launchUrl} from "../utils/htmlUtils";
 import {logHoc} from "../components/common/LogHoc";
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view-fix-guo';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+
+const Tab = createMaterialTopTabNavigator();
 
 /**
  * 仓库详情
@@ -40,22 +43,23 @@ class RepositoryDetailPage extends Component {
         this.curBranch = null;
         this.index = 0;
         this.state = {
-            dataDetail: this.props.defaultProps,
+            dataDetail: props.route.params.defaultProps,
             dataDetailReadme: '',
             showBottom: false,
         }
     }
 
     componentDidMount() {
+        const { ownerName, repositoryName } = this.props.route.params;
         InteractionManager.runAfterInteractions(() => {
-            repositoryActions.getRepositoryDetail(this.props.ownerName, this.props.repositoryName)
+            repositoryActions.getRepositoryDetail(ownerName, repositoryName)
                 .then((res) => {
                     if (res && res.result) {
                         this.setState({
                             dataDetail: res.data
                         });
                         Actions.refresh({titleData: res.data});
-                        repositoryActions.addRepositoryLocalRead(this.props.ownerName, this.props.repositoryName, res.data);
+                        repositoryActions.addRepositoryLocalRead(ownerName, repositoryName, res.data);
 
                     }
                     return res.next();
@@ -66,11 +70,11 @@ class RepositoryDetailPage extends Component {
                             dataDetail: res.data
                         });
                         Actions.refresh({titleData: res.data});
-                        repositoryActions.addRepositoryLocalRead(this.props.ownerName, this.props.repositoryName, res.data);
+                        repositoryActions.addRepositoryLocalRead(ownerName, repositoryName, res.data);
                     }
                 });
             this._refresh();
-            repositoryActions.getBranches(this.props.ownerName, this.props.repositoryName)
+            repositoryActions.getBranches(ownerName, repositoryName)
                 .then((res) => {
                     if (res && res.result) {
                         this.setState({
@@ -129,7 +133,8 @@ class RepositoryDetailPage extends Component {
     }
 
     _refresh() {
-        repositoryActions.getRepositoryDetailReadmeHtml(this.props.ownerName, this.props.repositoryName, this.curBranch)
+        const { ownerName, repositoryName } = this.props.route.params;
+        repositoryActions.getRepositoryDetailReadmeHtml(ownerName, repositoryName, this.curBranch)
             .then((res) => {
                 if (res && res.result) {
                     this.setState({
@@ -145,7 +150,7 @@ class RepositoryDetailPage extends Component {
                     })
                 }
             });
-        repositoryActions.getRepositoryStatus(this.props.ownerName, this.props.repositoryName).then((res) => {
+        repositoryActions.getRepositoryStatus(ownerName, repositoryName).then((res) => {
             if (res && res.result) {
                 this.setState({
                     showBottom: true,
@@ -158,7 +163,7 @@ class RepositoryDetailPage extends Component {
 
 
     _forked() {
-        let {ownerName, repositoryName} = this.props;
+        let {ownerName, repositoryName} = this.props.route.params;
         Actions.LoadingModal({backExit: false});
         repositoryActions.createRepositoryForks(ownerName, repositoryName).then((res) => {
             Toast((res && res.result) ? I18n('forkSuccess') : I18n('forkFail'));
@@ -182,7 +187,7 @@ class RepositoryDetailPage extends Component {
 
     _getBottomItem() {
         let {stared, watched, dataDetail} = this.state;
-        let {ownerName, repositoryName} = this.props;
+        let {ownerName, repositoryName} = this.props.route.params;
         return [{
             itemName: stared ? I18n("reposUnStar") : I18n("reposStar"),
             icon: "star",
@@ -272,60 +277,85 @@ class RepositoryDetailPage extends Component {
         return (
             <View style={styles.mainBox}>
                 <StatusBar hidden={false} backgroundColor={'transparent'} translucent barStyle={'light-content'}/>
-                <ScrollableTabView
-                    onChangeTab={(params) => {
-                        this.index = params.i;
+                <Tab.Navigator
+                    screenOptions={{
+                        tabBarActiveTintColor: Constant.white,
+                        tabBarInactiveTintColor: Constant.subTextColor,
+                        tabBarStyle: {
+                            backgroundColor: Constant.primaryColor,
+                            paddingTop: 5,
+                        },
+                        tabBarLabelStyle: {
+                            fontSize: 14,
+                        },
+                        tabBarIndicatorStyle: {
+                            backgroundColor: Constant.white,
+                            height: 3,
+                        },
                     }}
-                    tabBarUnderlineStyle={{
-                        backgroundColor: Constant.white,
-                        height: 3
+                    screenListeners={{
+                        tabPress: (e) => {
+                            // Handle tab change
+                        },
                     }}
-                    renderTabBar={(props) => {
-                        return <DefaultTabBar {...props} style={{paddingTop: 5}}/>;
-                    }}
-                    tabBarBackgroundColor={Constant.primaryColor}
-                    tabBarActiveTextColor={Constant.white}
-                    tabBarInactiveTextColor={Constant.subTextColor}
-                    tabBarTextStyle={{fontSize: 16}}>
-                    <WebComponent
-                        tabLabel={I18n('reposReadme')}
-                        source={{html: this.state.dataDetailReadme}}
-                        userName={this.props.ownerName}
-                        reposName={this.props.repositoryName}
-                        gsygithubLink={(url) => {
-                            if (url) {
-                                let owner = this.props.ownerName;
-                                let repo = this.props.repositoryName;
-                                let branch = this.curBranch ? this.curBranch : "master";
-                                let currentPath = url.replace("gsygithub://.", "").replace("gsygithub://", "/");
-                                let fixedUrl = "https://github.com/" + owner + "/" + repo + "/blob/" + branch + currentPath;
-                                launchUrl(fixedUrl);
-                            }
-                        }}
+                >
+                    <Tab.Screen 
+                        name="Readme" 
+                        children={() => (
+                            <WebComponent
+                                source={{html: this.state.dataDetailReadme}}
+                                userName={this.props.route.params.ownerName}
+                                reposName={this.props.route.params.repositoryName}
+                                gsygithubLink={(url) => {
+                                    if (url) {
+                                        let owner = this.props.route.params.ownerName;
+                                        let repo = this.props.route.params.repositoryName;
+                                        let branch = this.curBranch ? this.curBranch : "master";
+                                        let currentPath = url.replace("gsygithub://.", "").replace("gsygithub://", "/");
+                                        let fixedUrl = "https://github.com/" + owner + "/" + repo + "/blob/" + branch + currentPath;
+                                        launchUrl(fixedUrl);
+                                    }
+                                }}
+                            />
+                        )}
+                        options={{ tabBarLabel: I18n('reposReadme') }}
                     />
-                    <RepositoryDetailActivity
-                        tabLabel={I18n('reposActivity')}
-                        dataDetail={this.state.dataDetail}
-                        ownerName={this.props.ownerName}
-                        repositoryName={this.props.repositoryName}
+                    <Tab.Screen 
+                        name="Activity" 
+                        children={() => (
+                            <RepositoryDetailActivity
+                                dataDetail={this.state.dataDetail}
+                                ownerName={this.props.route.params.ownerName}
+                                repositoryName={this.props.route.params.repositoryName}
+                            />
+                        )}
+                        options={{ tabBarLabel: I18n('reposActivity') }}
                     />
-
-                    <RepositoryDetailFile
-                        tabLabel={I18n('reposFile')}
-                        ref={(ref) => {
-                            this.detailFile = ref;
-                        }}
-                        curBranch={this.curBranch}
-                        ownerName={this.props.ownerName}
-                        repositoryName={this.props.repositoryName}
+                    <Tab.Screen 
+                        name="Files" 
+                        children={() => (
+                            <RepositoryDetailFile
+                                ref={(ref) => {
+                                    this.detailFile = ref;
+                                }}
+                                curBranch={this.curBranch}
+                                ownerName={this.props.route.params.ownerName}
+                                repositoryName={this.props.route.params.repositoryName}
+                            />
+                        )}
+                        options={{ tabBarLabel: I18n('reposFile') }}
                     />
-
-                    <IssueListPage
-                        tabLabel={I18n('reposIssue')}
-                        userName={this.props.ownerName}
-                        repositoryName={this.props.repositoryName}
+                    <Tab.Screen 
+                        name="Issues" 
+                        children={() => (
+                            <IssueListPage
+                                userName={this.props.route.params.ownerName}
+                                repositoryName={this.props.route.params.repositoryName}
+                            />
+                        )}
+                        options={{ tabBarLabel: I18n('reposIssue') }}
                     />
-                </ScrollableTabView>
+                </Tab.Navigator>
                 {bottom}
             </View>
         )

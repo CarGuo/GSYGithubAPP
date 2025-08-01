@@ -7,7 +7,7 @@ import {
     View, Text, TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Router, Actions, Scene} from 'react-native-router-flux';
+import {Router, Actions, Scene} from '../../navigation/Actions';
 import styles from "../../style"
 import I18n from '../../style/i18n'
 import * as Constant from '../../style/constant'
@@ -33,7 +33,7 @@ class SearchButton extends Component {
             }]} onPress={() => {
                 Actions.SearchPage();
             }}>
-                <Icon name={'md-search'} size={25} color={Constant.miWhite}/>
+                <Icon name={'search-outline'} size={25} color={Constant.miWhite}/>
             </TouchableOpacity>
         )
     }

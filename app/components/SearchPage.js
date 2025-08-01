@@ -36,6 +36,7 @@ class SearchPage extends Component {
         this.selectSortData = null;
         this.selectLanguageData = null;
         this.select = 0;
+        this.pullListRef = React.createRef();
         this.state = {
             showSelect: 0,
             dataSource: [],
@@ -77,14 +78,14 @@ class SearchPage extends Component {
         Keyboard.dismiss();
         let type = (select === 0) ? null : 'user';
         if (this.searchText === null || this.searchText.trim().length === 0) {
-            if (this.refs.pullList) {
-                this.refs.pullList.refreshComplete(false);
+            if (this.pullListRef.current) {
+                this.pullListRef.current.refreshComplete(false);
             }
             return
         }
-        if (this.refs.pullList) {
-            this.refs.pullList.loadMoreComplete();
-            this.refs.pullList.showRefreshState();
+        if (this.pullListRef.current) {
+            this.pullListRef.current.loadMoreComplete();
+            this.pullListRef.current.showRefreshState();
         }
         repositoryActions.searchRepository(this.searchText, this.selectLanguageData, this.selectTypeData, this.selectSortData, type, 1).then((res) => {
             let size = 0;
@@ -96,9 +97,9 @@ class SearchPage extends Component {
                 size = res.data.length;
             }
             setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
-                    this.refs.pullList.scrollToTop()
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE), true);
+                    this.pullListRef.current.scrollToTop()
                 }
             }, 500);
         });
@@ -158,8 +159,8 @@ class SearchPage extends Component {
                 size = res.data.length;
             }
             setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.loadMoreComplete((size >= Config.PAGE_SIZE));
                 }
             }, 500);
         });
@@ -235,7 +236,7 @@ class SearchPage extends Component {
                         onPress={() => {
                             this._refresh()
                         }}>
-                        <Icon name={'md-search'} size={28} color={Constant.subLightTextColor}/>
+                        <Icon name={'search-outline'} size={28} color={Constant.subLightTextColor}/>
                     </TouchableOpacity>
                 </View>
                 <CommonBottomBar
@@ -249,7 +250,7 @@ class SearchPage extends Component {
                 <View style={{height: 2, opacity: 0.3}}/>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     enableRefresh={false}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)

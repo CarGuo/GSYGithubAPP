@@ -7,7 +7,7 @@ import {
     View, SafeAreaView, InteractionManager, StatusBar, TextInput, TouchableOpacity, Keyboard, StyleSheet, Platform
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from '../navigation/Actions';
 import styles, {screenWidth, screenHeight} from "../style"
 import * as Constant from "../style/constant"
 import repositoryActions from "../store/actions/repository"
@@ -40,6 +40,7 @@ class RepositoryIssueListPage extends Component {
         this.selectTypeData = null;
         this.selectSortData = null;
         this.selectLanguageData = null;
+        this.pullListRef = React.createRef();
         this.state = {
             select: 0,
             dataSource: []
@@ -58,11 +59,11 @@ class RepositoryIssueListPage extends Component {
 
     _searchText() {
         Keyboard.dismiss();
-        if (this.refs.pullList) {
-            this.refs.pullList.refreshComplete(false);
+        if (this.pullListRef.current) {
+            this.pullListRef.current.refreshComplete(false);
         }
-        if (this.refs.pullList) {
-            this.refs.pullList.showRefreshState();
+        if (this.pullListRef.current) {
+            this.pullListRef.current.showRefreshState();
         }
         if (this.searchText === null || this.searchText.trim().length === 0) {
             issueActions.getRepositoryIssue(0, this.props.userName, this.props.repositoryName, this.filter)
@@ -84,8 +85,8 @@ class RepositoryIssueListPage extends Component {
                     });
                     size = res.data.length;
                 }
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE), true);
                 }
             });
             return
@@ -100,8 +101,8 @@ class RepositoryIssueListPage extends Component {
                 size = res.data.length;
             }
             setTimeout(() => {
-                if (this.refs.pullList) {
-                    this.refs.pullList.refreshComplete((size >= Config.PAGE_SIZE), true);
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.refreshComplete((size >= Config.PAGE_SIZE), true);
                 }
             }, 500);
         });
@@ -121,7 +122,6 @@ class RepositoryIssueListPage extends Component {
                 onPressItem={() => {
                     Actions.IssueDetail({
                         iconType:2,
-                        rightBtn: 'ios-more',
                         needRightBtn: true,
                         issue: rowData, title: fullName,
                         repositoryName: this.props.repositoryName,
@@ -156,8 +156,8 @@ class RepositoryIssueListPage extends Component {
                     });
                     size = res.data.length;
                 }
-                if (this.refs.pullList) {
-                    this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+                if (this.pullListRef.current) {
+                    this.pullListRef.current.loadMoreComplete((size >= Config.PAGE_SIZE));
                 }
             });
             return
@@ -172,8 +172,8 @@ class RepositoryIssueListPage extends Component {
                 });
                 size = res.data.length;
             }
-            if (this.refs.pullList) {
-                this.refs.pullList.loadMoreComplete((size >= Config.PAGE_SIZE));
+            if (this.pullListRef.current) {
+                this.pullListRef.current.loadMoreComplete((size >= Config.PAGE_SIZE));
             }
         });
     }
@@ -298,7 +298,7 @@ class RepositoryIssueListPage extends Component {
                 </View>
                 <PullListView
                     style={{flex: 1}}
-                    ref="pullList"
+                    ref={this.pullListRef}
                     enableRefresh={false}
                     renderRow={(rowData, index) =>
                         this._renderRow(rowData)
@@ -328,7 +328,7 @@ class RepositoryIssueListPage extends Component {
                     }}>
                     <View
                         style={[styles.centered, ...btnStyle]}>
-                        <Icon name={'md-add-circle'}
+                        <Icon name={'add-outline'}
                               style={{backgroundColor: Constant.transparentColor}}
                               backgroundColor={Constant.transparentColor}
                               size={50} color={Constant.primaryColor}/>
