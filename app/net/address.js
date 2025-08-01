@@ -8,7 +8,7 @@ import {CLIENT_ID} from '../config/ignoreConfig';
 let host = 'https://api.github.com/';
 export const hostWeb = 'https://github.com/';
 export const downloadUrl = 'https://www.pgyer.com/GSYGithubApp';
-export const graphicHost = 'https://ghchart.rshah.org/';
+export const graphicHost = 'https://ghchart.rshah.org';
 
 export default AddressLocal = {
     /**

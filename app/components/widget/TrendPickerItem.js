@@ -17,7 +17,7 @@ class TrendPickerItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            icon:'md-arrow-dropdown'
+            icon:'caret-down-outline'
         }
     }
 
