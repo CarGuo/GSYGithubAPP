@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
 import com.android.build.OutputFile
@@ -45,6 +46,9 @@ react {
 
     /* Enable Hermes */
     hermesEnabled = true  // clean and rebuild if changing
+
+    /* Autolinking */
+    autolinkLibrariesWithApp()
 }
 
 /**
@@ -84,7 +88,7 @@ def enableHermes = true // This should match react.hermesEnabled
 
 android {
     namespace "com.gsygithubapp"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11

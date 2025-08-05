@@ -1,21 +1,6 @@
-pluginManagement {
-    includeBuild('../node_modules/@react-native/gradle-plugin')
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
-
-plugins {
-    id('com.facebook.react.settings')
-}
-
+pluginManagement { includeBuild("../node_modules/@react-native/gradle-plugin") }
+plugins { id("com.facebook.react.settings") }
+extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
 rootProject.name = 'GSYGithubApp'
 include ':app'
-
-extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
-    if (ex.metaClass.respondsTo(ex, 'autolinkLibrariesFromCommand')) {
-        ex.autolinkLibrariesFromCommand()
-    }
-}
+includeBuild('../node_modules/@react-native/gradle-plugin')
