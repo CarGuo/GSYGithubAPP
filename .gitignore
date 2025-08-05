@@ -61,3 +61,4 @@ tmp/
 # CocoaPods
 /ios/Pods/
 app/config/ignoreConfig.js
+.cxx/
