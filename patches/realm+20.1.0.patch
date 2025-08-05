@@ -1,0 +1,61 @@
+diff --git a/node_modules/realm/binding/android/src/main/cpp/io_realm_react_RealmReactModule.cpp b/node_modules/realm/binding/android/src/main/cpp/io_realm_react_RealmReactModule.cpp
+index 5b385c7..a987108 100644
+--- a/node_modules/realm/binding/android/src/main/cpp/io_realm_react_RealmReactModule.cpp
++++ b/node_modules/realm/binding/android/src/main/cpp/io_realm_react_RealmReactModule.cpp
+@@ -109,39 +109,29 @@ extern "C" JNIEXPORT void JNICALL Java_io_realm_react_RealmReactModule_setDefaul
+ }
+ 
+ extern "C" JNIEXPORT void JNICALL Java_io_realm_react_RealmReactModule_createScheduler(JNIEnv* env, jobject thiz,
+-                                                                                       jobject call_invoker)
++                                                                                       jobject call_invoker_holder_impl)
+ {
+-    // React Native uses the fbjni library for handling JNI, which has the concept of "hybrid objects",
+-    // which are Java objects containing a pointer to a C++ object. The CallInvokerHolder, which has the
+-    // invokeAsync method we want access to, is one such hybrid object.
+-    // Rather than reworking our code to use fbjni throughout, this code unpacks the C++ object from the Java
+-    // object `callInvokerHolderJavaObj` manually, based on reverse engineering the fbjni code.
+-
+-    // 1. Get the Java object referred to by the mHybridData field of the Java holder object
+-    auto callInvokerHolderClass = env->FindClass("com/facebook/react/turbomodule/core/CallInvokerHolderImpl");
+-    if (!env->IsInstanceOf(call_invoker, callInvokerHolderClass)) {
+-        throw std::invalid_argument("Expected call_invoker to be CallInvokerHolderImpl");
+-    }
+-    auto hybridDataField = env->GetFieldID(callInvokerHolderClass, "mHybridData", "Lcom/facebook/jni/HybridData;");
+-    auto hybridDataObj = env->GetObjectField(call_invoker, hybridDataField);
++    // Hacked CallInvoker extraction to work with RN 0.80
++    __android_log_print(ANDROID_LOG_INFO, "Realm", "createScheduler called - attempting CallInvoker extraction");
+ 
+-    // 2. Get the destructor Java object referred to by the mDestructor field from the myHybridData Java object
+-    auto hybridDataClass = env->FindClass("com/facebook/jni/HybridData");
+-    auto destructorField =
+-        env->GetFieldID(hybridDataClass, "mDestructor", "Lcom/facebook/jni/HybridData$Destructor;");
+-    auto destructorObj = env->GetObjectField(hybridDataObj, destructorField);
++    if (!call_invoker_holder_impl) {
++        throw std::invalid_argument("CallInvokerHolderImpl is null");
++    }
+ 
+-    // 3. Get the mNativePointer field from the mDestructor Java object
+-    auto destructorClass = env->FindClass("com/facebook/jni/HybridData$Destructor");
+-    auto nativePointerField = env->GetFieldID(destructorClass, "mNativePointer", "J");
+-    auto nativePointerValue = env->GetLongField(destructorObj, nativePointerField);
++    auto alias = facebook::jni::alias_ref<jobject>(call_invoker_holder_impl);
++    auto holder = facebook::jni::static_ref_cast<facebook::react::CallInvokerHolder::javaobject>(alias);
++    if (!holder) {
++        throw std::invalid_argument("Failed to cast to CallInvokerHolder java object");
++    }
+ 
+-    // 4. Cast the mNativePointer back to its C++ type
+-    auto nativePointer = reinterpret_cast<facebook::react::CallInvokerHolder*>(nativePointerValue);
++    auto callInvoker = holder->cthis()->getCallInvoker();
++    if (!callInvoker) {
++        throw std::invalid_argument("CallInvoker is null after extraction");
++    }
+ 
+-    // 5. Create the scheduler from the JS call invoker
+     __android_log_print(ANDROID_LOG_VERBOSE, "Realm", "Creating scheduler");
+-    realm::js::react_scheduler::create_scheduler(nativePointer->getCallInvoker());
++    realm::js::react_scheduler::create_scheduler(callInvoker);
++    __android_log_print(ANDROID_LOG_INFO, "Realm", "Realm scheduler created successfully");
+ }
+ 
+ extern "C" JNIEXPORT void JNICALL Java_io_realm_react_RealmReactModule_invalidateCaches(JNIEnv* env, jobject thiz)
