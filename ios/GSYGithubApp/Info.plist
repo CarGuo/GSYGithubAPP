@@ -45,6 +45,8 @@
 	<string>是否允许应用访问您的麦克风</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>是否允许应用访问您的相册</string>
+	<key>RCTNewArchEnabled</key>
+	<true/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
