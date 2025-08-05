@@ -15,5 +15,7 @@ rootProject.name = 'GSYGithubApp'
 include ':app'
 
 extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
-    ex.autolinkLibrariesFromCommand()
+    if (ex.metaClass.respondsTo(ex, 'autolinkLibrariesFromCommand')) {
+        ex.autolinkLibrariesFromCommand()
+    }
 }
