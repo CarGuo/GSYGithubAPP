@@ -12,6 +12,7 @@ import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.facebook.react.soloader.OpenSourceMergedSoMapping;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
+    SoLoader.init(this, OpenSourceMergedSoMapping.INSTANCE);
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
   }
 
