@@ -35,7 +35,7 @@ const injectedScript = function () {
  */
 export default class WebComponent extends Component {
 
-    constructor(props: Object) {
+    constructor(props) {
         super(props);
         this.state = {
             loading: true,
@@ -75,7 +75,7 @@ export default class WebComponent extends Component {
                 injectedJavaScript={'(' + String(injectedScript) + ')();'}
                 scrollEnabled={this.props.scrollEnabled || true}
                 javaScriptEnabled={true}
-                dataDetectorTypes={'none'}
+                dataDetectorTypes={null}
                 domStorageEnabled={true}
                 automaticallyAdjustContentInsets={true}
                 mixedContentMode={'always'}
