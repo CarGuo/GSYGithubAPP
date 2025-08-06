@@ -173,15 +173,12 @@ export const getNewsVersion = (showTip, onlyCheck = true) => {
                     console.log("version update newsHad ", newsHad);
                 }
                 if (newsHad) {
+                    
                     Actions.ConfirmModal({
                         titleText: I18n('update'),
                         text: I18n('update') + ": " + res.data[0].name + "\n" + res.data[0].body,
                         textConfirm: () => {
-                            if (Platform.OS === "ios") {
-                                Linking.openURL(hostWeb + "CarGuo/GSYGithubApp/releases")
-                            } else {
-                                Linking.openURL(downloadUrl)
-                            }
+                            Linking.openURL(hostWeb + "CarGuo/GSYGithubApp/releases")
                         }
                     });
                 } else {
