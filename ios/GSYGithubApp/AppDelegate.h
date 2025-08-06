@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import <React/RCTBridgeDelegate.h>
+#import <React/RCTDefaultReactNativeFactoryDelegate.h>
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate>
+@interface AppDelegate : RCTDefaultReactNativeFactoryDelegate <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 
