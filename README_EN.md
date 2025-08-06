@@ -94,7 +94,7 @@ With the use and feedback of the project, will user experience and function opti
 
 ### Third-party framework
 
-* [react-native(0.74.0)](http://reactnative.cn/docs/0.74/getting-started.html)
+* [react-native(0.80.2)](http://reactnative.cn/docs/0.80/getting-started.html)
 * [react-native-vector-icons ](https://github.com/oblador/react-native-vector-icons)
 * [react-redux redux](https://github.com/reactjs/react-redux)
 * [realm-js realm ](https://github.com/realm/realm-js)
