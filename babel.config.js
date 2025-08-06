@@ -3,6 +3,6 @@ module.exports = {
   plugins: [
     ['@babel/plugin-proposal-decorators', { 'legacy': true }],
     ['import', { libraryName: '@ant-design/react-native' }],
-    'react-native-reanimated/plugin',
+    'react-native-worklets/plugin',
   ]
 };

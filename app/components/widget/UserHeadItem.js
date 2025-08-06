@@ -119,7 +119,7 @@ class UserHeadItem extends Component {
                     //source={{html: generateImageHtml(userDisPlayName, Constant.primaryColor.replace("#", ""))}}
                     source={{uri: graphicHost + "/" + Constant.primaryColor.replace("#", "") + "/" + userDisPlayName}}
                     javaScriptEnabled={true}
-                    dataDetectorTypes={'none'}
+                    dataDetectorTypes={null}
                     domStorageEnabled={true}
                     scalesPageToFit={true}
                     onLoadEnd={() => {
