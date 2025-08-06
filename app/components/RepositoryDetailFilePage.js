@@ -130,7 +130,8 @@ class RepositoryDetailFilePage extends Component {
                                 branch: curBranch,
                                 html_url: rowData.html_url,
                                 clone_url: rowData.clone_url,
-                                textStyle: true
+                                textStyle: true,
+                                needRequest:true,
                             })
                         }
                     }}/>
