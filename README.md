@@ -94,19 +94,7 @@
 
 ## 相关文章
 
-- ### [1、从Android到React Native开发（一、入门）](https://juejin.im/post/58ac5b4c8ac2474faab25d1c)
-
-- ### [2、从Android到React Native开发（二、通信与模块实现）](https://juejin.im/post/58bc07c5ac502e006b07f434)
-
-- ### [3、从Android到React Native开发（三、自定义原生控件支持）](https://juejin.im/post/5946253561ff4b006cee4d65)
-
-- ### [4、从Android到React Native开发（四、打包流程和发布为Maven库）](https://juejin.im/post/5b2116466fb9a01e3128359f)
-
-- ### [React Native 的未来与React Hooks](https://juejin.im/post/5cb34404f265da0384127fcd)
-
-- ### [移动端跨平台开发的深度解析](https://juejin.im/post/5b395eb96fb9a00e556123ef)
-
-- ### [全网最全 Flutter 与 React Native 深入对比分析](https://juejin.im/post/5d0bac156fb9a07ec56e7f15)
+- ### [React Native 系列文章](https://juejin.cn/column/7535355162316505142)
 
 
 ### 示例图片
