@@ -9,7 +9,8 @@
 
 * ### 同款Weex版本 （ https://github.com/CarGuo/GSYGithubAppWeex ）
 * ### 同款Flutter版本 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
-* ### 同款Android Kotlin版本（ https://github.com/CarGuo/GSYGithubAppKotlin ）
+* ### 同款Android Kotlin View版本（ https://github.com/CarGuo/GSYGithubAppKotlin ）
+* ### 同款Android Compose版本（ https://github.com/CarGuo/GSYGithubAppKotlinCompose ）
 
 ```
 基于React Native开发，适配Android与IOS。
