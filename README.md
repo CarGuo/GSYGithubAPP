@@ -108,6 +108,28 @@
 
 <img src="http://img.cdn.guoshuyu.cn/showapp3.jpg" width="426px"/>
 
+
+### 架构图
+
+#### 系统结构
+
+![](./doc/SystemArchitecture.png)
+
+#### 导航结构
+
+![](./doc/NavigationStructure.png)
+
+#### 授权流程
+
+![](./doc/AuthenticationSystem.png)
+
+
+#### 数据流程
+
+![](./doc/CoreComponentsandDataFlow.png)
+
+
+
 ### 第三方框架
 
 * [react-native(0.80.2)](http://reactnative.cn/docs/0.80/getting-started.html)
