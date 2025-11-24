@@ -13,7 +13,7 @@
 * ### 同款Android Compose版本（ https://github.com/CarGuo/GSYGithubAppKotlinCompose ）
 
 ```
-基于React Native开发，适配Android与IOS。
+基于React Native开发，适配 Android 与 iOS。
 
 项目的目的是为方便个人日常维护和查阅Github，更好的沉浸于码友之间的互基，Github就是你的家。
 
