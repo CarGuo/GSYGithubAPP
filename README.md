@@ -23,6 +23,8 @@
 ```
 -----
 
+
+[![Github Actions](https://github.com/CarGuo/GSYGithubAPP/workflows/CI/badge.svg)](https://github.com/CarGuo/GSYGithubAPP/actions)
 [![GitHub stars](https://img.shields.io/github/stars/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/network)
 [![GitHub issues](https://img.shields.io/github/issues/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/issues)

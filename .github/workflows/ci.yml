@@ -59,7 +59,10 @@ jobs:
         run: npm install
 
       - name: Build Android Release APK
-        run: npx react-native build-android --mode=release
+        run: |
+          cd android
+          ./gradlew generateCodegenArtifactsFromSchema --no-daemon
+          ./gradlew assembleRelease --no-daemon
 
 
   apk:
@@ -108,7 +111,10 @@ jobs:
         run: npm install
 
       - name: Build Android Release APK
-        run: npx react-native build-android --mode=release
+        run: |
+          cd android
+          ./gradlew generateCodegenArtifactsFromSchema --no-daemon
+          ./gradlew assembleRelease --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
