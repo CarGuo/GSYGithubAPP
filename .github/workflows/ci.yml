@@ -58,6 +58,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Verify patches applied
+        run: npx patch-package
+
       - name: Build Android Release APK
         run: |
           cd android
@@ -109,6 +112,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Verify patches applied
+        run: npx patch-package
 
       - name: Build Android Release APK
         run: |
