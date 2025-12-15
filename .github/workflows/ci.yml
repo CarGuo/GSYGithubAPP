@@ -64,8 +64,7 @@ jobs:
       - name: Build Android Release APK
         run: |
           cd android
-          ./gradlew generateCodegenArtifactsFromSchema --no-daemon
-          ./gradlew assembleRelease --no-daemon
+          ./gradlew clean assembleRelease --no-daemon
 
 
   apk:
@@ -119,8 +118,7 @@ jobs:
       - name: Build Android Release APK
         run: |
           cd android
-          ./gradlew generateCodegenArtifactsFromSchema --no-daemon
-          ./gradlew assembleRelease --no-daemon
+          ./gradlew clean assembleRelease --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
