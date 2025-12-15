@@ -61,10 +61,25 @@ jobs:
       - name: Verify patches applied
         run: npx patch-package
 
-      - name: Build Android Release APK
+      - name: Build Android Release Bundle
+        run: npx react-native build-android --mode=release
+
+      - name: Setup bundletool
         run: |
-          cd android
-          ./gradlew clean assembleRelease --no-daemon
+          curl -L -o bundletool.jar https://github.com/google/bundletool/releases/download/1.15.6/bundletool-all-1.15.6.jar
+
+      - name: Extract APK from AAB
+        run: |
+          java -jar bundletool.jar build-apks \
+            --bundle=android/app/build/outputs/bundle/release/app-release.aab \
+            --output=app.apks \
+            --mode=universal \
+            --ks=android/gsygithubapp-debug.jks \
+            --ks-pass=pass:123456 \
+            --ks-key-alias=debug \
+            --key-pass=pass:123456
+          mkdir -p android/app/build/outputs/apk/release
+          unzip -p app.apks universal.apk > android/app/build/outputs/apk/release/app-release.apk
 
 
   apk:
@@ -115,10 +130,25 @@ jobs:
       - name: Verify patches applied
         run: npx patch-package
 
-      - name: Build Android Release APK
+      - name: Build Android Release Bundle
+        run: npx react-native build-android --mode=release
+
+      - name: Setup bundletool
         run: |
-          cd android
-          ./gradlew clean assembleRelease --no-daemon
+          curl -L -o bundletool.jar https://github.com/google/bundletool/releases/download/1.15.6/bundletool-all-1.15.6.jar
+
+      - name: Extract APK from AAB
+        run: |
+          java -jar bundletool.jar build-apks \
+            --bundle=android/app/build/outputs/bundle/release/app-release.aab \
+            --output=app.apks \
+            --mode=universal \
+            --ks=android/gsygithubapp-debug.jks \
+            --ks-pass=pass:123456 \
+            --ks-key-alias=debug \
+            --key-pass=pass:123456
+          mkdir -p android/app/build/outputs/apk/release
+          unzip -p app.apks universal.apk > android/app/build/outputs/apk/release/app-release.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
