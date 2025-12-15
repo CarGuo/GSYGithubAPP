@@ -47,11 +47,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate Codegen
-        run: npx react-native codegen --platform android
-
       - name: Build Android Release APK
-        run: npx react-native build-android --mode=release
+        working-directory: android
+        run: ./gradlew clean assembleRelease --no-daemon
 
   apk:
     name: Generate APK
@@ -87,11 +85,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate Codegen
-        run: npx react-native codegen --platform android
-
       - name: Build Android Release APK
-        run: npx react-native build-android --mode=release
+        working-directory: android
+        run: ./gradlew clean assembleRelease --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
