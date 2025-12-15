@@ -48,8 +48,8 @@ jobs:
         run: npm install
 
       - name: Build Android Release APK
-        working-directory: android
-        run: ./gradlew clean assembleRelease --no-daemon
+        run: npx react-native build-android --mode=release
+
 
   apk:
     name: Generate APK
@@ -86,8 +86,7 @@ jobs:
         run: npm install
 
       - name: Build Android Release APK
-        working-directory: android
-        run: ./gradlew clean assembleRelease --no-daemon
+        run: npx react-native build-android --mode=release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
