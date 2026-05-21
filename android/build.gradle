@@ -10,11 +10,11 @@ buildscript {
         kotlinVersion = "2.1.20"
     }
     repositories {
+        google()
+        mavenCentral()
         maven { url "https://maven.aliyun.com/repository/google" }
         maven { url "https://maven.aliyun.com/repository/public" }
         maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
-        google()
-        mavenCentral()
     }
     dependencies {
         classpath("com.android.tools.build:gradle")
@@ -25,11 +25,11 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
+        mavenCentral()
         maven { url "https://maven.aliyun.com/repository/google" }
         maven { url "https://maven.aliyun.com/repository/public" }
         maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
-        google()
-        mavenCentral()
         maven { url "https://www.jitpack.io" }
     }
 }

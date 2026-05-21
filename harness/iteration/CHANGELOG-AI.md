@@ -52,6 +52,20 @@
 - **发布动作（最终）**：
   - 二次 commit 干净 patch + KI-019 增强 + checklist §8.1 强化。
   - 删本地 v5.0.0 tag → 重打指向新 commit → `git push origin v5.0.0 --force` 第二次触发 CI。
+- **三次复盘（CI run `26210555137` 仍 failure，commit `462530b`）**：
+  - 拿 `GITHUB_TOKEN` 直接 curl `actions/jobs/<id>/logs` 拉到完整 step 8 日志，**与 patch 完全无关**：
+    ```
+    Could not resolve com.google.code.gson:gson:2.11.0
+    > Could not parse POM https://maven.aliyun.com/repository/public/com/google/code/gson/gson/2.11.0/gson-2.11.0.pom
+    > Received status code 502 from server: Bad Gateway
+    > There are 68 more failures with identical causes.
+    ```
+  - 真因：[android/build.gradle](../../android/build.gradle) 的 `buildscript.repositories` / `allprojects.repositories` 把 `maven.aliyun.com` 三个镜像放在 `google()` / `mavenCentral()` **之前**。GitHub Actions runner 在境外访问 aliyun CDN 偶发 502 Bad Gateway，Gradle 不会自动 fallback 到下一个 repo，导致 68 个依赖（含 `com.google.code.gson:gson:2.11.0` `gradle-plugin` 链路）同时挂。本机一直走 aliyun 命中缓存所以无感，制造"本地 / CI 行为分裂"假象。
+  - 修复：[android/build.gradle](../../android/build.gradle) 把 `google()` / `mavenCentral()` 提到 aliyun 之前作为主源；aliyun 镜像降级为国内开发机的兜底/加速。境外 CI runner 走官方源；国内开发机首选官方源、超时再走 aliyun（实际开发体验依赖国内梯子或 aliyun 缓存，影响可接受）。
+  - 新增 **KI-021**（P1，已修复关闭）登记此事件 + 修复方案；后续保留作为发版排错经验。
+- **发布动作（第三次最终）**：
+  - 三次 commit：`android/build.gradle` repos 顺序调整 + KI-021 登记。
+  - 删本地 v5.0.0 tag → 重打指向新 commit → `git push origin v5.0.0 --force` 第三次触发 CI。
 
 ## 2026-05-21 — 发布 v5.0.0：APK 更新链接审核 + 浏览器跳转加固 + 版本号升级 ✅
 - **触发**：用户指令"现在的 apk 更新下载链接是跳转到 github release 吗？如果不是，就该跳转到 release，同时补审核现在的 apk 配置是否能正常打开浏览器跳转，完事后打新的 tag v5.0.0，提交推送更新"+追问"项目也要升级版本号"。
