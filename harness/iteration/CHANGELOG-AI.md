@@ -3,6 +3,35 @@
 > 每次 AI 协作完成后，必须按倒序追加一条记录。
 > 字段：日期 | 范围 | 描述 | 关联文档/PR | 测试结果。
 
+## 2026-05-21 — 发布 v5.0.0：APK 更新链接审核 + 浏览器跳转加固 + 版本号升级 ✅
+- **触发**：用户指令"现在的 apk 更新下载链接是跳转到 github release 吗？如果不是，就该跳转到 release，同时补审核现在的 apk 配置是否能正常打开浏览器跳转，完事后打新的 tag v5.0.0，提交推送更新"+追问"项目也要升级版本号"。
+- **审核结论**：[app/components/AboutPage.js](../../app/components/AboutPage.js) 的 `getNewsVersion()` 已经在跳转到 `https://github.com/CarGuo/GSYGithubApp/releases`（即 GitHub release 页），符合诉求；但发现 2 个问题：
+  1. **仓库名大小写漂移**：远端实际名 `CarGuo/GSYGithubAPP`（大写 APP，见 `git@github.com:CarGuo/GSYGithubAPP.git`），代码里写的是 `GSYGithubApp`（小写 pp）。GitHub URL 路由大小写不敏感所以"能跳"，但依赖重定向，且与 README badge / git remote 不一致，规范化为 **GSYGithubAPP**。
+  2. **浏览器跳转无兜底**：`Linking.openURL(...)` 没有 `canOpenURL` 校验、也没有 `catch`，跳转失败时静默无响应。提取 `RELEASE_URL` 常量 + `openReleasePage()` 方法，加入 `canOpenURL` 校验 + try/catch 兜底，失败时 Toast 提示新 i18n key `openLinkFailed`（中英双语）。
+- **修复清单**：
+  - [app/components/AboutPage.js](../../app/components/AboutPage.js)：4 处 `GSYGithubApp` → `GSYGithubAPP`（issue 提交 / RepositoryDetail.repositoryName / RepositoryDetail.title / getRepositoryRelease / Linking.openURL）；新增 `RELEASE_URL` 常量 + `openReleasePage()` 公开方法（带 canOpenURL + catch 兜底）；`getNewsVersion()` 的 textConfirm 改为调用 `openReleasePage()`。
+  - [app/style/i18n.js](../../app/style/i18n.js)：新增 `openLinkFailed` 双语：`Cannot open browser, please copy URL manually` / `无法打开浏览器，请手动复制链接`。
+- **版本号升级到 5.0.0**：
+  - [android/app/build.gradle](../../android/app/build.gradle)：`versionCode 20 -> 21`、`versionName "4.0" -> "5.0.0"`
+  - [ios/GSYGithubApp/Info.plist](../../ios/GSYGithubApp/Info.plist)：`CFBundleShortVersionString 3.3 -> 5.0.0`、`CFBundleVersion 18 -> 21`
+  - 注：iOS tvOS / Tests 等子 target 维持历史 1.0/1，不在主 App 升级范围
+- **测试沉淀**：新增 [__tests__/unit/releaseUrl.test.js](../../__tests__/unit/releaseUrl.test.js)（8 个断言），覆盖：
+  1. URL 协议必须 https
+  2. 终结路径必须以 `/releases` 结尾
+  3. 仓库名严格大小写匹配 `CarGuo/GSYGithubAPP`（含负向断言：不允许 `CarGuo/GSYGithubApp` 小写形式）
+  4. 完整 URL 等于 `https://github.com/CarGuo/GSYGithubAPP/releases`
+  5. canOpenURL=true 时调用 openURL
+  6. canOpenURL=false 时 Toast 提示且不调用 openURL
+  7. canOpenURL 抛异常被 catch 兜底
+  8. openURL 抛异常被 catch 兜底
+- **测试结果**：`npm test` → **Test Suites: 1 skipped, 4 passed, 4 of 5 / Tests: 1 skipped, 34 passed, 35 / 0.585s** ✅
+- **GetDiagnostics**：5 个修改文件（AboutPage.js / i18n.js / build.gradle / Info.plist / releaseUrl.test.js）均 0 诊断 ✅
+- **未做（评估后接受现状）**：
+  - 旧 `downloadUrl = 'https://www.pgyer.com/GSYGithubApp'`（蒲公英平台）保留：仅 README 引用，无运行时使用，不属本轮诉求。后续打算彻底废弃可写 ADR。
+  - iOS `if (Platform.OS === "ios" && onlyCheck) return` 早期不发布 release 的历史限制保留。
+  - `parseFloat("5.0.0") === 5` 与 `parseFloat("4.0") === 4` 比较 OK，但 release name 仍受 `parseFloat` 限制（多于一位小数会丢精度）。属于现存架构问题，未列入本轮范围。
+- **发布动作**：commit + push origin master + 打 tag v5.0.0 + push origin v5.0.0。
+
 ## 2026-05-21 — 双 subagent code review + 关键 Major 修复 + 文档回归 ✅
 - **触发**：用户指令"开两个 subagent 审核代码，同时补充和回归 readme 和文档，然后没问题就提交和推送"，本轮收尾 RN 0.85 升级落库前的最后一道质量门。
 - **审查覆盖**：基于 `git diff HEAD` + 全部 untracked 新增（`AGENTS.md` / `harness/` / `__tests__/unit/` / `scripts/` / `.nvmrc` / `.npmrc` / `android/init.gradle` / `patches/lottie-react-native+7.3.0.patch`）。两个 subagent 并行审：

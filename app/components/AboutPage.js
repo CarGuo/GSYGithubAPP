@@ -39,7 +39,7 @@ class AboutPage extends Component {
     _createIssue(text) {
         let {repositoryName, userName} = this.props;
         Actions.LoadingModal({backExit: false});
-        issueActions.createIssue("CarGuo", "GSYGithubApp",
+        issueActions.createIssue("CarGuo", "GSYGithubAPP",
             {title: "APP " + I18n("feedback"), body: text}).then((res) => {
             setTimeout(() => {
                 if (res && res.result) {
@@ -122,8 +122,8 @@ class AboutPage extends Component {
                         itemText={I18n('projectUrl')}
                         onClickFun={() => {
                             Actions.RepositoryDetail({
-                                repositoryName: "GSYGithubApp", ownerName: "CarGuo"
-                                , title: "CarGuo/GSYGithubApp"
+                                repositoryName: "GSYGithubAPP", ownerName: "CarGuo"
+                                , title: "CarGuo/GSYGithubAPP"
                             });
                         }}/>
                     <CommonRowItem
@@ -151,12 +151,30 @@ class AboutPage extends Component {
 }
 
 
+export const RELEASE_URL = hostWeb + "CarGuo/GSYGithubAPP/releases";
+
+export const openReleasePage = () => {
+    const url = RELEASE_URL;
+    return Linking.canOpenURL(url)
+        .then((supported) => {
+            if (!supported) {
+                Toast(I18n('openLinkFailed'));
+                return false;
+            }
+            return Linking.openURL(url).then(() => true);
+        })
+        .catch(() => {
+            Toast(I18n('openLinkFailed'));
+            return false;
+        });
+};
+
 export const getNewsVersion = (showTip, onlyCheck = true) => {
     //ios不检查更新
     if (Platform.OS === "ios" && onlyCheck) {
         return
     }
-    repositoryActions.getRepositoryRelease("CarGuo", 'GSYGithubApp', 1, false).then((res) => {
+    repositoryActions.getRepositoryRelease("CarGuo", 'GSYGithubAPP', 1, false).then((res) => {
         if (res && res.result) {
             //github只能有release的versionName，没有code，囧
             let versionName = res.data[0].name;
@@ -178,7 +196,7 @@ export const getNewsVersion = (showTip, onlyCheck = true) => {
                         titleText: I18n('update'),
                         text: I18n('update') + ": " + res.data[0].name + "\n" + res.data[0].body,
                         textConfirm: () => {
-                            Linking.openURL(hostWeb + "CarGuo/GSYGithubApp/releases")
+                            openReleasePage();
                         }
                     });
                 } else {
