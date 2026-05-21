@@ -9,10 +9,11 @@
 
 * ### 同款Weex版本 （ https://github.com/CarGuo/GSYGithubAppWeex ）
 * ### 同款Flutter版本 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
-* ### 同款Android Kotlin版本（ https://github.com/CarGuo/GSYGithubAppKotlin ）
+* ### 同款Android Kotlin View版本（ https://github.com/CarGuo/GSYGithubAppKotlin ）
+* ### 同款Android Compose版本（ https://github.com/CarGuo/GSYGithubAppKotlinCompose ）
 
 ```
-基于React Native开发，适配Android与IOS。
+基于React Native开发，适配 Android 与 iOS。
 
 项目的目的是为方便个人日常维护和查阅Github，更好的沉浸于码友之间的互基，Github就是你的家。
 
@@ -22,6 +23,8 @@
 ```
 -----
 
+
+[![Github Actions](https://github.com/CarGuo/GSYGithubAPP/workflows/CI/badge.svg)](https://github.com/CarGuo/GSYGithubAPP/actions)
 [![GitHub stars](https://img.shields.io/github/stars/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/network)
 [![GitHub issues](https://img.shields.io/github/issues/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/issues)
@@ -105,19 +108,7 @@
 
 ## 相关文章
 
-- ### [1、从Android到React Native开发（一、入门）](https://juejin.im/post/58ac5b4c8ac2474faab25d1c)
-
-- ### [2、从Android到React Native开发（二、通信与模块实现）](https://juejin.im/post/58bc07c5ac502e006b07f434)
-
-- ### [3、从Android到React Native开发（三、自定义原生控件支持）](https://juejin.im/post/5946253561ff4b006cee4d65)
-
-- ### [4、从Android到React Native开发（四、打包流程和发布为Maven库）](https://juejin.im/post/5b2116466fb9a01e3128359f)
-
-- ### [React Native 的未来与React Hooks](https://juejin.im/post/5cb34404f265da0384127fcd)
-
-- ### [移动端跨平台开发的深度解析](https://juejin.im/post/5b395eb96fb9a00e556123ef)
-
-- ### [全网最全 Flutter 与 React Native 深入对比分析](https://juejin.im/post/5d0bac156fb9a07ec56e7f15)
+- ### [React Native 系列文章](https://juejin.cn/column/7535355162316505142)
 
 
 ### 示例图片
@@ -129,6 +120,28 @@
 <img src="http://img.cdn.guoshuyu.cn/showapp2.jpg" width="426px"/>
 
 <img src="http://img.cdn.guoshuyu.cn/showapp3.jpg" width="426px"/>
+
+
+### 架构图
+
+#### 系统结构
+
+![](./doc/SystemArchitecture.png)
+
+#### 导航结构
+
+![](./doc/NavigationStructure.png)
+
+#### 授权流程
+
+![](./doc/AuthenticationSystem.png)
+
+
+#### 数据流程
+
+![](./doc/CoreComponentsandDataFlow.png)
+
+
 
 ### 第三方框架
 
