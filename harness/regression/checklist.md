@@ -49,8 +49,11 @@
 
 ### 8.1 Patch 体检（防 patch-package 静默失效）
 - [ ] `grep -l '\.orig' patches/*.patch` → 0 命中（patch 头部 `--- a/x b/x`，不能是 `--- a/x.orig b/x`）。
+- [ ] `grep -l '\.transforms\|/build/' patches/*.patch` → 0 命中（patch 不允许包含 `node_modules/<pkg>/android/build/.transforms/`、`bundleLib*Dex/`、`*.dex`、`*.jar` 等 Gradle 中间产物，否则 CI 干净环境 patch-package apply 会失败）。重新生成 patch 前必须 `rm -rf node_modules/<pkg>/android/build` 清掉构建产物。
+- [ ] 任何 patch 单文件 ≤ 50KB；超过必须人工 review 是否混入构建产物。
 - [ ] `bash scripts/use-node.sh npx patch-package` 重跑时无 `patch ... did not apply` 警告。
 - [ ] [package.json](../../package.json) 任何 `dependencies` 改动后，必须 `rm -rf node_modules && npm install` 跑一遍 patch-package 全量 apply 流程。
+- [ ] 必跑一次 **从零模拟 CI**：`rm -rf node_modules && bash scripts/use-node.sh npm install` 全新装机后 patch-package 全 ✔，再跑一次 §8.2 装机闭环（避免 "本地缓存通过 / CI 失败" 假象）。
 
 ### 8.2 Android Release 装机闭环（必跑）
 - [ ] `cd android && bash ../scripts/use-node.sh ./gradlew clean assembleRelease` → BUILD SUCCESSFUL（不能用 `bundleRelease` / `build-android --mode=release` 替代，二者跳过 verifyReleaseResources）。

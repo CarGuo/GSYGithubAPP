@@ -42,6 +42,16 @@
 - **发布动作**：
   - commit + push origin master（包含两个 patch 修复 + KI-019/KI-020 + CHANGELOG）。
   - 删本地 v5.0.0 tag → 重打 v5.0.0 指向新 commit → `git push origin v5.0.0 --force`（覆盖远端旧 tag）触发 CI 重跑，期望 `Generate APK` job 这次能过。
+- **二次复盘（CI run `26209639810` 仍 failure，commit `9e2be63`）**：
+  - 再查 jobs 发现这次连 `Build` job（之前 success 的 bundleRelease 路径）也挂了 step 8 — patch-package 在 CI 干净环境 apply 失败。
+  - 真因：用 `npx patch-package <pkg>` 重生成的 patch **混入了 `node_modules/<pkg>/android/build/.transforms/`、`bundleLib*Dex/` 等 Gradle 中间产物**（本机有缓存 build/ 时打入），单 patch 膨胀到 4.8MB / 5.4 万行。这种 patch 在本机有缓存时反而能通过，制造"本地通过 / CI 失败"假象。
+  - 二次修复：`rm -rf node_modules/<pkg>/android/build` + `rm patches/<pkg>+*.patch` + `npx patch-package <pkg>` 重生成。修复后 spinkit 4.8MB→2KB、version-number-fix-new 4.8MB→1.4KB。`grep -l '\.transforms' patches/*.patch` → 0 命中。
+  - 模拟 CI 验证：`rm -rf node_modules` → `bash scripts/use-node.sh npm install`（patch-package 全 ✔ 6 个 patches）→ `bash scripts/use-node.sh npx react-native build-android --mode=release` **BUILD SUCCESSFUL in 3m 10s** ✓，766 actionable tasks。
+  - **KI-019 增强（仍归档 Closed）**：把根因从 "*.orig 路径" 拓展为 "patch 头部 `*.orig` + 重生成时混入构建产物" 双 bug。
+  - **§8.1 强化**：[harness/regression/checklist.md](../regression/checklist.md#L50-L56) 加 3 条 — `grep .transforms`/`/build/` 0 命中、单 patch ≤ 50KB、`rm -rf node_modules` 全新模拟 CI 装机。
+- **发布动作（最终）**：
+  - 二次 commit 干净 patch + KI-019 增强 + checklist §8.1 强化。
+  - 删本地 v5.0.0 tag → 重打指向新 commit → `git push origin v5.0.0 --force` 第二次触发 CI。
 
 ## 2026-05-21 — 发布 v5.0.0：APK 更新链接审核 + 浏览器跳转加固 + 版本号升级 ✅
 - **触发**：用户指令"现在的 apk 更新下载链接是跳转到 github release 吗？如果不是，就该跳转到 release，同时补审核现在的 apk 配置是否能正常打开浏览器跳转，完事后打新的 tag v5.0.0，提交推送更新"+追问"项目也要升级版本号"。
