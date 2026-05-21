@@ -3,6 +3,46 @@
 > 每次 AI 协作完成后，必须按倒序追加一条记录。
 > 字段：日期 | 范围 | 描述 | 关联文档/PR | 测试结果。
 
+## 2026-05-21 — v5.0.0 复盘 + patch-package 静默失效双坑修复（spinkit / version-number-fix-new）✅
+- **触发**：用户指令 "按 gh 工具，看最终构建如何，如果成功了就拉 apk 下来，跑一下全流程看看对不对，会不会崩溃，因为 release 下会有一些 r8 可能导致 crash？"
+- **CI 状态确认**：`gh` CLI 不可用（未装 brew），改用 `curl + GitHub REST API` 查 [actions/runs](https://api.github.com/repos/CarGuo/GSYGithubAPP/actions/runs)。两条结论：
+  - master push 触发的 `Build` job ✅ success（commit `c5e4cdb`，bundleRelease 出 AAB）
+  - **v5.0.0 tag 触发的 `Generate APK` job ❌ failure**，第 8 步 `Build Android Release APK` 挂掉 → `Release APK` job skip → **release 未创建、无 APK 资产上传**。`https://api.github.com/repos/CarGuo/GSYGithubAPP/releases/tags/v5.0.0` 返回 `Not Found`。
+  - 同 commit 同 step、Build job 通 / apk job 挂 — 一开始误判为 runner 抖动，本地 `assembleRelease` 一跑即复现，确认是真实代码问题。
+- **R8 风险评估**：[android/app/build.gradle#L67](../../android/app/build.gradle#L67) `enableProguardInReleaseBuilds = false`、[L132](../../android/app/build.gradle#L132) `minifyEnabled false`。**R8/ProGuard 在当前配置下未启用**，所以用户担心的 minify keep 规则缺失导致 release crash 不会发生。release 与 debug 主要差异是 Hermes 预编译 + 离线 bundle + 取消 DevMenu，其他保持一致。
+- **真相揭露 — patch-package 静默不 apply**：本地 `cd android && ./gradlew assembleRelease` 报错：
+  1. 第一发：`:react-native-spinkit-fix-new:verifyReleaseResources` → `AAPT: error: resource android:attr/lStar not found.`
+  2. 修第一个后第二发：`:react-native-version-number-fix-new:verifyReleaseResources` 同样报错。
+  根因：[patches/react-native-spinkit-fix-new+1.1.4.patch](../../patches/react-native-spinkit-fix-new+1.1.4.patch) + [patches/react-native-version-number-fix-new+0.3.6.patch](../../patches/react-native-version-number-fix-new+0.3.6.patch) 两个文件 diff 头部写的是 `*.orig → *`（应该是 `* → *`），patch-package 找不到 `*.orig` 文件，**静默 skip 不报错**。两个三方库子模块仍按原始 `compileSdkVersion 30 / buildToolsVersion 28.0.3` 编译，AndroidX `material:1.6+` 引入的 `android:attr/lStar`（API 31+）链接失败。
+  这正是 v5.0.0 CI Generate APK job 的真正失败原因——同时也解释了为什么 `Build` job 跑 bundleRelease 时通过：**bundleRelease 不调用 verifyReleaseResources**（KI-020），AAB 路径完全绕开了这个资源校验。
+- **修复**（不直接编辑 [package.json](../../package.json)，仍守红线）：
+  1. 手动改 [node_modules/react-native-spinkit-fix-new/android/build.gradle](../../node_modules/react-native-spinkit-fix-new/android/build.gradle) 与 [AndroidManifest.xml](../../node_modules/react-native-spinkit-fix-new/android/src/main/AndroidManifest.xml)：`compileSdkVersion 30 → 35`、`buildToolsVersion "28.0.3" → "35.0.0"`、`minSdkVersion 16 → 24`、`targetSdkVersion 28 → 35`、`com.android.tools.build:gradle:2.0.0 → 8.1.0`、`Android-SpinKit:1.2.0 → 1.4.0`、加 `namespace "com.react.rnspinkit"`、Manifest 删除 `package=...` 属性（namespace 接管）。
+  2. 同样手段处理 [node_modules/react-native-version-number-fix-new/android/build.gradle](../../node_modules/react-native-version-number-fix-new/android/build.gradle) 与 [AndroidManifest.xml](../../node_modules/react-native-version-number-fix-new/android/src/main/AndroidManifest.xml)：`compileSdkVersion 30 → 35`、`buildToolsVersion "28.0.3" → "35.0.0"`、`minSdkVersion 16 → 24`、`targetSdkVersion 28 → 35`、加 `namespace "com.reactnativeversioncheck"`、Manifest 删 `package=...`。
+  3. `rm` 旧 patch + `npx patch-package react-native-spinkit-fix-new` + `npx patch-package react-native-version-number-fix-new` 重生成 → 新 patch 头部 `--- a/.../build.gradle` 路径正确。
+  4. `grep -l '\.orig' patches/*.patch` → 0 命中，所有 patch 头部清洁。
+- **本地 release 实跑全流程验证**：
+  - `cd android && ./gradlew assembleRelease` ✅ **BUILD SUCCESSFUL in 15s**，836 actionable tasks。
+  - 产物 [android/app/build/outputs/apk/release/app-release.apk](../../android/app/build/outputs/apk/release/app-release.apk) 42M，aapt2 dump badging 验证 `versionCode='21' versionName='5.0.0' targetSdkVersion='36' compileSdkVersion='36'` ✅。
+  - `adb uninstall com.gsygithubapp` (旧版) → `adb install -r app-release.apk` → `adb shell am start -n com.gsygithubapp/.MainActivity`。
+  - emulator Pixel_7 (Android 16, API 36, arm64-v8a) 启动后 `adb shell pidof com.gsygithubapp` → 5944（持续存活）。
+  - `adb logcat 'AndroidRuntime:E ReactNativeJS:E *:F'` → **0 行**，无 fatal、无 crash、无红屏。
+  - 截屏 [/tmp/gsy_screen_login.png](file:///tmp/gsy_screen_login.png)：登录页 Logo / Click OAuth / OAuth 按钮 / Register / Login with Token 全部正常渲染 ✅。
+  - 唯一可见警告：系统弹窗 `This app isn't 16 KB compatible. ELF alignment check failed.`（KI-013 已登记，不影响功能，page-size 兼容模式自动接管）。
+- **新增 KI**：
+  - **KI-019** — patch-package patch 头部 `*.orig` 路径错误模式（已**修复关闭**），未来评审 patch 时必须 `grep -l '\.orig' patches/*.patch` 把关。
+  - **KI-020** — CI ci.yml 的 Build job 与 Generate APK job 同跑 `build-android --mode=release` 但 RN 0.85 默认 bundleRelease，绕开 verifyReleaseResources，patch 损坏被静默吞掉。建议改成 `assembleRelease` 或显式追加 verifyReleaseResources 步骤（**Open**）。
+- **规格补充（响应用户指令"补充规格，加 tag 发布的时候，需要注意已经验证过 release 的包，特别混淆场景"）**：
+  - [harness/regression/checklist.md](../regression/checklist.md) 新增 **§8 Release 包必跑（强制 / 打 tag 前最后一道闸）**，原 §8 文档与日志顺移到 §9：
+    - **§8.1 Patch 体检**：`grep -l '\.orig' patches/*.patch` → 0 命中、`npx patch-package` 无 `did not apply` 警告、[package.json](../../package.json) 改动后必须 `rm -rf node_modules && npm install` 全量重 apply。
+    - **§8.2 Android Release 装机闭环**：必须 `./gradlew clean assembleRelease`（**禁止以 bundleRelease / build-android --mode=release 替代**）→ aapt2 校 versionCode/versionName → adb uninstall + install + start → 5s 内 pidof 非空 → `adb logcat 'AndroidRuntime:E ReactNativeJS:E *:F'` 空 → 关键页面手测 → 截屏归档 ≥3 张。
+    - **§8.3 混淆 / R8 场景**（重点 / 当前关闭，未来开启时强制必跑）：[android/app/proguard-rules.pro](../../android/app/proguard-rules.pro) 必须 keep `com.facebook.react.**`、`com.facebook.hermes.**`、所有 `*ReactPackage`/`*Module`/`*ViewManager`、Realm 模型类（[app/dao/db/](../../app/dao/db/)）、JSI 注入入口（rn-fetch-blob / spinkit / version-number-fix-new / Realm binding）；`mapping.txt` 必须留底；R8 失败典型表现登记（ClassNotFoundException / ViewManager not found / JSI nullptr 段错 / 反射字段错乱），**禁止用 `--no-minify` 绕过**。
+    - **§8.4 iOS Release 装机闭环**：xcodebuild Release iphonesimulator → simctl install/launch → Console.app 无 EXC_BAD_ACCESS / SIGSEGV → 真机包留底 dSYM。
+    - **§8.5 CI 远端构建匹配**：push tag 前 grep 一次 [.github/workflows/ci.yml](../../.github/workflows/ci.yml) 确认 Generate APK job 不弱于本地 assembleRelease；tag 推上去后必须 watch 到 Release APK job success + APK 资产挂到 release 页面后再宣布发版。
+  - 立此规格的目的：v5.0.0 这次正是因为没有 §8.2 装机闭环、只信任 CI bundleRelease 的"绿灯"，导致 patch-package 静默失效漏出去，才有这次复盘。**今后任何 tag 发版前都强制走完 §8**，特别是一旦把 R8/ProGuard 切回开启，§8.3 必须逐项过。
+- **发布动作**：
+  - commit + push origin master（包含两个 patch 修复 + KI-019/KI-020 + CHANGELOG）。
+  - 删本地 v5.0.0 tag → 重打 v5.0.0 指向新 commit → `git push origin v5.0.0 --force`（覆盖远端旧 tag）触发 CI 重跑，期望 `Generate APK` job 这次能过。
+
 ## 2026-05-21 — 发布 v5.0.0：APK 更新链接审核 + 浏览器跳转加固 + 版本号升级 ✅
 - **触发**：用户指令"现在的 apk 更新下载链接是跳转到 github release 吗？如果不是，就该跳转到 release，同时补审核现在的 apk 配置是否能正常打开浏览器跳转，完事后打新的 tag v5.0.0，提交推送更新"+追问"项目也要升级版本号"。
 - **审核结论**：[app/components/AboutPage.js](../../app/components/AboutPage.js) 的 `getNewsVersion()` 已经在跳转到 `https://github.com/CarGuo/GSYGithubApp/releases`（即 GitHub release 页），符合诉求；但发现 2 个问题：
