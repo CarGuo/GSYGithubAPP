@@ -1,0 +1,16 @@
+appId: com.gsygithubapp
+---
+- launchApp
+- runFlow: flows/login-if-needed.yaml
+- tapOn:
+    id: "main-tab-dynamic"
+- tapOn:
+    id: "search-button"
+- inputText: "GSYGithubApp"
+- pressKey: Enter
+- assertVisible: "CarGuo/GSYGithubApp"
+- tapOn: "CarGuo/GSYGithubApp"
+- assertVisible:
+    id: "repository-detail-readme"
+    timeout: 10000
+- takeScreenshot: artifacts/repository-readme

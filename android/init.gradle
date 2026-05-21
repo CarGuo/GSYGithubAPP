@@ -1,0 +1,42 @@
+// android/init.gradle
+//
+// 给本仓库构建强制注入国内镜像，解决 RN 0.85 在 CN 网络下偶发 TLS 握手失败：
+//   "The server may not support the client's requested TLS protocol versions: (TLSv1.2, TLSv1.3).
+//    Remote host terminated the handshake"
+//
+// 用 allprojects + buildscript 双重 hook，让所有子项目（包括 autolink 进来的 RN 模块）
+// 都先尝试阿里云镜像，再 fallback 到原仓库。
+//
+// 使用方式：
+//   ./gradlew assembleDebug --init-script init.gradle
+// 或通过 ../scripts/use-node.sh 包装。
+//
+// 不污染本机其他项目（不放 ~/.gradle/init.d）。
+
+allprojects {
+    buildscript {
+        repositories {
+            maven { url 'https://maven.aliyun.com/repository/google' }
+            maven { url 'https://maven.aliyun.com/repository/public' }
+            maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+            maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        }
+    }
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+    }
+}
+
+settingsEvaluated { settings ->
+    settings.pluginManagement {
+        repositories {
+            maven { url 'https://maven.aliyun.com/repository/google' }
+            maven { url 'https://maven.aliyun.com/repository/public' }
+            maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+            gradlePluginPortal()
+        }
+    }
+}

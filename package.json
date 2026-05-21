@@ -2,12 +2,23 @@
   "name": "GSYGithubApp",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": ">=20.19.4 <21",
+    "npm": ">=10"
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
+    "use-node": "bash scripts/use-node.sh",
+    "node:check": "bash scripts/use-node.sh node --version",
+    "bundle:android:smoke": "bash scripts/use-node.sh npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output /tmp/gsy-android.bundle --assets-dest /tmp/gsy-android-assets",
+    "bundle:ios:smoke": "bash scripts/use-node.sh npx react-native bundle --platform ios --dev false --entry-file index.js --bundle-output /tmp/gsy-ios.bundle --assets-dest /tmp/gsy-ios-assets",
+    "check:age": "node scripts/check-package-age.js",
+    "check:age:strict": "STRICT=1 node scripts/check-package-age.js",
+    "preinstall": "node scripts/check-package-age.js",
     "postinstall": "patch-package"
   },
   "dependencies": {
@@ -31,22 +42,22 @@
     "moment": "^2.30.1",
     "prettier": "^3.6.2",
     "prop-types": "^15.8.1",
-    "react": "19.1.0",
+    "react": "19.2.3",
     "react-i18next": "^15.6.1",
-    "react-native": "0.80.2",
+    "react-native": "0.85.0",
     "react-native-autolink": "^4.1.0",
     "react-native-drawer-layout": "^4.1.12",
-    "react-native-gesture-handler": "2.27.2",
+    "react-native-gesture-handler": "2.31.2",
     "react-native-htmlview": "^0.16.0",
     "react-native-i18n": "git+https://github.com/CarSmallGuo/react-native-i18n.git",
     "react-native-image-crop-picker": "^0.41.2",
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-localize": "^3.0.6",
     "react-native-pager-view": "^6.8.1",
-    "react-native-reanimated": "4.0.1",
+    "react-native-reanimated": "4.3.0",
     "react-native-root-toast": "^3.6.0",
     "react-native-safe-area-context": "^5.5.2",
-    "react-native-screens": "4.13.1",
+    "react-native-screens": "4.24.0",
     "react-native-spinkit-fix-new": "git+https://github.com/CarSmallGuo/react-native-spinkit.git",
     "react-native-tab-view": "^3.5.2",
     "react-native-textinput-effects": "^0.6.2",
@@ -65,21 +76,25 @@
     "@babel/plugin-proposal-decorators": "^7.24.0",
     "@babel/preset-env": "^7.28.0",
     "@babel/runtime": "^7.24.0",
-    "@react-native-community/cli": "^19.1.1",
-    "@react-native/eslint-config": "^0.80.2",
-    "@react-native/metro-config": "^0.80.2",
+    "@react-native-community/cli": "^20.0.0",
+    "@react-native/eslint-config": "0.85.0",
+    "@react-native/jest-preset": "0.85.0",
+    "@react-native/metro-config": "0.85.0",
     "babel-jest": "^29.7.0",
     "babel-plugin-import": "^1.13.8",
     "eslint": "^8.57.0",
     "jest": "^29.7.0",
     "patch-package": "^8.0.0",
-    "react-native-worklets": "^0.4.1",
-    "react-test-renderer": "19.1.0"
+    "react-native-worklets": "0.8.3",
+    "react-test-renderer": "19.2.3"
   },
   "jest": {
-    "preset": "react-native",
+    "preset": "@react-native/jest-preset",
+    "setupFilesAfterEnv": [
+      "./harness/testing/jest/jest.setup.js"
+    ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|@react-native|react-redux|@react-navigation)/)"
+      "node_modules/(?!(react-native|@react-native|react-redux|@react-navigation|react-native-gesture-handler|react-native-reanimated|react-native-worklets|react-native-screens|react-native-drawer-layout|react-native-safe-area-context|react-native-vector-icons|react-native-svg|react-native-i18n)/)"
     ]
   }
 }

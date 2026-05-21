@@ -1,0 +1,20 @@
+appId: com.gsygithubapp
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Welcome"
+- runFlow: flows/skip-welcome.yaml
+- assertVisible:
+    id: "login-page-username"
+- tapOn:
+    id: "login-page-username"
+- inputText: "test_user"
+- tapOn:
+    id: "login-page-password"
+- inputText: "test_password"
+- tapOn:
+    id: "login-page-submit"
+- assertVisible:
+    id: "main-tab-dynamic"
+    timeout: 10000
+- takeScreenshot: artifacts/login-success

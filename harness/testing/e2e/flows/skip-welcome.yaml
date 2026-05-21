@@ -1,0 +1,8 @@
+appId: com.gsygithubapp
+---
+- assertVisible: "Welcome"
+- runFlow:
+    when:
+      visible: "Skip"
+    commands:
+      - tapOn: "Skip"

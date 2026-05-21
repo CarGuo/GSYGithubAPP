@@ -12,6 +12,8 @@ import {
     Keyboard,
     Linking,
     Easing, DeviceEventEmitter,
+    Modal,
+    TextInput,
 } from 'react-native';
 import styles, {screenHeight, screenWidth} from "../style"
 import * as Constant from "../style/constant"
@@ -61,6 +63,8 @@ export default class LoginPage extends Component {
             secureTextEntry: true,
             secureIcon: "eye-with-line",
             opacity: new Animated.Value(0),
+            tokenModalVisible: false,
+            tokenInput: '',
         }
         this.thisUnmount = false;
     }
@@ -180,6 +184,34 @@ export default class LoginPage extends Component {
         })*/
     }
 
+    openTokenModal() {
+        this.setState({tokenModalVisible: true, tokenInput: ''});
+    }
+
+    closeTokenModal() {
+        this.setState({tokenModalVisible: false});
+    }
+
+    submitTokenLogin() {
+        let {login} = this.props;
+        let token = (this.state.tokenInput || '').trim();
+        if (!token) {
+            Toast(I18n('TokenInputTip'));
+            return;
+        }
+        this.setState({tokenModalVisible: false});
+        Keyboard.dismiss();
+        Actions.LoadingModal({backExit: false});
+        login.doTokenLogin(token, (res) => {
+            this.exitLoading();
+            if (!res) {
+                Toast(I18n('TokenLoginFailTip'));
+            } else {
+                Actions.reset("MainTabs");
+            }
+        });
+    }
+
     render() {
         let textInputProps = {
             style: {width: 250, height: 70, backgroundColor: Constant.miWhite},
@@ -206,7 +238,8 @@ export default class LoginPage extends Component {
                 </View>
                 <View
                     style={[{backgroundColor: Constant.miWhite}, {
-                        height: 360,
+                        minHeight: 360,
+                        paddingBottom: Constant.normalMarginEdge,
                         width: screenWidth - 80,
                         margin: 50,
                         borderRadius: 10
@@ -290,7 +323,78 @@ export default class LoginPage extends Component {
                         <Text
                             style={[styles.subSmallText,]}>{" " + I18n('register') + " "}</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={[styles.centered, {marginTop: Constant.smallMarginEdge || 4}]}
+                                      onPress={() => {
+                                          this.openTokenModal();
+                                      }}>
+                        <Text
+                            style={[styles.subSmallText, {color: Constant.primaryColor}]}>
+                            {" " + I18n('TokenLogin') + " "}
+                        </Text>
+                    </TouchableOpacity>
                 </View>
+                <Modal
+                    visible={this.state.tokenModalVisible}
+                    transparent={true}
+                    animationType={'fade'}
+                    statusBarTranslucent={true}
+                    onRequestClose={() => this.closeTokenModal()}>
+                    <View style={[styles.centered, styles.absoluteFull, {backgroundColor: 'rgba(0,0,0,0.5)'}]}
+                          testID={'login-page-token-modal'}>
+                        <View style={{
+                            backgroundColor: Constant.miWhite,
+                            width: screenWidth - 80,
+                            padding: Constant.normalMarginEdge,
+                            borderRadius: 10,
+                        }}>
+                            <Text style={[styles.normalText, {marginBottom: Constant.normalMarginEdge}]}>
+                                {I18n('TokenLogin')}
+                            </Text>
+                            <Text style={[styles.subSmallText, {marginBottom: Constant.normalMarginEdge}]}>
+                                {I18n('TokenInputTip')}
+                            </Text>
+                            <TextInput
+                                testID={'login-page-token-input'}
+                                style={{
+                                    borderWidth: 1,
+                                    borderColor: '#dadada',
+                                    borderRadius: 5,
+                                    paddingHorizontal: 10,
+                                    paddingVertical: 8,
+                                    color: Constant.titleTextColor || '#000',
+                                }}
+                                autoCapitalize={'none'}
+                                autoCorrect={false}
+                                secureTextEntry={true}
+                                textContentType={'password'}
+                                placeholder={'ghp_xxxx / github_pat_xxxx'}
+                                placeholderTextColor={'#999'}
+                                value={this.state.tokenInput}
+                                onChangeText={(t) => this.setState({tokenInput: t})}
+                            />
+                            <View style={[styles.flexDirectionRow, {
+                                justifyContent: 'flex-end',
+                                marginTop: Constant.normalMarginEdge,
+                            }]}>
+                                <TouchableOpacity onPress={() => this.closeTokenModal()}
+                                                  testID={'login-page-token-cancel'}
+                                                  style={{padding: 8, marginRight: 12}}>
+                                    <Text style={styles.subSmallText}>{I18n('cancel')}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.submitTokenLogin()}
+                                                  testID={'login-page-token-submit'}
+                                                  style={{
+                                                      backgroundColor: Constant.primaryColor,
+                                                      paddingHorizontal: 14,
+                                                      paddingVertical: 8,
+                                                      borderRadius: 4,
+                                                  }}>
+                                    <Text style={styles.normalTextWhite}>{I18n('ok')}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
             </Animated.View>
         )
     }

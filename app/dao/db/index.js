@@ -1,4 +1,9 @@
-import Realm from 'realm';
+let Realm;
+try {
+    Realm = require('realm').default || require('realm');
+} catch (e) {
+    Realm = null;
+}
 
 /**
  * 仓库pulse表
@@ -277,19 +282,46 @@ const IssueComment = {
 };
 
 
-let realm = new Realm({
-    schema: [TrendRepository, ReceivedEvent, UserInfo, UserEvent,
-        RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
-        RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits,
-        UserFollower, UserFollowed, UserStared, UserRepos, RepositoryCommitInfoDetail,
-        IssueDetail, IssueComment, ReadHistory, RepositoryPulse, OrgMember, UserOrgs
-    ]
-});
+let realm = null;
+if (Realm) {
+    try {
+        realm = new Realm({
+            schema: [TrendRepository, ReceivedEvent, UserInfo, UserEvent,
+                RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
+                RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits,
+                UserFollower, UserFollowed, UserStared, UserRepos, RepositoryCommitInfoDetail,
+                IssueDetail, IssueComment, ReadHistory, RepositoryPulse, OrgMember, UserOrgs
+            ]
+        });
+    } catch (e) {
+        realm = null;
+    }
+}
 
-export const clearCache = () => {
-    realm.write(() => {
-        realm.deleteAll()
-    })
+const makeNoopResults = () => {
+    const results = [];
+    results.filtered = makeNoopResults;
+    results.sorted = makeNoopResults;
+    results.snapshot = makeNoopResults;
+    results.addListener = () => {};
+    results.removeAllListeners = () => {};
+    return results;
 };
 
-export default realm;
+const noop = {
+    write: (fn) => { try { fn && fn(); } catch (_) {} },
+    deleteAll: () => {},
+    objects: () => makeNoopResults(),
+    create: () => null,
+    delete: () => {},
+    objectForPrimaryKey: () => null,
+};
+
+export const clearCache = () => {
+    if (!realm) return;
+    realm.write(() => {
+        realm.deleteAll();
+    });
+};
+
+export default realm || noop;

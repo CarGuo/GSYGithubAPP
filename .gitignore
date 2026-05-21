@@ -62,3 +62,6 @@ tmp/
 /ios/Pods/
 app/config/ignoreConfig.js
 .cxx/
+
+# Xcode 本机环境（含开发者绝对 NODE_BINARY 路径，每台机器不同）
+ios/.xcode.env.local

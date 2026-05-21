@@ -27,7 +27,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/issues)
 [![GitHub license](https://img.shields.io/github/license/CarGuo/GSYGithubAPP.svg)](https://github.com/CarGuo/GSYGithubAPP/blob/master/LICENSE)
 
-### RN 0.74.0 版本。
+### RN 0.85.0 版本（已升级，详见 [harness/playbooks/rn-0.85-upgrade-plan.md](./harness/playbooks/rn-0.85-upgrade-plan.md)）。
 
 
 | 公众号   | 掘金     |  知乎    |  CSDN   |   简书   
@@ -39,9 +39,11 @@
 
 ### 编译运行流程
 
-1、配置好react native开发环境，可参阅 [【搭建环境】](http://reactnative.cn/docs/0.51/getting-started.html) | [【React Native开发（一、入门）】](http://www.jianshu.com/p/97692b1c451d)
+1、配置好react native开发环境，可参阅 [【搭建环境】](https://reactnative.dev/docs/environment-setup) | [【React Native开发（一、入门）】](http://www.jianshu.com/p/97692b1c451d)
 
-2、clone代码，根目录下执行`npm install`安装node_modules(太慢建议科学上网或使用淘宝镜像)
+> Node 版本固定为 [.nvmrc](./.nvmrc) 中声明的 `20.19.4`。仓库提供项目级 Node 隔离脚本 [scripts/use-node.sh](./scripts/use-node.sh)（基于 [n](https://github.com/tj/n) `n exec`，不污染全局），所有内置脚本（`npm run android` / `bundle:*:smoke`）已自动通过它解析。`.npmrc` 启用 `engine-strict=true` 与 15 天发布冷却（`cooldown=21600`），新增依赖必须满足 [AGENTS.md §4](./AGENTS.md) 的红线。
+
+2、clone代码，根目录下执行`npm install`安装node_modules（自动跑 [patch-package](./patches)；如果走 git 镜像，可参考 [android/init.gradle](./android/init.gradle) 提供的 aliyun mirror）
 
 >### 3、重点：你需要自己在app/config目录下 创建一个ignoreConfig.js文件，然后输入你申请的Github client_id 和 client_secret。
 
@@ -68,7 +70,16 @@
 
 4、打开xcode运行或执行`react-native run-android`
 
-### 5、重点：请使用github用户名登录，不是邮箱。
+### 5、重点：请使用github用户名登录，不是邮箱。如果你不希望走 OAuth WebView，也可以直接使用 GitHub Personal Access Token（`Settings → Developer settings → Personal access tokens`）登录：在登录页点击 **`Login with Token`**，把 `ghp_xxxx` 或 `github_pat_xxxx` 粘贴进去即可。Token 仅写入 [AsyncStorage](./app/store/actions/login.js) 本机，不会上传任何第三方。
+
+### 6、AI 协作 / 工程化文档
+
+仓库的架构、需求、决策、迭代日志、回归与升级 SOP 全部沉淀在 [harness/](./harness)，AI 协作（Trae / Cursor / Copilot 等）在动手前必须阅读 [AGENTS.md](./AGENTS.md) 与 [harness/README.md](./harness/README.md)。常用入口：
+
+- 升级路线：[harness/playbooks/rn-0.85-upgrade-plan.md](./harness/playbooks/rn-0.85-upgrade-plan.md)
+- 已知问题：[harness/regression/known-issues.md](./harness/regression/known-issues.md)
+- 改动日志：[harness/iteration/CHANGELOG-AI.md](./harness/iteration/CHANGELOG-AI.md)
+- 测试策略：[harness/testing/strategy.md](./harness/testing/strategy.md)
 
 
 ### 下载
@@ -121,17 +132,19 @@
 
 ### 第三方框架
 
-* [react-native(0.74.0)](http://reactnative.cn/docs/0.74/getting-started.html)
-* [react-native-vector-icons 矢量字体库图标 ](https://github.com/oblador/react-native-vector-icons)
-* [react-redux redux](https://github.com/reactjs/react-redux)
-* [realm-js realm 数据库](https://github.com/realm/realm-js)
-* [react-native-i18n 多语言](https://github.com/AlexanderZaytsev/react-native-i18n)
-* [react-native-image-viewer 图片预览](https://github.com/ascoders/react-native-image-viewer)
-* [react-native-modalbox 模态框](https://github.com/maxs15/react-native-modalbox)
-* [react-native-spinkit loading](https://github.com/maxs15/react-native-spinkit)
+详见 [package.json](./package.json) 与 [harness/architecture/modules.md](./harness/architecture/modules.md)。本轮 RN 0.85 升级后核心依赖：
+
+* [react-native(0.85.0)](https://reactnative.dev/docs/0.85/getting-started) + Hermes prebuilt + 新架构（Fabric + TurboModules）
+* [react 19.2.3](https://react.dev/) + [react-redux ^9.1.2](https://github.com/reactjs/react-redux) + [redux-thunk ^3.1.0](https://github.com/reduxjs/redux-thunk)
+* [@react-navigation/* v7](https://reactnavigation.org/) + [react-native-gesture-handler 2.31.2](https://github.com/software-mansion/react-native-gesture-handler) + [react-native-reanimated 4.3.0](https://github.com/software-mansion/react-native-reanimated) + [react-native-worklets 0.8.3](https://github.com/software-mansion/react-native-worklets) + [react-native-screens 4.24.0](https://github.com/software-mansion/react-native-screens)
+* [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) 矢量字体
+* [realm-js 20.1.0](https://github.com/realm/realm-js) 数据库（已配 [patches/realm+20.1.0.patch](./patches/realm+20.1.0.patch) 适配 RN 0.85 + bridgeless，详见 [KI-016](./harness/regression/known-issues.md)）
+* [react-native-i18n 多语言](https://github.com/AlexanderZaytsev/react-native-i18n)（仓库走 fork 形态，参见 package.json `git+` 依赖）
+* [react-native-image-zoom-viewer 图片预览](https://github.com/ascoders/react-native-image-viewer)
+* [react-native-spinkit-fix-new loading](https://github.com/maxs15/react-native-spinkit)
 * [react-native-textinput-effects 输入框](https://github.com/halilb/react-native-textinput-effects)
 * [url-parse url解析](https://github.com/unshiftio/url-parse)
-* [lottie](https://github.com/airbnb/lottie-react-native)
+* [lottie-react-native ^7.2.5](https://github.com/airbnb/lottie-react-native)（已配 [patches/lottie-react-native+7.3.0.patch](./patches/lottie-react-native+7.3.0.patch) 适配 Kotlin 2.1，详见 [KI-008](./harness/regression/known-issues.md)）
 
 ### 常见问题
 

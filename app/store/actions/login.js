@@ -42,6 +42,42 @@ const doLogin = (code, callback) => async (dispatch, getState) => {
 };
 
 /**
+ * 使用 Personal Access Token 直接登录
+ * 接受 'ghp_xxx' / 'github_pat_xxx' 等 token 字符串，
+ * 拼成 `token xxx` 写入 AsyncStorage，再调 /user 校验。
+ */
+const doTokenLogin = (rawToken, callback) => async (dispatch, getState) => {
+    Api.clearAuthorization();
+
+    let token = (rawToken || '').trim();
+    if (!token) {
+        callback && callback(false);
+        return;
+    }
+    let bare = token.toLowerCase().startsWith('token ')
+        ? token.slice(6).trim()
+        : token;
+    let authorizationCode = 'token ' + bare;
+    await AsyncStorage.setItem(Constant.TOKEN_KEY, authorizationCode);
+
+    let current = await userAction.getUserInfo();
+    if (current && current.result) {
+        dispatch({
+            type: LOGIN.IN,
+            res: {result: true, data: current.data}
+        });
+        callback && callback(true);
+    } else {
+        Api.clearAuthorization();
+        await AsyncStorage.removeItem(Constant.TOKEN_KEY);
+        await AsyncStorage.removeItem(Constant.USER_INFO);
+        await AsyncStorage.removeItem(Constant.USER_BASIC_CODE);
+        userAction.clearUserInfo();
+        callback && callback(false);
+    }
+};
+
+/**
  * 退出登录
  */
 const loginOut = () => async (dispatch, getState) => {
@@ -69,6 +105,7 @@ const getLoginParams = async () => {
 export default {
     toLogin,
     doLogin,
+    doTokenLogin,
     getLoginParams,
     loginOut
 

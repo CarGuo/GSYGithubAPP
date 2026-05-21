@@ -1,0 +1,24 @@
+appId: com.gsygithubapp
+---
+- runFlow:
+    when:
+      visible:
+        id: "main-tab-dynamic"
+    commands: []
+- runFlow:
+    when:
+      notVisible:
+        id: "main-tab-dynamic"
+    commands:
+      - tapOn:
+          id: "login-page-username"
+      - inputText: "${MAESTRO_USERNAME}"
+      - tapOn:
+          id: "login-page-password"
+      - inputText: "${MAESTRO_PASSWORD}"
+      - tapOn:
+          id: "login-page-submit"
+      - extendedWaitUntil:
+          visible:
+            id: "main-tab-dynamic"
+          timeout: 15000
