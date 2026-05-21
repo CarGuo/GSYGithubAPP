@@ -35,6 +35,7 @@
    - 无法自动化的操作 → 写入 [harness/testing/manual/](./harness/testing/manual) 的 Markdown 用例。
 5. **写日志**：完成后追加一条记录到 [harness/iteration/CHANGELOG-AI.md](./harness/iteration/CHANGELOG-AI.md)。
 6. **过 gate**：发布或合并前跑完 [harness/regression/checklist.md](./harness/regression/checklist.md)。
+7. **打 tag 前必跑 release 包验证（v5.0.0 硬规矩）**：任何 `git tag` + `git push origin <tag>` 触发 CI 发版前，必须先在本地完整跑过 [harness/regression/checklist.md §8](./harness/regression/checklist.md)（patch 体检 + `assembleRelease` 装机闭环 + **混淆/R8 场景**）。禁止"先打 tag 让 CI 兜底"——CI 默认走 bundleRelease 会静默吞 patch / 资源 / autolinking / R8 错误，导致 tag 已挂出却无可发资产。混淆开启时尤其关键：R8 删类/改名/反射剥离的崩溃只在 release 运行时暴露。
 
 ## 4. 编码与风格
 - 模块顺序：先看相邻同类文件再下笔，沿用既有 import / 命名 / 缩进风格。

@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-version-number-fix-new/android/build.gradle b/node_modules/react-native-version-number-fix-new/android/build.gradle
-index df1672c..d001980 100644
+index df1672c..2e55ebb 100644
 --- a/node_modules/react-native-version-number-fix-new/android/build.gradle
 +++ b/node_modules/react-native-version-number-fix-new/android/build.gradle
 @@ -2,12 +2,13 @@
@@ -8,7 +8,7 @@ index df1672c..d001980 100644
  android {
 -    compileSdkVersion 30
 -    buildToolsVersion "28.0.3"
-+    namespace "com.reactnativeversioncheck"
++    namespace "com.apsl.versionnumber"
 +    compileSdkVersion 35
 +    buildToolsVersion "35.0.0"
  

@@ -46,12 +46,20 @@
 
 ## 8. Release 包必跑（强制 / 打 tag 前最后一道闸）
 > ⚠️ **任何打 git tag 触发 CI 发版的动作之前，本节必须人工逐项确认通过。这是 v5.0.0 复盘后立的硬规矩 —— bundleRelease（AAB）不会跑 verifyReleaseResources，patch 损坏 / 资源链接失败会被静默吞掉，只有走完整 assembleRelease 才会暴露**。
+>
+> 🚨 **Tag 发布前置铁律（v5.0.0 用户补充规格）**：
+> 1. **先本地验证 release 包，再打 tag**。禁止"先打 tag 让 CI 兜底"——CI 走的是 bundleRelease，会把 patch / 资源 / namespace / autolinking / R8 等问题静默放过，直到 `Generate APK` / `Release APK` 阶段才炸，导致 tag 已挂出却无可发资产，必须 force-push 重打，污染发版历史（v5.0.0 已发生过 4 次，见 KI-019/020/021/022）。
+> 2. **本地必须用 `assembleRelease` 而非 `bundleRelease` / `build-android --mode=release`** 验证（见 §8.2），二者会跳过 verifyReleaseResources 与 java 编译期 autolinking 校验。
+> 3. **如启用了混淆 / R8（`minifyEnabled true` 或 `enableProguardInReleaseBuilds true`），打 tag 前 §8.3 全部勾项强制必跑**——R8 删除/重命名后的崩溃只在 release 构建产物运行时才暴露，不能跳过。即使本轮关闭混淆，下次打开混淆的第一次 tag 必须把 §8.3 当作 §8.2 同等强度的发版闸。
+> 4. **CI 命中 §8.5 success + APK 资产挂到 release 页面**才算"tag 发版完成"。CI Build job green 不代表发版成功，只有 `Release APK` job + 资产上传完成才算。
+> 5. 任何 §8.1 / §8.2 / §8.3 / §8.4 失败导致的 patch 修改 / 代码修改，必须 `git tag -d <tag> && git push origin :refs/tags/<tag>` 删旧 tag、commit + push 后**重新打 tag** —— 不允许把旧 tag 留在错误 commit 上"靠下一次 release 覆盖"。
 
 ### 8.1 Patch 体检（防 patch-package 静默失效）
 - [ ] `grep -l '\.orig' patches/*.patch` → 0 命中（patch 头部 `--- a/x b/x`，不能是 `--- a/x.orig b/x`）。
 - [ ] `grep -l '\.transforms\|/build/' patches/*.patch` → 0 命中（patch 不允许包含 `node_modules/<pkg>/android/build/.transforms/`、`bundleLib*Dex/`、`*.dex`、`*.jar` 等 Gradle 中间产物，否则 CI 干净环境 patch-package apply 会失败）。重新生成 patch 前必须 `rm -rf node_modules/<pkg>/android/build` 清掉构建产物。
 - [ ] 任何 patch 单文件 ≤ 50KB；超过必须人工 review 是否混入构建产物。
 - [ ] `bash scripts/use-node.sh npx patch-package` 重跑时无 `patch ... did not apply` 警告。
+- [ ] **AGP `namespace` 与 Java 实际 package 一致校验（KI-022 复盘后强约束）**：每当 patch 修改了 `node_modules/<pkg>/android/build.gradle` 的 `namespace "<x>"`，必须 `find node_modules/<pkg>/android/src/main/java -name '*.java' -o -name '*.kt' | xargs grep -l '^package'` 列出实际 package，**确保 `namespace` 与 Java/Kotlin 实际 package 完全一致**。否则 RN autolinking 用 namespace 推断 ReactPackage import path → [PackageList.java](../../android/app/build/generated/autolinking/src/main/java/com/facebook/react/PackageList.java) 找不到符号 → `compileReleaseJavaWithJavac FAILED`（且本机有 build/ 缓存时**误通过**）。
 - [ ] [package.json](../../package.json) 任何 `dependencies` 改动后，必须 `rm -rf node_modules && npm install` 跑一遍 patch-package 全量 apply 流程。
 - [ ] 必跑一次 **从零模拟 CI**：`rm -rf node_modules && bash scripts/use-node.sh npm install` 全新装机后 patch-package 全 ✔，再跑一次 §8.2 装机闭环（避免 "本地缓存通过 / CI 失败" 假象）。
 
@@ -64,7 +72,9 @@
 - [ ] 关键页面手测：登录页 → OAuth/Token 任一 → 首页 → Trending → 详情 → 关于页"检查更新"跳转浏览器到 GitHub releases。
 - [ ] 截屏归档到 `/tmp/gsy_release_<page>.png` 至少 3 张（登录 / 首页 / 关于）。
 
-### 8.3 混淆 / R8 场景（**当前关闭，未来打开时必跑**）
+### 8.3 混淆 / R8 场景（**当前关闭，未来打开时打 tag 前强制必跑**）
+> ⚠️ **打 tag 前混淆铁律**：本节是 v5.0.0 用户补充规格的核心。R8/ProGuard 删类、改名、内联、剥反射的副作用**只在 release 构建产物运行时**才暴露，单测、debug、`bundleRelease` 都看不到。所以一旦启用混淆，**禁止用"上一版 tag 验证过了 / debug 能跑就行"代替本节**——每次启用 / 调整混淆规则、新增依赖、升级 RN 主版本，都必须把 §8.3 当作打 tag 前的"必经闸"重新跑一遍。
+>
 > 当前 [android/app/build.gradle](../../android/app/build.gradle#L67) `enableProguardInReleaseBuilds = false`、[L132](../../android/app/build.gradle#L132) `minifyEnabled false`，所以 R8/ProGuard 路径未启用。
 > 一旦把 `enableProguardInReleaseBuilds = true` 或 `minifyEnabled true` 切回开启（典型场景：上架/瘦包），本节强制必跑：
 - [ ] [android/app/proguard-rules.pro](../../android/app/proguard-rules.pro) 中保留所有桥接类 `keep` 规则：`com.facebook.react.**`、`com.facebook.hermes.**`、所有 `*ReactPackage`、`*Module`、`*ViewManager`、Realm 模型类（[app/dao/db/](../../app/dao/db/)）、JSI 注入入口（[com.RNFetchBlob](../../node_modules/rn-fetch-blob)、[react-native-spinkit-fix-new](../../node_modules/react-native-spinkit-fix-new)、[react-native-version-number-fix-new](../../node_modules/react-native-version-number-fix-new)、Realm `binding.js` 触达的 native ）。

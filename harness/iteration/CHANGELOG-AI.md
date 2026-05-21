@@ -3,6 +3,17 @@
 > 每次 AI 协作完成后，必须按倒序追加一条记录。
 > 字段：日期 | 范围 | 描述 | 关联文档/PR | 测试结果。
 
+## 2026-05-21 — v5.0.0 第四次复盘：AGP namespace ≠ Java package 错配（KI-022） + 16KB 精确根因定位（KI-013） ✅
+- **触发**：用户指令 "继续，最终就是确保线上包打出来是可用的" + 反问 "为什么不支持 16K ？？不科学吧，RN 不是支持吗？"
+- **错误链（v5.0.0 第三次 CI run `26210954144` / commit `c72e34c`）**：`Generate APK` 第 8 步 `Build Android Release APK` 失败：`PackageList.java:87: error: cannot find symbol class RNVersionNumberPackage location: package com.reactnativeversioncheck`。
+- **根因（KI-022）**：[patches/react-native-version-number-fix-new+0.3.6.patch](../../patches/react-native-version-number-fix-new+0.3.6.patch) 为 AGP 8.x 加 `namespace "com.reactnativeversioncheck"` 时**取了与 Java 实际 package 不一致的 namespace**：[RNVersionNumberPackage.java](../../node_modules/react-native-version-number-fix-new/android/src/main/java/com/apsl/versionnumber/RNVersionNumberPackage.java) 实际 `package com.apsl.versionnumber;`。RN autolinking 用 namespace 推断 [PackageList.java](../../android/app/build/generated/autolinking/src/main/java/com/facebook/react/PackageList.java) 的 import 路径 → 编译期找不到符号。本地 `app/build/generated/autolinking/` 缓存旧 PackageList.java → 误通过。属于 KI-019 复盘后**第 4 个**patch-package 暗坑。
+- **修复**：(1) 把 patch 中 namespace 改回 `com.apsl.versionnumber`；(2) sanity check spinkit namespace `com.react.rnspinkit` 与 [RNSpinkitPackage.java](../../node_modules/react-native-spinkit-fix-new/android/src/main/java/com/react/rnspinkit/RNSpinkitPackage.java) 一致 ✓；(3) [checklist.md §8.1](../regression/checklist.md) 加"namespace ↔ Java package 一致校验闸口"。
+- **本地闭环验证（§8.1 + §8.2 全过）**：`rm -rf node_modules && bash scripts/use-node.sh npm install` → 6 patches 全 ✔；`cd android && ./gradlew clean assembleRelease` → BUILD SUCCESSFUL in 2m51s；APK 42MB；`aapt2 dump badging` versionCode/versionName 5.0.0 ✓；emulator Pixel_7 / API 36 装机 pid alive / `adb logcat -d 'AndroidRuntime:E ReactNativeJS:E *:F'` 0 fatal / 登录页截屏 [/tmp/gsy_release_v5_login.png](file:///tmp/gsy_release_v5_login.png) 正常渲染。
+- **16KB 精确根因（KI-013 修正）**：用户反问 "RN 不是支持吗？" 完全正确。`unzip -j app-release.apk 'lib/arm64-v8a/*.so'` 解出 18 个 `.so`，用 NDK 28.2.13676358 的 `llvm-readelf -lW <so> | grep LOAD` 校验：**17 个 `.so`（RN 自身 + reanimated/gesture/screens/spinkit/hermes/fbjni/...）全部 `Align=0x4000`(16KB) ✅**，**仅 [librealm.so](../../node_modules/realm) 一个 `Align=0x1000`(4KB) ❌**——realm@20.1.0 是当前唯一不合规 `.so`；realm 21+ 才修。校验脚本 [/tmp/check_align2.sh](file:///tmp/check_align2.sh) 已沉淀。已把 KI-013 描述从笼统的 "RN/三方包尚未全部支持 16KB" 改为精确版本，给出修复路径（realm 21+ 满冷却升级 / zipalign 16384 兜底）。
+- **规格补充**：[AGENTS.md §3](../../AGENTS.md) 新增第 7 条"打 tag 前必跑 release 包验证（v5.0.0 硬规矩）"；[checklist.md §8](../regression/checklist.md) 顶部加 "Tag 发布前置铁律" 5 条；§8.3 加"打 tag 前混淆铁律"。
+- **失误**：在试图清 git 状态时跑 `git rebase --abort` 把 HEAD 切回旧 copilot 分支，丢工作目录改动；reflog 确认 master commit 安全后 `git checkout master` 恢复，重做 patch + 4 份文档。已纳入"切分支前必先 `git stash` / 看 reflog"的个人 lesson。
+- **关联**：[KI-022](../regression/known-issues.md)、[KI-013](../regression/known-issues.md)、[checklist.md §8](../regression/checklist.md)、[AGENTS.md §3](../../AGENTS.md)。
+
 ## 2026-05-21 — v5.0.0 复盘 + patch-package 静默失效双坑修复（spinkit / version-number-fix-new）✅
 - **触发**：用户指令 "按 gh 工具，看最终构建如何，如果成功了就拉 apk 下来，跑一下全流程看看对不对，会不会崩溃，因为 release 下会有一些 r8 可能导致 crash？"
 - **CI 状态确认**：`gh` CLI 不可用（未装 brew），改用 `curl + GitHub REST API` 查 [actions/runs](https://api.github.com/repos/CarGuo/GSYGithubAPP/actions/runs)。两条结论：
