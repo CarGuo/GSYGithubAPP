@@ -1,9 +1,4 @@
-let Realm;
-try {
-    Realm = require('realm').default || require('realm');
-} catch (e) {
-    Realm = null;
-}
+import Realm from 'realm';
 
 /**
  * 仓库pulse表
@@ -283,19 +278,18 @@ const IssueComment = {
 
 
 let realm = null;
-if (Realm) {
-    try {
-        realm = new Realm({
-            schema: [TrendRepository, ReceivedEvent, UserInfo, UserEvent,
-                RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
-                RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits,
-                UserFollower, UserFollowed, UserStared, UserRepos, RepositoryCommitInfoDetail,
-                IssueDetail, IssueComment, ReadHistory, RepositoryPulse, OrgMember, UserOrgs
-            ]
-        });
-    } catch (e) {
-        realm = null;
-    }
+try {
+    realm = new Realm({
+        schema: [TrendRepository, ReceivedEvent, UserInfo, UserEvent,
+            RepositoryDetail, RepositoryDetailReadme, RepositoryEvent, RepositoryIssue,
+            RepositoryBranch, RepositoryWatcher, RepositoryStar, RepositoryFork, RepositoryCommits,
+            UserFollower, UserFollowed, UserStared, UserRepos, RepositoryCommitInfoDetail,
+            IssueDetail, IssueComment, ReadHistory, RepositoryPulse, OrgMember, UserOrgs
+        ]
+    });
+} catch (e) {
+    console.warn('[realm] init failed, fallback to noop cache:', e && e.message);
+    realm = null;
 }
 
 const makeNoopResults = () => {
