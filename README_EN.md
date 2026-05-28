@@ -9,7 +9,8 @@ Companion implementations in other stacks:
 - Weex: https://github.com/CarGuo/GSYGithubAppWeex
 - Flutter: https://github.com/CarGuo/GSYGithubAppFlutter
 - Android Kotlin (View): https://github.com/CarGuo/GSYGithubAppKotlin
-- Android Kotlin (Compose): https://github.com/CarGuo/GSYGithubAppKotlinCompose
+- Android Kotlin (Compose): https://github.com/CarGuo/GSYGithubAppCompose
+- Compose Multiplatform: https://github.com/CarGuo/GSYGithubAppCMP
 
 ```
 Developed with React Native, supporting both Android and iOS.
