@@ -8,10 +8,11 @@
 > ### [如果克隆太慢或者图片看不到，可尝试从码云地址下载](https://gitee.com/CarGuo/GSYGithubAPP)
 
 * ### 同款Weex版本 （ https://github.com/CarGuo/GSYGithubAppWeex ）
-* ### 同款Flutter版本 （ https://github.com/CarGuo/GSYGithubAppFlutter ）
+* ### 同款Flutter版本 （ https://github.com/CarGuo/gsy_github_app_flutter ）
 * ### 同款Android Kotlin View版本（ https://github.com/CarGuo/GSYGithubAppKotlin ）
 * ### 同款Android Compose版本（ https://github.com/CarGuo/GSYGithubAppCompose ）
 * ### 同款Compose Multiplatform版本（ https://github.com/CarGuo/GSYGithubAppCMP ）
+* ### 同款HarmonyOS ArkUI版本（ https://github.com/CarGuo/GSYGithubAppOH ）
 
 ```
 基于React Native开发，适配 Android 与 iOS。
