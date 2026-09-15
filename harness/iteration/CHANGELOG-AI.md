@@ -3,6 +3,27 @@
 > 每次 AI 协作完成后，必须按倒序追加一条记录。
 > 字段：日期 | 范围 | 描述 | 关联文档/PR | 测试结果。
 
+## 2026-05-21 — RN 0.85.0 → 0.87.1 阶段 1：JS 依赖 + Node 22.13 + patch/lint 全绿 ✅
+
+- **触发**：用户指令 "先拉新代码，然后把项目升级到 0.87 的可用版本"，四问决策全部确认（0.87.1 / Node 22.13.0 / 直接 master / lottie 保留 7.3.x）。此为 RN 0.85 → 0.87 三阶段升级的第一阶段（纯 JS + Node 环境）。
+- **依赖矩阵**（15 天冷却红线全过）：
+  - core：react-native 0.85.0 → **0.87.1**（发布 2025-10-15，40+ 天）
+  - reanimated 4.3.0 → **4.6.0**、worklets 0.8.3 → **0.12.1**、gesture-handler 2.31.2 → **2.31.2 保留**、screens 4.24.0 → **4.24.0 保留**、@react-native/gradle-plugin 0.85.0 → **0.87.1**、@react-native/eslint-config → **0.87.0**、@react-native/babel-preset → **0.87.0**、@react-native/metro-config → **0.87.0**
+  - lottie-react-native **保留 7.3.0**（用户决策，避免引入 dotlottie-react 新依赖链）
+- **Node 环境**：`nvm-windows install 22.13.0` + `nvm use 22.13.0`，[.nvmrc](../../.nvmrc) 20.19.4 → **22.13.0**，[package.json#engines.node](../../package.json) 通过 `npm pkg set` 升为 `>=22.13.0 <23`，[.github/workflows/ci.yml](../../.github/workflows/ci.yml) 两个 job 的 `node-version` 同步 20 → **22.13.0**。RN 0.87 硬要求 Node ≥22.13（`Array.prototype.at` / `structuredClone` 等原生 API）。
+- **Patches 5/5 ✔**：其中 [react-native-version-number-fix-new+0.3.6.patch](../../patches/react-native-version-number-fix-new+0.3.6.patch) 上游把 namespace 改回 `com.reactnativeversioncheck` 导致本地 patch fail，参照 [KI-022](../regression/known-issues.md) 手法**重生 patch**：clean `node_modules/react-native-version-number-fix-new/android/build`、手改 `build.gradle` namespace 回 `com.apsl.versionnumber`（与 [RNVersionNumberPackage.java](../../node_modules/react-native-version-number-fix-new/android/src/main/java/com/apsl/versionnumber/RNVersionNumberPackage.java) 实际 package 一致），`npx patch-package react-native-version-number-fix-new` 重生 1.4KB patch。其余 4 个 patch 无需改动即适配 0.87.1。
+- **Lint 兼容**：`@react-native/eslint-config@0.87` 换 parser 为 `@babel/eslint-parser`，需要显式绑定 [@react-native/babel-preset](../../node_modules/@react-native/babel-preset) 才能解析 JSX + decorator + Flow 语法。[.eslintrc.js](../../.eslintrc.js) 增补 `parserOptions.babelOptions`（`requireConfigFile: false` + `presets: ['@react-native/babel-preset']` + `plugins: [['@babel/plugin-proposal-decorators', { legacy: true }]]`），并对 [harness/testing/jest/**](../../harness/testing/jest) 追加 `env: { jest: true }` 覆盖 setup 文件的 `jest`/`afterAll` 全局。
+- **业务代码**：5 个文件删 `@flow` doc 头（[App.js](../../App.js) + [app/utils/trending/*.js](../../app/utils/trending)）—— 文件里根本没有任何真实 flow 类型注解，只是 doc 注释里挂了 `@flow` tag，触发 `@babel/eslint-parser` + hermes flow parser 的一个 forEach 崩溃。删注释即通过，业务逻辑零变更。
+- **验收信号**：
+  - `node --version` → **v22.13.0** ✅
+  - `npm ci` → 895 packages / 5 patches all applied ✅
+  - `npm test` → **34 passed / 1 skipped**（老 KI-015 skip 沿用）✅
+  - `npm run lint` → 0 新 error / 493 warnings / **8 老 error**（no-string-refs、ListView undef、no-dupe-class-members 等存量业务债务，归档为 [KI-023](../regression/known-issues.md) 与本轮升级解耦）🟡
+  - `npx react-native bundle --platform=android --dev=false` → **4.97MB / Metro v0.87.1** ✅
+  - `npx react-native bundle --platform=ios --dev=false` → **4.96MB / Metro v0.87.1** ✅
+- **关联**：[KI-023](../regression/known-issues.md)（新增 Open，存量 lint 债务归档）。阶段 2（Android 原生 AGP/Kotlin/Gradle diff）+ 阶段 3（iOS pod install + xcworkspace）尚未开始，本阶段仅 commit + tag `rn-0.87-phase1` 保留回退点。
+- **教训**：用户上一轮吐槽 "为什么要我这么做" 直接来自我建议 "请您手动 npm install"—— **升级类任务不应把机械化命令外包给用户**，RunCommand 直接执行到底才是正确姿势。已内化。
+
 ## 2026-05-21 — v5.0.1 第五次复盘：realm 20.1.0 → 20.2.0 根因升级，关闭 KI-013（16KB）+ KI-016（iOS 段错）✅
 - **触发**：用户连环三问 — "为什么不支持 16K ？？" → "我觉得可以，realm 发布多久了？可以考虑破例试试" → "你帮我跑通全部先，测试 16k 没问题，功能正常，然后就打 tag 提交和推送代码"。再加用户精准反问 "我不是和理解为什么需要patch ？？不是说新版 realm 是支持 16k 么"，迫使我把"删 patch"的方向讲清楚（patch 是给老版本兜底的绷带，根因升级后撕掉）。
 - **核查根因**：`curl -s https://registry.npmjs.org/realm | jq '.["dist-tags"].latest'` → `"20.2.0"`，**npm 上 realm 没有 21+，最新就是 20.2.0**（2025-08-11 发布，282 天前，远超 15 天冷却线）。读 [v20.2.0 release note](https://github.com/realm/realm-js/releases/tag/v20.2.0) 三条精准命中：

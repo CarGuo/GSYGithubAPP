@@ -2,7 +2,6 @@
  * 从https://github.com/trending获取数据
  * 项目地址:https://github.com/crazycodeboy/GitHubTrending
  * 博客地址:http://www.devio.org
- * @flow
  */
 import TrendingUtil from './TrendingUtil';
 import * as Code from '../../net/netwrokCode'

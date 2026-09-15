@@ -2,7 +2,6 @@
  * 字符串工具类
  * 项目地址:https://github.com/crazycodeboy/GitHubTrending
  * 博客地址:http://www.devio.org
- * @flow
  */
 export default class StringUtil {
     /*
