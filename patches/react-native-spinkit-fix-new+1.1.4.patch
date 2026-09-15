@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-spinkit-fix-new/android/build.gradle b/node_modules/react-native-spinkit-fix-new/android/build.gradle
-index 7bbf59e..6743547 100644
+index 7bbf59e..f6acdf1 100644
 --- a/node_modules/react-native-spinkit-fix-new/android/build.gradle
 +++ b/node_modules/react-native-spinkit-fix-new/android/build.gradle
 @@ -1,6 +1,7 @@
@@ -10,7 +10,7 @@ index 7bbf59e..6743547 100644
      mavenCentral()
      maven {
          url "https://jitpack.io"
-@@ -9,23 +10,25 @@ repositories {
+@@ -9,30 +10,32 @@ repositories {
  
  buildscript {
      repositories {
@@ -41,6 +41,14 @@ index 7bbf59e..6743547 100644
          versionCode 1
          versionName "1.0"
      }
+     buildTypes {
+         release {
+             minifyEnabled false
+-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
++            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+         }
+     }
+ }
 @@ -40,5 +43,5 @@ android {
  
  dependencies {

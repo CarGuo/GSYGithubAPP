@@ -57,6 +57,7 @@ buck-out/
 
 # Temporary build files
 tmp/
+.build-log/
 
 # CocoaPods
 /ios/Pods/
