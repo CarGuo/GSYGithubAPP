@@ -1,13 +1,33 @@
 diff --git a/node_modules/react-native-version-number-fix-new/android/build.gradle b/node_modules/react-native-version-number-fix-new/android/build.gradle
-index 2e55ebb..3f8a2c1 100644
+index df1672c..fc6f9b7 100644
 --- a/node_modules/react-native-version-number-fix-new/android/build.gradle
 +++ b/node_modules/react-native-version-number-fix-new/android/build.gradle
-@@ -2,7 +2,7 @@
+@@ -2,12 +2,13 @@
  apply plugin: 'com.android.library'
  
  android {
--    namespace "com.reactnativeversioncheck"
+-    compileSdkVersion 30
+-    buildToolsVersion "28.0.3"
 +    namespace "com.apsl.versionnumber"
-     compileSdkVersion 35
-     buildToolsVersion "35.0.0"
++    compileSdkVersion 37
++    buildToolsVersion "37.0.0"
  
+     defaultConfig {
+-        minSdkVersion 16
+-        targetSdkVersion 28
++        minSdkVersion 24
++        targetSdkVersion 36
+         versionCode 1
+         versionName "1.0"
+         ndk {
+diff --git a/node_modules/react-native-version-number-fix-new/android/src/main/AndroidManifest.xml b/node_modules/react-native-version-number-fix-new/android/src/main/AndroidManifest.xml
+index 50f0085..5f5d7a2 100644
+--- a/node_modules/react-native-version-number-fix-new/android/src/main/AndroidManifest.xml
++++ b/node_modules/react-native-version-number-fix-new/android/src/main/AndroidManifest.xml
+@@ -1,5 +1,4 @@
+ 
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-          package="com.apsl.versionnumber">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ 
+ </manifest>

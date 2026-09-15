@@ -3,6 +3,25 @@
 > 每次 AI 协作完成后，必须按倒序追加一条记录。
 > 字段：日期 | 范围 | 描述 | 关联文档/PR | 测试结果。
 
+## 2026-09-15 — CI hotfix：修 [react-native-version-number-fix-new+0.3.6.patch](../../patches/react-native-version-number-fix-new+0.3.6.patch) base 偏移 ✅
+
+- **触发**：用户 push master (`cd6c7ea`) 后 CI 挂在 `patch-package apply react-native-version-number-fix-new`（`sh -c patch-package` exit 1），前 4 patch ✔、只挂第 5 个。**同型于 [KI-019](../regression/known-issues.md)/[KI-022](../regression/known-issues.md)** —— 本地通过 / CI 失败的第 5 次踩坑。
+- **精确根因**：阶段 1 (`3cfd2b7`) 重生 patch 时，我在 **已经被历史 patch 修改过的** [build.gradle](../../node_modules/react-native-version-number-fix-new/android/build.gradle) 上直接跑 `patch-package`，导致 base blob (`2e55ebb`) **不是** git 上游 (`d831424980612fb97f37ad25bee14d273900e4de`) 的原始态。CI 干净 install 后拿到的 build.gradle 是 `compileSdkVersion 30 / buildToolsVersion "28.0.3" / 无 namespace`（对应 blob `df1672c`），与 patch 的 "before" 完全对不上，patch-package fuzz 匹配失败。同时阶段 1 patch **丢失** v5.0.0 (`9c20402`) 原本的 `AndroidManifest.xml` package 属性清除、`minSdkVersion 16→24` / `targetSdkVersion 28→35`、`compileSdkVersion 30→35` / `buildToolsVersion "28.0.3"→"35.0.0"` 五个必需变更，只剩 namespace 一行。
+- **修复过程**：
+  1. `Remove-Item -Recurse -Force node_modules\react-native-version-number-fix-new` → `npm install react-native-version-number-fix-new --ignore-scripts` 拉回上游原始态（compileSdk 30 / buildTools 28.0.3 / 无 namespace / manifest 带 `package="com.apsl.versionnumber"`）
+  2. 手改 [build.gradle](../../node_modules/react-native-version-number-fix-new/android/build.gradle) 到 AGP 9 目标态：加 `namespace "com.apsl.versionnumber"`、`compileSdkVersion 37`（与 [android/build.gradle](../../android/build.gradle) 对齐）、`buildToolsVersion "37.0.0"`、`minSdkVersion 24` / `targetSdkVersion 36`
+  3. 手改 [AndroidManifest.xml](../../node_modules/react-native-version-number-fix-new/android/src/main/AndroidManifest.xml) 删除 `package="com.apsl.versionnumber"`（AGP 8+ 强制走 namespace 替代 manifest package）
+  4. `Remove-Item -Recurse -Force node_modules\...\android\build,.idea`（[KI-019 强纪律](../regression/known-issues.md)：patch 重生前清中间产物）
+  5. `npx patch-package react-native-version-number-fix-new` 重生
+  6. **CI 等价验证**：`Remove-Item -Recurse -Force node_modules` + `npm install` → 5/5 patches ✔ / `assembleRelease` BUILD SUCCESSFUL 6m23s / APK 44.05MB
+- **意外副作用回退**：单独 `npm install react-native-version-number-fix-new` 把 [package.json](../../package.json) / [package-lock.json](../../package-lock.json) 里的 protocol 从 `git+https://github.com/...` 静默改成 `github:...` 简写。功能等价但语义漂移，已手动回退。
+- **验收信号**：
+  - `rm -rf node_modules && npm install` → `patch-package Applying patches... 5 ✔`（含 `react-native-version-number-fix-new@0.3.6 ✔`）✅
+  - `./gradlew assembleRelease` → **BUILD SUCCESSFUL in 6m 23s** / APK **44.05MB** ✅
+  - `grep -l '\.transforms' patches/*.patch` → 0 命中 ✅
+  - patch diff hunk 数：2 (build.gradle + AndroidManifest.xml)，与 v5.0.0 `9c20402` 正确形态完全一致 ✅
+- **教训**：`patch-package <pkg>` **必须**在 "上游拉回来的原始 node_modules 副本"上跑，绝不能在"已经被 patch 打过的、或本地脚手架污染过的" build.gradle 上重生 —— **base 移位就等于 patch 报废**。此为第 6 个 patch-package 暗坑（继 KI-019 双坑 + KI-022 namespace 错配 + [KI-024](../regression/known-issues.md) runtime 崩溃 + 本次 base blob 移位）。已把强纪律 SOP 内化到本条日志，后续 patch 重生均遵此顺序：**清 node_modules/<pkg> → npm install --ignore-scripts 单包重装 → 手改 → 清 build/ → patch-package**。
+
 ## 2026-09-15 — RN 0.85 → 0.87 阶段 2：Android AGP 9 / Gradle 9.4.1 / Kotlin 2.2 + stack 7.11 runtime 修复 ✅
 
 - **触发**：阶段 1 全绿并 tag `rn-0.87-phase1` 后，用户 "直接重跑 assembleRelease，遇坑就修（不等确认）"。本阶段目标是让 Android release 从 build → 装机 → 冒烟 全链路跑通。
